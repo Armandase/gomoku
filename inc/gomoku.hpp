@@ -11,5 +11,6 @@
 #define BOARD_HEIGHT 19
 #define SCREEN_HEIGHT (GRID_SIZE * 19) + (3 * MARGIN)
 #define SCREEN_WIDTH (GRID_SIZE * 19) + (3 * MARGIN)
+#define RADIUS GRID_SIZE / 3
 
 #endif

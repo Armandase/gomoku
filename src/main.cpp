@@ -32,26 +32,31 @@ int main() {
     bool quit = false;
     SDL_Event e;
 
+    render_board(renderer);
     while (!quit) {
         // Handle q and echap for quit the programm
         // If SDL receive an event SDL_PollEvent return 1
         while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_MOUSEBUTTONDOWN) {
-                int mouseX;
-                int mouseY;
-                SDL_GetMouseState(&mouseX, &mouseY);
-                std::cout << "X: " << mouseX << "\n";
-                std::cout << "Y: " << mouseY << "\n";
-
-            }
             if (e.type == SDL_QUIT)
                 quit = true;
             else if (e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q)
                     quit = true;
             }
+            else if (e.type == SDL_MOUSEBUTTONDOWN) {
+                int mouseX, mouseY;
+                SDL_GetMouseState(&mouseX, &mouseY);
+                int x_case = ((mouseX - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
+                int y_case = ((mouseY - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
+                SDL_Rect rect = {x_case * GRID_SIZE + MARGIN - RADIUS / 2, y_case * GRID_SIZE + MARGIN - RADIUS / 2, RADIUS, RADIUS};
+                SDL_SetRenderDrawColor(renderer, 80, 0, 80, 255);
+                if (SDL_RenderFillRect(renderer, &rect) < 0) {
+                    SDL_Log("Failed to RenderFillRect: %s", SDL_GetError());
+                    return 1;
+                }
+                SDL_RenderPresent(renderer);
+            }
         }
-        render_board(renderer);
     }
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
