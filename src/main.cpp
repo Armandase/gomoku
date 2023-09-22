@@ -1,4 +1,5 @@
 #include "../inc/gomoku.hpp"
+#include "../inc/utils.hpp"
 
 void render_board(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
@@ -14,21 +15,14 @@ void render_board(SDL_Renderer *renderer) {
 }
 
 int main() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        SDL_Log("Failed to init SDL: %s", SDL_GetError());
-        return 1;
-    }
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+        SDL_Error("Failed to init SDL:", NULL, NULL);
     SDL_Window *window = SDL_CreateWindow("Gomoku", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN); 
-    if (!window) {
-        SDL_Log("Failed to create SDL window: %s", SDL_GetError());
-        return 1;
-    }
+    if (!window)
+        SDL_Error("Failed to create SDL window:", window, NULL);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) {
-        SDL_Log("Failed to create SDL renderer: %s", SDL_GetError());
-        return 1;
-    }
-    
+    if (!renderer)
+        SDL_Error("Failed to create SDL renderer:", window, renderer);
     bool quit = false;
     SDL_Event e;
 
@@ -50,10 +44,8 @@ int main() {
                 int y_case = ((mouseY - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
                 SDL_Rect rect = {x_case * GRID_SIZE + MARGIN - RADIUS / 2, y_case * GRID_SIZE + MARGIN - RADIUS / 2, RADIUS, RADIUS};
                 SDL_SetRenderDrawColor(renderer, 80, 0, 80, 255);
-                if (SDL_RenderFillRect(renderer, &rect) < 0) {
-                    SDL_Log("Failed to RenderFillRect: %s", SDL_GetError());
-                    return 1;
-                }
+                if (SDL_RenderFillRect(renderer, &rect) < 0)
+                    SDL_Error("Failed to RenderFillRect:", window, renderer);
                 SDL_RenderPresent(renderer);
             }
         }

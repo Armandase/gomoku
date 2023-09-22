@@ -1,7 +1,7 @@
 CXX		=	c++
 NAME 	= 	gomoku
-SRC 	=	main.cpp 
-HEADER	=	inc/gomoku.hpp
+SRC 	=	main.cpp utils.cpp
+HEADER	=	inc/gomoku.hpp inc/utils.hpp
 OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))
 CXXFLAGS=	-Wall -Wextra --std=c++17 -g 
 LDFLAGS = 	-lSDL2
