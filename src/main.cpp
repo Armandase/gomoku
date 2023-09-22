@@ -48,12 +48,14 @@ int main() {
                 SDL_GetMouseState(&mouseX, &mouseY);
                 int x_case = ((mouseX - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
                 int y_case = ((mouseY - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
-                SDL_Rect rect = {x_case * GRID_SIZE + MARGIN - RADIUS / 2, y_case * GRID_SIZE + MARGIN - RADIUS / 2, RADIUS, RADIUS};
-                SDL_SetRenderDrawColor(renderer, 80, 0, 80, 255);
-                if (SDL_RenderFillRect(renderer, &rect) < 0) {
-                    SDL_Log("Failed to RenderFillRect: %s", SDL_GetError());
-                    return 1;
-                }
+                // SDL_Rect rect = {x_case * GRID_SIZE + MARGIN - RADIUS / 2, y_case * GRID_SIZE + MARGIN - RADIUS / 2, RADIUS, RADIUS};
+                // SDL_SetRenderDrawColor(renderer, 80, 0, 80, 255);
+                // if (SDL_RenderFillRect(renderer, &rect) < 0) {
+                //     SDL_Log("Failed to RenderFillRect: %s", SDL_GetError());
+                //     return 1;
+                // }
+                // SDL_Rect rect = {x_case * GRID_SIZE + MARGIN - RADIUS / 2, y_case * GRID_SIZE + MARGIN - RADIUS / 2, RADIUS, RADIUS};
+                drawCircle(x_case * GRID_SIZE + MARGIN - RADIUS / (RADIUS / 2), y_case * GRID_SIZE + MARGIN - RADIUS / (RADIUS / 2), renderer);
                 SDL_RenderPresent(renderer);
             }
         }

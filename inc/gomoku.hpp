@@ -13,4 +13,6 @@
 #define SCREEN_WIDTH (GRID_SIZE * 19) + (3 * MARGIN)
 #define RADIUS GRID_SIZE / 3
 
+void drawCircle(int centreX, int centreY, SDL_Renderer *renderer);
+
 #endif
