@@ -5,9 +5,11 @@
 # include <exception>
 # include <iostream>
 
-#define SCREEN_HEIGHT 640
-#define SCREEN_WIDTH 640 
+#define GRID_SIZE 50
+#define MARGIN 20
 #define BOARD_WIDTH 19
 #define BOARD_HEIGHT 19
+#define SCREEN_HEIGHT (GRID_SIZE * 19) + (3 * MARGIN)
+#define SCREEN_WIDTH (GRID_SIZE * 19) + (3 * MARGIN)
 
 #endif
