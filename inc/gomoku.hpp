@@ -13,6 +13,7 @@
 # define SCREEN_HEIGHT (GRID_SIZE * 19) + (2 * MARGIN)
 # define SCREEN_WIDTH (GRID_SIZE * 19) + (2 * MARGIN)
 # define RADIUS (GRID_SIZE / 3)
+# define DIAMETER (RADIUS * 2)
 
 enum player
 {
@@ -22,6 +23,7 @@ enum player
 
 typedef std::vector<std::vector<int> > vector2d;
 
-void drawCircle(int, int, SDL_Renderer *);
+void    drawCircle(int, int, SDL_Renderer *);
+int     handleMouse(vector2d& game, int& player, SDL_Renderer* renderer);
 
 #endif

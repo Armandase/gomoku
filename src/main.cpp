@@ -41,24 +41,8 @@ int main() {
                     quit = true;
             }
             else if (e.type == SDL_MOUSEBUTTONDOWN) {
-                int mouseX, mouseY;
-                SDL_GetMouseState(&mouseX, &mouseY);
-                if (mouseX <= MARGIN || mouseX >= SCREEN_WIDTH - MARGIN
-                    || mouseY <= MARGIN || mouseY >= SCREEN_HEIGHT - MARGIN)
-                    continue;
-                int x_case = ((mouseX - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
-                int y_case = ((mouseY - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
-                if (x_case > BOARD_WIDTH || y_case > BOARD_HEIGHT)
-                    continue;
-                game[y_case][x_case] = player + 1;
-                if (player == 0){
-                    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-                    player = 1;
-                } else {
-                    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-                    player = 0;
-                }
-                drawCircle(x_case, y_case, renderer);
+                if (handleMouse(game, player, renderer))
+                    continue ;
                 SDL_RenderPresent(renderer);
                 minMaxAlgorithm(game);
             }
