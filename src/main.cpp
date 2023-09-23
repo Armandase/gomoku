@@ -28,8 +28,8 @@ int main() {
     SDL_Event e;
 
     render_board(renderer);
-    int player = 0;
-    vector2d game(19, std::vector<int>(19));
+    int player = WHITE;
+    vector2d game(BOARD_HEIGHT + 1, std::vector<int>(BOARD_WIDTH + 1, 0));
     while (!quit) {
         // Handle q and echap for quit the programm
         // If SDL receive an event SDL_PollEvent return 1

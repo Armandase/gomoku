@@ -24,9 +24,8 @@ int checkCaptures(vector2d& game, const int& y_case, const int& x_case, const in
         for (int j = 1; j < 4; j++){
             checkX = x_case + (dirX[i] * j);
             checkY = y_case + (dirY[i] * j);
-            if (checkX < 0 || checkY < 0 || checkX > 18 || checkY > 18)
+            if (checkX < 0 || checkY < 0 || checkX > BOARD_HEIGHT + 1 || checkY > BOARD_WIDTH + 1)
                 return (0);
-            
             if (j == 3 && game[checkY][checkX] == player){
                 erasePlayer(checkY - dirY[i], checkX - dirX[i], renderer);
                 erasePlayer(checkY - dirY[i] * 2, checkX - dirX[i] * 2, renderer);
@@ -54,15 +53,16 @@ int    handleMouse(vector2d& game, int& player, SDL_Renderer* renderer){
     int y_case = ((mouseY - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
     if (x_case > BOARD_WIDTH || y_case > BOARD_HEIGHT)
         return (1);
-
-    game[y_case][x_case] = player + 1;
-    checkCaptures(game, y_case, x_case, player + 1, renderer);
-    if (player == 0){
+    if (game[y_case][x_case] != 0)
+        return (1);
+    game[y_case][x_case] = player;
+    checkCaptures(game, y_case, x_case, player, renderer);
+    if (player == WHITE){
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        player = 1;
+        player = BLACK;
     } else {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        player = 0;
+        player = WHITE;
     }
     drawCircle(x_case, y_case, renderer);
     return (0);
