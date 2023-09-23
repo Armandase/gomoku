@@ -1,7 +1,9 @@
 CXX		=	c++
 NAME 	= 	gomoku
-SRC 	=	main.cpp utils.cpp drawCircle.cpp
-HEADER	=	inc/gomoku.hpp inc/utils.hpp
+SRC 	=	main.cpp utils.cpp drawCircle.cpp \
+			minMaxAlgorithm.cpp
+HEADER	=	inc/gomoku.hpp inc/utils.hpp \
+			inc/minMaxAlgorithm.hpp
 OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))
 CXXFLAGS=	-Wall -Wextra --std=c++17 -g 
 LDFLAGS = 	-lSDL2

@@ -1,5 +1,6 @@
 #include "../inc/gomoku.hpp"
 #include "../inc/utils.hpp"
+#include "../inc/minMaxAlgorithm.hpp"
 
 void render_board(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
@@ -7,9 +8,9 @@ void render_board(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     // Draw grid of 19 * 19
-    for (int x = MARGIN; x < SCREEN_WIDTH - MARGIN; x += GRID_SIZE) {
-        SDL_RenderDrawLine(renderer, x, MARGIN, x, SCREEN_HEIGHT - MARGIN * 2);
-        SDL_RenderDrawLine(renderer, MARGIN, x, SCREEN_WIDTH - MARGIN * 2, x);
+    for (int x = MARGIN; x < SCREEN_WIDTH; x += GRID_SIZE) {
+        SDL_RenderDrawLine(renderer, x, MARGIN, x, SCREEN_HEIGHT - MARGIN);
+        SDL_RenderDrawLine(renderer, MARGIN, x, SCREEN_WIDTH - MARGIN, x);
     }
     SDL_RenderPresent(renderer);
 }
@@ -27,6 +28,8 @@ int main() {
     SDL_Event e;
 
     render_board(renderer);
+    int player = 0;
+    vector2d game(19, std::vector<int>(19));
     while (!quit) {
         // Handle q and echap for quit the programm
         // If SDL receive an event SDL_PollEvent return 1
@@ -40,17 +43,24 @@ int main() {
             else if (e.type == SDL_MOUSEBUTTONDOWN) {
                 int mouseX, mouseY;
                 SDL_GetMouseState(&mouseX, &mouseY);
+                if (mouseX <= MARGIN || mouseX >= SCREEN_WIDTH - MARGIN
+                    || mouseY <= MARGIN || mouseY >= SCREEN_HEIGHT - MARGIN)
+                    continue;
                 int x_case = ((mouseX - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
                 int y_case = ((mouseY - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
-                // SDL_Rect rect = {x_case * GRID_SIZE + MARGIN - RADIUS / 2, y_case * GRID_SIZE + MARGIN - RADIUS / 2, RADIUS, RADIUS};
-                // SDL_SetRenderDrawColor(renderer, 80, 0, 80, 255);
-                // if (SDL_RenderFillRect(renderer, &rect) < 0) {
-                //     SDL_Log("Failed to RenderFillRect: %s", SDL_GetError());
-                //     return 1;
-                // }
-                // SDL_Rect rect = {x_case * GRID_SIZE + MARGIN - RADIUS / 2, y_case * GRID_SIZE + MARGIN - RADIUS / 2, RADIUS, RADIUS};
-                drawCircle(x_case * GRID_SIZE + MARGIN - RADIUS / (RADIUS / 2), y_case * GRID_SIZE + MARGIN - RADIUS / (RADIUS / 2), renderer);
+                if (x_case > BOARD_WIDTH || y_case > BOARD_HEIGHT)
+                    continue;
+                game[y_case][x_case] = player + 1;
+                if (player == 0){
+                    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+                    player = 1;
+                } else {
+                    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+                    player = 0;
+                }
+                drawCircle(x_case, y_case, renderer);
                 SDL_RenderPresent(renderer);
+                minMaxAlgorithm(game);
             }
         }
     }
