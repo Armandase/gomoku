@@ -1,6 +1,7 @@
 #include "../inc/gomoku.hpp"
 #include "../inc/utils.hpp"
 #include "../inc/minMaxAlgorithm.hpp"
+#include "../inc/Button.hpp"
 
 void render_board(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
@@ -26,9 +27,15 @@ int main() {
         SDL_Error("Failed to create SDL renderer:", window, renderer);
     bool quit = false;
     SDL_Event e;
+    // render_board(renderer);
 
-    render_board(renderer);
     int player = WHITE;
+    bool start = false;
+    // create 2 button 
+    Button playerButton(SCREEN_WIDTH / 3 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
+    Button IAButton(SCREEN_WIDTH / 3 * 2 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
+    start_menu(renderer, playerButton, IAButton);
+
     vector2d game(BOARD_HEIGHT + 1, std::vector<int>(BOARD_WIDTH + 1, 0));
     while (!quit) {
         // Handle q and echap for quit the programm
@@ -41,12 +48,15 @@ int main() {
                     quit = true;
             }
             else if (e.type == SDL_MOUSEBUTTONDOWN) {
-                if (handleMouse(game, player, renderer))
+                if (!start)
+                    start = handleStart(renderer, playerButton, IAButton);
+                else if (start && handleMouse(game, player, renderer))
                     continue ;
                 SDL_RenderPresent(renderer);
                 minMaxAlgorithm(game);
             }
         }
+    
     }
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

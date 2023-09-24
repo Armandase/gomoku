@@ -1,11 +1,12 @@
 CXX		=	c++
 NAME 	= 	gomoku
 SRC 	=	main.cpp utils.cpp drawCircle.cpp \
-			minMaxAlgorithm.cpp handleMouse.cpp
+			minMaxAlgorithm.cpp handleMouse.cpp \
+			Button.cpp startMenu.cpp
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
-			inc/minMaxAlgorithm.hpp
+			inc/minMaxAlgorithm.hpp inc/Button.hpp 
 OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))
-CXXFLAGS=	-Wall -Wextra --std=c++17 -g 
+CXXFLAGS=	-Wall -Wextra --std=c++17 -g
 LDFLAGS = 	-lSDL2
 
 all		:	${NAME}
