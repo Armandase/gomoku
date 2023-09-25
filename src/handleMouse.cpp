@@ -1,4 +1,4 @@
-#include "../inc/gomoku.hpp"
+#include "../inc/utils.hpp"
 #include <unistd.h>
 
 void print_game(const vector2d& game) {
@@ -18,8 +18,6 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
     game[y][x] = player;
 
     int winner = gameChecker(game, y, x, player, renderer);
-    // gameChecker is used to check if the game is ended or if there is a capture (return 1 on victory)
-
 
     // select white or black depending of player's color
     if (player == WHITE){
@@ -31,33 +29,20 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
     }
     // draw cirlce... stone, player, pawn, piece ... u know 
     drawCircle(x, y, renderer);
-    if (winner > 0){
-        std::string message;
-        if (winner == BLACK)
-            message = "black wins";
-        else if (winner == WHITE)
-            message = "white wins";
+    if (winner > 0){ 
         {
+            std::string message;
+            winner == BLACK ? message = "black wins" : message = "white wins";
             SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
             SDL_RenderClear(renderer);
-            TTF_Font* Sans = TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24);
-            SDL_Color white = {80, 0, 80, 255};
-            SDL_Surface* surfaceMsg = TTF_RenderText_Solid(Sans, message.c_str(), white);
-            SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMsg);
-            SDL_Rect Message_rect;
-            Message_rect.x = SCREEN_WIDTH / 4; 
-            Message_rect.y = SCREEN_HEIGHT / 3;
-            Message_rect.w = SCREEN_WIDTH / 2;
-            Message_rect.h = Message_rect.y;
-            SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-            SDL_RenderPresent(renderer);
-            SDL_FreeSurface(surfaceMsg);
-            SDL_DestroyTexture(Message);
+            SDL_Color textColor = {80, 0, 80, 255};
+            SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
+            writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", &msg_rect, textColor, renderer);
         }
-        sleep(2);        
-        for (int i = 0; i < game.size(); i++)
+        sleep(2);
+        const int size = game.size();
+        for (int i = 0; i < size; i++)
             memset(&game[i][0], 0, game[i].size() * sizeof game[i][0]);
-        // print_game(game);
         render_board(renderer);
     }
     return (0);

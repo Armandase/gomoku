@@ -37,16 +37,6 @@ int main() {
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
     start_menu(renderer, playerButton, IAButton);
 
-    TTF_Font* Sans = TTF_OpenFont("fonts/SEASRN.ttf", 28);
-    SDL_Color White = {255, 255, 255, 255};
-    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "Gomoku", White); 
-    SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-    SDL_Rect Message_rect = {100, 100, 300, 300};
-    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-    SDL_RenderPresent(renderer);
-
-    SDL_FreeSurface(surfaceMessage);
-    SDL_DestroyTexture(Message);
     vector2d game(BOARD_HEIGHT + 1, std::vector<int>(BOARD_WIDTH + 1, 0));
     int start = 0;
     while (!quit) {
