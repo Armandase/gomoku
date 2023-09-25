@@ -9,8 +9,24 @@ void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer
     SDL_RenderFillRect(renderer, &rect);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    SDL_RenderDrawLine(renderer, x_square, y_square + RADIUS, x_square + DIAMETER, y_square + RADIUS);
-    SDL_RenderDrawLine(renderer, x_square + RADIUS, y_square, x_square + RADIUS, y_square + DIAMETER);
+    int borderX = DIAMETER;
+    if (x_square + borderX > MARGIN + (GRID_SIZE * BOARD_WIDTH))
+        borderX = RADIUS;
+
+    int borderY = DIAMETER;
+    if (y_square + borderY > MARGIN + (GRID_SIZE * BOARD_HEIGHT))
+        borderY = RADIUS;
+
+    int startX = 0;
+    if (x_square < MARGIN)
+        startX = RADIUS;
+
+    int startY = 0;
+    if (y_square < MARGIN)
+        startY = RADIUS;
+
+    SDL_RenderDrawLine(renderer, x_square + startX , y_square + RADIUS, x_square + borderX, y_square + RADIUS);
+    SDL_RenderDrawLine(renderer, x_square + RADIUS, y_square + startY, x_square + RADIUS, y_square + borderY);
     SDL_RenderPresent(renderer);
 
 }
