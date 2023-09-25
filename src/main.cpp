@@ -19,15 +19,26 @@ void render_board(SDL_Renderer *renderer) {
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
         SDL_Error("Failed to init SDL:", NULL, NULL);
+    if(TTF_Init() == -1)
+        SDL_Error("Failed to init TTF:", NULL, NULL);
     SDL_Window *window = SDL_CreateWindow("Gomoku", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN); 
     if (!window)
         SDL_Error("Failed to create SDL window:", window, NULL);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer)
         SDL_Error("Failed to create SDL renderer:", window, renderer);
+
     bool quit = false;
+
+    TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24);
+    SDL_Color White = {255, 255, 255};
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "Player VS Player", White); 
+    SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    SDL_Rect Message_rect = {0, 0, 100, 100};
+    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
+    SDL_FreeSurface(surfaceMessage);
+    SDL_DestroyTexture(Message);
     SDL_Event e;
-    // render_board(renderer);
 
     int player = WHITE;
     bool start = false;

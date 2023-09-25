@@ -1,3 +1,5 @@
+MAKEFLAGS += -j
+
 CXX		=	c++
 NAME 	= 	gomoku
 SRC 	=	main.cpp utils.cpp drawCircle.cpp \
@@ -7,13 +9,20 @@ SRC 	=	main.cpp utils.cpp drawCircle.cpp \
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			inc/minMaxAlgorithm.hpp inc/Button.hpp 
 OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))
-CXXFLAGS=	-Wall -Wextra --std=c++17 -g
-LDFLAGS = 	-lSDL2
+CXXFLAGS=	-Wall -Wextra --std=c++17 -g -I$(SDL2_TTF) -I/usr/include/SDL2
+SDL2_TTF=	libs/SDL2_ttf
+LDFLAGS = 	-lSDL2 -L$(SDL2_TTF)/build -lSDL2_ttf-2.0
 
-all		:	${NAME}
+all		:	${NAME} 
+
+lib		:
+			cd ${SDL2_TTF} && \
+			./configure && \
+			cmake -S . -B build && \
+			make -C build
 
 ${NAME}	:	${OBJS} ${HEADER}
-			${CXX} ${CXXFLAGS} -o ${NAME} ${OBJS} ${LDFLAGS}
+			${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
 
 obj/%.o: src/%.cpp $(HEADER)
 	@mkdir -p $(@D)
@@ -25,6 +34,7 @@ fclean: clean
 clean:
 	rm -rf obj/
 
-re: fclean all
+re: fclean
+	@make all
 
 .PHONY: all fclean clean re
