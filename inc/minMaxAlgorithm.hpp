@@ -3,6 +3,6 @@
 
 # include "gomoku.hpp"
 
-void    minMaxAlgorithm(vector2d&);
+void    minMaxAlgorithm(vector2d&, int&,  SDL_Renderer *);
 
 #endif // !__MINMAXALGORITHM_HPP__
