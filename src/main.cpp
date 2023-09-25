@@ -28,17 +28,19 @@ int main() {
     if (!renderer)
         SDL_Error("Failed to create SDL renderer:", window, renderer);
 
+    int start = 0;
     bool quit = false;
     SDL_Event e;
-
     int player = WHITE;
+
     // create 2 button 
     Button playerButton(SCREEN_WIDTH / 3 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
+
+    // Render Start Menu
     start_menu(renderer, playerButton, IAButton);
 
     vector2d game(BOARD_HEIGHT + 1, std::vector<int>(BOARD_WIDTH + 1, 0));
-    int start = 0;
     while (!quit) {
         // Handle q and echap for quit the programm
         // If SDL receive an event SDL_PollEvent return 1
