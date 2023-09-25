@@ -17,6 +17,7 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
         return (1);
     game[y][x] = player;
 
+    // gameChecker is used to check if the game is ended or if there is a capture (return 1 on victory)
     int winner = gameChecker(game, y, x, player, renderer);
 
     // select white or black depending of player's color
@@ -29,12 +30,17 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
     }
     // draw cirlce... stone, player, pawn, piece ... u know 
     drawCircle(x, y, renderer);
-    if (winner > 0){ 
+    if (winner > 0){
+        // if someone win, it prints the winner to the screen
         {
+            // select corresponding name
             std::string message;
             winner == BLACK ? message = "black wins" : message = "white wins";
+            //reset game's board with game's color
             SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
             SDL_RenderClear(renderer);
+
+            // select text color and where it should be placed and his size
             SDL_Color textColor = {80, 0, 80, 255};
             SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
             writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", &msg_rect, textColor, renderer);
