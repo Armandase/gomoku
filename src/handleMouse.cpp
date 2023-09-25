@@ -40,7 +40,7 @@ int checkCaptures(vector2d& game, const int& y_case, const int& x_case, const in
         for (int j = 1; j < 4; j++){
             checkX = x_case + (dirX[i] * j);
             checkY = y_case + (dirY[i] * j);
-            if (checkX < 0 || checkY < 0 || checkX > BOARD_HEIGHT + 1 || checkY > BOARD_WIDTH + 1)
+            if (checkX < 0 || checkY < 0 || checkX > BOARD_HEIGHT || checkY > BOARD_WIDTH)
                 return (0);
             if (j == 3 && game[checkY][checkX] == player){
                 erasePlayer(checkY - dirY[i], checkX - dirX[i], renderer);
