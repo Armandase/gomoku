@@ -35,6 +35,8 @@ int     handleStart(SDL_Renderer *, Button &player, Button &IA);
 void    start_menu(SDL_Renderer *, Button &player, Button &IA);
 void    render_board(SDL_Renderer *);
 int     gameChecker(vector2d&, const int&, const int&, const int&, SDL_Renderer*);
+int     place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x);
+
 
 
 #endif
