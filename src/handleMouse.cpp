@@ -15,7 +15,6 @@ int    handleMouse(vector2d& game, int& player, SDL_Renderer* renderer){
     if (game[y_case][x_case] != 0)
         return (1);
     game[y_case][x_case] = player;
-    // checkCaptures(game, y_case, x_case, player, renderer);
     if (int winner = gameChecker(game, y_case, x_case, player, renderer); winner > 0)
         std::cout << "player " << winner << std::endl;
     if (player == WHITE){

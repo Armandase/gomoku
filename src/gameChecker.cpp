@@ -47,7 +47,7 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
             checkX = x + (dirX[i] * j);
             checkY = y + (dirY[i] * j);
             if (checkX < 0 || checkY < 0 || checkX > 18 || checkY > 18)
-                return (0);
+                break ;
             if (checkWin == false && checkCapture == false)
                 break ;
             
@@ -62,7 +62,7 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
                 game[checkY - dirY[i]][checkX - dirX[i]] = 0;
                 game[checkY - dirY[i] * 2][checkX - dirX[i] * 2] = 0;
             }
-            else if (checkCapture == true && (game[checkY][checkX] == player || game[checkY][checkX] == 0))
+            else if (checkCapture == true && (game[checkY][checkX] == player || game[checkY][checkX] == 0 || j > 3))
                 checkCapture = false;
         }
     }
