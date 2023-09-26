@@ -64,7 +64,7 @@ int main() {
                 else if (start && handleMouse(game, player, renderer))
                     continue ;
                 SDL_RenderPresent(renderer);
-                minMaxAlgorithm(game, player, renderer);
+                //minMaxAlgorithm(game, player, renderer);
             }
         }
     
