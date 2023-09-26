@@ -1,0 +1,9 @@
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/SDL2_image.dir
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/showanim.dir
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/showimage.dir
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/edit_cache.dir
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/rebuild_cache.dir
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/list_install_components.dir
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/install.dir
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/install/local.dir
+/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/install/strip.dir

@@ -6,6 +6,7 @@
 # include <iostream>
 # include <vector>
 # include <SDL_ttf.h>
+# include <SDL_image.h>
 
 # define GRID_SIZE 50
 # define MARGIN 20

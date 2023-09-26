@@ -27,6 +27,9 @@ int main() {
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer)
         SDL_Error("Failed to create SDL renderer:", window, renderer);
+    SDL_Texture* imageTexture = IMG_LoadTexture(renderer, "your_image.png"); // Replace with your image file path
+    if (!imageTexture)
+        SDL_Error("Failed to load image:", window, renderer);
 
     int start = 0;
     bool quit = false;
@@ -34,8 +37,8 @@ int main() {
     int player = WHITE;
 
     // create 2 button 
-    Button playerButton(SCREEN_WIDTH / 3 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
-    Button IAButton(SCREEN_WIDTH / 3 * 2 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
+    Button playerButton(SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
+    Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
 
     // Render Start Menu
     start_menu(renderer, playerButton, IAButton);
