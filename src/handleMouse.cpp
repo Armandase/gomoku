@@ -43,7 +43,7 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
             // select text color and where it should be placed and his size
             SDL_Color textColor = {80, 0, 80, 255};
             SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
-            writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", &msg_rect, textColor, renderer);
+            writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24,renderer);
         }
         sleep(2);
         const int size = game.size();

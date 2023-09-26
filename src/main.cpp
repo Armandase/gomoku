@@ -27,24 +27,20 @@ int main() {
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer)
         SDL_Error("Failed to create SDL renderer:", window, renderer);
+    // SDL_Texture* imageTexture = IMG_LoadTexture(renderer, "your_image.png"); // Replace with your image file path
+    // if (!imageTexture)
+    //     SDL_Error("Failed to load image:", window, renderer);
 
+    int start = 0;
     bool quit = false;
-
-    TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24);
-    SDL_Color White = {255, 255, 255};
-    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "Player VS Player", White); 
-    SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-    SDL_Rect Message_rect = {0, 0, 100, 100};
-    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-    SDL_FreeSurface(surfaceMessage);
-    SDL_DestroyTexture(Message);
     SDL_Event e;
-
     int player = WHITE;
-    bool start = false;
+
     // create 2 button 
-    Button playerButton(SCREEN_WIDTH / 3 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
-    Button IAButton(SCREEN_WIDTH / 3 * 2 - 100, SCREEN_HEIGHT / 2 - 50, 200, 100);
+    Button playerButton(SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
+    Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
+
+    // Render Start Menu
     start_menu(renderer, playerButton, IAButton);
 
     vector2d game(BOARD_HEIGHT + 1, std::vector<int>(BOARD_WIDTH + 1, 0));
@@ -59,12 +55,14 @@ int main() {
                     quit = true;
             }
             else if (e.type == SDL_MOUSEBUTTONDOWN) {
-                if (!start)
+                if (!start) {
                     start = handleStart(renderer, playerButton, IAButton);
-                else if (start && handleMouse(game, player, renderer))
                     continue ;
+                }
+                if (handleMouse(game, player, renderer))
+                    continue ;
+                minMaxAlgorithm(game, player, renderer);
                 SDL_RenderPresent(renderer);
-                //minMaxAlgorithm(game, player, renderer);
             }
         }
     
