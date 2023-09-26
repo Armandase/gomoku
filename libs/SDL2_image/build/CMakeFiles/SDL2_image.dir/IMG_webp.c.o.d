@@ -1,6 +1,6 @@
 CMakeFiles/SDL2_image.dir/IMG_webp.c.o: \
-  /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_webp.c \
-  /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/SDL_image.h \
+  /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_webp.c \
+  /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/SDL_image.h \
   /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
   /usr/include/SDL2/SDL_stdinc.h /usr/include/SDL2/SDL_config.h \
   /usr/include/x86_64-linux-gnu/SDL2/_real_SDL_config.h \

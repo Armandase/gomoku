@@ -27,6 +27,10 @@ lib		:
 			cmake -S . -B build && \
 			make -C build
 
+lib_clean:
+			rm -r ${SDL2_TTF}/build
+			rm -r ${SDL2_IMAGE}/build
+
 ${NAME}	:	${OBJS} ${HEADER}
 			${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
 

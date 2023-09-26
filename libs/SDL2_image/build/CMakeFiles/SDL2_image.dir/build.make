@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image
+CMAKE_SOURCE_DIR = /nfs/homes/adamiens/42/gomoku/libs/SDL2_image
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build
+CMAKE_BINARY_DIR = /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/SDL2_image.dir/depend.make
@@ -72,296 +72,296 @@ include CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG.c.o: ../IMG.c
 CMakeFiles/SDL2_image.dir/IMG.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/SDL2_image.dir/IMG.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG.c.o -MF CMakeFiles/SDL2_image.dir/IMG.c.o.d -o CMakeFiles/SDL2_image.dir/IMG.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/SDL2_image.dir/IMG.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG.c.o -MF CMakeFiles/SDL2_image.dir/IMG.c.o.d -o CMakeFiles/SDL2_image.dir/IMG.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG.c
 
 CMakeFiles/SDL2_image.dir/IMG.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG.c > CMakeFiles/SDL2_image.dir/IMG.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG.c > CMakeFiles/SDL2_image.dir/IMG.c.i
 
 CMakeFiles/SDL2_image.dir/IMG.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG.c -o CMakeFiles/SDL2_image.dir/IMG.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG.c -o CMakeFiles/SDL2_image.dir/IMG.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_WIC.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_WIC.c.o: ../IMG_WIC.c
 CMakeFiles/SDL2_image.dir/IMG_WIC.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/SDL2_image.dir/IMG_WIC.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_WIC.c.o -MF CMakeFiles/SDL2_image.dir/IMG_WIC.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_WIC.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_WIC.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/SDL2_image.dir/IMG_WIC.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_WIC.c.o -MF CMakeFiles/SDL2_image.dir/IMG_WIC.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_WIC.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_WIC.c
 
 CMakeFiles/SDL2_image.dir/IMG_WIC.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_WIC.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_WIC.c > CMakeFiles/SDL2_image.dir/IMG_WIC.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_WIC.c > CMakeFiles/SDL2_image.dir/IMG_WIC.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_WIC.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_WIC.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_WIC.c -o CMakeFiles/SDL2_image.dir/IMG_WIC.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_WIC.c -o CMakeFiles/SDL2_image.dir/IMG_WIC.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_avif.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_avif.c.o: ../IMG_avif.c
 CMakeFiles/SDL2_image.dir/IMG_avif.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/SDL2_image.dir/IMG_avif.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_avif.c.o -MF CMakeFiles/SDL2_image.dir/IMG_avif.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_avif.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_avif.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/SDL2_image.dir/IMG_avif.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_avif.c.o -MF CMakeFiles/SDL2_image.dir/IMG_avif.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_avif.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_avif.c
 
 CMakeFiles/SDL2_image.dir/IMG_avif.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_avif.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_avif.c > CMakeFiles/SDL2_image.dir/IMG_avif.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_avif.c > CMakeFiles/SDL2_image.dir/IMG_avif.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_avif.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_avif.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_avif.c -o CMakeFiles/SDL2_image.dir/IMG_avif.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_avif.c -o CMakeFiles/SDL2_image.dir/IMG_avif.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_bmp.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_bmp.c.o: ../IMG_bmp.c
 CMakeFiles/SDL2_image.dir/IMG_bmp.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/SDL2_image.dir/IMG_bmp.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_bmp.c.o -MF CMakeFiles/SDL2_image.dir/IMG_bmp.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_bmp.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_bmp.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/SDL2_image.dir/IMG_bmp.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_bmp.c.o -MF CMakeFiles/SDL2_image.dir/IMG_bmp.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_bmp.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_bmp.c
 
 CMakeFiles/SDL2_image.dir/IMG_bmp.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_bmp.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_bmp.c > CMakeFiles/SDL2_image.dir/IMG_bmp.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_bmp.c > CMakeFiles/SDL2_image.dir/IMG_bmp.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_bmp.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_bmp.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_bmp.c -o CMakeFiles/SDL2_image.dir/IMG_bmp.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_bmp.c -o CMakeFiles/SDL2_image.dir/IMG_bmp.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_gif.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_gif.c.o: ../IMG_gif.c
 CMakeFiles/SDL2_image.dir/IMG_gif.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/SDL2_image.dir/IMG_gif.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_gif.c.o -MF CMakeFiles/SDL2_image.dir/IMG_gif.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_gif.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_gif.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/SDL2_image.dir/IMG_gif.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_gif.c.o -MF CMakeFiles/SDL2_image.dir/IMG_gif.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_gif.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_gif.c
 
 CMakeFiles/SDL2_image.dir/IMG_gif.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_gif.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_gif.c > CMakeFiles/SDL2_image.dir/IMG_gif.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_gif.c > CMakeFiles/SDL2_image.dir/IMG_gif.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_gif.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_gif.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_gif.c -o CMakeFiles/SDL2_image.dir/IMG_gif.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_gif.c -o CMakeFiles/SDL2_image.dir/IMG_gif.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_jpg.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_jpg.c.o: ../IMG_jpg.c
 CMakeFiles/SDL2_image.dir/IMG_jpg.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/SDL2_image.dir/IMG_jpg.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_jpg.c.o -MF CMakeFiles/SDL2_image.dir/IMG_jpg.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_jpg.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_jpg.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/SDL2_image.dir/IMG_jpg.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_jpg.c.o -MF CMakeFiles/SDL2_image.dir/IMG_jpg.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_jpg.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_jpg.c
 
 CMakeFiles/SDL2_image.dir/IMG_jpg.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_jpg.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_jpg.c > CMakeFiles/SDL2_image.dir/IMG_jpg.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_jpg.c > CMakeFiles/SDL2_image.dir/IMG_jpg.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_jpg.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_jpg.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_jpg.c -o CMakeFiles/SDL2_image.dir/IMG_jpg.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_jpg.c -o CMakeFiles/SDL2_image.dir/IMG_jpg.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_jxl.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_jxl.c.o: ../IMG_jxl.c
 CMakeFiles/SDL2_image.dir/IMG_jxl.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/SDL2_image.dir/IMG_jxl.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_jxl.c.o -MF CMakeFiles/SDL2_image.dir/IMG_jxl.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_jxl.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_jxl.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/SDL2_image.dir/IMG_jxl.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_jxl.c.o -MF CMakeFiles/SDL2_image.dir/IMG_jxl.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_jxl.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_jxl.c
 
 CMakeFiles/SDL2_image.dir/IMG_jxl.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_jxl.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_jxl.c > CMakeFiles/SDL2_image.dir/IMG_jxl.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_jxl.c > CMakeFiles/SDL2_image.dir/IMG_jxl.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_jxl.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_jxl.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_jxl.c -o CMakeFiles/SDL2_image.dir/IMG_jxl.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_jxl.c -o CMakeFiles/SDL2_image.dir/IMG_jxl.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_lbm.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_lbm.c.o: ../IMG_lbm.c
 CMakeFiles/SDL2_image.dir/IMG_lbm.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/SDL2_image.dir/IMG_lbm.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_lbm.c.o -MF CMakeFiles/SDL2_image.dir/IMG_lbm.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_lbm.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_lbm.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/SDL2_image.dir/IMG_lbm.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_lbm.c.o -MF CMakeFiles/SDL2_image.dir/IMG_lbm.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_lbm.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_lbm.c
 
 CMakeFiles/SDL2_image.dir/IMG_lbm.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_lbm.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_lbm.c > CMakeFiles/SDL2_image.dir/IMG_lbm.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_lbm.c > CMakeFiles/SDL2_image.dir/IMG_lbm.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_lbm.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_lbm.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_lbm.c -o CMakeFiles/SDL2_image.dir/IMG_lbm.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_lbm.c -o CMakeFiles/SDL2_image.dir/IMG_lbm.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_pcx.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_pcx.c.o: ../IMG_pcx.c
 CMakeFiles/SDL2_image.dir/IMG_pcx.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/SDL2_image.dir/IMG_pcx.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_pcx.c.o -MF CMakeFiles/SDL2_image.dir/IMG_pcx.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_pcx.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pcx.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/SDL2_image.dir/IMG_pcx.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_pcx.c.o -MF CMakeFiles/SDL2_image.dir/IMG_pcx.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_pcx.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_pcx.c
 
 CMakeFiles/SDL2_image.dir/IMG_pcx.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_pcx.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pcx.c > CMakeFiles/SDL2_image.dir/IMG_pcx.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_pcx.c > CMakeFiles/SDL2_image.dir/IMG_pcx.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_pcx.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_pcx.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pcx.c -o CMakeFiles/SDL2_image.dir/IMG_pcx.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_pcx.c -o CMakeFiles/SDL2_image.dir/IMG_pcx.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_png.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_png.c.o: ../IMG_png.c
 CMakeFiles/SDL2_image.dir/IMG_png.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/SDL2_image.dir/IMG_png.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_png.c.o -MF CMakeFiles/SDL2_image.dir/IMG_png.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_png.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_png.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/SDL2_image.dir/IMG_png.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_png.c.o -MF CMakeFiles/SDL2_image.dir/IMG_png.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_png.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_png.c
 
 CMakeFiles/SDL2_image.dir/IMG_png.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_png.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_png.c > CMakeFiles/SDL2_image.dir/IMG_png.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_png.c > CMakeFiles/SDL2_image.dir/IMG_png.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_png.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_png.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_png.c -o CMakeFiles/SDL2_image.dir/IMG_png.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_png.c -o CMakeFiles/SDL2_image.dir/IMG_png.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_pnm.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_pnm.c.o: ../IMG_pnm.c
 CMakeFiles/SDL2_image.dir/IMG_pnm.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/SDL2_image.dir/IMG_pnm.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_pnm.c.o -MF CMakeFiles/SDL2_image.dir/IMG_pnm.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_pnm.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pnm.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/SDL2_image.dir/IMG_pnm.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_pnm.c.o -MF CMakeFiles/SDL2_image.dir/IMG_pnm.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_pnm.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_pnm.c
 
 CMakeFiles/SDL2_image.dir/IMG_pnm.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_pnm.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pnm.c > CMakeFiles/SDL2_image.dir/IMG_pnm.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_pnm.c > CMakeFiles/SDL2_image.dir/IMG_pnm.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_pnm.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_pnm.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pnm.c -o CMakeFiles/SDL2_image.dir/IMG_pnm.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_pnm.c -o CMakeFiles/SDL2_image.dir/IMG_pnm.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_qoi.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_qoi.c.o: ../IMG_qoi.c
 CMakeFiles/SDL2_image.dir/IMG_qoi.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/SDL2_image.dir/IMG_qoi.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_qoi.c.o -MF CMakeFiles/SDL2_image.dir/IMG_qoi.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_qoi.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_qoi.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/SDL2_image.dir/IMG_qoi.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_qoi.c.o -MF CMakeFiles/SDL2_image.dir/IMG_qoi.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_qoi.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_qoi.c
 
 CMakeFiles/SDL2_image.dir/IMG_qoi.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_qoi.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_qoi.c > CMakeFiles/SDL2_image.dir/IMG_qoi.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_qoi.c > CMakeFiles/SDL2_image.dir/IMG_qoi.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_qoi.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_qoi.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_qoi.c -o CMakeFiles/SDL2_image.dir/IMG_qoi.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_qoi.c -o CMakeFiles/SDL2_image.dir/IMG_qoi.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_stb.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_stb.c.o: ../IMG_stb.c
 CMakeFiles/SDL2_image.dir/IMG_stb.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/SDL2_image.dir/IMG_stb.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_stb.c.o -MF CMakeFiles/SDL2_image.dir/IMG_stb.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_stb.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_stb.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/SDL2_image.dir/IMG_stb.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_stb.c.o -MF CMakeFiles/SDL2_image.dir/IMG_stb.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_stb.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_stb.c
 
 CMakeFiles/SDL2_image.dir/IMG_stb.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_stb.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_stb.c > CMakeFiles/SDL2_image.dir/IMG_stb.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_stb.c > CMakeFiles/SDL2_image.dir/IMG_stb.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_stb.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_stb.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_stb.c -o CMakeFiles/SDL2_image.dir/IMG_stb.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_stb.c -o CMakeFiles/SDL2_image.dir/IMG_stb.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_svg.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_svg.c.o: ../IMG_svg.c
 CMakeFiles/SDL2_image.dir/IMG_svg.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/SDL2_image.dir/IMG_svg.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_svg.c.o -MF CMakeFiles/SDL2_image.dir/IMG_svg.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_svg.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_svg.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/SDL2_image.dir/IMG_svg.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_svg.c.o -MF CMakeFiles/SDL2_image.dir/IMG_svg.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_svg.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_svg.c
 
 CMakeFiles/SDL2_image.dir/IMG_svg.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_svg.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_svg.c > CMakeFiles/SDL2_image.dir/IMG_svg.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_svg.c > CMakeFiles/SDL2_image.dir/IMG_svg.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_svg.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_svg.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_svg.c -o CMakeFiles/SDL2_image.dir/IMG_svg.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_svg.c -o CMakeFiles/SDL2_image.dir/IMG_svg.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_tga.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_tga.c.o: ../IMG_tga.c
 CMakeFiles/SDL2_image.dir/IMG_tga.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/SDL2_image.dir/IMG_tga.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_tga.c.o -MF CMakeFiles/SDL2_image.dir/IMG_tga.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_tga.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_tga.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/SDL2_image.dir/IMG_tga.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_tga.c.o -MF CMakeFiles/SDL2_image.dir/IMG_tga.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_tga.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_tga.c
 
 CMakeFiles/SDL2_image.dir/IMG_tga.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_tga.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_tga.c > CMakeFiles/SDL2_image.dir/IMG_tga.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_tga.c > CMakeFiles/SDL2_image.dir/IMG_tga.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_tga.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_tga.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_tga.c -o CMakeFiles/SDL2_image.dir/IMG_tga.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_tga.c -o CMakeFiles/SDL2_image.dir/IMG_tga.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_tif.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_tif.c.o: ../IMG_tif.c
 CMakeFiles/SDL2_image.dir/IMG_tif.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/SDL2_image.dir/IMG_tif.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_tif.c.o -MF CMakeFiles/SDL2_image.dir/IMG_tif.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_tif.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_tif.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/SDL2_image.dir/IMG_tif.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_tif.c.o -MF CMakeFiles/SDL2_image.dir/IMG_tif.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_tif.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_tif.c
 
 CMakeFiles/SDL2_image.dir/IMG_tif.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_tif.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_tif.c > CMakeFiles/SDL2_image.dir/IMG_tif.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_tif.c > CMakeFiles/SDL2_image.dir/IMG_tif.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_tif.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_tif.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_tif.c -o CMakeFiles/SDL2_image.dir/IMG_tif.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_tif.c -o CMakeFiles/SDL2_image.dir/IMG_tif.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_webp.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_webp.c.o: ../IMG_webp.c
 CMakeFiles/SDL2_image.dir/IMG_webp.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/SDL2_image.dir/IMG_webp.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_webp.c.o -MF CMakeFiles/SDL2_image.dir/IMG_webp.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_webp.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_webp.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/SDL2_image.dir/IMG_webp.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_webp.c.o -MF CMakeFiles/SDL2_image.dir/IMG_webp.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_webp.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_webp.c
 
 CMakeFiles/SDL2_image.dir/IMG_webp.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_webp.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_webp.c > CMakeFiles/SDL2_image.dir/IMG_webp.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_webp.c > CMakeFiles/SDL2_image.dir/IMG_webp.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_webp.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_webp.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_webp.c -o CMakeFiles/SDL2_image.dir/IMG_webp.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_webp.c -o CMakeFiles/SDL2_image.dir/IMG_webp.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_xcf.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_xcf.c.o: ../IMG_xcf.c
 CMakeFiles/SDL2_image.dir/IMG_xcf.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/SDL2_image.dir/IMG_xcf.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_xcf.c.o -MF CMakeFiles/SDL2_image.dir/IMG_xcf.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_xcf.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xcf.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/SDL2_image.dir/IMG_xcf.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_xcf.c.o -MF CMakeFiles/SDL2_image.dir/IMG_xcf.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_xcf.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xcf.c
 
 CMakeFiles/SDL2_image.dir/IMG_xcf.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_xcf.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xcf.c > CMakeFiles/SDL2_image.dir/IMG_xcf.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xcf.c > CMakeFiles/SDL2_image.dir/IMG_xcf.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_xcf.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_xcf.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xcf.c -o CMakeFiles/SDL2_image.dir/IMG_xcf.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xcf.c -o CMakeFiles/SDL2_image.dir/IMG_xcf.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_xpm.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_xpm.c.o: ../IMG_xpm.c
 CMakeFiles/SDL2_image.dir/IMG_xpm.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/SDL2_image.dir/IMG_xpm.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_xpm.c.o -MF CMakeFiles/SDL2_image.dir/IMG_xpm.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_xpm.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xpm.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/SDL2_image.dir/IMG_xpm.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_xpm.c.o -MF CMakeFiles/SDL2_image.dir/IMG_xpm.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_xpm.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xpm.c
 
 CMakeFiles/SDL2_image.dir/IMG_xpm.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_xpm.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xpm.c > CMakeFiles/SDL2_image.dir/IMG_xpm.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xpm.c > CMakeFiles/SDL2_image.dir/IMG_xpm.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_xpm.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_xpm.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xpm.c -o CMakeFiles/SDL2_image.dir/IMG_xpm.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xpm.c -o CMakeFiles/SDL2_image.dir/IMG_xpm.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_xv.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_xv.c.o: ../IMG_xv.c
 CMakeFiles/SDL2_image.dir/IMG_xv.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/SDL2_image.dir/IMG_xv.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_xv.c.o -MF CMakeFiles/SDL2_image.dir/IMG_xv.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_xv.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xv.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/SDL2_image.dir/IMG_xv.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_xv.c.o -MF CMakeFiles/SDL2_image.dir/IMG_xv.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_xv.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xv.c
 
 CMakeFiles/SDL2_image.dir/IMG_xv.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_xv.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xv.c > CMakeFiles/SDL2_image.dir/IMG_xv.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xv.c > CMakeFiles/SDL2_image.dir/IMG_xv.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_xv.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_xv.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xv.c -o CMakeFiles/SDL2_image.dir/IMG_xv.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xv.c -o CMakeFiles/SDL2_image.dir/IMG_xv.c.s
 
 CMakeFiles/SDL2_image.dir/IMG_xxx.c.o: CMakeFiles/SDL2_image.dir/flags.make
 CMakeFiles/SDL2_image.dir/IMG_xxx.c.o: ../IMG_xxx.c
 CMakeFiles/SDL2_image.dir/IMG_xxx.c.o: CMakeFiles/SDL2_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/SDL2_image.dir/IMG_xxx.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_xxx.c.o -MF CMakeFiles/SDL2_image.dir/IMG_xxx.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_xxx.c.o -c /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xxx.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/SDL2_image.dir/IMG_xxx.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/SDL2_image.dir/IMG_xxx.c.o -MF CMakeFiles/SDL2_image.dir/IMG_xxx.c.o.d -o CMakeFiles/SDL2_image.dir/IMG_xxx.c.o -c /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xxx.c
 
 CMakeFiles/SDL2_image.dir/IMG_xxx.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/SDL2_image.dir/IMG_xxx.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xxx.c > CMakeFiles/SDL2_image.dir/IMG_xxx.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xxx.c > CMakeFiles/SDL2_image.dir/IMG_xxx.c.i
 
 CMakeFiles/SDL2_image.dir/IMG_xxx.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/SDL2_image.dir/IMG_xxx.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xxx.c -o CMakeFiles/SDL2_image.dir/IMG_xxx.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_xxx.c -o CMakeFiles/SDL2_image.dir/IMG_xxx.c.s
 
 # Object files for target SDL2_image
 SDL2_image_OBJECTS = \
@@ -414,7 +414,7 @@ libSDL2_image-2.0.so.0.600.3: CMakeFiles/SDL2_image.dir/IMG_xxx.c.o
 libSDL2_image-2.0.so.0.600.3: CMakeFiles/SDL2_image.dir/build.make
 libSDL2_image-2.0.so.0.600.3: /usr/lib/x86_64-linux-gnu/libSDL2.so
 libSDL2_image-2.0.so.0.600.3: CMakeFiles/SDL2_image.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking C shared library libSDL2_image-2.0.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking C shared library libSDL2_image-2.0.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SDL2_image.dir/link.txt --verbose=$(VERBOSE)
 	$(CMAKE_COMMAND) -E cmake_symlink_library libSDL2_image-2.0.so.0.600.3 libSDL2_image-2.0.so.0 libSDL2_image-2.0.so
 	/usr/bin/cmake -E create_symlink libSDL2_image-2.0.so.0 libSDL2_image.so
@@ -434,6 +434,6 @@ CMakeFiles/SDL2_image.dir/clean:
 .PHONY : CMakeFiles/SDL2_image.dir/clean
 
 CMakeFiles/SDL2_image.dir/depend:
-	cd /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/CMakeFiles/SDL2_image.dir/DependInfo.cmake --color=$(COLOR)
+	cd /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /nfs/homes/adamiens/42/gomoku/libs/SDL2_image /nfs/homes/adamiens/42/gomoku/libs/SDL2_image /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build/CMakeFiles/SDL2_image.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/SDL2_image.dir/depend
 

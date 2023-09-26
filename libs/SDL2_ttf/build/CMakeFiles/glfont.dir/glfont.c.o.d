@@ -1,5 +1,5 @@
 CMakeFiles/glfont.dir/glfont.c.o: \
-  /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/glfont.c \
+  /nfs/homes/adamiens/42/gomoku/libs/SDL2_ttf/glfont.c \
   /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h /usr/include/features-time64.h \
@@ -178,5 +178,5 @@ CMakeFiles/glfont.dir/glfont.c.o: \
   /usr/include/SDL2/SDL_system.h /usr/include/SDL2/SDL_timer.h \
   /usr/include/SDL2/SDL_version.h /usr/include/SDL2/SDL_locale.h \
   /usr/include/SDL2/SDL_misc.h \
-  /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/SDL_ttf.h \
+  /nfs/homes/adamiens/42/gomoku/libs/SDL2_ttf/SDL_ttf.h \
   /usr/include/SDL2/SDL_opengl.h /usr/include/SDL2/SDL_opengl_glext.h

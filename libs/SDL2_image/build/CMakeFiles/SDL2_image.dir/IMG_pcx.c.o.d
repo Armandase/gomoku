@@ -1,5 +1,5 @@
 CMakeFiles/SDL2_image.dir/IMG_pcx.c.o: \
-  /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pcx.c \
+  /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/IMG_pcx.c \
   /usr/include/SDL2/SDL_endian.h /usr/include/SDL2/SDL_stdinc.h \
   /usr/include/SDL2/SDL_config.h \
   /usr/include/x86_64-linux-gnu/SDL2/_real_SDL_config.h \
@@ -76,7 +76,7 @@ CMakeFiles/SDL2_image.dir/IMG_pcx.c.o: \
   /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/float.h \
   /usr/include/SDL2/begin_code.h /usr/include/SDL2/close_code.h \
-  /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/SDL_image.h \
+  /nfs/homes/adamiens/42/gomoku/libs/SDL2_image/SDL_image.h \
   /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
   /usr/include/SDL2/SDL_assert.h /usr/include/SDL2/SDL_atomic.h \
   /usr/include/SDL2/SDL_platform.h /usr/include/SDL2/SDL_audio.h \
