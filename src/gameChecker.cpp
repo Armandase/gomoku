@@ -10,11 +10,11 @@ void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     int borderX = DIAMETER;
-    if (x_square + borderX > MARGIN + (GRID_SIZE * BOARD_WIDTH))
+    if (x_square + borderX > MARGIN + (GRID_SIZE * BOARD_SIZE))
         borderX = RADIUS;
 
     int borderY = DIAMETER;
-    if (y_square + borderY > MARGIN + (GRID_SIZE * BOARD_HEIGHT))
+    if (y_square + borderY > MARGIN + (GRID_SIZE * BOARD_SIZE))
         borderY = RADIUS;
 
     int startX = 0;

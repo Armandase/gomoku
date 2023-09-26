@@ -66,7 +66,7 @@ int    handleMouse(vector2d& game, int& player, SDL_Renderer* renderer){
     // get the case corresponding to the click coordinate 
     int x_case = ((mouseX - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
     int y_case = ((mouseY - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
-    if (x_case > BOARD_WIDTH || y_case > BOARD_HEIGHT)
+    if (x_case > BOARD_SIZE || y_case > BOARD_SIZE)
         return (1);
 
     if (place_stone(game, player, renderer, y_case, x_case) > 0)

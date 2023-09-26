@@ -42,5 +42,8 @@ void start_menu(SDL_Renderer *renderer, Button &player, Button &IA) {
     SDL_Rect creditText = {SCREEN_WIDTH - 310, SCREEN_HEIGHT - 70, 300, 50};
     writeText("made by adamiens & nlocusso", "fonts/OpenSans-Bold.ttf", 
                 creditText, {0, 0, 0, 255}, 50, renderer);
+
     SDL_RenderPresent(renderer);
+    
+
 }

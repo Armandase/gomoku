@@ -7,13 +7,13 @@
 # include <vector>
 # include <SDL_ttf.h>
 # include <SDL_image.h>
+# include <climits>
 
 # define GRID_SIZE 50
 # define MARGIN 20
-# define BOARD_WIDTH 18
-# define BOARD_HEIGHT 18
-# define SCREEN_HEIGHT ((GRID_SIZE * BOARD_HEIGHT) + (2 * MARGIN))
-# define SCREEN_WIDTH ((GRID_SIZE * BOARD_WIDTH) + (2 * MARGIN))
+# define BOARD_SIZE 18
+# define SCREEN_HEIGHT ((GRID_SIZE * BOARD_SIZE) + (2 * MARGIN))
+# define SCREEN_WIDTH ((GRID_SIZE * BOARD_SIZE) + (2 * MARGIN))
 # define RADIUS (GRID_SIZE / 3)
 # define DIAMETER (RADIUS * 2)
 

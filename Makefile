@@ -5,7 +5,7 @@ NAME 	= 	gomoku
 SRC 	=	main.cpp utils.cpp drawCircle.cpp \
 			minMaxAlgorithm.cpp handleMouse.cpp \
 			Button.cpp startMenu.cpp \
-			gameChecker.cpp
+			checkLine.cpp gameChecker.cpp
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			inc/minMaxAlgorithm.hpp inc/Button.hpp 
 OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))
