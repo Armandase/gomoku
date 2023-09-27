@@ -1,5 +1,5 @@
 #include "../inc/minMaxAlgorithm.hpp"
-
+#include "../inc/utils.hpp"
 // void scoreUpdate(const int &playerCount, const int &opponentCount, int &score) {
 //     if (playerCount == 5) {
 //         score = INT_MAX;
@@ -66,6 +66,8 @@ int counterAnalysis(const int counter, const int player, const int color){
 
     if (counter == 5 && player == color)
         result = 1000;
+    else if (counter == 5 && player != color)
+        result = 1000;
     else if (counter == 4 && player != color)
         result = 600;
     else if (counter == 4 && player == color)
@@ -84,20 +86,23 @@ int heuristic(const vector2d &game, int player, const int y, const int x){
     int         counter, color, heuristic = 0;
 
     for (int i = 0; i < 8; i++){
-        counter = 1, color = 0;
+        counter = 1;
+        color = 0;
         for (int j = 1; j < 5; j++){
             checkX = x + (dirX[i] * j);
             checkY = y + (dirY[i] * j);
-            if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
+            if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE || game[checkY][checkX] == 0)
                 break ;
             if (j == 1)
                 color = game[checkY][checkX];
-            if (game[checkY][checkX] == color)
+            if (game[checkY][checkX] == color && counter + 1 < 5)
                 counter++;
             else
                 break ;
         }
-        heuristic += counterAnalysis(counter, player, color);
+        if (color)
+            heuristic += counterAnalysis(counter + 1, player, color);
     }
+    // std::cout << "HEURISITIC: " << heuristic << "\n";
     return (heuristic);
 }
