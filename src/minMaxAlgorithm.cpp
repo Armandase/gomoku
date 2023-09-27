@@ -64,7 +64,9 @@ int heuristic(const vector2d &game, int player) {
 
 int minMaxRecursive(const vector2d &game, int init_player, int player, int depth) {
     if (depth == 0)
-        return heuristic(game, player);
+        // return heuristic(game, player);
+        // h ?
+        return 4;
 
     std::vector<int> result;
     for (int x = 0; x < BOARD_SIZE; x++) {
