@@ -34,8 +34,7 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
                 copy[y][x] = player;
                 int next_player = (player == BLACK) ? WHITE : BLACK;
                 cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x);
-                cost tmp {recursiveResult.heuristic, x, y};
-                result.push_back(tmp);
+                result.push_back(cost {recursiveResult.heuristic, x, y});
             }
         }
     }
