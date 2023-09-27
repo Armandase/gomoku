@@ -72,6 +72,8 @@ int counterAnalysis(const int counter, const int player, const int color){
         result = 600;
     else if (counter == 4 && player == color)
         result = 500;
+    else if (counter != 3)
+        result = 250;
     else if (counter == 3)
         result = 250;
     else
