@@ -18,4 +18,12 @@ enum side {
     BOTTOM_LEFT,
 };
 
+typedef struct t_cost{
+    int heuristic;
+    int x;
+    int y;
+} cost;
+
+int heuristic(const vector2d &game, int player, const int y, const int x);
+
 #endif // !__MINMAXALGORITHM_HPP__

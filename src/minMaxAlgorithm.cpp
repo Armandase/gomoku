@@ -1,92 +1,81 @@
 #include "../inc/minMaxAlgorithm.hpp"
+#include "../inc/utils.hpp"
 
-void scoreUpdate(const int &playerCount, const int &opponentCount, int &score) {
-    if (playerCount == 5) {
-        score = INT_MAX;
-        return ;
-    }
-    else if (playerCount == 4 && opponentCount == 0)
-        score += 1000;
-    else if (playerCount == 3 && opponentCount == 0)
-        score += 100;
-    else if (playerCount == 2 && opponentCount == 0)
-        score += 10;
-    else if (playerCount == 1 && opponentCount == 0)
-        score += 1;
-}
+bool emptyNeighbour(const vector2d &game, const int x, const int y){
+    const int   dirX[] = { 0, 1, 0, -1, 1, -1, 1, -1};
+    const int   dirY[] = { 1, 0, -1, 0, 1, -1, -1, 1};
+    int         checkX = 0, checkY = 0;
+    int         counter = 0;
 
-void scoreLine(const vector2d &game, int player, int x, int y, int &score) {
-    int playerCount = 0;
-    int opponentCount = 0;
-    
-    for (int k = 0; k < 5; ++k) {
-        if (game[x][y + k] == player) {
-            playerCount++;
-        } else if (game[x][y + k] != 0) {
-            opponentCount++;
+    for (int i = 0; i < 8; i++){
+        checkX = x + dirX[i];
+        checkY = y + dirY[i];
+        if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE){
+            counter++;
+            continue;
         }
+        if (game[checkY][checkX] == 0)
+            counter++;        
     }
-    scoreUpdate(playerCount, opponentCount, score);
+    if (counter == 8)
+        return (true);
+    return (false);
 }
 
-void scoreColumns(const vector2d &game, int player, int x, int y, int &score) {
-    int playerCount = 0;
-    int opponentCount = 0;
-    
-    for (int k = 0; k < 5; ++k) {
-        if (game[x + k][y] == player) {
-            playerCount++;
-        } else if (game[x + k][y] != 0) {
-            opponentCount++;
-        }
-    }
-    scoreUpdate(playerCount, opponentCount, score);
-}
-
-int heuristic(const vector2d &game, int player) {
-    int score = 0;
-    for (int x = 0; x < BOARD_SIZE + 1; ++x) {
-        for (int y = 0; y < BOARD_SIZE + 1; ++y) {
-            if (y + 4 < BOARD_SIZE + 1) {
-                scoreLine(game, player, x, y, score);
-                if (score == INT_MAX)
-                    return score;
-            }
-            if (x + 4 < BOARD_SIZE + 1) {
-                scoreColumns(game, player, x, y, score);
-                if (score == INT_MAX)
-                    return score;
-            }
-        }
-    }
-    return score;
-}
-
-int minMaxRecursive(const vector2d &game, int init_player, int player, int depth) {
+cost minMaxRecursive(const vector2d &game, int init_player, int player, int depth, const int yGame, const int xGame) {
     if (depth == 0)
-        return heuristic(game, player);
+        return cost{heuristic(game, player, yGame, xGame), yGame , xGame};
 
-    std::vector<int> result;
-    for (int x = 0; x < BOARD_SIZE; x++) {
-        for (int y = 0; y < BOARD_SIZE; y++) {
-            if (game[x][y] == 0) {
+    std::vector<cost> result;
+    for (int y = 0; y < BOARD_SIZE; y++) {
+        for (int x = 0; x < BOARD_SIZE; x++) {
+            if (game[y][x] == 0 && emptyNeighbour(game, x, y) == false) {
                 vector2d copy = game;
-                copy[x][y] = player;
+                copy[y][x] = player;
                 int next_player = (player == BLACK) ? WHITE : BLACK;
-                result.push_back(minMaxRecursive(copy, init_player, next_player, depth - 1));
+                cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x);
+                result.push_back(cost{recursiveResult.heuristic, x, y});
             }
         }
     }
     if (init_player == player) {
-        auto it_max = std::max_element(result.begin(), result.end());
-        return *it_max;
+        // auto it_max = std::max_element(result.begin(), result.end());
+        int size = result.size();
+        int max = 0;
+        int pos = 0;
+        for (int i = 0; i < size; i++){
+            if (result[i].heuristic > max){
+                max = result[i].heuristic;
+                pos = i;
+            }
+        }
+       if (max == 0)
+            return cost{0,0,0};
+        return result[pos];
     }
     else {
-        auto it_min = std::min_element(result.begin(), result.end());
-        return *it_min;
+        int size = result.size();
+        int min = 2147483647;
+        int pos = 0;
+        for (int i = 0; i < size; i++){
+            if (result[i].heuristic < min){
+                min = result[i].heuristic;
+                pos = i;
+            }
+        }
+        if (min == 2147483647)
+            return cost{0,0,0};
+        return result[pos];
+        // auto it_min = std::min_element(result.begin(), result.end());
+        // if (it_min == result.end())
+        //     return cost{2147483647,BOARD_SIZE,BOARD_SIZE};
+        // return *it_min;
     }
 }
+
 void minMaxAlgorithm(vector2d &game, int &player, SDL_Renderer *renderer)
 {
-    std::cout << minMaxRecursive(game, player, player, 2) << "\n";
+    cost result =  minMaxRecursive(game, player, player, 2, 0, 0);
+    std::cout << "heuristic:" << result.heuristic << " X: " << result.x << " Y: " << result.y <<"\n";
+    place_stone(game, player, renderer, result.y, result.x);
 }
