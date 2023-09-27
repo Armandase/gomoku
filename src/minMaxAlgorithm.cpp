@@ -24,7 +24,7 @@ bool emptyNeighbour(const vector2d &game, const int x, const int y){
 
 cost minMaxRecursive(const vector2d &game, int init_player, int player, int depth, const int yGame, const int xGame) {
     if (depth == 0)
-        return cost{heuristic(game, player, yGame, xGame), yGame , xGame};
+        return cost{heuristic(game, player, yGame, xGame), xGame , yGame};
 
     std::vector<cost> result;
     for (int y = 0; y < BOARD_SIZE; y++) {
@@ -34,12 +34,12 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
                 copy[y][x] = player;
                 int next_player = (player == BLACK) ? WHITE : BLACK;
                 cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x);
-                result.push_back(cost{recursiveResult.heuristic, x, y});
+                cost tmp {recursiveResult.heuristic, x, y};
+                result.push_back(tmp);
             }
         }
     }
-    if (init_player == player) {
-        // auto it_max = std::max_element(result.begin(), result.end());
+    if (init_player != player) {
         int size = result.size();
         int max = 0;
         int pos = 0;
@@ -66,10 +66,6 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
         if (min == 2147483647)
             return cost{0,0,0};
         return result[pos];
-        // auto it_min = std::min_element(result.begin(), result.end());
-        // if (it_min == result.end())
-        //     return cost{2147483647,BOARD_SIZE,BOARD_SIZE};
-        // return *it_min;
     }
 }
 
