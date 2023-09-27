@@ -1,16 +1,6 @@
 #include "../inc/utils.hpp"
 #include <unistd.h>
 
-void print_game(const vector2d& game) {
-    const int game_size = game.size();
-    for (int i = 0; i < game_size; i++) {
-        for (int j = 0; j < game_size; j++)
-            std::cout << game[i][j] << " ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
-
 int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x){
     // check if this case isn't already used    
     if (game[y][x] != 0)
