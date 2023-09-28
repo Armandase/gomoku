@@ -93,14 +93,12 @@ int heuristic(const vector2d &game, int player, const int y, const int x){
                 continue ;
             for (int i = 0; i < 8; i++){
                 counter = 1;
-                color = 0;
+                color = game[y][x];
                 for (int j = 1; j < 5; j++){
                     checkX = x + (dirX[i] * j);
                     checkY = y + (dirY[i] * j);
                     if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE || game[checkY][checkX] == 0)
                         break ;
-                    if (j == 1)
-                        color = game[checkY][checkX];
                     if (game[checkY][checkX] == color && counter + 1 < 5)
                         counter++;
                     else

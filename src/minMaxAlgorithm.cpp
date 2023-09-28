@@ -38,11 +38,11 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
             }
         }
     }
-    int size = result.size();
-    std::cout << "DEPTH: " << depth << " = ";
-    for (int i = 0; i < result.size(); i++)
-        std::cout << result[i].heuristic << "  ";
-    std::cout << "\n";
+    // int size = result.size();
+    // std::cout << "DEPTH: " << depth << " = ";
+    // for (int i = 0; i < result.size(); i++)
+    //     std::cout << result[i].heuristic << "  ";
+    // std::cout << "\n";
     if (init_player != player) {
         int size = result.size();
         int max = 0;
