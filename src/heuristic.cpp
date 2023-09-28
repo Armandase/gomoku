@@ -69,20 +69,27 @@ int fibo(int n){
 
 int counterAnalysis(const int counter, const int player, const int color){
     int result = 0;
+    std::cout << " inside: " << counter << "\n";
 
-    // if (counter >= 5 && player == color)
-    //     result = 1000;
-    // else if (counter >= 5 && player != color)
-    //     result = 900;
-    // else if (counter == 4 && player != color)
-    //     result = 600;
-    // else if (counter == 4 && player == color)
-    //     result = 500;
-    // else if (counter == 3)
-    //     result = 250;
-    // else
-        // result = counter * 100;
-        result = fibo(counter);
+    if (counter >= 5 && player == color)
+        result = 100000;
+    else if (counter == 4 && player == color)
+        result = 25000;
+    else if (counter == 3 && player == color)
+        result = 10000;
+    else if (counter == 2 && player == color)
+        result = 750;
+    else if (counter >= 5 && player != color)
+        result = -25000;
+    else if (counter == 4 && player != color)
+        result = -10000;
+    else if (counter == 3 && player != color)
+        result = -750;
+    else if (counter == 2 && player != color)
+        result = -50;    
+    // result = fibo(counter);
+    // std::cout << "result: " << result;
+    // std::cout << " counter: " << counter    << "\n";
     return (result);
 }
 
@@ -90,26 +97,33 @@ int heuristic(const vector2d &game, int player, const int y, const int x){
     const int   dirX[] = { 0, 1, 0, -1, 1, -1, 1, -1};
     const int   dirY[] = { 1, 0, -1, 0, 1, -1, -1, 1};
     int         checkX = 0, checkY = 0;
-    int         counter, color, heuristic = 0;
+    int         counter[2], color, heuristic = 0;
 
     // for (int y = 0; y < BOARD_SIZE; y++){
-    //     for (int x = 0; x < BOARD_SIZE; x++){
+        // for (int x = 0; x < BOARD_SIZE; x++){
             color = game[y][x];
+            counter[0] = 1;
+            counter[1] = 1;
+
             for (int i = 0; i < 8; i++){
-                counter = 1;
+                if (i % 4 < 2)
+                    counter[i % 4] = 1;
                 for (int j = 1; j < 5; j++){
                     checkX = x + (dirX[i] * j);
                     checkY = y + (dirY[i] * j);
                     if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
                         break ;
                     if (game[checkY][checkX] == color)
-                        counter++;
+                        (counter[i % 2])++;
                     else if (game[checkY][checkX] == 0)
                         continue ;
                     else
                         break ;
                 }
-                heuristic += counterAnalysis(counter + 1, player, color);
+                if (i % 4 < 2){
+                    std::cout << "Compteur value: " << counter[i % 4];
+                    heuristic += counterAnalysis(counter[i % 4] + 1, player, color);
+                }
             }
         // }
     // }

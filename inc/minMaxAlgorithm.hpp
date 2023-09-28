@@ -18,6 +18,11 @@ enum side {
     BOTTOM_LEFT,
 };
 
+enum comparison {
+    MAX,
+    MIN,
+};
+
 typedef struct t_cost{
     int heuristic;
     int x;
