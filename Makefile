@@ -7,6 +7,7 @@ SRC 	=	main.cpp utils.cpp drawCircle.cpp \
 			Button.cpp startMenu.cpp \
 			checkLine.cpp gameChecker.cpp \
 			heuristic.cpp
+
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			inc/minMaxAlgorithm.hpp inc/Button.hpp 
 OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))

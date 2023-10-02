@@ -75,37 +75,45 @@ int checkWin(const vector2d& game, const int& y, const int& x, const int& player
 }
 
 cost minMaxRecursive(const vector2d &game, int init_player, int player, int depth, const int yGame, const int xGame) {
-    if (depth == 0 || checkWin(game, yGame, xGame, player) == true)
-        return cost{heuristic(game, player, yGame, xGame), xGame , yGame};
+    std::string playerColor = (player == BLACK) ? "\x1B[31mBLACK\x1B[0m" : "\x1B[34mWHITE\x1B[0m";
+
+    if (depth == 0 || checkWin(game, yGame, xGame, player) == true) {
+        // std::cerr << "\x1B[36mDepth " << depth << ":\x1B[0m Returning heuristic " << heuristic(game, player, yGame, xGame)
+                //   << " for position (" << xGame << ", " << yGame << ") for player " << playerColor << std::endl;
+        return cost{heuristic(game, player, yGame, xGame), xGame, yGame};
+    }
 
     std::vector<cost> result;
     for (int y = 0; y < BOARD_SIZE; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
             if (game[y][x] == 0 && emptyNeighbour(game, x, y) == false) {
-            // if (game[y][x] == 0) {
                 vector2d copy = game;
                 copy[y][x] = player;
+                if (checkWin(copy, y, x, player) && depth == 2)
+                    return cost{INT_MAX, x, y};
                 int next_player = (player == BLACK) ? WHITE : BLACK;
                 cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x);
-                result.push_back(cost {recursiveResult.heuristic, x, y});
+                result.push_back(cost{recursiveResult.heuristic, x, y});
             }
         }
     }
-    // std::cout << "DEPTH : " << depth << " = ";
-    // for (int i = 0; i < result.size(); i++){
-    //     std::cout << result[i].heuristic <<  "  ";
-    // }
-    // std::cout << "\n\n";
-    // std::cout << "INIT: " << init_player << " PLAYER: " << player << "\n";
-    if (init_player == player) {
-        return (finCorrectValue(result, MAX));
+
+    if (init_player != player) {
+        cost finalValue = finCorrectValue(result, MAX);
+        // std::cerr << "\x1B[36mDepth " << depth << ":\x1B[0m Returning MAX value " << finalValue.heuristic
+                //   << " for player " << playerColor << std::endl;
+        return finalValue;
     }
-    return (finCorrectValue(result, MIN));
+
+    cost finalValue = finCorrectValue(result, MIN);
+    // std::cerr << "\x1B[36mDepth " << depth << ":\x1B[0m Returning MIN value " << finalValue.heuristic
+            //   << " for player " << playerColor << std::endl;
+    return finalValue;
 }
 
 void minMaxAlgorithm(vector2d &game, int &player, SDL_Renderer *renderer)
 {
-    cost result =  minMaxRecursive(game, player, player, 2, 0, 0);
+    cost result =  minMaxRecursive(game, player, player, 4, 0, 0);
     std::cout << "heuristic:" << result.heuristic << " X: " << result.x << " Y: " << result.y <<"\n";
     place_stone(game, player, renderer, result.y, result.x);
 }
