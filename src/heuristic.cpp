@@ -201,30 +201,30 @@ int heuristic(const vector2d &game, int player, const int y, const int x){
     if (hasWon(game, player))
         heuristic += 1000;
     if (hasWon(game, opponent))
-        heuristic -= 1000;
+        heuristic -= 990;
 
     if (openFour(game, player))
         heuristic += 500;
     else if (openSideFour(game, player))
         heuristic += 450;
     if (openFour(game, opponent))
-        heuristic -= 500;
+        heuristic -= 490;
     else if (openSideFour(game, opponent))
-        heuristic -= 450;
+        heuristic -= 440;
 
     if (checkCapture(game, player))
-        heuristic += 250;
+        heuristic += 200;
     if (checkCapture(game, opponent))
-        heuristic -= 250;
+        heuristic -= 190;
 
     if (openThree(game, player))
         heuristic += 100;
     else if (openSideThree(game, player))
         heuristic += 90;
     if (openThree(game, opponent))
-        heuristic -= 100;
-    else if (openSideThree(game, opponent))
         heuristic -= 90;
+    else if (openSideThree(game, opponent))
+        heuristic -= 80;
 
     if (openTwo(game, player))
         heuristic += 50;
@@ -232,9 +232,9 @@ int heuristic(const vector2d &game, int player, const int y, const int x){
         heuristic += 40;
 
     if (openTwo(game, opponent))
-        heuristic -= 50;
-    else if (openSideTwo(game, opponent))
         heuristic -= 40;
+    else if (openSideTwo(game, opponent))
+        heuristic -= 30;
 
     return (heuristic);
 }
