@@ -29,6 +29,9 @@ typedef struct t_cost{
     int y;
 } cost;
 
-int heuristic(const vector2d &game, int player, const int y, const int x);
+int     heuristic(const vector2d &game, int player, const int y, const int x);
+bool    openSideFour(const vector2d & board, int player);
+bool    openSideThree(const vector2d & board, int player);
+bool    openSideTwo(const vector2d & board, int player);
 
 #endif // !__MINMAXALGORITHM_HPP__

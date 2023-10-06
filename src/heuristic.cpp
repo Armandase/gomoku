@@ -7,63 +7,234 @@ int fibo(int n){
     return (fibo(n - 1) + fibo(n - 2));
 }
 
-int counterAnalysis(const int count, const int whiteSpace, const bool capture) {
-    if (count == 5)
-        return (1000000);
-    if (count == 4)
-        return (100000);
-    if (count == 3)
-        return (10000);
-    if (capture)
-        return (5000);
-    if (count == 2)
-        return (1000);
-    return (100);
+int getOpponent(int player) {
+    if (player == WHITE)
+        return BLACK;
+    return WHITE;
 }
 
-bool checkCapture(const vector2d &game, int checkY, int checkX, int dirY, int dirX, int player) {
-    if (checkY + dirY >= 0 && checkY + dirY <= BOARD_SIZE 
-        && checkX + dirX >= 0 && checkX + dirX <= BOARD_SIZE
-        && game[checkY + dirY][checkX + dirX] == player
-        && checkX + dirX * 2 >= 0 && checkX + dirX * 2 <= BOARD_SIZE
-        && checkY + dirY * 2 >= 0 && checkY + dirY * 2 <= BOARD_SIZE
-        && game[checkY + dirY * 2][checkX + dirX * 2] != player
-        && game[checkY + dirY * 2][checkX + dirX * 2] != 0)
-        return true;
+bool hasWon(const vector2d & board, int player) {
+    for (int y = 0; y <= BOARD_SIZE; y++) {
+        for (int x = 0; x <= BOARD_SIZE; x++) {
+            if (board[y][x] != player)
+                continue;
+            if (x < BOARD_SIZE - 4 &&
+                board[y][x + 1] == player &&
+                board[y][x + 2] == player && 
+                board[y][x + 3] == player &&
+                board[y][x + 4] == player)
+                return true;
+                
+            if (y < BOARD_SIZE - 4 &&
+                board[y + 1][x] == player &&
+                board[y + 2][x] == player && 
+                board[y + 3][x] == player &&
+                board[y + 4][x] == player)
+                return true;
+
+            if (x < BOARD_SIZE - 4 && y < BOARD_SIZE - 4 &&
+                board[y + 1][x + 1] == player &&
+                board[y + 2][x + 2] == player && 
+                board[y + 3][x + 3] == player &&
+                board[y + 4][x + 4] == player)
+                return true;
+
+            if (x < BOARD_SIZE - 4 && y >= 4 &&
+                board[y - 1][x + 1] == player &&
+                board[y - 2][x + 2] == player && 
+                board[y - 3][x + 3] == player &&
+                board[y - 4][x + 4] == player)
+                return true;
+        }
+    }
+    return false;
+}
+
+bool openFour(const vector2d & board, int player) {
+    for (int y = 0; y <= BOARD_SIZE; y++) {
+        for (int x = 0; x <= BOARD_SIZE; x++) {
+            if (board[y][x] != 0)
+                continue;
+            if (x < BOARD_SIZE - 5 &&
+                board[y][x + 1] == player &&
+                board[y][x + 2] == player && 
+                board[y][x + 3] == player &&
+                board[y][x + 4] == player &&
+                board[y][x + 5] == 0)
+                return true;
+                
+            if (y < BOARD_SIZE - 5 &&
+                board[y + 1][x] == player &&
+                board[y + 2][x] == player && 
+                board[y + 3][x] == player &&
+                board[y + 4][x] == player &&
+                board[y + 5][x] == 0)
+                return true;
+
+            if (x < BOARD_SIZE - 5 && y < BOARD_SIZE - 5 &&
+                board[y + 1][x + 1] == player &&
+                board[y + 2][x + 2] == player && 
+                board[y + 3][x + 3] == player &&
+                board[y + 4][x + 4] == player &&
+                board[y + 5][x + 5] == 0)
+                return true;
+
+            if (x < BOARD_SIZE - 5 && y >= 5 &&
+                board[y - 1][x + 1] == player &&
+                board[y - 2][x + 2] == player && 
+                board[y - 3][x + 3] == player &&
+                board[y - 4][x + 4] == player &&
+                board[y - 5][x + 5] == 0)
+                return true;
+        }
+    }
+    return false;
+}
+
+bool openThree(const vector2d & board, int player) {
+    for (int y = 0; y <= BOARD_SIZE; y++) {
+        for (int x = 0; x <= BOARD_SIZE; x++) {
+            if (board[y][x] != 0)
+                continue;
+            if (x < BOARD_SIZE - 4 &&
+                board[y][x + 1] == player &&
+                board[y][x + 2] == player && 
+                board[y][x + 3] == player &&
+                board[y][x + 4] == 0)
+                return true;
+                
+            if (y < BOARD_SIZE - 4 &&
+                board[y + 1][x] == player &&
+                board[y + 2][x] == player && 
+                board[y + 3][x] == player &&
+                board[y + 4][x] == 0)
+                return true;
+
+            if (x < BOARD_SIZE - 4 && y < BOARD_SIZE - 4 &&
+                board[y + 1][x + 1] == player &&
+                board[y + 2][x + 2] == player && 
+                board[y + 3][x + 3] == player &&
+                board[y + 4][x + 4] == 0)
+                return true;
+
+            if (x < BOARD_SIZE - 4 && y >= 4 &&
+                board[y - 1][x + 1] == player &&
+                board[y - 2][x + 2] == player && 
+                board[y - 3][x + 3] == player &&
+                board[y - 4][x + 4] == 0)
+                return true;
+        }
+    }
+    return false;
+}
+
+bool openTwo(const vector2d & board, int player) {
+    for (int y = 0; y <= BOARD_SIZE; y++) {
+        for (int x = 0; x <= BOARD_SIZE; x++) {
+            if (board[y][x] != 0)
+                continue;
+            if (x < BOARD_SIZE - 3 &&
+                board[y][x + 1] == player &&
+                board[y][x + 2] == player && 
+                board[y][x + 3] == 0)
+                return true;
+                
+            if (y < BOARD_SIZE - 3 &&
+                board[y + 1][x] == player &&
+                board[y + 2][x] == player && 
+                board[y + 3][x] == 0)
+                return true;
+
+            if (x < BOARD_SIZE - 3 && y < BOARD_SIZE - 3 &&
+                board[y + 1][x + 1] == player &&
+                board[y + 2][x + 2] == player && 
+                board[y + 3][x + 3] == 0)
+                return true;
+
+            if (x < BOARD_SIZE - 3 && y >= 3 &&
+                board[y - 1][x + 1] == player &&
+                board[y - 2][x + 2] == player && 
+                board[y - 3][x + 3] == 0)
+                return true;
+        }
+    }
+    return false;
+}
+
+bool checkCapture(const vector2d &board, int player) {
+    int opponent = getOpponent(player);
+    for (int y = 0; y <= BOARD_SIZE; y++) {
+        for (int x = 0; x <= BOARD_SIZE; x++) {
+            if (board[y][x] != player)
+                continue;
+            if (x < BOARD_SIZE - 3 &&
+                board[y][x + 1] == opponent &&
+                board[y][x + 2] == opponent && 
+                board[y][x + 3] == player)
+                return true;
+                
+            if (y < BOARD_SIZE - 3 &&
+                board[y + 1][x] == opponent &&
+                board[y + 2][x] == opponent && 
+                board[y + 3][x] == player)
+                return true;
+
+            if (y < BOARD_SIZE - 3 && x < BOARD_SIZE - 3 &&
+                board[y + 1][x + 1] == opponent &&
+                board[y + 2][x + 2] == opponent && 
+                board[y + 3][x + 3] == player)
+                return true;
+
+            if (y >= 3 && x < BOARD_SIZE - 3 &&
+                board[y - 1][x + 1] == opponent &&
+                board[y - 2][x + 2] == opponent && 
+                board[y - 3][x + 3] == player)
+                return true;
+        }
+    }
     return false;
 }
 
 int heuristic(const vector2d &game, int player, const int y, const int x){
-    const int   dirX[] = { 0, 1, 0, -1, 1, -1, 1, -1};
-    const int   dirY[] = { 1, 0, -1, 0, 1, -1, -1, 1};
-    int checkX, checkY;
-    int newPoint = game[y][x];
-    int count, whiteSpace;
     int heuristic = 0;
-    bool capture;
+    int opponent = getOpponent(player);
+    if (hasWon(game, player))
+        heuristic += 1000;
+    if (hasWon(game, opponent))
+        heuristic -= 1000;
 
-    for (int i = 0; i < 8; i++) {
-        count = 1;
-        whiteSpace = 0;
-        capture = false;
-        for (int j = 1; j < 5; j++) {
-            checkX = x + (dirX[i] * j);
-            checkY = y + (dirY[i] * j);
-            if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
-                break ;
-            if (game[checkY][checkX] == newPoint)
-                count++;
-            else if (game[checkY][checkX] != 0 && checkCapture(game, checkY, checkX, dirY[i], dirX[i], player)) {
-                capture = true;
-                break;
-            }
-            else if (game[checkY][checkX] != 0)
-                break;
-            else 
-                whiteSpace++;
-        }
-        heuristic += counterAnalysis(count, whiteSpace, capture);
-    }
+    if (openFour(game, player))
+        heuristic += 500;
+    else if (openSideFour(game, player))
+        heuristic += 450;
+    if (openFour(game, opponent))
+        heuristic -= 500;
+    else if (openSideFour(game, opponent))
+        heuristic -= 450;
+
+    if (checkCapture(game, player))
+        heuristic += 250;
+    if (checkCapture(game, opponent))
+        heuristic -= 250;
+
+    if (openThree(game, player))
+        heuristic += 100;
+    else if (openSideThree(game, player))
+        heuristic += 90;
+    if (openThree(game, opponent))
+        heuristic -= 100;
+    else if (openSideThree(game, opponent))
+        heuristic -= 90;
+
+    if (openTwo(game, player))
+        heuristic += 50;
+    else if (openSideTwo(game, player))
+        heuristic += 40;
+
+    if (openTwo(game, opponent))
+        heuristic -= 50;
+    else if (openSideTwo(game, opponent))
+        heuristic -= 40;
 
     return (heuristic);
 }

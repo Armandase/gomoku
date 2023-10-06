@@ -6,7 +6,7 @@ SRC 	=	main.cpp utils.cpp drawCircle.cpp \
 			minMaxAlgorithm.cpp handleMouse.cpp \
 			Button.cpp startMenu.cpp \
 			checkLine.cpp gameChecker.cpp \
-			heuristic.cpp
+			heuristic.cpp openOneSide.cpp
 
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			inc/minMaxAlgorithm.hpp inc/Button.hpp 
