@@ -35,7 +35,7 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
             SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
             writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24,renderer);
         }
-        sleep(2);
+        sleep(1);
         const int size = game.size();
         for (int i = 0; i < size; i++)
             memset(&game[i][0], 0, game[i].size() * sizeof game[i][0]);

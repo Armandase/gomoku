@@ -6,10 +6,11 @@ SRC 	=	main.cpp utils.cpp drawCircle.cpp \
 			minMaxAlgorithm.cpp handleMouse.cpp \
 			Button.cpp startMenu.cpp \
 			checkLine.cpp gameChecker.cpp \
-			heuristic.cpp
+			Heuristic.cpp
 
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
-			inc/minMaxAlgorithm.hpp inc/Button.hpp 
+			inc/minMaxAlgorithm.hpp inc/Button.hpp \
+			inc/Heuristic.hpp 
 OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))
 CXXFLAGS=	-Wall -Wextra --std=c++17 -g -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2
 SDL2_TTF=	libs/SDL2_ttf

@@ -2,6 +2,7 @@
 #include "../inc/utils.hpp"
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Button.hpp"
+#include "../inc/Heuristic.hpp"
 
 void render_board(SDL_Renderer *renderer)
 {

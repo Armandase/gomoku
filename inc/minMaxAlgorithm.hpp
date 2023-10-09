@@ -4,6 +4,7 @@
 # include "gomoku.hpp"
 # include <algorithm>
 # include <map>
+# include "Heuristic.hpp"
 
 void    minMaxAlgorithm(vector2d&, int&,  SDL_Renderer *);
 
@@ -29,6 +30,6 @@ typedef struct t_cost{
     int y;
 } cost;
 
-int heuristic(const vector2d &game, int player, const int y, const int x);
+// int heuristic(const vector2d &game, int player, const int y, const int x);
 
 #endif // !__MINMAXALGORITHM_HPP__
