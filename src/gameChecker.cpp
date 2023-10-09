@@ -32,11 +32,11 @@ void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer
 }
 
 int gameChecker(vector2d& game, const int& y, const int& x, const int& player, SDL_Renderer* renderer){
-    const int   dirX[] = { 0, 1, 0, -1, 1, -1, 1, -1};
-    const int   dirY[] = { 1, 0, -1, 0, 1, -1, -1, 1};
+    const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
+    const int   dirY[] = { 1, 1, 0, 0, 1, -1, -1, 1};
     int         checkX = 0, checkY = 0;
+    int         count[2] = {1, 1};
 
-    int         result = 0;
     bool        checkWin;
     bool        checkCapture;
 
@@ -46,16 +46,16 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
         for (int j = 1; j < 5; j++){
             checkX = x + (dirX[i] * j);
             checkY = y + (dirY[i] * j);
-            if (checkX < 0 || checkY < 0 || checkX > 18 || checkY > 18)
+            if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
                 break ;
             if (checkWin == false && checkCapture == false)
                 break ;
             
             if (checkWin == true && game[checkY][checkX] != player)
                 checkWin = false;
-            else if (checkWin == true && j == 4)
-                result = player;
-            
+            else if (checkWin == true && game[checkY][checkX] == player)
+                (count[i % 2])++;
+
             if (checkCapture == true && j == 3 && game[checkY][checkX] == player){
                 erasePlayer(checkY - dirY[i], checkX - dirX[i], renderer);
                 erasePlayer(checkY - dirY[i] * 2, checkX - dirX[i] * 2, renderer);
@@ -65,6 +65,11 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
             else if (checkCapture == true && (game[checkY][checkX] == player || game[checkY][checkX] == 0 || j > 3))
                 checkCapture = false;
         }
+        if (i % 2 == 1){
+            if (count[(i - 1) / 2 % 2] >= 5)
+                return (player);
+            count[(i - 1) / 2 % 2] = 1;
+        }
     }
-    return result;
+    return 0;
 }

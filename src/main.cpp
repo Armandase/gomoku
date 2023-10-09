@@ -64,9 +64,10 @@ int main()
                     start = handleStart(renderer, playerButton, IAButton);
                     continue;
                 }
-                if (player == WHITE && handleMouse(game, player, renderer))
+                if ((player == WHITE || (player == BLACK && start == PLAYER_MODE)) && handleMouse(game, player, renderer))
                     continue;
-                if (player == BLACK) {
+                if (start == IA_MODE && player == BLACK)
+                {
                     minMaxAlgorithm(game, player, renderer);
                     player = WHITE;
                 }

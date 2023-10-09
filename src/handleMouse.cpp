@@ -26,12 +26,9 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
             // select corresponding name
             std::string message;
             winner == BLACK ? message = "black wins" : message = "white wins";
-            //reset game's board with game's color
-            SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
-            SDL_RenderClear(renderer);
 
             // select text color and where it should be placed and his size
-            SDL_Color textColor = {80, 0, 80, 255};
+            SDL_Color textColor = {80, 0, 80, 220};
             SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
             writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24,renderer);
         }
