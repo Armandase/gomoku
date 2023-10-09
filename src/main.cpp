@@ -11,10 +11,11 @@ void render_board(SDL_Renderer *renderer)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     // Draw grid of 19 * 19
-    for (int x = MARGIN; x < SCREEN_WIDTH; x += GRID_SIZE)
+    int line = BOARD_SIZE * (GRID_SIZE + 1);
+    for (int x = MARGIN, i = 0; x < line + GRID_SIZE && i <= BOARD_SIZE; x += GRID_SIZE, i++)
     {
-        SDL_RenderDrawLine(renderer, x, MARGIN, x, SCREEN_HEIGHT - MARGIN);
-        SDL_RenderDrawLine(renderer, MARGIN, x, SCREEN_WIDTH - MARGIN, x);
+        SDL_RenderDrawLine(renderer, x, MARGIN, x, line);
+        SDL_RenderDrawLine(renderer, MARGIN, x, line , x);
     }
     SDL_RenderPresent(renderer);
 }

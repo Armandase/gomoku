@@ -1,5 +1,8 @@
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/utils.hpp"
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 
 bool emptyNeighbour(const vector2d &game, const int x, const int y){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
@@ -67,7 +70,7 @@ int checkWin(const vector2d& game, const int& y, const int& x, const int& player
             if (game[checkY][checkX] != player)
                 break ;
             else
-                (count[i % 2])++;
+                (count[i / 2 % 2])++;
         }
         if (i % 2 == 1){
             if (count[(i - 1) / 2 % 2] >= 5)
@@ -134,7 +137,24 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
 void minMaxAlgorithm(vector2d &game, int &player, SDL_Renderer *renderer)
 {
     int alpha = -2147483648, beta = 2147483647;
+
+    clock_t begin = clock();
     cost result =  minMaxRecursive(game, player, player, 4, 0, 0, alpha, beta);
+	clock_t end = clock();
+	double timer = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+
     std::cout << "heuristic:" << result.heuristic << " X: " << result.x << " Y: " << result.y <<"\n";
+    {
+        std::ostringstream message;
+        message << std::fixed << std::setprecision(3) << timer;
+        SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
+
+        SDL_Color textColor = {80, 0, 80, 255};
+        SDL_Rect msg_rect = {SCREEN_WIDTH - MARGIN - OFFSET, SCREEN_HEIGHT - SCREEN_HEIGHT / 15, MARGIN + OFFSET, OFFSET};
+        SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
+        SDL_RenderFillRect(renderer, &msg_rect);
+        writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24,renderer);
+    }
     place_stone(game, player, renderer, result.y, result.x);
+
 }

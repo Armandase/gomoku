@@ -11,9 +11,10 @@
 
 # define GRID_SIZE 50
 # define MARGIN 20
+# define OFFSET 50
 # define BOARD_SIZE 18
-# define SCREEN_HEIGHT ((GRID_SIZE * BOARD_SIZE) + (2 * MARGIN))
-# define SCREEN_WIDTH ((GRID_SIZE * BOARD_SIZE) + (2 * MARGIN))
+# define SCREEN_HEIGHT ((GRID_SIZE * BOARD_SIZE) + (2 * (MARGIN)))
+# define SCREEN_WIDTH ((GRID_SIZE * BOARD_SIZE) + (2 * (MARGIN + OFFSET)))
 # define RADIUS (GRID_SIZE / 3)
 # define DIAMETER (RADIUS * 2)
 
