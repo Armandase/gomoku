@@ -21,6 +21,7 @@ class Heuristic
         static constexpr int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
         const int   _initPlayer;
         int         _heuristic;
+        int         _index;
 };
 
 #endif

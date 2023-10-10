@@ -17,6 +17,8 @@
 # define SCREEN_WIDTH ((GRID_SIZE * BOARD_SIZE) + (2 * (MARGIN + OFFSET)))
 # define RADIUS (GRID_SIZE / 3)
 # define DIAMETER (RADIUS * 2)
+# define DEPTH 4
+
 
 class Button;
 

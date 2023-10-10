@@ -5,6 +5,7 @@ Heuristic::~Heuristic(){
 
 Heuristic::Heuristic(int player, const vector2d& game) : _game(game), _initPlayer(player) {
     _heuristic = 0;
+    _index = 0;
 }
 
 const vector2d Heuristic::getGame() const { return (this->_game); }
@@ -67,17 +68,17 @@ int Heuristic::heuristic(){
                         break ;
                     
                     if (this->_game[checkY][checkX] == newPoint)
-                        (count[i % 2])++;
+                        ++(count[i / 2 % 2]);
                     if (this->_game[checkY][checkX] == newPoint && rowChecker[i % 2])
-                        (inRow[i % 2])++;
+                        ++(inRow[i / 2 % 2]);
                     if (this->_game[checkY][checkX] > 0 && this->_game[checkY][checkX] != newPoint
                         && checkCapture(checkY, checkX, dirY[i], dirX[i], newPoint)) {
-                        capture[i % 2] = true;
+                        capture[i / 2 % 2] = true;
                         break;
                     }
                     else if (this->_game[checkY][checkX] == 0){
-                        empty[i % 2]++;
-                        rowChecker[i % 2] = false;
+                        ++empty[i / 2 % 2];
+                        rowChecker[i / 2 % 2] = false;
                     }
                     else if (this->_game[checkY][checkX] != newPoint && this->_game[checkY][checkX] > 0 ){
                         break;
@@ -85,13 +86,13 @@ int Heuristic::heuristic(){
                     
                 }
                 if (i % 2 == 1){
-                    int index = (i - 1) / 2 % 2;
-                    this->_heuristic += counterAnalysis(count[index], capture[index], empty[index], inRow[index], newPoint);
-                    count[index] = 1;
-                    inRow[index] = 1;
-                    empty[index] = 0;
-                    capture[index] = false;
-                    rowChecker[index] = true;
+                    this->_heuristic += counterAnalysis(count[_index], capture[_index], empty[_index], inRow[_index], newPoint);
+                    count[_index] = 1;
+                    inRow[_index] = 1;
+                    empty[_index] = 0;
+                    capture[_index] = false;
+                    rowChecker[_index] = true;
+                    this->_index = (this->_index == 0)? 1 : 0;
                 }
             }
         }

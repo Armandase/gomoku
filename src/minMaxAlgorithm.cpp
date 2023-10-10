@@ -53,12 +53,13 @@ cost finCorrectValue(const std::vector<cost>& recursiveResult, int minOrMax){
     return recursiveResult[pos];
 }
 
-int checkWin(const vector2d& game, const int& y, const int& x, const int& player){
+bool checkWin(const vector2d& game, const int& y, const int& x, const int& player){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
     int         checkX = 0, checkY = 0;
     int         count[2] = {1, 1};
 
+    int current = 0;
     for (int i = 0; i < 8; i++){
         for (int j = 1; j < 5; j++){
             checkX = x + (dirX[i] * j);
@@ -69,13 +70,14 @@ int checkWin(const vector2d& game, const int& y, const int& x, const int& player
             
             if (game[checkY][checkX] != player)
                 break ;
-            else
-                (count[i / 2 % 2])++;
+            else if (game[checkY][checkX] == player)
+                ++(count[i / 2 % 2]);
         }
         if (i % 2 == 1){
-            if (count[(i - 1) / 2 % 2] >= 5)
+            if (count[current] >= 5)
                 return (true);
-            count[(i - 1) / 2 % 2] = 1;
+            count[current] = 1;
+            (current == 0) ? current = 1 : current = 0;
         }
     }
     return (false);
@@ -95,7 +97,7 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
             if (game[y][x] == 0 && emptyNeighbour(game, x, y) == false) {
                 vector2d copy = game;
                 copy[y][x] = player;
-                if (checkWin(copy, y, x, player) && depth == 4)
+                if (checkWin(copy, y, x, player) && depth == DEPTH)
                     return cost{INT_MAX, x, y};
                 int next_player = (player == BLACK) ? WHITE : BLACK;
                 cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x, alpha, beta);
@@ -139,7 +141,7 @@ void minMaxAlgorithm(vector2d &game, int &player, SDL_Renderer *renderer)
     int alpha = -2147483648, beta = 2147483647;
 
     clock_t begin = clock();
-    cost result =  minMaxRecursive(game, player, player, 4, 0, 0, alpha, beta);
+    cost result =  minMaxRecursive(game, player, player, DEPTH, 0, 0, alpha, beta);
 	clock_t end = clock();
 	double timer = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
 
