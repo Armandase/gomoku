@@ -57,12 +57,14 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
     int current = 0;
     for (int i = 0; i < 8; i++){
         if (checkCapture(game, y, x, dirY[i], dirX[i], player) == true){
-                erasePlayer(y + dirY[i], x + dirX[i], renderer);
-                erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2, renderer);
-                game[y + dirY[i]][x + dirX[i]] = 0;
-                game[y + dirY[i] * 2][x + dirX[i] * 2] = 0;
-                captureCounter[player - 1]++;
-                continue ;
+            erasePlayer(y + dirY[i], x + dirX[i], renderer);
+            erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2, renderer);
+            game[y + dirY[i]][x + dirX[i]] = 0;
+            game[y + dirY[i] * 2][x + dirX[i] * 2] = 0;
+            captureCounter[player - 1]++;
+            if (captureCounter[player - 1] >= 5)
+                return (player);
+            continue ;
         }
         for (int j = 1; j < 5; ++j){
             checkX = x + (dirX[i] * j);
