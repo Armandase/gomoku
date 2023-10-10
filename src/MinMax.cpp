@@ -9,7 +9,7 @@ MinMax::~MinMax() {}
 cost MinMax::minMaxRecursive(const vector2d &board, int player, int depth, const int yGame, const int xGame, int alpha, int beta) {
     if (depth == 0 || checkWin(board, yGame, xGame, player) == true) {
         Heuristic computeH(player, board);
-        return cost{ heuristic(board, player), xGame, yGame};
+        return cost{ heuristic(board, player, _captureCounter), xGame, yGame};
         // return cost{ computeH.heuristic(), xGame, yGame};
     }
 

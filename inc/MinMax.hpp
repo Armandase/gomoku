@@ -46,7 +46,7 @@ public:
     void    minMaxAlgorithm(vector2d &board, int player, int captureCounter[2]);
 };
 
-int     heuristic(const vector2d &game, int player);
+int     heuristic(const vector2d &game, int player, int captures[2]);
 bool    openSideFour(const vector2d &board, int player);
 bool    openSideThree(const vector2d &board, int player);
 bool    openSideTwo(const vector2d &board, int player);

@@ -196,7 +196,7 @@ bool checkCapture(const vector2d &board, int player) {
     return false;
 }
 
-int heuristic(const vector2d &game, int player){
+int heuristic(const vector2d &game, int player, int captures[2]){
     int heuristic = 0;
     int opponent = getOpponent(player);
     if (hasWon(game, player))
@@ -214,9 +214,9 @@ int heuristic(const vector2d &game, int player){
         heuristic -= 450;
 
     if (checkCapture(game, player))
-        heuristic += 200;
+        heuristic += 200 * (captures[player - 1] + 1);
     if (checkCapture(game, opponent))
-        heuristic -= 200;
+        heuristic -= 200 * (captures[opponent - 1] + 1);
 
     if (openThree(game, player))
         heuristic += 100;
