@@ -1,7 +1,6 @@
 #include "../inc/gomoku.hpp"
 
 bool openSideFour(const vector2d & board, int player) {
-    int opponent = getOpponent(player);
     for (int y = 0; y <= BOARD_SIZE; y++) {
         for (int x = 0; x <= BOARD_SIZE; x++) {
             if (board[y][x] == player)
@@ -43,10 +42,9 @@ bool openSideFour(const vector2d & board, int player) {
 }
 
 bool openSideThree(const vector2d & board, int player) {
-    int opponent = getOpponent(player);
     for (int y = 0; y <= BOARD_SIZE; y++) {
         for (int x = 0; x <= BOARD_SIZE; x++) {
-            if (board[y][x] != 0)
+            if (board[y][x] == player)
                 continue;
             if (x < BOARD_SIZE - 4 &&
                 board[y][x + 1] == player &&
@@ -81,10 +79,9 @@ bool openSideThree(const vector2d & board, int player) {
 }
 
 bool openSideTwo(const vector2d & board, int player) {
-    int opponent = getOpponent(player);
     for (int y = 0; y <= BOARD_SIZE; y++) {
         for (int x = 0; x <= BOARD_SIZE; x++) {
-            if (board[y][x] != 0)
+            if (board[y][x] == player)
                 continue;
             if (x < BOARD_SIZE - 3 &&
                 board[y][x + 1] == player &&

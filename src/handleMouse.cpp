@@ -1,14 +1,14 @@
 #include "../inc/utils.hpp"
 #include <unistd.h>
 
-int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x){
+int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x, int captureCounter[2]){
     // check if this case isn't already used    
     if (game[y][x] != 0)
         return (1);
     game[y][x] = player;
 
     // gameChecker is used to check if the game is ended or if there is a capture (return 1 on victory)
-    int winner = gameChecker(game, y, x, player, renderer);
+    int winner = gameChecker(game, y, x, player, renderer, captureCounter);
 
     // select white or black depending of player's color
     if (player == WHITE){
@@ -41,7 +41,7 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
     return (0);
 }
 
-int    handleMouse(vector2d& game, int& player, SDL_Renderer* renderer){
+int    handleMouse(vector2d& game, int& player, int captureCounter[2], SDL_Renderer* renderer){
     int mouseX, mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
 
@@ -56,7 +56,7 @@ int    handleMouse(vector2d& game, int& player, SDL_Renderer* renderer){
     if (x_case > BOARD_SIZE || y_case > BOARD_SIZE)
         return (1);
 
-    if (place_stone(game, player, renderer, y_case, x_case) > 0)
+    if (place_stone(game, player, renderer, y_case, x_case, captureCounter) > 0)
         return (1);
     return (0);
 }

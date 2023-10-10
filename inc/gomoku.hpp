@@ -32,12 +32,12 @@ enum mode {
 typedef std::vector<std::vector<int> > vector2d;
 
 void    drawCircle(int, int, SDL_Renderer *);
-int     handleMouse(vector2d& game, int& player, SDL_Renderer* renderer);
+int     handleMouse(vector2d& game, int& player, int captureCounter[2], SDL_Renderer* renderer);
 int     handleStart(SDL_Renderer *, Button &player, Button &IA);
 void    start_menu(SDL_Renderer *, Button &player, Button &IA);
 void    render_board(SDL_Renderer *);
-int     gameChecker(vector2d&, const int&, const int&, const int&, SDL_Renderer*);
-int     place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x);
+int     gameChecker(vector2d&, const int&, const int&, const int&, SDL_Renderer*, int captureCounter[2]);
+int     place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x, int captureCounter[2]);
 int     getOpponent(int player);
 
 

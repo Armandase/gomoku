@@ -1,4 +1,5 @@
 #include "../inc/gomoku.hpp"
+#include "../inc/utils.hpp"
 
 void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer){
     int x_square = x_case * GRID_SIZE + MARGIN - RADIUS;
@@ -31,45 +32,58 @@ void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer
 
 }
 
-int gameChecker(vector2d& game, const int& y, const int& x, const int& player, SDL_Renderer* renderer){
-    const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
-    const int   dirY[] = { 1, 1, 0, 0, 1, -1, -1, 1};
-    int         checkX = 0, checkY = 0;
+bool checkCapture(const vector2d& game, int checkY, int checkX, int dirY, int dirX, int player) {
+    int ennemy = (player == WHITE) ? BLACK : WHITE;
+
+    if (checkY + dirY >= 0 && checkY + dirY <= BOARD_SIZE 
+        && checkX + dirX >= 0 && checkX + dirX <= BOARD_SIZE
+        && game[checkY + dirY][checkX + dirX] == ennemy
+        && checkX + dirX * 2 >= 0 && checkX + dirX * 2 <= BOARD_SIZE
+        && checkY + dirY * 2 >= 0 && checkY + dirY * 2 <= BOARD_SIZE
+        && game[checkY + (dirY * 2)][checkX + (dirX * 2)] == ennemy
+        && checkX + dirX * 3 >= 0 && checkX + dirX * 3 <= BOARD_SIZE
+        && checkY + dirY * 3 >= 0 && checkY + dirY * 3 <= BOARD_SIZE
+        && game[checkY + (dirY * 3)][checkX + (dirX * 3)] == player)
+            return true;
+    return false;
+}
+
+int gameChecker(vector2d& game, const int& y, const int& x, const int& player, SDL_Renderer* renderer, int captureCounter[2]){
+    const int   dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
+    const int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
+    int         checkX = x, checkY = y;
     int         count[2] = {1, 1};
 
-    bool        checkWin;
-    bool        checkCapture;
-
+    int current = 0;
     for (int i = 0; i < 8; i++){
-        checkWin = true;
-        checkCapture = true;
-        for (int j = 1; j < 5; j++){
+        if (checkCapture(game, y, x, dirY[i], dirX[i], player) == true){
+                erasePlayer(y + dirY[i], x + dirX[i], renderer);
+                erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2, renderer);
+                game[y + dirY[i]][x + dirX[i]] = 0;
+                game[y + dirY[i] * 2][x + dirX[i] * 2] = 0;
+                captureCounter[player - 1]++;
+                continue ;
+        }
+        for (int j = 1; j < 5; ++j){
             checkX = x + (dirX[i] * j);
             checkY = y + (dirY[i] * j);
             if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
                 break ;
-            if (checkWin == false && checkCapture == false)
-                break ;
             
-            if (checkWin == true && game[checkY][checkX] != player)
-                checkWin = false;
-            else if (checkWin == true && game[checkY][checkX] == player)
-                (count[i % 2])++;
+            if (game[checkY][checkX] != player)
+                break ;
+            else if (game[checkY][checkX] == player)
+                ++(count[i / 2 % 2]);
 
-            if (checkCapture == true && j == 3 && game[checkY][checkX] == player){
-                erasePlayer(checkY - dirY[i], checkX - dirX[i], renderer);
-                erasePlayer(checkY - dirY[i] * 2, checkX - dirX[i] * 2, renderer);
-                game[checkY - dirY[i]][checkX - dirX[i]] = 0;
-                game[checkY - dirY[i] * 2][checkX - dirX[i] * 2] = 0;
-            }
-            else if (checkCapture == true && (game[checkY][checkX] == player || game[checkY][checkX] == 0 || j > 3))
-                checkCapture = false;
         }
         if (i % 2 == 1){
-            if (count[(i - 1) / 2 % 2] >= 5)
+            if (count[current] >= 5)
                 return (player);
-            count[(i - 1) / 2 % 2] = 1;
+            count[current] = 1;
+            (current == 0) ? current = 1 : current = 0;
         }
     }
+    if (count[0] >= 5 || count[1] >= 5)
+        return (player);
     return 0;
 }

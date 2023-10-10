@@ -1,7 +1,7 @@
 #include "../inc/gomoku.hpp"
 #include "../inc/utils.hpp"
-#include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Button.hpp"
+#include "../inc/MinMax.hpp"
 
 void render_board(SDL_Renderer *renderer)
 {
@@ -44,6 +44,8 @@ int main()
     start_menu(renderer, playerButton, IAButton);
 
     vector2d game(BOARD_SIZE + 1, std::vector<int>(BOARD_SIZE + 1, 0));
+    int captureCounter[2];
+    MinMax algo(2, renderer);
     while (!quit)
     {
         // Handle q and echap for quit the programm
@@ -64,11 +66,11 @@ int main()
                     start = handleStart(renderer, playerButton, IAButton);
                     continue;
                 }
-                if ((player == WHITE || (player == BLACK && start == PLAYER_MODE)) && handleMouse(game, player, renderer))
+                if ((player == WHITE || (player == BLACK && start == PLAYER_MODE)) && handleMouse(game, player, captureCounter, renderer))
                     continue;
                 if (start == IA_MODE && player == BLACK)
                 {
-                    minMaxAlgorithm(game, player, renderer);
+                    algo.minMaxAlgorithm(game, player, captureCounter);
                     player = WHITE;
                 }
                 SDL_RenderPresent(renderer);
