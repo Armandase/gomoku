@@ -31,5 +31,6 @@ typedef struct t_cost{
 } cost;
 
 // int heuristic(const vector2d &game, int player, const int y, const int x);
+bool checkDoubleThree(vector2d& copy, int y, int x, int dirY, int dirX, int center);
 
 #endif // !__MINMAXALGORITHM_HPP__

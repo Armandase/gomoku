@@ -86,22 +86,7 @@ bool checkWin(const vector2d& game, const int& y, const int& x, const int& playe
 bool checkDoubleThree(vector2d& copy, int y, int x, int dirY, int dirX, int center){
     int count = 1, empty = 0;
     int checkX = x, checkY = y;
-    vector2d tmp(BOARD_SIZE + 1, std::vector<int>(BOARD_SIZE + 1, 0));
-    y = 1;
-    x = 1;
-    tmp[1][1] = 1;
-    tmp[2][1] = 1;
-    tmp[3][1] = 1;
-    tmp[2][2] = 1;
-    tmp[3][3] = 1;
-    /*
-    0 0 0 0 0 0 0 0 0 
-    2 1 0 0 0 0 0 0 0 0 0 
-    0 1 1 0 0 0 0 0 0 0 0 
-    0 1 0 1 0 0 0 0 0 0 0 
-    0 2 0 0 2
-    */
-   copy = tmp;
+
     for (int j = 1; j < 5; j++) {
         checkX = x + (dirX * j);
         checkY = y + (dirY * j);
@@ -125,7 +110,8 @@ bool checkDoubleThree(vector2d& copy, int y, int x, int dirY, int dirX, int cent
     return false;
 }
 
-void    validGame(vector2d& copy, int yPoint, int xPoint, int player){
+//return true when there are a double three
+bool    validGame(vector2d& copy, int yPoint, int xPoint, int player){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
     
@@ -149,11 +135,12 @@ void    validGame(vector2d& copy, int yPoint, int xPoint, int player){
                 }
 
                 if (doubleThree > 1){
-                    std::cout << "double three en y: " << y << " x: " << x << "\n";
+                    return true;
                 }
             }
         }
     }
+    return false;
 }
 
 cost minMaxRecursive(const vector2d &game, int init_player, int player, int depth, const int yGame, const int xGame, int alpha, int beta) {
@@ -173,7 +160,8 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
                 if (checkWin(copy, y, x, player) && depth == DEPTH)
                     return cost{INT_MAX, x, y};
 
-                validGame(copy, y, x, player);
+                if (validGame(copy, y, x, player) == true)
+                    continue;
                 int next_player = (player == BLACK) ? WHITE : BLACK;
                 cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x, alpha, beta);
                 result.push_back(cost{recursiveResult.heuristic, x, y});

@@ -6,10 +6,9 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
     if (game[y][x] != 0)
         return (1);
     game[y][x] = player;
-
     // gameChecker is used to check if the game is ended or if there is a capture (return 1 on victory)
     int winner = gameChecker(game, y, x, player, renderer);
-
+    if (winner == 3){ return (1); }
     // select white or black depending of player's color
     if (player == WHITE){
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

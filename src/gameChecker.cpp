@@ -1,5 +1,6 @@
 #include "../inc/gomoku.hpp"
 #include "../inc/utils.hpp"
+#include "../inc/minMaxAlgorithm.hpp"
 
 void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer){
     int x_square = x_case * GRID_SIZE + MARGIN - RADIUS;
@@ -53,6 +54,7 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
     const int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
     int         checkX = x, checkY = y;
     int         count[2] = {1, 1};
+    int         doubleThree = 0;
 
     int current = 0;
     for (int i = 0; i < 8; i++){
@@ -73,7 +75,9 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
                 break ;
             else if (game[checkY][checkX] == player)
                 ++(count[i / 2 % 2]);
-
+        }
+        if (checkDoubleThree(game, y, x, dirY[i], dirX[i], game[y][x]) == true){
+            ++doubleThree;
         }
         if (i % 2 == 1){
             if (count[current] >= 5)
@@ -81,6 +85,11 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
             count[current] = 1;
             (current == 0) ? current = 1 : current = 0;
         }
+    }
+    if (doubleThree > 1){
+        std::cout << "double three en y: " << y << " x: " << x << "\n";
+        // return 3 to skip white(1) and black(2)
+        return 3;
     }
     if (count[0] >= 5 || count[1] >= 5)
         return (player);
