@@ -83,6 +83,18 @@ bool checkWin(const vector2d& game, const int& y, const int& x, const int& playe
     return (false);
 }
 
+void    removeCapture(vector2d& copy, int y, int x, int player){
+    const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
+    const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
+
+    for (int i = 0; i < 8; i++){
+        if (checkCapture(copy, y, x, dirY[i], dirX[i], player) == true){
+            copy[y + dirY[i]][x + dirX[i]] = 0;
+            copy[y + (dirY[i] * 2)][x + (dirX[i] * 2)] = 0;
+        }
+    }
+}
+
 cost minMaxRecursive(const vector2d &game, int init_player, int player, int depth, const int yGame, const int xGame, int alpha, int beta) {
     if (depth == 0 || checkWin(game, yGame, xGame, player) == true) {
         Heuristic computeH(player, game);
@@ -99,6 +111,8 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
                 copy[y][x] = player;
                 if (checkWin(copy, y, x, player) && depth == DEPTH)
                     return cost{INT_MAX, x, y};
+
+                removeCapture(copy, y, x, player);
                 int next_player = (player == BLACK) ? WHITE : BLACK;
                 cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x, alpha, beta);
                 result.push_back(cost{recursiveResult.heuristic, x, y});
