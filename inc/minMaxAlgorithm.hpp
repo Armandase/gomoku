@@ -30,6 +30,18 @@ typedef struct t_cost{
     int y;
 } cost;
 
+typedef struct t_data{
+    const vector2d game;
+    int init_player;
+    int player; 
+    int depth; 
+    int yGame; 
+    int xGame; 
+    int alpha; 
+    int beta;
+    cost finalRes;
+} data;
+
 // int heuristic(const vector2d &game, int player, const int y, const int x);
 bool checkDoubleThree(vector2d& copy, int y, int x, int dirY, int dirX, int center);
 

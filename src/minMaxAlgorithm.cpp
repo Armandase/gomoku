@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+#include <future>
 
 bool emptyNeighbour(const vector2d &game, const int x, const int y){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
@@ -149,6 +150,7 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
         return cost{ computeH.heuristic(), xGame, yGame};
     }
 
+    std::vector< std::future<cost> > threadResult;
     int value = (player == init_player) ? -2147483648 : 2147483647;
     std::vector<cost> result;
     bool cutoff = false;
@@ -163,54 +165,71 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
                 if (validGame(copy, y, x, player) == true)
                     continue;
                 int next_player = (player == BLACK) ? WHITE : BLACK;
-                cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x, alpha, beta);
-                result.push_back(cost{recursiveResult.heuristic, x, y});
 
-                if (player == init_player){
-                    if (recursiveResult.heuristic > value)
-                        value = recursiveResult.heuristic;
-                    if (value >= beta){
-                        cutoff = true;
-                        break ;
+                // if (depth == DEPTH)
+                //     threadResult.push_back(async(std::launch::async, minMaxRecursive, copy, init_player, next_player, depth - 1, y, x, alpha, beta));
+                // else{
+                    cost recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x, alpha, beta);
+                    result.push_back(cost{recursiveResult.heuristic, x, y});
+                    if (player == init_player){
+                        if (recursiveResult.heuristic > value)
+                            value = recursiveResult.heuristic;
+                        if (value >= beta){
+                            cutoff = true;
+                            break ;
+                        }
+                        if (value > alpha)
+                            alpha = value;
                     }
-                    if (value > alpha)
-                        alpha = value;
-                }
-                else {
-                    if (recursiveResult.heuristic < value)
-                        value = recursiveResult.heuristic;
-                    if (value <= alpha){
-                        cutoff = true;
-                        break ;
+                    else {
+                        if (recursiveResult.heuristic < value)
+                            value = recursiveResult.heuristic;
+                        if (value <= alpha){
+                            cutoff = true;
+                            break ;
+                        }
+                        if (value < beta)
+                            beta = value;
                     }
-                    if (value < beta)
-                        beta = value;
-                }
+                // }
             }
         }
     }
 
-    if (init_player == player) {
-        cost finalValue = finCorrectValue(result, MAX);
-        return finalValue;
-    }
+    // if (depth == DEPTH){
+    //     int len = threadResult.size();
+    //     for (int i = 0; i < len; i++){
+    //         threadResult[i].wait();
+    //     }
+    //     for (int i = 0; i < len; i++){
+    //         result.push_back(threadResult[i].get());
+    //     }
+    // }
+    if (DEPTH == depth)
+        std::cout << result.size() << "\n";
+    if (init_player == player)
+        return finCorrectValue(result, MAX);
 
-    cost finalValue = finCorrectValue(result, MIN);
-    return finalValue;
+    return finCorrectValue(result, MIN);;
 }
+
 
 void minMaxAlgorithm(vector2d &game, int &player, SDL_Renderer *renderer)
 {
     int alpha = -2147483648, beta = 2147483647;
 
-    clock_t begin = clock();
-    cost result =  minMaxRecursive(game, player, player, DEPTH, 0, 0, alpha, beta);
-	clock_t end = clock();
-	double timer = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+    // clock_t begin = clock();
+    auto t_start = std::chrono::high_resolution_clock::now();
+        cost result =  minMaxRecursive(game, player, player, DEPTH, 0, 0, alpha, beta);
+    const auto t_end = std::chrono::high_resolution_clock::now();
+	// clock_t end = clock();
+	// double timer = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+    double timer = std::chrono::duration<double, std::milli>(t_end - t_start).count() / 1000;
 
     std::cout << "heuristic:" << result.heuristic << " X: " << result.x << " Y: " << result.y <<"\n";
     {
         std::ostringstream message;
+
         message << std::fixed << std::setprecision(3) << timer;
         SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
 
