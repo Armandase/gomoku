@@ -45,7 +45,7 @@ int main()
 
     vector2d game(BOARD_SIZE + 1, std::vector<int>(BOARD_SIZE + 1, 0));
     int captureCounter[2];
-    MinMax algo(2, renderer);
+    MinMax algo(4, renderer);
     cost ia_suggest;
     while (!quit)
     {

@@ -45,8 +45,8 @@ public:
 };
 
 int     heuristic(const vector2d &game, int player, int captures[2]);
-bool    openSideFour(const vector2d &board, int player);
-bool    openSideThree(const vector2d &board, int player);
-bool    openSideTwo(const vector2d &board, int player);
+bool    openSideFour(const vector2d &board, int player, int y, int x);
+bool    openSideThree(const vector2d &board, int player, int y, int x);
+bool    openSideTwo(const vector2d &board, int player, int y, int x);
 
 #endif
