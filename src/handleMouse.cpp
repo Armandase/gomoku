@@ -1,6 +1,17 @@
 #include "../inc/utils.hpp"
 #include <unistd.h>
 
+
+void    place_suggest_stone(int player, SDL_Renderer *renderer, const int y, const int x) {
+    if (player == WHITE)
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 100);
+    else
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
+    SDL_Rect help = {x * GRID_SIZE + MARGIN - 10, y * GRID_SIZE + MARGIN - 10, 20, 20};
+    SDL_RenderFillRect(renderer, &help);
+    SDL_RenderPresent(renderer);
+}
+
 int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x, int captureCounter[2]){
     // check if this case isn't already used    
     if (game[y][x] != 0)

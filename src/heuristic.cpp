@@ -172,7 +172,6 @@ bool checkCapture(const vector2d &board, int player) {
                 board[y][x + 2] == opponent && 
                 board[y][x + 3] == player)
                 return true;
-                // remove eat stone
                 
             if (y < BOARD_SIZE - 3 &&
                 board[y + 1][x] == opponent &&

@@ -13,6 +13,7 @@ cost MinMax::minMaxRecursive(const vector2d &board, int player, int depth, const
         // return cost{ computeH.heuristic(), xGame, yGame};
     }
 
+    std::vector< std::future<cost> > threadResult;
     int value = (player == _initPlayer) ? INT_MIN : INT_MAX;
     std::vector<cost> result;
     bool cutoff = false;
@@ -27,30 +28,42 @@ cost MinMax::minMaxRecursive(const vector2d &board, int player, int depth, const
                 cost recursiveResult = minMaxRecursive(copy, next_player, depth - 1, y, x, alpha, beta);
                 result.push_back(cost{recursiveResult.heuristic, x, y});
 
-                if (player == _initPlayer){
-                    if (recursiveResult.heuristic > value)
-                        value = recursiveResult.heuristic;
-                    if (value >= beta){
-                        cutoff = true;
-                        break ;
-                    }
-                    if (value > alpha)
-                        alpha = value;
-                }
+                if (depth == _depth)
+                    threadResult.push_back(async(std::launch::async, &MinMax::minMaxRecursive, this, copy, next_player, depth - 1, y, x, alpha, beta));
                 else {
-                    if (recursiveResult.heuristic < value)
-                        value = recursiveResult.heuristic;
-                    if (value <= alpha){
-                        cutoff = true;
-                        break ;
+                    if (player == _initPlayer){
+                        if (recursiveResult.heuristic > value)
+                            value = recursiveResult.heuristic;
+                        if (value >= beta){
+                            cutoff = true;
+                            break ;
+                        }
+                        if (value > alpha)
+                            alpha = value;
                     }
-                    if (value < beta)
-                        beta = value;
+                    else {
+                        if (recursiveResult.heuristic < value)
+                            value = recursiveResult.heuristic;
+                        if (value <= alpha){
+                            cutoff = true;
+                            break ;
+                        }
+                        if (value < beta)
+                            beta = value;
+                    }
                 }
             }
         }
     }
-
+    if (depth == _depth) {
+        int len = threadResult.size();
+        for (int i = 0; i < len; i++){
+            threadResult[i].wait();
+        }
+        for (int i = 0; i < len; i++){
+            result.push_back(threadResult[i].get());
+        }
+    }
     if (_initPlayer == player) {
         cost finalValue = finCorrectValue(result, MAX);
         return finalValue;
@@ -68,6 +81,18 @@ void MinMax::minMaxAlgorithm(vector2d &board, int player, int captureCounter[2])
     cost result = minMaxRecursive(board, _initPlayer, _depth, 0, 0, INT_MIN, INT_MAX);
     std::cout << "heuristic:" << result.heuristic << " X: " << result.x << " Y: " << result.y <<"\n";
     place_stone(board, _initPlayer, _renderer, result.y, result.x, _captureCounter);
+}
+
+
+cost MinMax::minMaxAlgorithmHelper(vector2d &board, int player, int captureCounter[2])
+{
+    _initPlayer = player;
+    _captureCounter[0] = captureCounter[0];
+    _captureCounter[1] = captureCounter[1];
+    cost result = minMaxRecursive(board, _initPlayer, _depth, 0, 0, INT_MIN, INT_MAX);
+    std::cout << "heuristic:" << result.heuristic << " X: " << result.x << " Y: " << result.y <<"\n";
+    place_suggest_stone(_initPlayer, _renderer, result.y, result.x);
+    return result;
 }
 
 int MinMax::checkWin(const vector2d& board, const int y, const int x, const int player){

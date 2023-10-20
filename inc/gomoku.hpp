@@ -29,6 +29,13 @@ enum mode {
     IA_MODE,
 };
 
+typedef struct t_cost{
+    int heuristic;
+    int x;
+    int y;
+} cost;
+
+
 typedef std::vector<std::vector<int> > vector2d;
 
 void    drawCircle(int, int, SDL_Renderer *);
@@ -38,8 +45,8 @@ void    start_menu(SDL_Renderer *, Button &player, Button &IA);
 void    render_board(SDL_Renderer *);
 int     gameChecker(vector2d&, const int&, const int&, const int&, SDL_Renderer*, int captureCounter[2]);
 int     place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x, int captureCounter[2]);
+void    place_suggest_stone(int player, SDL_Renderer *renderer, const int y, const int x);
 int     getOpponent(int player);
-
-
+void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer);
 
 #endif

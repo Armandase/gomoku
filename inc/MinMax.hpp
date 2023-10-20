@@ -3,6 +3,8 @@
 
 # include "gomoku.hpp"
 # include "Heuristic.hpp"
+# include <future>
+
 
 enum side {
     LEFT,
@@ -20,11 +22,6 @@ enum comparison {
     MIN,
 };
 
-typedef struct t_cost{
-    int heuristic;
-    int x;
-    int y;
-} cost;
 
 
 class MinMax
@@ -44,6 +41,7 @@ public:
     int     checkWin(const vector2d& game, const int y, const int x, const int player);
     bool    emptyNeighbour(const vector2d &game, const int x, const int y);
     void    minMaxAlgorithm(vector2d &board, int player, int captureCounter[2]);
+    cost    minMaxAlgorithmHelper(vector2d &board, int player, int captureCounter[2]);
 };
 
 int     heuristic(const vector2d &game, int player, int captures[2]);

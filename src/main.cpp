@@ -46,6 +46,7 @@ int main()
     vector2d game(BOARD_SIZE + 1, std::vector<int>(BOARD_SIZE + 1, 0));
     int captureCounter[2];
     MinMax algo(2, renderer);
+    cost ia_suggest;
     while (!quit)
     {
         // Handle q and echap for quit the programm
@@ -66,8 +67,14 @@ int main()
                     start = handleStart(renderer, playerButton, IAButton);
                     continue;
                 }
-                if ((player == WHITE || (player == BLACK && start == PLAYER_MODE)) && handleMouse(game, player, captureCounter, renderer))
-                    continue;
+                if (player == WHITE || (player == BLACK && start == PLAYER_MODE)) {
+                    if (ia_suggest.y && ia_suggest.x)
+                        erasePlayer(ia_suggest.y, ia_suggest.x, renderer);
+                    if (handleMouse(game, player, captureCounter, renderer))
+                        continue;
+                    if (start == PLAYER_MODE)
+                        ia_suggest = algo.minMaxAlgorithmHelper(game, player, captureCounter);
+                }
                 if (start == IA_MODE && player == BLACK)
                 {
                     algo.minMaxAlgorithm(game, player, captureCounter);
