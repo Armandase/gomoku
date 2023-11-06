@@ -1,6 +1,7 @@
 #include "../inc/utils.hpp"
 #include <unistd.h>
 
+// return  1 on victory; 0 every in other case
 int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x){
     // check if this case isn't already used    
     if (game[y][x] != 0)
@@ -58,6 +59,7 @@ int    handleMouse(vector2d& game, int& player, SDL_Renderer* renderer){
     if (x_case > BOARD_SIZE || y_case > BOARD_SIZE)
         return (1);
 
+    // place a stone at the intersection of lines
     if (place_stone(game, player, renderer, y_case, x_case) > 0)
         return (1);
     return (0);

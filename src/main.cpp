@@ -4,24 +4,30 @@
 #include "../inc/Button.hpp"
 #include "../inc/Heuristic.hpp"
 
+// render the board base on the number of square and them size
 void render_board(SDL_Renderer *renderer)
 {
+    // select brown color and clear the board with this color
     SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
     SDL_RenderClear(renderer);
+    //select black color to draw lines
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    // Draw grid of 19 * 19
+    // Draw grid of Board size + 1 ^ 2
     int line = BOARD_SIZE * (GRID_SIZE + 1);
     for (int x = MARGIN, i = 0; x < line + GRID_SIZE && i <= BOARD_SIZE; x += GRID_SIZE, i++)
     {
+        // draw line on x and y axis
         SDL_RenderDrawLine(renderer, x, MARGIN, x, line);
         SDL_RenderDrawLine(renderer, MARGIN, x, line , x);
     }
+    //render the board
     SDL_RenderPresent(renderer);
 }
 
 int main()
 {
+    //init sdl variables
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
         SDL_Error("Failed to init SDL:", NULL, NULL);
     if (TTF_Init() == -1)
@@ -38,13 +44,14 @@ int main()
     SDL_Event e;
     int player = WHITE;
 
-    // create 2 button
+    // create 2 button to choose human vs ia or human vs human
     Button playerButton(SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
 
     // Render Start Menu
     start_menu(renderer, playerButton, IAButton);
 
+    // 2d vector which will contains the game(players)
     vector2d game(BOARD_SIZE + 1, std::vector<int>(BOARD_SIZE + 1, 0));
     while (!quit)
     {
@@ -61,6 +68,7 @@ int main()
             }
             else if (e.type == SDL_MOUSEBUTTONDOWN)
             {
+                // if start is equal to 0 then no game mode is chosen
                 if (!start)
                 {
                     start = handleStart(renderer, playerButton, IAButton);

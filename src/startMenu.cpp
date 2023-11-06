@@ -2,8 +2,12 @@
 #include "../inc/Button.hpp"
 #include "../inc/utils.hpp"
 
+// called when a player click on one of the available buttons
+// return the game mode or 0 if the click wasn't on a button
 int handleStart(SDL_Renderer *renderer, Button &player, Button &IA) {
     int mouseX, mouseY;
+
+    // get the coordinate of the click to know which button has been hit
     SDL_GetMouseState(&mouseX, &mouseY);
     if (player.inButton(mouseX, mouseY)) {
         render_board(renderer);
