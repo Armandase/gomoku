@@ -49,7 +49,7 @@ int main()
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
 
     // Render Start Menu
-    start_menu(renderer, playerButton, IAButton);
+    start_menu(renderer, playerButton, IAButton);   
 
     // 2d vector which will contains the game(players)
     vector2d game(BOARD_SIZE + 1, std::vector<int>(BOARD_SIZE + 1, 0));

@@ -64,26 +64,32 @@ int heuristic(const vector2d &game, int player, const int y, const int x){
                 for (int j = 1; j < 5; j++) {
                     checkX = x + (dirX[i] * j);
                     checkY = y + (dirY[i] * j);
+                    //check out of the board
                     if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
                         break ;
-                    
+                    //check if the current position of x & y are the player's color too
                     if (game[checkY][checkX] == newPoint)
                         (count[i % 2])++;
+                    //if it's in a row
                     if (game[checkY][checkX] == newPoint && rowChecker[i % 2])
                         (inRow[i % 2])++;
+                    //check if there are a capture
                     if (game[checkY][checkX] > 0 && game[checkY][checkX] != newPoint
                         && checkCapture(game, checkY, checkX, dirY[i], dirX[i], newPoint)) {
                         capture = true;
                         break;
                     }
+                    //  add empty point and stop in a row counter
                     else if (game[checkY][checkX] == 0){
                         empty[i % 2]++;
                         rowChecker[i % 2] = false;
                     }
+                    // quit loop if it's an ennemy pawn
                     else if (game[checkY][checkX] != newPoint && game[checkY][checkX] > 0 )
                         break;
                     
                 }
+                // for each axis, reset counter and compute heurisitic
                 if (i % 4 < 2){
                     heuristic += counterAnalysis(count[i % 4], capture, empty[i % 4], inRow[i % 4], currentPlayer);
                     count[i % 4] = 1;
