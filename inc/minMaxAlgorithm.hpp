@@ -7,7 +7,6 @@
 # include "Heuristic.hpp"
 # include "Board.hpp"
 
-void    minMaxAlgorithm(Board&, int&,  SDL_Renderer *);
 
 enum side {
     LEFT,
@@ -25,25 +24,15 @@ enum comparison {
     MIN,
 };
 
-typedef struct t_cost{
-    int heuristic;
-    int x;
-    int y;
-} cost;
+struct CompareHeuristic {
+    bool operator()(const Heuristic& a, const Heuristic& b) const {
+        return a.getHeuristic() < b.getHeuristic();
+    }
+};
 
-typedef struct t_data{
-    const Board game;
-    int init_player;
-    int player; 
-    int depth; 
-    int yGame; 
-    int xGame; 
-    int alpha; 
-    int beta;
-    cost finalRes;
-} data;
+typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 
-// int heuristic(const vector2d &game, int player, const int y, const int x);
+void    minMaxAlgorithm(Board&, int&,  SDL_Renderer *);
 bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center);
 
 #endif // !__MINMAXALGORITHM_HPP__

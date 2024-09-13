@@ -22,7 +22,6 @@ class Board{
 
         void    printBoard() const;
         void    resetBoard();
-        // bool    checkWin(int x, int y);
 
     private:
         std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1;

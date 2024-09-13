@@ -32,13 +32,3 @@ void    writeText(const std::string& msg, const std::string& font, const SDL_Rec
     SDL_DestroyTexture(Message);
     TTF_CloseFont(Font);
 }
-
-void print_game(const vector2d& game) {
-    const int game_size = game.size();
-    for (int i = 0; i < game_size; i++) {
-        for (int j = 0; j < game_size; j++)
-            std::cout << game[i][j] << " ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
