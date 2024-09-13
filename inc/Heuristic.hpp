@@ -3,22 +3,26 @@
 
 #include "iostream"
 #include "utils.hpp"
+#include "Board.hpp"
+#include <memory>
 
 class Heuristic
 {
 	public:
-        Heuristic(int player, const vector2d& game);
+        Heuristic(int player, const Board& game);
         ~Heuristic();
 
         int heuristic();
-        const vector2d getGame() const;
+        const Board& getGame() const;
     private:
         int     counterAnalysis(int count, bool capture, int empty, int inRow, int player);
         bool    checkCapture(int checkY, int checkX, int dirY, int dirX, int player);
 
-        const vector2d _game;
         static constexpr int   dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
         static constexpr int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
+        //a shared pointer to the game
+        std::shared_ptr<Board> _gamePtr;
+
         const int   _initPlayer;
         int         _heuristic;
         int         _index;

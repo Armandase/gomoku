@@ -3,6 +3,7 @@
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Button.hpp"
 #include "../inc/Heuristic.hpp"
+#include "../inc/Board.hpp"
 
 // render the board base on the number of square and them size
 void render_board(SDL_Renderer *renderer)
@@ -51,8 +52,7 @@ int main()
     // Render Start Menu
     start_menu(renderer, playerButton, IAButton);   
 
-    // 2d vector which will contains the game(players)
-    vector2d game(BOARD_SIZE + 1, std::vector<int>(BOARD_SIZE + 1, 0));
+    Board board;
     while (!quit)
     {
         // Handle q and echap for quit the programm
@@ -74,10 +74,10 @@ int main()
                     start = handleStart(renderer, playerButton, IAButton);
                     continue;
                 }
-                if (player == WHITE && handleMouse(game, player, renderer))
+                if (player == WHITE && handleMouse(board, player, renderer))
                     continue;
                 if (player == BLACK) {
-                    minMaxAlgorithm(game, player, renderer);
+                    minMaxAlgorithm(board, player, renderer);
                     player = WHITE;
                 }
                 SDL_RenderPresent(renderer);

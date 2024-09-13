@@ -1,12 +1,11 @@
 #include "../inc/utils.hpp"
-#include <unistd.h>
 
 // return  1 on victory; 0 every in other case
-int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x){
+int    place_stone(Board& game, int& player, SDL_Renderer *renderer, const int& y, const int& x){
     // check if this case isn't already used    
-    if (game[y][x] != 0)
+    if (game.getPos(x, y) != 0)
         return (1);
-    game[y][x] = player;
+    game.setPos(x, y, player);
     // gameChecker is used to check if the game is ended or if there is a capture (return 1 on victory)
     int winner = gameChecker(game, y, x, player, renderer);
     if (winner == 3){ return (1); }
@@ -36,15 +35,16 @@ int    place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const in
             writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24,renderer);
         }
         sleep(1);
-        const int size = game.size();
-        for (int i = 0; i < size; i++)
-            memset(&game[i][0], 0, game[i].size() * sizeof game[i][0]);
+        // const int size = game.size();
+        // for (int i = 0; i < size; i++)
+            // memset(&game[i][0], 0, game[i].size() * sizeof game[i][0]);
+        game.resetBoard();
         render_board(renderer);
     }
     return (0);
 }
 
-int    handleMouse(vector2d& game, int& player, SDL_Renderer* renderer){
+int    handleMouse(Board& game, int& player, SDL_Renderer* renderer){
     int mouseX, mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
 

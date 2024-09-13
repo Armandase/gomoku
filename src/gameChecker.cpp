@@ -33,23 +33,23 @@ void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer
 
 }
 
-bool checkCapture(const vector2d& game, int checkY, int checkX, int dirY, int dirX, int player) {
+bool checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX, int player) {
     int ennemy = (player == WHITE) ? BLACK : WHITE;
 
     if (checkY + dirY >= 0 && checkY + dirY <= BOARD_SIZE 
         && checkX + dirX >= 0 && checkX + dirX <= BOARD_SIZE
-        && game[checkY + dirY][checkX + dirX] == ennemy
+        && game.getPos(checkX + dirX, checkY + dirY) == ennemy
         && checkX + dirX * 2 >= 0 && checkX + dirX * 2 <= BOARD_SIZE
         && checkY + dirY * 2 >= 0 && checkY + dirY * 2 <= BOARD_SIZE
-        && game[checkY + (dirY * 2)][checkX + (dirX * 2)] == ennemy
+        && game.getPos(checkX + (dirX * 2), checkY + (dirY * 2)) == ennemy
         && checkX + dirX * 3 >= 0 && checkX + dirX * 3 <= BOARD_SIZE
         && checkY + dirY * 3 >= 0 && checkY + dirY * 3 <= BOARD_SIZE
-        && game[checkY + (dirY * 3)][checkX + (dirX * 3)] == player)
+        && game.getPos(checkX + (dirX * 3), checkY + (dirY * 3)) == player)
             return true;
     return false;
 }
 
-int gameChecker(vector2d& game, const int& y, const int& x, const int& player, SDL_Renderer* renderer){
+int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_Renderer* renderer){
     const int   dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
     int         checkX = x, checkY = y;
@@ -61,8 +61,8 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
         if (checkCapture(game, y, x, dirY[i], dirX[i], player) == true){
                 erasePlayer(y + dirY[i], x + dirX[i], renderer);
                 erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2, renderer);
-                game[y + dirY[i]][x + dirX[i]] = 0;
-                game[y + dirY[i] * 2][x + dirX[i] * 2] = 0;
+                game.removePos(x + dirX[i], y + dirY[i]);
+                game.removePos(x + dirX[i] * 2, y + dirY[i] * 2);
                 continue ;
         }
         for (int j = 1; j < 5; ++j){
@@ -71,12 +71,12 @@ int gameChecker(vector2d& game, const int& y, const int& x, const int& player, S
             if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
                 break ;
             
-            if (game[checkY][checkX] != player)
+            if (game.getPos(checkX, checkY) != player)
                 break ;
-            else if (game[checkY][checkX] == player)
+            else if (game.getPos(checkX, checkY) == player)
                 ++(count[i / 2 % 2]);
         }
-        if (checkDoubleThree(game, y, x, dirY[i], dirX[i], game[y][x]) == true){
+        if (checkDoubleThree(game, y, x, dirY[i], dirX[i], game.getPos(x, y)) == true){
             ++doubleThree;
         }
         if (i % 2 == 1){

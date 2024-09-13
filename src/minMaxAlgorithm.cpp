@@ -5,7 +5,7 @@
 #include <sstream>
 #include <future>
 
-bool emptyNeighbour(const vector2d &game, const int x, const int y){
+bool emptyNeighbour(const Board &game, const int x, const int y){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
     int         checkX = 0, checkY = 0;
@@ -18,7 +18,7 @@ bool emptyNeighbour(const vector2d &game, const int x, const int y){
             counter++;
             continue;
         }
-        if (game[checkY][checkX] == 0)
+        if (game.isPosEmpty(checkX, checkY) == true)
             counter++;        
     }
     if (counter == 8)
@@ -54,7 +54,7 @@ cost finCorrectValue(const std::vector<cost>& recursiveResult, int minOrMax){
     return recursiveResult[pos];
 }
 
-bool checkWin(const vector2d& game, const int& y, const int& x, const int& player){
+bool checkWin(const Board& game, const int& y, const int& x, const int& player){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
     int         checkX = 0, checkY = 0;
@@ -69,9 +69,10 @@ bool checkWin(const vector2d& game, const int& y, const int& x, const int& playe
                 break ;
 
             
-            if (game[checkY][checkX] != player)
+            // if (game[checkY][checkX] != player)
+            if (game.getPos(checkX, checkY) != player)
                 break ;
-            else if (game[checkY][checkX] == player)
+            else if (game.getPos(checkX, checkY) == player)
                 ++(count[i / 2 % 2]);
         }
         if (i % 2 == 1){
@@ -84,7 +85,7 @@ bool checkWin(const vector2d& game, const int& y, const int& x, const int& playe
     return (false);
 }
 
-bool checkDoubleThree(vector2d& copy, int y, int x, int dirY, int dirX, int center){
+bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center){
     int count = 1, empty = 0;
     int checkX = x, checkY = y;
 
@@ -94,13 +95,13 @@ bool checkDoubleThree(vector2d& copy, int y, int x, int dirY, int dirX, int cent
         if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
             break ;
 
-        if (empty > 1 || (count == 3 && copy[checkY][checkX] > 0))
+        if (empty > 1 || (count == 3 && copy.isPosEmpty(checkX, checkY) == false))
             return false;
         else if (count == 3)
             break ;
-        if (copy[checkY][checkX] == center)
+        if (copy.getPos(checkX, checkY) == center)
             ++(count);
-        else if (copy[checkY][checkX] == 0)
+        else if (copy.getPos(checkX, checkY) == 0)
             ++empty;
         else
             break;
@@ -112,7 +113,7 @@ bool checkDoubleThree(vector2d& copy, int y, int x, int dirY, int dirX, int cent
 }
 
 //return true when there are a double three
-bool    validGame(vector2d& copy, int yPoint, int xPoint, int player){
+bool    validGame(Board& copy, int yPoint, int xPoint, int player){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
     
@@ -120,18 +121,18 @@ bool    validGame(vector2d& copy, int yPoint, int xPoint, int player){
     
     for (int y = 0; y < BOARD_SIZE; y++){
         for (int x = 0; x < BOARD_SIZE; x++){
-            if (copy[y][x] == 0)
+            if (copy.isPosEmpty(x, y) == true)
                 continue;
             doubleThree = 0;
 
             for (int i = 0; i < 8; i++){
 
                 if (y == yPoint && x == xPoint && checkCapture(copy, y, x, dirY[i], dirX[i], player) == true){
-                    copy[y + dirY[i]][x + dirX[i]] = 0;
-                    copy[y + (dirY[i] * 2)][x + (dirX[i] * 2)] = 0;
+                    copy.removePos(x + dirX[i], y + dirY[i]);
+                    copy.removePos(x + (dirX[i] * 2), y + (dirY[i] * 2));
                 }
 
-                if (checkDoubleThree(copy, y, x, dirY[i], dirX[i], copy[y][x]) == true){
+                if (checkDoubleThree(copy, y, x, dirY[i], dirX[i], copy.getPos(x, y)) == true){
                     ++doubleThree;
                 }
 
@@ -144,7 +145,7 @@ bool    validGame(vector2d& copy, int yPoint, int xPoint, int player){
     return false;
 }
 
-cost minMaxRecursive(const vector2d &game, int init_player, int player, int depth, const int yGame, const int xGame, int alpha, int beta) {
+cost minMaxRecursive(const Board &game, int init_player, int player, int depth, const int yGame, const int xGame, int alpha, int beta) {
     if (depth == 0 || checkWin(game, yGame, xGame, player) == true) {
         Heuristic computeH(player, game);
         return cost{ computeH.heuristic(), xGame, yGame};
@@ -156,9 +157,10 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
     bool cutoff = false;
     for (int y = 0; y < BOARD_SIZE && !cutoff; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
-            if (game[y][x] == 0 && emptyNeighbour(game, x, y) == false) {
-                vector2d copy = game;
-                copy[y][x] = player;
+            if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
+                Board copy = game;
+                // copy[y][x] = player;
+                copy.setPos(x, y, player);
                 if (checkWin(copy, y, x, player) && depth == DEPTH)
                     return cost{INT_MAX, x, y};
 
@@ -214,7 +216,7 @@ cost minMaxRecursive(const vector2d &game, int init_player, int player, int dept
 }
 
 
-void minMaxAlgorithm(vector2d &game, int &player, SDL_Renderer *renderer)
+void minMaxAlgorithm(Board &game, int &player, SDL_Renderer *renderer)
 {
     int alpha = -2147483648, beta = 2147483647;
 

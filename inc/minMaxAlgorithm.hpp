@@ -5,8 +5,9 @@
 # include <algorithm>
 # include <map>
 # include "Heuristic.hpp"
+# include "Board.hpp"
 
-void    minMaxAlgorithm(vector2d&, int&,  SDL_Renderer *);
+void    minMaxAlgorithm(Board&, int&,  SDL_Renderer *);
 
 enum side {
     LEFT,
@@ -31,7 +32,7 @@ typedef struct t_cost{
 } cost;
 
 typedef struct t_data{
-    const vector2d game;
+    const Board game;
     int init_player;
     int player; 
     int depth; 
@@ -43,6 +44,6 @@ typedef struct t_data{
 } data;
 
 // int heuristic(const vector2d &game, int player, const int y, const int x);
-bool checkDoubleThree(vector2d& copy, int y, int x, int dirY, int dirX, int center);
+bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center);
 
 #endif // !__MINMAXALGORITHM_HPP__

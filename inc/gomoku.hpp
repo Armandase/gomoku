@@ -19,7 +19,7 @@
 # define DIAMETER (RADIUS * 2)
 # define DEPTH 4
 
-
+class Board;
 class Button;
 
 enum player {
@@ -35,13 +35,13 @@ enum mode {
 typedef std::vector<std::vector<int> > vector2d;
 
 void    drawCircle(int, int, SDL_Renderer *);
-int     handleMouse(vector2d& game, int& player, SDL_Renderer* renderer);
+int     handleMouse(Board& board, int& player, SDL_Renderer* renderer);
 int     handleStart(SDL_Renderer *, Button &player, Button &IA);
 void    start_menu(SDL_Renderer *, Button &player, Button &IA);
 void    render_board(SDL_Renderer *);
-int     gameChecker(vector2d&, const int&, const int&, const int&, SDL_Renderer*);
-int     place_stone(vector2d& game, int& player, SDL_Renderer *renderer, const int& y, const int& x);
-bool    checkCapture(const vector2d& game, int checkY, int checkX, int dirY, int dirX, int player);
+int     gameChecker(Board&, const int&, const int&, const int&, SDL_Renderer*);
+int     place_stone(Board& board, int& player, SDL_Renderer *renderer, const int& y, const int& x);
+bool    checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX, int player);
 
 
 #endif
