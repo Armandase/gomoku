@@ -3,12 +3,15 @@
 Heuristic::~Heuristic(){
 }
 
-Heuristic::Heuristic(int player, const Board& game) :
+Heuristic::Heuristic(int player, const Board& game, int x, int y) :
     _gamePtr(std::make_shared<Board>(game)),
     _initPlayer(player),
     _heuristic(0),
-    _index(0)
+    _index(0),
+    _xPos(x),
+    _yPos(y)
 {
+    this->heuristic();
 }
 
 const Board& Heuristic::getGame() const { return (*(this->_gamePtr.get())); }

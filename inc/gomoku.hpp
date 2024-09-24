@@ -8,6 +8,7 @@
 # include <SDL_ttf.h>
 # include <SDL_image.h>
 # include <climits>
+# include <set>
 
 # define GRID_SIZE 50
 # define MARGIN 20
@@ -18,6 +19,7 @@
 # define RADIUS (GRID_SIZE / 3)
 # define DIAMETER (RADIUS * 2)
 # define DEPTH 4
+# define PRUNING 10
 
 class Board;
 class Button;
@@ -31,8 +33,6 @@ enum mode {
     PLAYER_MODE = 1,
     IA_MODE,
 };
-
-typedef std::vector<std::vector<int> > vector2d;
 
 void    drawCircle(int, int, SDL_Renderer *);
 int     handleMouse(Board& board, int& player, SDL_Renderer* renderer);

@@ -9,11 +9,16 @@
 class Heuristic
 {
 	public:
-        Heuristic(int player, const Board& game);
+        Heuristic(int player, const Board& game, int x, int y);
         ~Heuristic();
 
         int heuristic();
         const Board& getGame() const;
+        int getHeuristic() const { return (this->_heuristic); }
+        int getIndex() const { return (this->_index); }
+        int getX() const { return (this->_xPos); }
+        int getY() const { return (this->_yPos); }
+        void setHeuristic(int heuristic) { this->_heuristic = heuristic; }
     private:
         int     counterAnalysis(int count, bool capture, int empty, int inRow, int player);
         bool    checkCapture(int checkY, int checkX, int dirY, int dirX, int player);
@@ -26,6 +31,8 @@ class Heuristic
         const int   _initPlayer;
         int         _heuristic;
         int         _index;
+        int         _xPos;
+        int         _yPos;
 };
 
 #endif

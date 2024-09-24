@@ -22,7 +22,6 @@ class Board{
 
         void    printBoard() const;
         void    resetBoard();
-        // bool    checkWin(int x, int y);
 
     private:
         void generateTransposedBoard();
