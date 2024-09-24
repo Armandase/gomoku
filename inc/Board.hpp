@@ -25,8 +25,20 @@ class Board{
         // bool    checkWin(int x, int y);
 
     private:
+        void generateTransposedBoard();
+        void generateDiagBoard();
+        void generateAntiDiagBoard();
+        
         std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1;
+        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1Transposed;
+        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1Diag;
+        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1AntiDiag;
+
         std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player2;
+        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player2Transposed;
+        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player2Diag;
+        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player2AntiDiag;
+
         int _width = {BOARD_SIZE + 1};
         int _idPlayer1;
         int _idPlayer2;
