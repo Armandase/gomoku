@@ -26,6 +26,7 @@ class Board{
         void    printBoard() const;
         void    printTransposedBoard() const;
         void    resetBoard();
+        // void    patternMatching()
 
     private:
         void generateTransposedBoard();
