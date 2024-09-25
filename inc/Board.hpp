@@ -6,10 +6,14 @@
 # include <iomanip>
 
 
+# include <algorithm>
 # include "gomoku.hpp"
 
 // bitboard representation of the board
+
 class Board{
+    public:
+        typedef std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> bitboard;
     public:
         Board(void);
         ~Board();
@@ -25,6 +29,7 @@ class Board{
         void    printBoard() const;
         void    printDiagBoard() const;
         void    printAntiDiagBoard() const;
+        void    printTransposedBoard() const;
         void    resetBoard();
 
         void    generateTransposedBoard();
@@ -32,15 +37,19 @@ class Board{
         void    generateAntiDiagBoard();
 
     private:
-        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1;
-        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1Transposed;
-        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1Diag;
-        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1AntiDiag;
+        void swapBits(bitboard& board, int pos1, int pos2);
+        // void generateDiagBoard();
+        // void generateAntiDiagBoard();
+        
+        bitboard _player1;
+        bitboard _player1Transposed;
+        bitboard _player1Diag;
+        bitboard _player1AntiDiag;
 
-        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player2;
-        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player2Transposed;
-        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player2Diag;
-        std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player2AntiDiag;
+        bitboard _player2;
+        bitboard _player2Transposed;
+        bitboard _player2Diag;
+        bitboard _player2AntiDiag;
 
         int _width = {BOARD_SIZE + 1};
         int _idPlayer1;
