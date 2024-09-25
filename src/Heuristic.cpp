@@ -63,7 +63,7 @@ int Heuristic::heuristic(){
         for (int x = 0; x < BOARD_SIZE; x++){
             if (this->_gamePtr.get()->isPosEmpty(x, y) == true)
                 continue ;
-
+        
             int count[2] = {1, 1}, empty[2] = {0, 0}, inRow[2] = {1, 1};
             bool capture[2] = {false, false}, rowChecker[2] = {true, true};
             // int newPoint = this->_game[y][x];

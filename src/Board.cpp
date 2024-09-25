@@ -20,7 +20,17 @@ Board::Board(const Board &cpy):
     _idPlayer1(cpy._idPlayer1),
     _idPlayer2(cpy._idPlayer2)
 {
+    generateDiagBoard();
+    generateAntiDiagBoard();
     generateTransposedBoard();
+    // std::cout << "ORIGINAL" << std::endl;
+    // printBoard();
+    // std::cout << "TRANSPOSED BOARD" << std::endl;
+    // printTransposedBoard();    
+    // std::cout << "DIAG" << std::endl;
+    // printDiagBoard();
+    // std::cout << "ANTI DIAG" << std::endl;
+    // printAntiDiagBoard();
 }
 
 Board &Board::operator=(const Board &rhs)
@@ -79,6 +89,36 @@ void Board::printBoard() const{
     std::cout << std::endl;
 }
 
+void Board::printDiagBoard() const{
+    for (int y = 0; y < this->_width; y++){
+        for (int x = 0; x < this->_width; x++){
+            if (this->_player1Diag.test(x + y * this->_width))
+                std::cout << "1 ";
+            else if (this->_player2Diag.test(x + y * this->_width))
+                std::cout << "2 ";
+            else
+                std::cout << "0 ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << std::endl;
+}
+
+void Board::printAntiDiagBoard() const{
+    for (int y = 0; y < this->_width; y++){
+        for (int x = 0; x < this->_width; x++){
+            if (this->_player1AntiDiag.test(x + y * this->_width))
+                std::cout << "1 ";
+            else if (this->_player2AntiDiag.test(x + y * this->_width))
+                std::cout << "2 ";
+            else
+                std::cout << "0 ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << std::endl;
+}
+
 void    Board::printTransposedBoard() const{
     for (int y = 0; y < this->_width; y++){
         for (int x = 0; x < this->_width; x++){
@@ -104,6 +144,36 @@ bool    Board::isPosEmpty(int x, int y) const {
     if (this->_player1.test(x + y * this->_width) || this->_player2.test(x + y * this->_width))
         return false;
     return true;
+}
+
+void Board::generateDiagBoard() {
+    // _player1Diag.reset();
+    // _player2Diag.reset();
+
+    // Perform 45-degree rotation by adjusting row and column mapping
+    for (int row = 0; row < this->_width; ++row) {
+        for (int col = 0; col < this->_width; ++col) {
+            int newRow = (row + col) % this->_width;
+            int newCol = col;
+            _player1Diag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
+            _player2Diag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
+        }
+    }
+}
+
+void Board::generateAntiDiagBoard() {
+    // _player1AntiDiag.reset();
+    // _player2AntiDiag.reset();
+
+    // Perform 315-degree rotation by adjusting row and column mapping
+    for (int row = 0; row < this->_width; ++row) {
+        for (int col = 0; col < this->_width; ++col) {
+            int newRow = (row - col + this->_width) % this->_width;
+            int newCol = col;
+            _player1AntiDiag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
+            _player2AntiDiag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
+        }
+    }
 }
 
 void Board::swapBits(bitboard& board, int pos1, int pos2){

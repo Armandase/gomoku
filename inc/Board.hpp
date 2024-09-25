@@ -3,6 +3,9 @@
 
 # include <iostream>
 # include <bitset>
+# include <iomanip>
+
+
 # include <algorithm>
 # include "gomoku.hpp"
 
@@ -24,12 +27,17 @@ class Board{
         bool    isPosEmpty(int x, int y) const;
 
         void    printBoard() const;
+        void    printDiagBoard() const;
+        void    printAntiDiagBoard() const;
         void    printTransposedBoard() const;
         void    resetBoard();
-        // void    patternMatching()
+        // void    patternMatching();
+
+        void    generateTransposedBoard();
+        void    generateDiagBoard();
+        void    generateAntiDiagBoard();
 
     private:
-        void generateTransposedBoard();
         void swapBits(bitboard& board, int pos1, int pos2);
         // void generateDiagBoard();
         // void generateAntiDiagBoard();
