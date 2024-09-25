@@ -30,14 +30,14 @@ bool emptyNeighbour(const Board &game, const int x, const int y){
 Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
     if (recursiveResult.empty())
         throw std::runtime_error("Empty vector of recursive\n");
-    for (auto it = recursiveResult.begin(); it != recursiveResult.end(); it++){
-        std::cout << it->getHeuristic() << "\n";
-    }
+    // for (auto it = recursiveResult.begin(); it != recursiveResult.end(); it++){
+    //     std::cout << it->getHeuristic() << "\n";
+    // }
     if (minOrMax == MAX){
-        std::cout << "max: " << recursiveResult.rbegin()->getHeuristic() << "\n";
+        // std::cout << "max: " << recursiveResult.rbegin()->getHeuristic() << "\n";
         return *recursiveResult.rbegin();
     }
-    std::cout << "min: " << recursiveResult.begin()->getHeuristic() << "\n";
+    // std::cout << "min: " << recursiveResult.begin()->getHeuristic() << "\n";
     return *recursiveResult.begin();
 }
 

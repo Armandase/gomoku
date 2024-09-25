@@ -3,6 +3,8 @@
 
 # include <iostream>
 # include <bitset>
+# include <iomanip>
+
 
 # include "gomoku.hpp"
 
@@ -21,13 +23,15 @@ class Board{
         bool    isPosEmpty(int x, int y) const;
 
         void    printBoard() const;
+        void    printDiagBoard() const;
+        void    printAntiDiagBoard() const;
         void    resetBoard();
 
+        void    generateTransposedBoard();
+        void    generateDiagBoard();
+        void    generateAntiDiagBoard();
+
     private:
-        void generateTransposedBoard();
-        void generateDiagBoard();
-        void generateAntiDiagBoard();
-        
         std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1;
         std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1Transposed;
         std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> _player1Diag;

@@ -26,6 +26,80 @@ void render_board(SDL_Renderer *renderer)
     SDL_RenderPresent(renderer);
 }
 
+void printBoard(const std::vector<std::vector<std::string>>& board) {
+    for (const auto& row : board) {
+        for (const auto& element : row) {
+            std::cout << (element.empty() ? "   " : element + " ");
+        }
+        std::cout << std::endl;
+    }
+}
+
+std::vector<std::vector<std::string>> rotateBoard45Degrees(const std::vector<std::vector<std::string>>& board) {
+    int rows = board.size();
+    int cols = board[0].size();
+    int newSize = rows;  // Keeping the original row count
+
+    // Create a new result board initialized with empty strings
+    std::vector<std::vector<std::string>> result(newSize, std::vector<std::string>(cols, ""));
+
+    // Place elements in a way that each diagonal is filled according to the desired rotation
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < cols; ++col) {
+            int newRow = (row + col) % rows; // Shifting row positions by sum of row and column
+            int newCol = col;                // Keep the same column
+            result[newRow][newCol] = board[row][col];
+        }
+    }
+
+    return result;
+}
+
+std::vector<std::vector<std::string>> rotateBoard45DegreesCounterClockwise(const std::vector<std::vector<std::string>>& board) {
+    int rows = board.size();
+    int cols = board[0].size();
+    int newSize = rows;  // Keeping the original row count
+
+    // Create a new result board initialized with empty strings
+    std::vector<std::vector<std::string>> result(newSize, std::vector<std::string>(cols, ""));
+
+    // Place elements in a way that each diagonal is filled according to the counterclockwise rotation
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < cols; ++col) {
+            // For counterclockwise rotation, subtract col from row
+            int newRow = (row - col + rows) % rows; // Handle negative indices with +rows
+            int newCol = col; // Keep the column index unchanged
+            result[newRow][newCol] = board[row][col];
+        }
+    }
+
+    return result;
+}
+
+// int main() {
+//     std::vector<std::vector<std::string>> board = {
+//         {"A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"},
+//         {"A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7"},
+//         {"A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6"},
+//         {"A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5"},
+//         {"A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4"},
+//         {"A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3"},
+//         {"A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2"},
+//         {"A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1"}
+//     };
+
+//     std::cout << "Original Board:\n";
+//     printBoard(board);
+//     std::cout << "\nRotated Board 45:\n";
+//     std::vector<std::vector<std::string>> rotatedBoard = rotateBoard45Degrees(board);
+//     printBoard(rotatedBoard);
+
+//     std::cout << "\nRotated Board 315:\n";
+//     std::vector<std::vector<std::string>> rotatedBoardCounter = rotateBoard45DegreesCounterClockwise(board);
+//     printBoard(rotatedBoardCounter);
+//     return 0;
+// }
+
 int main()
 {
     //init sdl variables
