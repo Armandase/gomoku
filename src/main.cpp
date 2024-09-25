@@ -25,7 +25,7 @@ void render_board(SDL_Renderer *renderer)
     //render the board
     SDL_RenderPresent(renderer);
 }
-
+//test
 int main()
 {
     //init sdl variables
