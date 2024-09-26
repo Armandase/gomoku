@@ -74,15 +74,29 @@ int Board::getPos(int x, int y) const
         return (0);
 }
 
+void Board::printBoardX() const
+{
+    int sliceLen = intlen(this->_width);
+    std::cout << "\033[4m"<< std::setw(sliceLen + 1) << "|";
+    for (int i = 0; i < this->_width; i++)
+        std::cout << std::setw(sliceLen + 1) << i;
+    std::cout << "\e[0m" << std::endl;
+}
+
 void Board::printBoard() const{
-    for (int y = 0; y < this->_width; y++){
-        for (int x = 0; x < this->_width; x++){
+    printBoardX();
+    int sliceLen = intlen(this->_width);
+    for (int y = 0; y < this->_width; y++)
+    {
+        std::cout << std::setw(sliceLen) << y << "|";
+        for (int x = 0; x < this->_width; x++)
+        {
             if (this->_player1.test(x + y * this->_width))
-                std::cout << "1 ";
+                std::cout << std::setw(sliceLen + 1) << "1";
             else if (this->_player2.test(x + y * this->_width))
-                std::cout << "2 ";
+                std::cout << std::setw(sliceLen + 1) << "2";
             else
-                std::cout << "0 ";
+                std::cout << std::setw(sliceLen + 1) << "0";
         }
         std::cout << "\n";
     }
@@ -90,14 +104,19 @@ void Board::printBoard() const{
 }
 
 void Board::printDiagBoard() const{
-    for (int y = 0; y < this->_width; y++){
-        for (int x = 0; x < this->_width; x++){
+    printBoardX();
+    int sliceLen = intlen(this->_width);
+    for (int y = 0; y < this->_width; y++)
+    {
+        std::cout << std::setw(sliceLen) << y << "|";
+        for (int x = 0; x < this->_width; x++)
+        {
             if (this->_player1Diag.test(x + y * this->_width))
-                std::cout << "1 ";
+                std::cout << std::setw(sliceLen + 1) << "1";
             else if (this->_player2Diag.test(x + y * this->_width))
-                std::cout << "2 ";
+                std::cout << std::setw(sliceLen + 1) << "2";
             else
-                std::cout << "0 ";
+                std::cout << std::setw(sliceLen + 1) << "0";
         }
         std::cout << "\n";
     }
@@ -105,29 +124,40 @@ void Board::printDiagBoard() const{
 }
 
 void Board::printAntiDiagBoard() const{
-    for (int y = 0; y < this->_width; y++){
-        for (int x = 0; x < this->_width; x++){
+    printBoardX();
+    int sliceLen = intlen(this->_width);
+    for (int y = 0; y < this->_width; y++)
+    {
+        std::cout << std::setw(sliceLen) << y << "|";
+        for (int x = 0; x < this->_width; x++)
+        {
             if (this->_player1AntiDiag.test(x + y * this->_width))
-                std::cout << "1 ";
+                std::cout << std::setw(sliceLen + 1) << "1";
             else if (this->_player2AntiDiag.test(x + y * this->_width))
-                std::cout << "2 ";
+                std::cout << std::setw(sliceLen + 1) << "2";
             else
-                std::cout << "0 ";
+                std::cout << std::setw(sliceLen + 1) << "0";
         }
         std::cout << "\n";
     }
     std::cout << std::endl;
 }
 
-void    Board::printTransposedBoard() const{
-    for (int y = 0; y < this->_width; y++){
-        for (int x = 0; x < this->_width; x++){
+void    Board::printTransposedBoard() const
+{
+    printBoardX();
+    int sliceLen = intlen(this->_width);
+    for (int y = 0; y < this->_width; y++)
+    {
+        std::cout << std::setw(sliceLen) << y << "|";
+        for (int x = 0; x < this->_width; x++)
+        {
             if (this->_player1Transposed.test(x + y * this->_width))
-                std::cout << "1 ";
+                std::cout << std::setw(sliceLen + 1) << "1";
             else if (this->_player2Transposed.test(x + y * this->_width))
-                std::cout << "2 ";
+                std::cout << std::setw(sliceLen + 1) << "2";
             else
-                std::cout << "0 ";
+                std::cout << std::setw(sliceLen + 1) << "0";
         }
         std::cout << "\n";
     }
@@ -147,12 +177,10 @@ bool    Board::isPosEmpty(int x, int y) const {
 }
 
 void Board::generateDiagBoard() {
-    // _player1Diag.reset();
-    // _player2Diag.reset();
-
-    // Perform 45-degree rotation by adjusting row and column mapping
-    for (int row = 0; row < this->_width; ++row) {
-        for (int col = 0; col < this->_width; ++col) {
+    for (int row = 0; row < this->_width; ++row) 
+    {
+        for (int col = 0; col < this->_width; ++col) 
+        {
             int newRow = (row + col) % this->_width;
             int newCol = col;
             _player1Diag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
@@ -162,12 +190,10 @@ void Board::generateDiagBoard() {
 }
 
 void Board::generateAntiDiagBoard() {
-    // _player1AntiDiag.reset();
-    // _player2AntiDiag.reset();
-
-    // Perform 315-degree rotation by adjusting row and column mapping
-    for (int row = 0; row < this->_width; ++row) {
-        for (int col = 0; col < this->_width; ++col) {
+    for (int row = 0; row < this->_width; ++row) 
+    {
+        for (int col = 0; col < this->_width; ++col) 
+        {
             int newRow = (row - col + this->_width) % this->_width;
             int newCol = col;
             _player1AntiDiag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
@@ -196,5 +222,53 @@ void Board::generateTransposedBoard(){
             swapBits(_player1Transposed, n*i + j, n*j + i);
             swapBits(_player2Transposed, n*i + j, n*j + i);
         }
+    }
+}
+
+void Board::checkDiagPattern() {
+    std::bitset<4> patternToCheck;
+    int cnt;
+    for (int row = 0; row < this->_width; ++row) 
+    {
+        cnt = 0;
+        for (int col = 0; col < this->_width; ++col) 
+        {
+            if (col == row + 1) {
+                patternToCheck.reset();
+                cnt = 0;
+            }
+            patternToCheck[cnt] = _player1Diag[row + col * this->_width];
+            cnt++;
+            if (cnt == 4) {
+                std::cout << "CHECK: " << patternToCheck << std::endl;
+                patternToCheck <<= 1;
+                cnt = 3;
+            }
+        }
+        std::cout << std::endl;
+    }
+}
+
+void Board::checkAntiDiagPattern() {
+    std::bitset<4> patternToCheck;
+    int cnt;
+    for (int row = 0; row < this->_width; ++row) 
+    {
+        cnt = 0;
+        for (int col = 0; col < this->_width; ++col) 
+        {
+            if (col == this->_width - row) {
+                patternToCheck.reset();
+                cnt = 0;
+            }
+            patternToCheck[cnt] = _player1AntiDiag[row + col * this->_width];
+            cnt++;
+            if (cnt == 4) {
+                std::cout << "CHECK: " << patternToCheck << std::endl;
+                patternToCheck <<= 1;
+                cnt = 3;
+            }
+        }
+        std::cout << std::endl;
     }
 }

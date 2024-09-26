@@ -32,3 +32,14 @@ void    writeText(const std::string& msg, const std::string& font, const SDL_Rec
     SDL_DestroyTexture(Message);
     TTF_CloseFont(Font);
 }
+
+int intlen(int number) {
+    if (number == 0)
+        return 1;
+    int length = 0;
+    while (number != 0) {
+        number /= 10;
+        length++;
+    }
+    return length;
+}
