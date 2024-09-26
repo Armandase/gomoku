@@ -30,14 +30,6 @@ Board::Board(const Board &cpy):
     generateDiagBoard();
     generateAntiDiagBoard();
     generateTransposedBoard();
-    // std::cout << "ORIGINAL" << std::endl;
-    // printBoard();
-    // std::cout << "TRANSPOSED BOARD" << std::endl;
-    // printTransposedBoard();    
-    // std::cout << "DIAG" << std::endl;
-    // printDiagBoard();
-    // std::cout << "ANTI DIAG" << std::endl;
-    // printAntiDiagBoard();
 }
 
 Board &Board::operator=(const Board &rhs)
@@ -61,50 +53,44 @@ Board &Board::operator=(const Board &rhs)
 
 void Board::setPos(int x, int y, int player)
 {
+    int coordinateToTranspose1d = this->coordinateToTranspose1D(x, y);
+    int coordinateToDiag1d = this->coordinateToDiag1D(x, y);
+    int coordinateToAntiDiag1d = this->coordinateToAntiDiag1D(x, y);
 
-    if (player == this->_idPlayer1 && !this->_player2.test(x + y * this->_width))
+    if (player == this->_idPlayer1 && !this->_player2.test(x + y * this->_width)){
         this->_player1.set(x + y * this->_width);
-    else if (player == this->_idPlayer2 && !this->_player1.test(x + y * this->_width))
+        this->_player1Transposed.set(coordinateToTranspose1d);
+        this->_player1Diag.set(coordinateToDiag1d);
+        this->_player1AntiDiag.set(coordinateToAntiDiag1d);
+    }
+    else if (player == this->_idPlayer2 && !this->_player1.test(x + y * this->_width)){
         this->_player2.set(x + y * this->_width);
-    else
+        this->_player2Transposed.set(coordinateToTranspose1d);
+        this->_player2Diag.set(coordinateToDiag1d);
+        this->_player2AntiDiag.set(coordinateToAntiDiag1d);
+    }
+    else{
         std::cerr << "Error: Invalid player ID" << std::endl;
+        return ;
+    }
 }
 
-void Board::setPosTranspose(int x, int y, int player)
+int Board::coordinateToTranspose1D(int x, int y) const
 {
-
-    if (player == this->_idPlayer1 && !this->_player2.test(x + y * this->_width))
-        this->_player1.set(x + y * this->_width);
-    else if (player == this->_idPlayer2 && !this->_player1.test(x + y * this->_width))
-        this->_player2.set(x + y * this->_width);
-    else
-        std::cerr << "Error: Invalid player ID" << std::endl;
+    return (y + x * this->_width);
 }
 
-void Board::setPosDiag(int x, int y, int player)
+int Board::coordinateToDiag1D(int x, int y) const
 {
-
     int newRow = (x + y) % this->_width;
-    int newCol = y;
-    if (player == this->_idPlayer1 && !this->_player2Diag.test(newRow + newCol * this->_width))
-        this->_player1Diag.set(newRow + newCol * this->_width);
-    else if (player == this->_idPlayer2 && !this->_player1Diag.test(newRow + newCol * this->_width))
-        this->_player2Diag.set(newRow + newCol * this->_width);
-    else
-        std::cerr << "Error: Invalid player ID" << std::endl;
+    // return (newRow + y * this->_width);
+    return (newRow + x * this->_width);
 }
 
-void Board::setPosAntiDiag(int x, int y, int player)
+int Board::coordinateToAntiDiag1D(int x, int y) const
 {
-
     int newRow = (x - y + this->_width) % this->_width;
-    int newCol = y;
-    if (player == this->_idPlayer1 && !this->_player2AntiDiag.test(newRow + newCol * this->_width))
-        this->_player1AntiDiag.set(newRow + newCol * this->_width);
-    else if (player == this->_idPlayer2 && !this->_player1AntiDiag.test(newRow + newCol * this->_width))
-        this->_player2AntiDiag.set(newRow + newCol * this->_width);
-    else
-        std::cerr << "Error: Invalid player ID" << std::endl;
+    return (newRow + y * this->_width);
 }
 
 void Board::removePos(int x, int y){
@@ -119,7 +105,7 @@ int Board::getPos(int x, int y) const
     if (this->_player1.test(x + y * this->_width))
         return (this->_idPlayer1);
     else if (this->_player2.test(x + y * this->_width))
-        return (this->_idPlayer2);
+        return (this->_idPlayer2);  
     else
         return (0);
 }
@@ -130,22 +116,35 @@ Board::patternMap Board::extractPatterns(int xStart, int yStart, int xEnd, int y
     if (xEnd > this->_width || yEnd > this->_width){
         return result;
     }
-    int begin = xStart + yStart * this->_width;
-    int end = xEnd + yEnd * this->_width;
+    int beginDefault = xStart + yStart * this->_width;
+    int beginTranspose = this->coordinateToTranspose1D(xStart, yStart);
+    int beginDiag = this->coordinateToDiag1D(xStart, yStart);
+    std::cout << "Begin diag:" << beginDiag << std::endl;
+    int beginAntiDiag = this->coordinateToAntiDiag1D(xStart, yStart);
+    // int beginDefault = xStart + yStart * this->_width;
+    int nbIter = (xEnd + yEnd * this->_width) - beginDefault;
 
     patternBitset defaultBitset;
     patternBitset transposBitset;
-    for (int i = 0; i < end - begin; ++i) {
+    patternBitset diagBitset;
+    patternBitset antiDiagBitset;
+    for (int i = 0; i < nbIter; ++i) {
         if (player == this->_idPlayer1){
-            defaultBitset[i] = _player1[begin + i];
-            transposBitset[i] = _player1Transposed[begin + i];
+            defaultBitset[i] = _player1[beginDefault + i];
+            transposBitset[i] = _player1Transposed[beginTranspose + i];
+            diagBitset[i] = _player1Diag[beginDiag + i];
+            antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
         } else {
-            defaultBitset[i] = _player2[begin + i];
-            transposBitset[i] = _player2Transposed[begin + i];
+            defaultBitset[i] = _player2[beginDefault + i];
+            transposBitset[i] = _player2Transposed[beginTranspose + i];
+            diagBitset[i] = _player1Diag[beginDiag + i];
+            antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
         }
     }
     result.insert(patternPair(Board::PatternType::DEFAULT, defaultBitset));
     result.insert(patternPair(Board::PatternType::TRANSPOS, transposBitset));
+    result.insert(patternPair(Board::PatternType::DIAG, diagBitset));
+    result.insert(patternPair(Board::PatternType::ANTIDIAG, antiDiagBitset));
 
     return result;
 }
@@ -259,8 +258,10 @@ void Board::generateDiagBoard() {
         {
             int newRow = (row + col) % this->_width;
             int newCol = col;
-            _player1Diag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
-            _player2Diag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
+            // _player1Diag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
+            // _player2Diag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
+            _player1Diag[newRow + newCol * this->_width] = _player1[col + row * this->_width];
+            _player2Diag[newRow + newCol * this->_width] = _player2[col + row * this->_width];
         }
     }
 }
@@ -272,8 +273,10 @@ void Board::generateAntiDiagBoard() {
         {
             int newRow = (row - col + this->_width) % this->_width;
             int newCol = col;
-            _player1AntiDiag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
-            _player2AntiDiag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
+            // _player1AntiDiag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
+            // _player2AntiDiag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
+            _player1AntiDiag[newRow + newCol * this->_width] = _player1[col + row * this->_width];
+            _player2AntiDiag[newRow + newCol * this->_width] = _player2[col + row * this->_width];
         }
     }
 }

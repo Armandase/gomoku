@@ -5,6 +5,8 @@
 #include <sstream>
 #include <future>
 # include <set>
+#include "../inc/Pattern.hpp"
+
 
 bool emptyNeighbour(const Board &game, const int x, const int y){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
@@ -147,7 +149,21 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                 Board::patternMap res = game.extractPatterns(x, y, x + 4, y, player);
                 if (!res.size())
                     continue;
-                game.printBoard();
+                // std::cout << "x: " << x << " y: " << y << std::endl;
+                // std::cout << "DEFAULT" << std::endl;
+                // std::cout << "DEFAULT: " << res[Board::DEFAULT] << std::endl;
+                // game.printBoard();
+                // std::cout << "TRANSPOS" << std::endl;
+                // std::cout << "TRANSPOS: " << res[Board::TRANSPOS] << std::endl;
+                // game.printTransposedBoard();
+                std::cout << "DIAG" << std::endl;
+                std::cout << "DIAG: " << res[Board::DIAG] << std::endl;
+                game.printDiagBoard();
+                // std::cout << "ANTIDIAG" << std::endl;
+                // std::cout << "ANTIDIAG: " << res[Board::ANTIDIAG] << std::endl;
+                // game.printAntiDiagBoard();
+                Pattern::compareBoardsWithPattern(res);
+                // game.printBoard();
             }
             if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
                 Board copy = game;
