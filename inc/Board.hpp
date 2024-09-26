@@ -31,6 +31,9 @@ class Board{
         Board &operator=(const Board &rhs);
 
         void    setPos(int x, int y, int player);
+        void    setPosTranspose(int x, int y, int player);
+        void    setPosDiag(int x, int y, int player);
+        void    setPosAntiDiag(int x, int y, int player);
         void    removePos(int x, int y);
         int     getPos(int x, int y) const;
         patternMap extractPatterns(int xStart, int yStart, int xEnd, int yEnd, int player) const;
