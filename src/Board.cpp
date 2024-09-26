@@ -70,6 +70,43 @@ void Board::setPos(int x, int y, int player)
         std::cerr << "Error: Invalid player ID" << std::endl;
 }
 
+void Board::setPosTranspose(int x, int y, int player)
+{
+
+    if (player == this->_idPlayer1 && !this->_player2.test(x + y * this->_width))
+        this->_player1.set(x + y * this->_width);
+    else if (player == this->_idPlayer2 && !this->_player1.test(x + y * this->_width))
+        this->_player2.set(x + y * this->_width);
+    else
+        std::cerr << "Error: Invalid player ID" << std::endl;
+}
+
+void Board::setPosDiag(int x, int y, int player)
+{
+
+    int newRow = (x + y) % this->_width;
+    int newCol = y;
+    if (player == this->_idPlayer1 && !this->_player2Diag.test(newRow + newCol * this->_width))
+        this->_player1Diag.set(newRow + newCol * this->_width);
+    else if (player == this->_idPlayer2 && !this->_player1Diag.test(newRow + newCol * this->_width))
+        this->_player2Diag.set(newRow + newCol * this->_width);
+    else
+        std::cerr << "Error: Invalid player ID" << std::endl;
+}
+
+void Board::setPosAntiDiag(int x, int y, int player)
+{
+
+    int newRow = (x - y + this->_width) % this->_width;
+    int newCol = y;
+    if (player == this->_idPlayer1 && !this->_player2AntiDiag.test(newRow + newCol * this->_width))
+        this->_player1AntiDiag.set(newRow + newCol * this->_width);
+    else if (player == this->_idPlayer2 && !this->_player1AntiDiag.test(newRow + newCol * this->_width))
+        this->_player2AntiDiag.set(newRow + newCol * this->_width);
+    else
+        std::cerr << "Error: Invalid player ID" << std::endl;
+}
+
 void Board::removePos(int x, int y){
     if (this->_player1.test(x + y * this->_width))
         this->_player1.reset(x + y * this->_width);
