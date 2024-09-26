@@ -9,41 +9,25 @@ class Board;
 
 class Pattern{
     public:
-
-
-    public:
         static patternsVector getPatterns(){
             return (Pattern()._patterns);
         }
 
-        static void compareBoardsWithPattern(Board& gameBoard, int xPos, int yPos)
+        static bool compareBoardsWithPattern(Board::patternMap patterns)
         {
-            patternBitset defaultPattern;
-            patternBitset transposPattern;
-            patternBitset diagPattern;
-            patternBitset antiDiagPattern;
+            ulong defaultPattern = patterns[Board::DEFAULT].to_ulong();
+            ulong transposPattern = patterns[Board::TRANSPOS].to_ulong();
+            ulong diagPattern = patterns[Board::DIAG].to_ulong();
+            ulong antiDiagPattern = patterns[Board::ANTIDIAG].to_ulong();
 
             for (auto& pattern: Pattern::getPatterns()){
-                // gameBoard
-                std::cout << "Pattern for " << xPos << " : " << yPos << std::endl;
-                // std::cout << "Found pattern:" << gameBoard.extractPatterns(xPos, yPos, xPos + PARTTERN_SIZE, yPos + PARTTERN_SIZE, 1) << std::endl;
-                exit(1);
-
-                // pattern.to_ullong()
-
-                // pattern.to_ullong() != r.to_ulong();
+                if (pattern.to_ullong() == defaultPattern 
+                ||  pattern.to_ullong() == defaultPattern
+                ||  pattern.to_ullong() == defaultPattern
+                ||  pattern.to_ullong() == defaultPattern)
+                return true;
             }
-        }
-
-        static void matchPatternBoard(Board& gameBoard){
-            
-            for (int y = 0; y < BOARD_SIZE; y++) {
-                for (int x = 0; x < BOARD_SIZE; x++) {
-                    if (gameBoard.isPosEmpty(x, y) == true)
-                        continue ;
-                    Pattern::compareBoardsWithPattern(gameBoard, x, y);
-                }
-            }
+            return false;
         }
 
     private:
