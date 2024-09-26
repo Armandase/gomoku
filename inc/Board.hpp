@@ -31,6 +31,7 @@ class Board{
         void    printAntiDiagBoard() const;
         void    printTransposedBoard() const;
         void    resetBoard();
+        // void    patternMatching();
 
         void    generateTransposedBoard();
         void    generateDiagBoard();
