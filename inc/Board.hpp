@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cmath>
 #include "gomoku.hpp"
+# include "utils.hpp"
 #include <map>
 
 // bitboard representation of the board
@@ -45,8 +46,11 @@ class Board{
         void    generateTransposedBoard();
         void    generateDiagBoard();
         void    generateAntiDiagBoard();
+        void    checkDiagPattern();
+        void    checkAntiDiagPattern();
 
     private:
+        void printBoardX() const;
         void swapBits(bitboard& board, int pos1, int pos2);
         // void generateDiagBoard();
         // void generateAntiDiagBoard();
