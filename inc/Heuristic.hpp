@@ -1,5 +1,5 @@
-#ifndef HEURISTIC_HPP
-# define HEURISTIC_HPP
+#ifndef __HEURISTIC_HPP__
+#define __HEURISTIC_HPP__
 
 #include "iostream"
 #include "utils.hpp"

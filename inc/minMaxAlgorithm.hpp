@@ -1,5 +1,5 @@
 #ifndef __MINMAXALGORITHM_HPP__
-# define __MINMAXALGORITHM_HPP__
+#define __MINMAXALGORITHM_HPP__
 
 # include "gomoku.hpp"
 # include <algorithm>
@@ -35,4 +35,4 @@ typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 void    minMaxAlgorithm(Board&, int&,  SDL_Renderer *);
 bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center);
 
-#endif // !__MINMAXALGORITHM_HPP__
+#endif

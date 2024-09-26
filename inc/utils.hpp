@@ -1,7 +1,8 @@
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#ifndef __UTILS_HPP__
+#define __UTILS_HPP__
+
 # include "gomoku.hpp"
-# include "../inc/Board.hpp"
+// # include "../inc/Board.hpp"
 # include <unistd.h>
 
 void    SDL_Error(const std::string &, SDL_Window *, SDL_Renderer *);

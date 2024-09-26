@@ -1,6 +1,7 @@
 #include "../inc/gomoku.hpp"
 #include "../inc/utils.hpp"
 #include "../inc/minMaxAlgorithm.hpp"
+#include "../inc/Board.hpp"
 
 void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer){
     int x_square = x_case * GRID_SIZE + MARGIN - RADIUS;

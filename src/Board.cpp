@@ -1,4 +1,5 @@
 #include "../inc/Board.hpp"
+#include "../inc/Pattern.hpp"
 
 Board::Board():
     _player1(),
@@ -16,6 +17,12 @@ Board::~Board(){
 Board::Board(const Board &cpy):
     _player1(cpy._player1),
     _player2(cpy._player2),
+    _player1Transposed(cpy._player1Transposed),
+    _player2Transposed(cpy._player2Transposed),
+    _player1Diag(cpy._player1Diag),
+    _player2Diag(cpy._player2Diag),
+    _player1AntiDiag(cpy._player1AntiDiag),
+    _player2AntiDiag(cpy._player2AntiDiag),
     _width(cpy._width),
     _idPlayer1(cpy._idPlayer1),
     _idPlayer2(cpy._idPlayer2)
@@ -39,6 +46,12 @@ Board &Board::operator=(const Board &rhs)
     {
         this->_player1 = rhs._player1;
         this->_player2 = rhs._player2;
+        this->_player1Transposed = rhs._player1Transposed;
+        this->_player2Transposed = rhs._player2Transposed;
+        this->_player1Diag = rhs._player1Diag;
+        this->_player2Diag = rhs._player2Diag;
+        this->_player1AntiDiag = rhs._player1AntiDiag;
+        this->_player2AntiDiag = rhs._player2AntiDiag;
         this->_width = rhs._width;
         this->_idPlayer1 = rhs._idPlayer1;
         this->_idPlayer2 = rhs._idPlayer2;
@@ -74,15 +87,52 @@ int Board::getPos(int x, int y) const
         return (0);
 }
 
+Board::patternMap Board::extractPatterns(int xStart, int yStart, int xEnd, int yEnd, int player) const{
+    patternMap result{};
+
+    if (xEnd > this->_width || yEnd > this->_width){
+        return result;
+    }
+        // return de facon clean 
+        // return (Pattern::patternBitset().reset());
+    // xEnd = this->_width - xEnd; 
+    // yEnd = this->_width - yEnd; 
+    // xStart = this->_width - xStart; 
+    // yStart = this->_width - yStart; 
+    // printBoard();
+    std::cout << "start x: " << xStart << " y: " << yStart << std::endl;
+    std::cout << "end x: " << xEnd << " y: " << yEnd << std::endl;
+    int begin = xStart + yStart * this->_width;
+    int end = xEnd + yEnd * this->_width;
+
+
+    patternBitset defaultBitset;
+    patternBitset transposBitset;
+    for (int i = begin; i < begin - end + 1; ++i) {
+        if (player == this->_idPlayer1){
+            defaultBitset[i] = _player1[begin + i];
+            transposBitset[i] = _player1Transposed[begin + i];
+        } else {
+            defaultBitset[i] = _player2[begin + i];
+            transposBitset[i] = _player2Transposed[begin + i];
+        }
+    }
+
+    result.insert(patternPair(Board::PatternType::DEFAULT, defaultBitset));
+    result.insert(patternPair(Board::PatternType::TRANSPOS, transposBitset));
+
+    return result;
+}
+
 void Board::printBoard() const{
     for (int y = 0; y < this->_width; y++){
         for (int x = 0; x < this->_width; x++){
             if (this->_player1.test(x + y * this->_width))
-                std::cout << "1 ";
+                std::cout << "1  ";
             else if (this->_player2.test(x + y * this->_width))
-                std::cout << "2 ";
+                std::cout << "2  ";
             else
-                std::cout << "0 ";
+                std::cout << "0  ";
         }
         std::cout << "\n";
     }

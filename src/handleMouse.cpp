@@ -1,4 +1,5 @@
 #include "../inc/utils.hpp"
+#include "../inc/Board.hpp"
 
 // return  1 on victory; 0 every in other case
 int    place_stone(Board& game, int& player, SDL_Renderer *renderer, const int& y, const int& x){

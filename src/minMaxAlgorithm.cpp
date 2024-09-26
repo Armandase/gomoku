@@ -143,6 +143,14 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
     heuristicSet result;
     for (int y = 0; y < BOARD_SIZE && !cutoff; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
+            if (game.isPosEmpty(x, y) == false){
+                std::cout << "Current player:" << game.getPos(x, y) << std::endl;
+                auto res = game.extractPatterns(x, y, x + 4, y, player);
+                if (!res.size())
+                    continue;
+                game.printBoard();
+                std::cout << "Default extraction:" << res[Board::DEFAULT] << std::endl;
+            }
             if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
                 Board copy = game;
                 copy.setPos(x, y, player);
@@ -157,6 +165,7 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                     continue;
                 int next_player = (player == BLACK) ? WHITE : BLACK;
 
+                // std::cout << "Transpos extraction:" << res[Board::TRANSPOS] << std::endl;
                 // if (depth == DEPTH)
                 //     threadResult.push_back(async(std::launch::async, minMaxRecursive, copy, init_player, next_player, depth - 1, y, x, alpha, beta));
                 // else{

@@ -1,3 +1,6 @@
+#ifndef __BUTTON_HPP__
+#define __BUTTON_HPP__
+
 #include "../inc/gomoku.hpp"
 
 class Button
@@ -14,3 +17,5 @@ public:
     bool inButton(int mouseX, int mouseY);
     void renderButton(SDL_Renderer *renderer, int R, int G, int B);
 };
+
+#endif
