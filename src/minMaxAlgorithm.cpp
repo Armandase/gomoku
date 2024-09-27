@@ -156,9 +156,9 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                 // std::cout << "TRANSPOS" << std::endl;
                 // std::cout << "TRANSPOS: " << res[Board::TRANSPOS] << std::endl;
                 // game.printTransposedBoard();
-                std::cout << "DIAG" << std::endl;
+                // std::cout << "DIAG" << std::endl;
                 // std::cout << "DIAG: " << res[Board::DIAG] << std::endl;
-                game.printDiagBoard();
+                // game.printDiagBoard();
                 std::cout << "ANTIDIAG" << std::endl;
                 // std::cout << "ANTIDIAG: " << res[Board::ANTIDIAG] << std::endl;
                 game.printAntiDiagBoard();

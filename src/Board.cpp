@@ -82,15 +82,15 @@ int Board::coordinateToTranspose1D(int x, int y) const
 
 int Board::coordinateToDiag1D(int x, int y) const
 {
-    int newRow = (x + y) % this->_width;
+    int newY = (x + y) % this->_width;
     // return (newRow + y * this->_width);
-    return (x + newRow * this->_width);
+    return (x + newY * this->_width);
 }
 
 int Board::coordinateToAntiDiag1D(int x, int y) const
 {
-    int newRow = (x - y + this->_width) % this->_width;
-    return (y + newRow * this->_width);
+    int newY = (y - x + this->_width) % this->_width;
+    return (x + newY * this->_width);
 }
 
 void Board::removePos(int x, int y){
@@ -156,6 +156,115 @@ void Board::printBoardX() const
     for (int i = 0; i < this->_width; i++)
         std::cout << std::setw(sliceLen + 1) << i;
     std::cout << "\e[0m" << std::endl;
+}
+
+
+void Board::resetBoard(){
+    this->_player1.reset();
+    this->_player2.reset();
+}
+
+bool    Board::isPosEmpty(int x, int y) const {
+    if (this->_player1.test(x + y * this->_width) || this->_player2.test(x + y * this->_width))
+        return false;
+    return true;
+}
+
+void Board::generateDiagBoard() {
+    for (int y = 0; y < this->_width; ++y) 
+    {
+        for (int x = 0; x < this->_width; ++x) 
+        {
+            int newY = (y + x) % this->_width;
+            int newX = x;
+            _player1Diag[newX + newY * this->_width] = _player1[x + y * this->_width];
+            _player2Diag[newX + newY * this->_width] = _player2[x + y * this->_width];
+        }
+    }
+}
+
+void Board::generateAntiDiagBoard() {
+    for (int y = 0; y < this->_width; ++y) 
+    {
+        for (int x = 0; x < this->_width; ++x) 
+        {
+            int newY = (y - x + this->_width) % this->_width;
+            int newX = x;
+            _player1AntiDiag[newX + newY * this->_width] = _player1[x + y * this->_width];
+            _player2AntiDiag[newX + newY * this->_width] = _player2[x + y * this->_width];
+        }
+    }
+}
+
+void Board::swapBits(bitboard& board, int pos1, int pos2){
+    bool temp = board[pos1];
+    board[pos1] = board[pos2];
+    board[pos2] = temp;
+}
+
+void Board::generateTransposedBoard(){
+    if (this->_player1.none() == true && this->_player2.none() == true)
+    {
+        std::cout << __FUNCTION__ << " Transpose an empty board" << std::endl;
+    }
+    this->_player1Transposed = this->_player1;
+    this->_player2Transposed = this->_player2;
+
+    int n = std::sqrt(this->_player1.size());
+    for(int i = 0; i < n; ++i){
+        for(int j = i+1; j < n; ++j){
+            swapBits(_player1Transposed, n*i + j, n*j + i);
+            swapBits(_player2Transposed, n*i + j, n*j + i);
+        }
+    }
+}
+
+void Board::checkDiagPattern() {
+    std::bitset<4> patternToCheck;
+    int cnt;
+    for (int row = 0; row < this->_width; ++row) 
+    {
+        cnt = 0;
+        for (int col = 0; col < this->_width; ++col) 
+        {
+            if (col == row + 1) {
+                patternToCheck.reset();
+                cnt = 0;
+            }
+            patternToCheck[cnt] = _player1Diag[row + col * this->_width];
+            cnt++;
+            if (cnt == 4) {
+                std::cout << "CHECK: " << patternToCheck << std::endl;
+                patternToCheck <<= 1;
+                cnt = 3;
+            }
+        }
+        std::cout << std::endl;
+    }
+}
+
+void Board::checkAntiDiagPattern() {
+    std::bitset<4> patternToCheck;
+    int cnt;
+    for (int row = 0; row < this->_width; ++row) 
+    {
+        cnt = 0;
+        for (int col = 0; col < this->_width; ++col) 
+        {
+            if (col == this->_width - row) {
+                patternToCheck.reset();
+                cnt = 0;
+            }
+            patternToCheck[cnt] = _player1AntiDiag[row + col * this->_width];
+            cnt++;
+            if (cnt == 4) {
+                std::cout << "CHECK: " << patternToCheck << std::endl;
+                patternToCheck <<= 1;
+                cnt = 3;
+            }
+        }
+        std::cout << std::endl;
+    }
 }
 
 void Board::printBoard() const{
@@ -237,113 +346,4 @@ void    Board::printTransposedBoard() const
         std::cout << "\n";
     }
     std::cout << std::endl;
-}
-
-
-void Board::resetBoard(){
-    this->_player1.reset();
-    this->_player2.reset();
-}
-
-bool    Board::isPosEmpty(int x, int y) const {
-    if (this->_player1.test(x + y * this->_width) || this->_player2.test(x + y * this->_width))
-        return false;
-    return true;
-}
-
-void Board::generateDiagBoard() {
-    for (int row = 0; row < this->_width; ++row) 
-    {
-        for (int col = 0; col < this->_width; ++col) 
-        {
-            int newRow = (row + col) % this->_width;
-            int newCol = col;
-            _player1Diag[newCol + newRow * this->_width] = _player1[col + row * this->_width];
-            _player2Diag[newCol + newRow * this->_width] = _player2[col + row * this->_width];
-        }
-    }
-}
-
-void Board::generateAntiDiagBoard() {
-    for (int row = 0; row < this->_width; ++row) 
-    {
-        for (int col = 0; col < this->_width; ++col) 
-        {
-            int newRow = (row - col + this->_width) % this->_width;
-            int newCol = col;
-            _player1AntiDiag[newCol + newRow * this->_width] = _player1[col + row * this->_width];
-            _player2AntiDiag[newCol + newRow * this->_width] = _player2[col + row * this->_width];
-        }
-    }
-}
-
-void Board::swapBits(bitboard& board, int pos1, int pos2){
-    bool temp = board[pos1];
-    board[pos1] = board[pos2];
-    board[pos2] = temp;
-}
-
-void Board::generateTransposedBoard(){
-    if (this->_player1.none() == true && this->_player2.none() == true)
-    {
-        std::cout << __FUNCTION__ << " Transpose an empty board" << std::endl;
-    }
-    this->_player1Transposed = this->_player1;
-    this->_player2Transposed = this->_player2;
-
-    int n = std::sqrt(this->_player1.size());
-    for(int i = 0; i < n; ++i){
-        for(int j = i+1; j < n; ++j){
-            swapBits(_player1Transposed, n*i + j, n*j + i);
-            swapBits(_player2Transposed, n*i + j, n*j + i);
-        }
-    }
-}
-
-void Board::checkDiagPattern() {
-    std::bitset<4> patternToCheck;
-    int cnt;
-    for (int row = 0; row < this->_width; ++row) 
-    {
-        cnt = 0;
-        for (int col = 0; col < this->_width; ++col) 
-        {
-            if (col == row + 1) {
-                patternToCheck.reset();
-                cnt = 0;
-            }
-            patternToCheck[cnt] = _player1Diag[row + col * this->_width];
-            cnt++;
-            if (cnt == 4) {
-                std::cout << "CHECK: " << patternToCheck << std::endl;
-                patternToCheck <<= 1;
-                cnt = 3;
-            }
-        }
-        std::cout << std::endl;
-    }
-}
-
-void Board::checkAntiDiagPattern() {
-    std::bitset<4> patternToCheck;
-    int cnt;
-    for (int row = 0; row < this->_width; ++row) 
-    {
-        cnt = 0;
-        for (int col = 0; col < this->_width; ++col) 
-        {
-            if (col == this->_width - row) {
-                patternToCheck.reset();
-                cnt = 0;
-            }
-            patternToCheck[cnt] = _player1AntiDiag[row + col * this->_width];
-            cnt++;
-            if (cnt == 4) {
-                std::cout << "CHECK: " << patternToCheck << std::endl;
-                patternToCheck <<= 1;
-                cnt = 3;
-            }
-        }
-        std::cout << std::endl;
-    }
 }

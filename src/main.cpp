@@ -76,27 +76,6 @@ std::vector<std::vector<std::string>> rotateBoard45DegreesCounterClockwise(const
     return result;
 }
 
-void printBoard45(const std::vector<std::vector<std::string>>& board) {
-    int size = board.size();
-
-    // Print the increasing number of elements
-    for (int i = 0; i < size; ++i) {
-        std::cout << std::setw(((size - i) * 4) / 2);
-        for (int j = 0; j <= i; ++j) {
-            std::cout << board[i][j] << "  ";
-        }
-        std::cout << std::endl;
-    }
-
-    for (int i = 0; i < size; ++i) {
-        std::cout << std::setw(((i + 2) * 4) / 2);
-        for (int j = i + 1; j < size; ++j) {
-            std::cout << board[i][j] << "  ";
-        }
-        std::cout << std::endl;
-    }
-}
-
 void checkDiagPattern(const std::vector<std::vector<std::string>>& board) {
     int cnt;
     int size = board.size();
@@ -156,8 +135,6 @@ void checkAntiDiagPattern(const std::vector<std::vector<std::string>>& board) {
     }
 }
 
-
-
 // int main() {
 //     std::vector<std::vector<std::string>> board = {
 //         {"A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"},
@@ -172,16 +149,16 @@ void checkAntiDiagPattern(const std::vector<std::vector<std::string>>& board) {
 
 //     std::cout << "Original Board:\n";
 //     printBoard(board);
-//     std::cout << "\nRotated Board 45:\n";
-//     std::vector<std::vector<std::string>> diagBoard = rotateBoard45Degrees(board);
-//     printBoard(diagBoard);
-//     std::cout << "\nCheck Diag Pattern\n";
-//     checkDiagPattern(diagBoard);
+//     // std::cout << "\nRotated Board 45:\n";
+//     // std::vector<std::vector<std::string>> diagBoard = rotateBoard45Degrees(board);
+//     // printBoard(diagBoard);
+//     // std::cout << "\nCheck Diag Pattern\n";
+//     // checkDiagPattern(diagBoard);
 //     std::cout << "\nRotated Board 315:\n";
 //     std::vector<std::vector<std::string>> antiDiagBoard = rotateBoard45DegreesCounterClockwise(board);
 //     printBoard(antiDiagBoard);
-//     std::cout << "\nCheck AntiDiag Pattern\n";
-//     checkAntiDiagPattern(antiDiagBoard);
+//     // std::cout << "\nCheck AntiDiag Pattern\n";
+//     // checkAntiDiagPattern(antiDiagBoard);
 //     return 0;
 // }
 
