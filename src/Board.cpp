@@ -258,8 +258,6 @@ void Board::generateDiagBoard() {
         {
             int newRow = (row + col) % this->_width;
             int newCol = col;
-            // _player1Diag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
-            // _player2Diag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
             _player1Diag[newRow + newCol * this->_width] = _player1[col + row * this->_width];
             _player2Diag[newRow + newCol * this->_width] = _player2[col + row * this->_width];
         }
@@ -273,8 +271,6 @@ void Board::generateAntiDiagBoard() {
         {
             int newRow = (row - col + this->_width) % this->_width;
             int newCol = col;
-            // _player1AntiDiag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
-            // _player2AntiDiag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
             _player1AntiDiag[newRow + newCol * this->_width] = _player1[col + row * this->_width];
             _player2AntiDiag[newRow + newCol * this->_width] = _player2[col + row * this->_width];
         }
