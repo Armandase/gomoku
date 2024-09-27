@@ -158,8 +158,8 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                 // game.printTransposedBoard();
                 // std::cout << "DIAG" << std::endl;
                 // std::cout << "DIAG: " << res[Board::DIAG] << std::endl;
-                // game.printDiagBoard();
-                // std::cout << "ANTIDIAG" << std::endl;
+                game.printDiagBoard();
+                std::cout << "ANTIDIAG" << std::endl;
                 // std::cout << "ANTIDIAG: " << res[Board::ANTIDIAG] << std::endl;
                 // game.printAntiDiagBoard();
                 bool found = Pattern::compareBoardsWithPattern(multiDirectionnalPatterns);
