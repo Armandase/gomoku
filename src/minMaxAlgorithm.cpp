@@ -146,23 +146,26 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
     for (int y = 0; y < BOARD_SIZE && !cutoff; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
             if (game.isPosEmpty(x, y) == false){
-                Board::patternMap res = game.extractPatterns(x, y, 4, player);
-                if (!res.size())
+                Board::patternMap multiDirectionnalPatterns = game.extractPatterns(x, y, 4, player);
+                if (!multiDirectionnalPatterns.size())
                     continue;
                 // std::cout << "x: " << x << " y: " << y << std::endl;
-                std::cout << "DEFAULT" << std::endl;
+                // std::cout << "DEFAULT" << std::endl;
                 // std::cout << "DEFAULT: " << res[Board::DEFAULT] << std::endl;
-                game.printBoard();
+                // game.printBoard();
                 // std::cout << "TRANSPOS" << std::endl;
                 // std::cout << "TRANSPOS: " << res[Board::TRANSPOS] << std::endl;
                 // game.printTransposedBoard();
-                std::cout << "DIAG" << std::endl;
+                // std::cout << "DIAG" << std::endl;
                 // std::cout << "DIAG: " << res[Board::DIAG] << std::endl;
-                game.printDiagBoard();
-                std::cout << "ANTIDIAG" << std::endl;
+                // game.printDiagBoard();
+                // std::cout << "ANTIDIAG" << std::endl;
                 // std::cout << "ANTIDIAG: " << res[Board::ANTIDIAG] << std::endl;
-                game.printAntiDiagBoard();
-                Pattern::compareBoardsWithPattern(res);
+                // game.printAntiDiagBoard();
+                bool found = Pattern::compareBoardsWithPattern(multiDirectionnalPatterns);
+                std::cout << std::boolalpha << "Matching pattern found: " << found << std::endl;
+                if (!found)
+                    continue;
                 // game.printBoard();
             }
             if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
@@ -209,18 +212,7 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
             }
         }
     }
-    
-    // if (depth == DEPTH){
-    //     int len = threadResult.size();
-    //     for (int i = 0; i < len; i++){
-    //         threadResult[i].wait();
-    //     }
-    //     for (int i = 0; i < len; i++){
-    //         result.push_back(threadResult[i].get());
-    //     }
-    // }
-    if (DEPTH == depth)
-        std::cout << result.size() << "\n";
+
     if (init_player == player)
         return finCorrectValue(result, MAX);
 

@@ -113,6 +113,7 @@ int Board::getPos(int x, int y) const
 Board::patternMap Board::extractPatterns(int xPos, int yPos, int length, int player) const{
     patternMap result{};
     bool handleDiag = true;
+    bool handleAntiDiag = true;
 
     int xEnd = xPos + length % this->_width;
     int yEnd = yPos + (length / this->_width);
@@ -120,8 +121,11 @@ Board::patternMap Board::extractPatterns(int xPos, int yPos, int length, int pla
     if (xEnd > this->_width || yEnd > this->_width){
         return result;
     }
-    if (xPos <= yEnd && xEnd >= yEnd)
+    if (xPos <= yEnd + 1 && xEnd >= yEnd + 1)
         handleDiag = false;
+    if (this->_width - xPos <= yEnd - 1 && this->_width - xEnd >= yEnd - 1)
+        handleAntiDiag = false;
+    
 
     int beginDefault = xPos + yPos * this->_width;
     int beginTranspose = this->coordinateToTranspose1D(xPos, yPos);
@@ -136,17 +140,17 @@ Board::patternMap Board::extractPatterns(int xPos, int yPos, int length, int pla
         if (player == this->_idPlayer1){
             defaultBitset[i] = _player1[beginDefault + i];
             transposBitset[i] = _player1Transposed[beginTranspose + i];
-            if (handleDiag){
+            if (handleDiag)
                 diagBitset[i] = _player1Diag[beginDiag + i];
+            if (handleAntiDiag)
                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
-            }
         } else {
             defaultBitset[i] = _player2[beginDefault + i];
             transposBitset[i] = _player2Transposed[beginTranspose + i];
-            if (handleDiag){
+            if (handleDiag)
                 diagBitset[i] = _player1Diag[beginDiag + i];
+            if (handleAntiDiag)
                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
-            }
         }
     }
     result.insert(patternPair(Board::PatternType::DEFAULT, defaultBitset));
