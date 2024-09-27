@@ -20,11 +20,15 @@ class Pattern{
             ulong diagPattern = patterns[Board::DIAG].to_ulong();
             ulong antiDiagPattern = patterns[Board::ANTIDIAG].to_ulong();
 
+            // std::cout << "DEFAULT" << patterns[Board::DEFAULT] << std::endl;
+            // std::cout << "TRANSPOS" << patterns[Board::TRANSPOS] << std::endl;
             for (auto& pattern: Pattern::getPatterns()){
-                if (pattern.to_ullong() == defaultPattern 
-                ||  pattern.to_ullong() == defaultPattern
-                ||  pattern.to_ullong() == defaultPattern
-                ||  pattern.to_ullong() == defaultPattern)
+                // std::cout << "pattern: " << pattern << std::endl;
+                // std::cout << "Result: " << (pattern.to_ulong() == defaultPattern) << std::endl;
+                if (pattern.to_ulong() == defaultPattern 
+                ||  pattern.to_ulong() == transposPattern
+                ||  pattern.to_ulong() == diagPattern
+                ||  pattern.to_ulong() == antiDiagPattern)
                 return true;
             }
             return false;

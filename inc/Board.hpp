@@ -36,7 +36,7 @@ class Board{
         int    coordinateToAntiDiag1D(int x, int y) const;
         void    removePos(int x, int y);
         int     getPos(int x, int y) const;
-        patternMap extractPatterns(int xStart, int yStart, int xEnd, int yEnd, int player) const;
+        patternMap extractPatterns(int xStart, int yStart, int length, int player) const;
         bool    isPosEmpty(int x, int y) const;
 
         void    printBoard() const;

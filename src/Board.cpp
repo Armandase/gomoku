@@ -84,13 +84,13 @@ int Board::coordinateToDiag1D(int x, int y) const
 {
     int newRow = (x + y) % this->_width;
     // return (newRow + y * this->_width);
-    return (newRow + x * this->_width);
+    return (x + newRow * this->_width);
 }
 
 int Board::coordinateToAntiDiag1D(int x, int y) const
 {
     int newRow = (x - y + this->_width) % this->_width;
-    return (newRow + y * this->_width);
+    return (y + newRow * this->_width);
 }
 
 void Board::removePos(int x, int y){
@@ -110,35 +110,43 @@ int Board::getPos(int x, int y) const
         return (0);
 }
 
-Board::patternMap Board::extractPatterns(int xStart, int yStart, int xEnd, int yEnd, int player) const{
+Board::patternMap Board::extractPatterns(int xPos, int yPos, int length, int player) const{
     patternMap result{};
+    bool handleDiag = true;
 
+    int xEnd = xPos + length % this->_width;
+    int yEnd = yPos + (length / this->_width);
+    
     if (xEnd > this->_width || yEnd > this->_width){
         return result;
     }
-    int beginDefault = xStart + yStart * this->_width;
-    int beginTranspose = this->coordinateToTranspose1D(xStart, yStart);
-    int beginDiag = this->coordinateToDiag1D(xStart, yStart);
-    std::cout << "Begin diag:" << beginDiag << std::endl;
-    int beginAntiDiag = this->coordinateToAntiDiag1D(xStart, yStart);
-    // int beginDefault = xStart + yStart * this->_width;
-    int nbIter = (xEnd + yEnd * this->_width) - beginDefault;
+    if (xPos <= yEnd && xEnd >= yEnd)
+        handleDiag = false;
+
+    int beginDefault = xPos + yPos * this->_width;
+    int beginTranspose = this->coordinateToTranspose1D(xPos, yPos);
+    int beginDiag = this->coordinateToDiag1D(xPos, yPos);
+    int beginAntiDiag = this->coordinateToAntiDiag1D(xPos, yPos);
 
     patternBitset defaultBitset;
     patternBitset transposBitset;
     patternBitset diagBitset;
     patternBitset antiDiagBitset;
-    for (int i = 0; i < nbIter; ++i) {
+    for (int i = 0; i < length; ++i) {
         if (player == this->_idPlayer1){
             defaultBitset[i] = _player1[beginDefault + i];
             transposBitset[i] = _player1Transposed[beginTranspose + i];
-            diagBitset[i] = _player1Diag[beginDiag + i];
-            antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
+            if (handleDiag){
+                diagBitset[i] = _player1Diag[beginDiag + i];
+                antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
+            }
         } else {
             defaultBitset[i] = _player2[beginDefault + i];
             transposBitset[i] = _player2Transposed[beginTranspose + i];
-            diagBitset[i] = _player1Diag[beginDiag + i];
-            antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
+            if (handleDiag){
+                diagBitset[i] = _player1Diag[beginDiag + i];
+                antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
+            }
         }
     }
     result.insert(patternPair(Board::PatternType::DEFAULT, defaultBitset));
@@ -258,8 +266,8 @@ void Board::generateDiagBoard() {
         {
             int newRow = (row + col) % this->_width;
             int newCol = col;
-            _player1Diag[newRow + newCol * this->_width] = _player1[col + row * this->_width];
-            _player2Diag[newRow + newCol * this->_width] = _player2[col + row * this->_width];
+            _player1Diag[newCol + newRow * this->_width] = _player1[col + row * this->_width];
+            _player2Diag[newCol + newRow * this->_width] = _player2[col + row * this->_width];
         }
     }
 }
@@ -271,8 +279,8 @@ void Board::generateAntiDiagBoard() {
         {
             int newRow = (row - col + this->_width) % this->_width;
             int newCol = col;
-            _player1AntiDiag[newRow + newCol * this->_width] = _player1[col + row * this->_width];
-            _player2AntiDiag[newRow + newCol * this->_width] = _player2[col + row * this->_width];
+            _player1AntiDiag[newCol + newRow * this->_width] = _player1[col + row * this->_width];
+            _player2AntiDiag[newCol + newRow * this->_width] = _player2[col + row * this->_width];
         }
     }
 }
