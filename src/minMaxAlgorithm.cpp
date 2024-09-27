@@ -150,18 +150,18 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                 if (!res.size())
                     continue;
                 // std::cout << "x: " << x << " y: " << y << std::endl;
-                // std::cout << "DEFAULT" << std::endl;
+                std::cout << "DEFAULT" << std::endl;
                 // std::cout << "DEFAULT: " << res[Board::DEFAULT] << std::endl;
-                // game.printBoard();
+                game.printBoard();
                 // std::cout << "TRANSPOS" << std::endl;
                 // std::cout << "TRANSPOS: " << res[Board::TRANSPOS] << std::endl;
                 // game.printTransposedBoard();
                 std::cout << "DIAG" << std::endl;
-                std::cout << "DIAG: " << res[Board::DIAG] << std::endl;
+                // std::cout << "DIAG: " << res[Board::DIAG] << std::endl;
                 game.printDiagBoard();
-                // std::cout << "ANTIDIAG" << std::endl;
+                std::cout << "ANTIDIAG" << std::endl;
                 // std::cout << "ANTIDIAG: " << res[Board::ANTIDIAG] << std::endl;
-                // game.printAntiDiagBoard();
+                game.printAntiDiagBoard();
                 Pattern::compareBoardsWithPattern(res);
                 // game.printBoard();
             }

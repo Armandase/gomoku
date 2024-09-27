@@ -84,13 +84,13 @@ int Board::coordinateToDiag1D(int x, int y) const
 {
     int newRow = (x + y) % this->_width;
     // return (newRow + y * this->_width);
-    return (newRow + x * this->_width);
+    return (x + newRow * this->_width);
 }
 
 int Board::coordinateToAntiDiag1D(int x, int y) const
 {
     int newRow = (x - y + this->_width) % this->_width;
-    return (newRow + y * this->_width);
+    return (y + newRow * this->_width);
 }
 
 void Board::removePos(int x, int y){
@@ -258,10 +258,8 @@ void Board::generateDiagBoard() {
         {
             int newRow = (row + col) % this->_width;
             int newCol = col;
-            // _player1Diag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
-            // _player2Diag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
-            _player1Diag[newRow + newCol * this->_width] = _player1[col + row * this->_width];
-            _player2Diag[newRow + newCol * this->_width] = _player2[col + row * this->_width];
+            _player1Diag[newCol + newRow * this->_width] = _player1[col + row * this->_width];
+            _player2Diag[newCol + newRow * this->_width] = _player2[col + row * this->_width];
         }
     }
 }
@@ -273,10 +271,8 @@ void Board::generateAntiDiagBoard() {
         {
             int newRow = (row - col + this->_width) % this->_width;
             int newCol = col;
-            // _player1AntiDiag[newRow + newCol * this->_width] = _player1[row + col * this->_width];
-            // _player2AntiDiag[newRow + newCol * this->_width] = _player2[row + col * this->_width];
-            _player1AntiDiag[newRow + newCol * this->_width] = _player1[col + row * this->_width];
-            _player2AntiDiag[newRow + newCol * this->_width] = _player2[col + row * this->_width];
+            _player1AntiDiag[newCol + newRow * this->_width] = _player1[col + row * this->_width];
+            _player2AntiDiag[newCol + newRow * this->_width] = _player2[col + row * this->_width];
         }
     }
 }
