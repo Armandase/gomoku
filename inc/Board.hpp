@@ -51,15 +51,15 @@ class Board{
         void    generateAntiDiagBoard();
         void    checkDiagPattern();
         void    checkAntiDiagPattern();
+        
+        bitboard _player1;
+        bitboard _player2;
 
     private:
         void printBoardX() const;
         void swapBits(bitboard& board, int pos1, int pos2);
         // void generateDiagBoard();
         // void generateAntiDiagBoard();
-        
-        bitboard _player1;
-        bitboard _player2;
 
         bitboard _player1Transposed;
         bitboard _player2Transposed;
