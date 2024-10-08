@@ -161,6 +161,7 @@ void checkAntiDiagPattern(const std::vector<std::vector<std::string>>& board) {
 //     // checkAntiDiagPattern(antiDiagBoard);
 //     return 0;
 // }
+int nbMoves = 0;
 
 int main()
 {

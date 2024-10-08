@@ -18,6 +18,7 @@ class Heuristic
         int getIndex() const { return (this->_index); }
         int getX() const { return (this->_xPos); }
         int getY() const { return (this->_yPos); }
+        int getPlayer() const { return (this->_initPlayer); }
         void setHeuristic(int heuristic) { this->_heuristic = heuristic; }
     private:
         int     counterAnalysis(int count, bool capture, int empty, int inRow, int player);
