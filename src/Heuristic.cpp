@@ -4,7 +4,7 @@ Heuristic::~Heuristic(){
 }
 
 Heuristic::Heuristic(int player, const Board& game, int x, int y) :
-    _gamePtr(std::make_shared<Board>(game)),
+    _game(game),
     _initPlayer(player),
     _heuristic(0),
     _xPos(x),
@@ -14,7 +14,7 @@ Heuristic::Heuristic(int player, const Board& game, int x, int y) :
 }
 
 Heuristic::Heuristic(const Heuristic &cpy):
-    _gamePtr(cpy._gamePtr),
+    _game(cpy._game),
     _initPlayer(cpy._initPlayer),
     _heuristic(cpy._heuristic),
     _xPos(cpy._xPos),
@@ -27,7 +27,7 @@ Heuristic &Heuristic::operator=(const Heuristic &rhs)
 {
     if (this != &rhs)
     {
-        this->_gamePtr = rhs._gamePtr;
+        this->_game = rhs._game;
         this->_initPlayer = rhs._initPlayer;
         this->_heuristic = rhs._heuristic;
         this->_xPos = rhs._xPos;
@@ -37,7 +37,7 @@ Heuristic &Heuristic::operator=(const Heuristic &rhs)
     return (*this);
 }
 
-const Board& Heuristic::getGame() const { return (*(this->_gamePtr.get())); }
+const Board& Heuristic::getGame() const { return (this->_game); }
 
 
 int Heuristic::counterAnalysis(int count, bool capture, int empty, int inRow, int player) {
@@ -70,8 +70,8 @@ bool Heuristic::checkCapture(int checkY, int checkX, int dirY, int dirX, int pla
 
     if (checkX + dirX * 2 >= 0 && checkX + dirX * 2 <= BOARD_SIZE
         && checkY + dirY * 2 >= 0 && checkY + dirY * 2 <= BOARD_SIZE
-        && this->_gamePtr.get()->getPos(checkX + dirX, checkY + dirY) == ennemy
-        && this->_gamePtr.get()->getPos(checkX + (dirX * 2), checkY + (dirY * 2)) == player)
+        && this->_game.getPos(checkX + dirX, checkY + dirY) == ennemy
+        && this->_game.getPos(checkX + (dirX * 2), checkY + (dirY * 2)) == player)
             return true;
     return false;
 }
@@ -82,7 +82,7 @@ int Heuristic::localHeuristic(int x, int y){
     int localHeuritic = 0;
     int index = 0;
     int posToCheck;
-    int player = this->_gamePtr.get()->getPos(x, y);
+    int player = this->_game.getPos(x, y);
     int checkX, checkY;
 
 
@@ -93,7 +93,7 @@ int Heuristic::localHeuristic(int x, int y){
             if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
                 break ;
             
-            posToCheck = this->_gamePtr.get()->getPos(checkX, checkY);
+            posToCheck = this->_game.getPos(checkX, checkY);
             if (posToCheck == player)
                 ++(count[i / 2 % 2]);
             if (posToCheck == player && rowChecker[i % 2])
@@ -130,7 +130,7 @@ int Heuristic::globalHeuristic(){
 
     for (int y = 0; y < BOARD_SIZE; y++){
         for (int x = 0; x < BOARD_SIZE; x++){
-            if (this->_gamePtr.get()->isPosEmpty(x, y) == true)
+            if (this->_game.isPosEmpty(x, y) == true)
                 continue ;
         
             this->_heuristic += this->localHeuristic(x, y);
