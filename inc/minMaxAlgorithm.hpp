@@ -33,6 +33,6 @@ struct CompareHeuristic {
 typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 
 void    minMaxAlgorithm(Board&, int&,  SDL_Renderer *);
-bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center);
+// bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center);
 
 #endif

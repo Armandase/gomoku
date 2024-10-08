@@ -365,3 +365,45 @@ void    Board::printTransposedBoard() const
     }
     std::cout << std::endl;
 }
+
+int Board::countInDirection(int startRow, int startCol, int rowDelta, int colDelta, int player) {
+    int count = 0;
+    
+    for (int d = 1; d < 4; d++) {
+        int newRow = startRow + d * rowDelta;
+        int newCol = startCol + d * colDelta;
+
+        if (newRow < 0 || newRow >= this->_width || newCol < 0 || newCol >= this->_width)
+            break;
+
+        if ((player == _idPlayer1 && _player2[newRow * this->_width + newCol])
+        || (player == _idPlayer2 && _player1[newRow * this->_width + newCol]))
+            return -1;
+        
+        if ((player == _idPlayer1 && _player1[newRow * this->_width + newCol]) 
+        || (player == _idPlayer2 && _player2[newRow * this->_width + newCol]))
+            count++;
+    }
+    
+    return count;
+}
+
+bool Board::checkDoubleThree(int col, int row, int player) {
+    const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
+    const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
+    int count;
+    int double_three = 0;
+
+    for (int i = 0; i < 8; i += 2){
+        count = 1;
+        int dirA = countInDirection(row, col, dirX[i], dirY[i], player); 
+        int dirB = countInDirection(row, col, dirX[i + 1], dirY[i + 1], player);
+        if (dirA == 2 && dirB == 2)
+            return true;
+        count += dirA + dirB;
+        if (count == 3)
+            double_three++;
+    }
+
+    return double_three >= 2;
+}

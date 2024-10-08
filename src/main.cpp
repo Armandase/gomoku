@@ -36,7 +36,7 @@ void render_board(SDL_Renderer *renderer)
 
 //     // test.setPos(7, 2, BLACK);      
 //     int test_col = 7, test_row = 1; // Position to test (the X)
-//     if (check_double_free_three(test._player1, test._player2, test_col, test_row)) {
+//     if (checkDoubleThree(test._player1, test._player2, test_col, test_row)) {
 //         std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") would create a double three!" << std::endl;
 //     } else {
 //         std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") is allowed." << std::endl;
@@ -92,9 +92,9 @@ int main()
                     start = handleStart(renderer, playerButton, IAButton);
                     continue;
                 }
-                if (player == WHITE && handleMouse(board, player, renderer))
+                if ((player == WHITE || start == PLAYER_MODE) && handleMouse(board, player, renderer))
                     continue;
-                if (player == BLACK) {
+                if (player == BLACK && start == IA_MODE) {
                     minMaxAlgorithm(board, player, renderer);
                     player = WHITE;
                 }

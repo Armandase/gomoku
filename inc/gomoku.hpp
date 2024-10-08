@@ -49,5 +49,6 @@ void    render_board(SDL_Renderer *);
 int     gameChecker(Board&, const int&, const int&, const int&, SDL_Renderer*);
 int     place_stone(Board& board, int& player, SDL_Renderer *renderer, const int& y, const int& x);
 bool    checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX, int player);
+bool    checkDoubleThree(Board& game, int col, int row);
 
 #endif

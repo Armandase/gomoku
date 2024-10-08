@@ -50,21 +50,31 @@ bool checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX,
     return false;
 }
 
+bool checkPossibleCapture(Board& game, const int& y, const int& x, const int& player) {
+    if ((game.getPos(x - 1, y - 1) != player && game.getPos(x + 1, y + 1) == player) 
+    || (game.getPos(x - 1, y) != player && game.getPos(x + 1, y) == player)
+    || (game.getPos(x, y - 1) != player && game.getPos(x, y + 1) == player)
+    || (game.getPos(x - 1, y - 1) == player && game.getPos(x + 1, y + 1) != player) 
+    || (game.getPos(x - 1, y) == player && game.getPos(x + 1, y) != player)
+    || (game.getPos(x, y - 1) == player && game.getPos(x, y + 1) != player))
+        return true;
+    return false;
+}
+
 int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_Renderer* renderer){
     const int   dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
     int         checkX = x, checkY = y;
     int         count[2] = {1, 1};
-    int         doubleThree = 0;
 
     int current = 0;
     for (int i = 0; i < 8; i++){
         if (checkCapture(game, y, x, dirY[i], dirX[i], player) == true){
-                erasePlayer(y + dirY[i], x + dirX[i], renderer);
-                erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2, renderer);
-                game.removePos(x + dirX[i], y + dirY[i]);
-                game.removePos(x + dirX[i] * 2, y + dirY[i] * 2);
-                continue ;
+            erasePlayer(y + dirY[i], x + dirX[i], renderer);
+            erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2, renderer);
+            game.removePos(x + dirX[i], y + dirY[i]);
+            game.removePos(x + dirX[i] * 2, y + dirY[i] * 2);
+            continue ;
         }
         for (int j = 1; j < 5; ++j){
             checkX = x + (dirX[i] * j);
@@ -74,23 +84,17 @@ int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_
             
             if (game.getPos(checkX, checkY) != player)
                 break ;
+            // checkpossibleCapture
             else if (game.getPos(checkX, checkY) == player)
                 ++(count[i / 2 % 2]);
         }
-        if (checkDoubleThree(game, y, x, dirY[i], dirX[i], game.getPos(x, y)) == true){
-            ++doubleThree;
-        }
+
         if (i % 2 == 1){
             if (count[current] >= 5)
                 return (player);
             count[current] = 1;
             (current == 0) ? current = 1 : current = 0;
         }
-    }
-    if (doubleThree > 1){
-        std::cout << "double three en y: " << y << " x: " << x << "\n";
-        // return 3 to skip white(1) and black(2)
-        return 3;
     }
     if (count[0] >= 5 || count[1] >= 5)
         return (player);

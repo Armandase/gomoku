@@ -52,14 +52,16 @@ class Board{
         void    checkDiagPattern();
         void    checkAntiDiagPattern();
         
-        bitboard _player1;
-        bitboard _player2;
+        int     countInDirection(int startRow, int startCol, int rowDelta, int colDelta, int player);
+        bool    checkDoubleThree(int col, int row, int player);
 
     private:
         void printBoardX() const;
         void swapBits(bitboard& board, int pos1, int pos2);
         // void generateDiagBoard();
         // void generateAntiDiagBoard();
+        bitboard _player1;
+        bitboard _player2;
 
         bitboard _player1Transposed;
         bitboard _player2Transposed;

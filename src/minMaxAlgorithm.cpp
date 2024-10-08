@@ -68,38 +68,41 @@ bool checkWin(const Board& game, const int& y, const int& x, const int& player){
     return (false);
 }
 
-bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center){
-    int count = 1, empty = 0;
-    int checkX = x, checkY = y;
+// bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center){
+//     int count = 1, empty = 0;
+//     int checkX = x, checkY = y;
 
-    for (int j = 1; j < 5; j++) {
-        checkX = x + (dirX * j);
-        checkY = y + (dirY * j);
-        if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
-            break ;
+//     for (int j = 1; j < 5; j++) {
+//         checkX = x + (dirX * j);
+//         checkY = y + (dirY * j);
+//         if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
+//             break ;
 
-        if (empty > 1 || (count == 3 && copy.isPosEmpty(checkX, checkY) == false))
-            return false;
-        else if (count == 3)
-            break ;
-        if (copy.getPos(checkX, checkY) == center)
-            ++(count);
-        else if (copy.getPos(checkX, checkY) == 0)
-            ++empty;
-        else
-            break;
-    }
-    if (count == 3 && empty <= 1){
-        return true;
-    }
-    return false;
-}
+//         if (empty > 1 || (count == 3 && copy.isPosEmpty(checkX, checkY) == false))
+//             return false;
+//         else if (count == 3)
+//             break ;
+//         if (copy.getPos(checkX, checkY) == center)
+//             ++(count);
+//         else if (copy.getPos(checkX, checkY) == 0)
+//             ++empty;
+//         else
+//             break;
+//     }
+//     if (count == 3 && empty <= 1){
+//         return true;
+//     }
+//     return false;
+// }
 
 //return true when there are a double three
 bool    validGame(Board& copy, int yPoint, int xPoint, int player){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
     
+    if (copy.checkDoubleThree(xPoint, yPoint, player))
+        return true;
+        
     int doubleThree = 0;
     
     for (int y = 0; y < BOARD_SIZE; y++){
@@ -113,14 +116,6 @@ bool    validGame(Board& copy, int yPoint, int xPoint, int player){
                 if (y == yPoint && x == xPoint && checkCapture(copy, y, x, dirY[i], dirX[i], player) == true){
                     copy.removePos(x + dirX[i], y + dirY[i]);
                     copy.removePos(x + (dirX[i] * 2), y + (dirY[i] * 2));
-                }
-
-                if (checkDoubleThree(copy, y, x, dirY[i], dirX[i], copy.getPos(x, y)) == true){
-                    ++doubleThree;
-                }
-
-                if (doubleThree > 1){
-                    return true;
                 }
             }
         }
