@@ -4,6 +4,12 @@
 Board::Board():
     _player1(),
     _player2(),
+    _player1Transposed(),
+    _player2Transposed(),
+    _player1Diag(),
+    _player2Diag(),
+    _player1AntiDiag(),
+    _player2AntiDiag(),
     _idPlayer1(WHITE),
     _idPlayer2(BLACK)
 {
