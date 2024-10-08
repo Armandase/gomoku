@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/showanim.dir/showanim.c.o -o showanim  -Wl,-rpath,/nfs/homes/adamiens/42/gomoku/libs/SDL2_image/build libSDL2_image-2.0.so.0.600.3 /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so 
+/usr/bin/cc CMakeFiles/showanim.dir/showanim.c.o -o showanim  -Wl,-rpath,/home/nlocusso/42/gomoku/libs/SDL2_image/build libSDL2_image-2.0.so.0.600.3 /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so 

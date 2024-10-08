@@ -4,7 +4,6 @@
 #include "../inc/Button.hpp"
 #include "../inc/Heuristic.hpp"
 #include "../inc/Board.hpp"
-
 // render the board base on the number of square and them size
 void render_board(SDL_Renderer *renderer)
 {
@@ -26,141 +25,88 @@ void render_board(SDL_Renderer *renderer)
     SDL_RenderPresent(renderer);
 }
 
-void printBoard(const std::vector<std::vector<std::string>>& board) {
-    for (const auto& row : board) {
-        for (const auto& element : row) {
-            std::cout << (element.empty() ? "   " : element + " ");
-        }
-        std::cout << std::endl;
-    }
-}
-
-std::vector<std::vector<std::string>> rotateBoard45Degrees(const std::vector<std::vector<std::string>>& board) {
-    int rows = board.size();
-    int cols = board[0].size();
-    int newSize = rows;  // Keeping the original row count
-
-    // Create a new result board initialized with empty strings
-    std::vector<std::vector<std::string>> result(newSize, std::vector<std::string>(cols, ""));
-
-    // Place elements in a way that each diagonal is filled according to the desired rotation
-    for (int row = 0; row < rows; ++row) {
-        for (int col = 0; col < cols; ++col) {
-            int newRow = (row + col) % rows; // Shifting row positions by sum of row and column
-            int newCol = col;                // Keep the same column
-            result[newRow][newCol] = board[row][col];
-        }
-    }
-
-    return result;
-}
-
-std::vector<std::vector<std::string>> rotateBoard45DegreesCounterClockwise(const std::vector<std::vector<std::string>>& board) {
-    int rows = board.size();
-    int cols = board[0].size();
-    int newSize = rows;  // Keeping the original row count
-
-    // Create a new result board initialized with empty strings
-    std::vector<std::vector<std::string>> result(newSize, std::vector<std::string>(cols, ""));
-
-    // Place elements in a way that each diagonal is filled according to the counterclockwise rotation
-    for (int row = 0; row < rows; ++row) {
-        for (int col = 0; col < cols; ++col) {
-            // For counterclockwise rotation, subtract col from row
-            int newRow = (row - col + rows) % rows; // Handle negative indices with +rows
-            int newCol = col; // Keep the column index unchanged
-            result[newRow][newCol] = board[row][col];
-        }
-    }
-
-    return result;
-}
-
-void checkDiagPattern(const std::vector<std::vector<std::string>>& board) {
-    int cnt;
-    int size = board.size();
-    for (int row = 0; row < size; ++row) {
-        cnt = 0;
-        std::string patternToCheck = ""; // Store the diagonal pattern as a string
-        for (int col = 0; col < size; ++col) {
-            // Reset the pattern when moving to the next diagonal
-            if (col == row + 1) {
-                patternToCheck = "";
-                cnt = 0;
-            }
-
-            // Concatenate the string at (row, col) to the pattern
-            patternToCheck += board[row][col] + " ";
-            cnt++;
-
-            // If we've collected 4 items, print and reset the pattern
-            if (cnt == 4) {
-                std::cout << "CHECK: " << patternToCheck << std::endl;
-                // Shift pattern left and reduce count
-                patternToCheck.erase(0, 3);
-                cnt = 3;
-            }
-        }
-        std::cout << std::endl;
-    }
-}
+// int width = {BOARD_SIZE + 1};
 
 
-void checkAntiDiagPattern(const std::vector<std::vector<std::string>>& board) {
-    int cnt;
-    int size = board.size();
-    for (int row = 0; row < size; ++row) {
-        cnt = 0;
-        std::string patternToCheck = ""; // Store the diagonal pattern as a string
-        for (int col = 0; col < size; ++col) {
-            // Reset the pattern when moving to the next diagonal
-            if (col == size - row) {
-                patternToCheck = "";
-                cnt = 0;
-            }
+// int count_in_direction(Board::bitboard& playerBoard, Board::bitboard& enemyBoard, int startRow, int startCol, int rowDelta, int colDelta) {
+//     int count = 0;
+    
+//     // Continue moving in the specified direction
+//     for (int d = 1; d < 4; d++) {  // Check up to 3 pieces in the direction
+//         int newRow = startRow + d * rowDelta;
+//         int newCol = startCol + d * colDelta;
+        
+//         // Check boundaries and enemy pieces
+//         if (enemyBoard[newRow * width + newCol])
+//             return -1;
+//         if (newRow < 0 || newRow >= width || newCol < 0 || newCol >= width) {
+//             break;
+//         }
+        
+//         // Count player's pieces
+//         if (playerBoard[newRow * width + newCol]) {
+//             count++;
+//         }
+//     }
+    
+//     return count;
+// }
 
-            // Concatenate the string at (row, col) to the pattern
-            patternToCheck += board[row][col] + " ";
-            cnt++;
+// void printB(Board::bitboard& playerBoard, Board::bitboard& enemyBoard) {
+//     for (int r = 0; r < width; r++) {
+//         for (int c = 0; c < width; c++) {
+//             if (playerBoard[r * width + c]) {
+//                 std::cout << "W "; // White
+//             } else if (enemyBoard[r * width + c]) {
+//                 std::cout << "B "; // Black
+//             } else {
+//                 std::cout << ". "; // Empty
+//             }
+//         }
+//         std::cout << std::endl;
+//     }
+// }
 
-            // If we've collected 4 items, print and reset the pattern
-            if (cnt == 4) {
-                std::cout << "CHECK: " << patternToCheck << std::endl;
-                // Shift pattern left and reduce count
-                patternToCheck.erase(0, 3);
-                cnt = 3;
-            }
-        }
-        std::cout << std::endl;
-    }
-}
+// bool check_double_free_three(Board::bitboard& playerBoard, Board::bitboard& enemyBoard, int col, int row) {
+//     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
+//     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
+//     int count;
+//     int double_three = 0;
 
-// int main() {
-//     std::vector<std::vector<std::string>> board = {
-//         {"A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"},
-//         {"A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7"},
-//         {"A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6"},
-//         {"A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5"},
-//         {"A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4"},
-//         {"A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3"},
-//         {"A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2"},
-//         {"A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1"}
-//     };
+//     Board::bitboard newBoard = playerBoard;
+//     newBoard.set(col + row * width);
+//     printB(newBoard, enemyBoard);
+//     for (int i = 0; i < 8; i += 2){
+//         count = 1;
+//         count += count_in_direction(newBoard, enemyBoard, row, col, dirX[i], dirY[i]); 
+//         count += count_in_direction(newBoard, enemyBoard, row, col, dirX[i + 1], dirY[i + 1]);
+//         std::cout << count << std::endl;
+//         if (count >= 3)
+//             double_three++;
+//     }
 
-//     std::cout << "Original Board:\n";
-//     printBoard(board);
-//     // std::cout << "\nRotated Board 45:\n";
-//     // std::vector<std::vector<std::string>> diagBoard = rotateBoard45Degrees(board);
-//     // printBoard(diagBoard);
-//     // std::cout << "\nCheck Diag Pattern\n";
-//     // checkDiagPattern(diagBoard);
-//     std::cout << "\nRotated Board 315:\n";
-//     std::vector<std::vector<std::string>> antiDiagBoard = rotateBoard45DegreesCounterClockwise(board);
-//     printBoard(antiDiagBoard);
-//     // std::cout << "\nCheck AntiDiag Pattern\n";
-//     // checkAntiDiagPattern(antiDiagBoard);
+//     return double_three >= 2;
+// }
+
+
+// int main(int argc, char const *argv[])
+// {
+//     Board test;
+//     test.setPos(1, 1, WHITE);
+//     test.setPos(2, 2, WHITE);
+//     test.setPos(5, 4, WHITE);
+//     test.setPos(6, 4, WHITE);
+
+//     // test.setPos(3, 4, BLACK);        
+//     int test_row = 4, test_col = 4; // Position to test (the X)
+//     if (check_double_free_three(test._player1, test._player2, test_col, test_row)) {
+//         std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") would create a double three!" << std::endl;
+//     } else {
+//         std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") is allowed." << std::endl;
+//     }
 //     return 0;
 // }
+int nbMoves = 0;
 
 int main()
 {

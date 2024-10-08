@@ -32,14 +32,9 @@ bool emptyNeighbour(const Board &game, const int x, const int y){
 Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
     if (recursiveResult.empty())
         throw std::runtime_error("Empty vector of recursive\n");
-    // for (auto it = recursiveResult.begin(); it != recursiveResult.end(); it++){
-    //     std::cout << it->getHeuristic() << "\n";
-    // }
     if (minOrMax == MAX){
-        // std::cout << "max: " << recursiveResult.rbegin()->getHeuristic() << "\n";
         return *recursiveResult.rbegin();
     }
-    // std::cout << "min: " << recursiveResult.begin()->getHeuristic() << "\n";
     return *recursiveResult.begin();
 }
 
@@ -140,7 +135,6 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
 
     // std::vector< std::future<cost> > threadResult;
     int value = (player == init_player) ? -2147483648 : 2147483647;
-    // std::vector<Heuristic> result;
     bool cutoff = false;
     heuristicSet result;
     for (int y = 0; y < BOARD_SIZE && !cutoff; y++) {
@@ -149,24 +143,9 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                 Board::patternMap multiDirectionnalPatterns = game.extractPatterns(x, y, 4, player);
                 if (!multiDirectionnalPatterns.size())
                     continue;
-                // std::cout << "x: " << x << " y: " << y << std::endl;
-                // std::cout << "DEFAULT" << std::endl;
-                // std::cout << "DEFAULT: " << res[Board::DEFAULT] << std::endl;
-                // game.printBoard();
-                // std::cout << "TRANSPOS" << std::endl;
-                // std::cout << "TRANSPOS: " << res[Board::TRANSPOS] << std::endl;
-                // game.printTransposedBoard();
-                // std::cout << "DIAG" << std::endl;
-                // std::cout << "DIAG: " << res[Board::DIAG] << std::endl;
-                game.printDiagBoard();
-                std::cout << "ANTIDIAG" << std::endl;
-                // std::cout << "ANTIDIAG: " << res[Board::ANTIDIAG] << std::endl;
-                // game.printAntiDiagBoard();
                 bool found = Pattern::compareBoardsWithPattern(multiDirectionnalPatterns);
-                std::cout << std::boolalpha << "Matching pattern found: " << found << std::endl;
-                if (!found)
+                if (found == false)
                     continue;
-                // game.printBoard();
             }
             if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
                 Board copy = game;
@@ -182,7 +161,6 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                     continue;
                 int next_player = (player == BLACK) ? WHITE : BLACK;
 
-                // std::cout << "Transpos extraction:" << res[Board::TRANSPOS] << std::endl;
                 // if (depth == DEPTH)
                 //     threadResult.push_back(async(std::launch::async, minMaxRecursive, copy, init_player, next_player, depth - 1, y, x, alpha, beta));
                 // else{
@@ -191,7 +169,7 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                 if (player == init_player){
                     if (recursiveResult.getHeuristic() > value)
                         value = recursiveResult.getHeuristic();
-                    if (value >= beta){
+                    if (value >= beta || result.begin()->getHeuristic() == 2147483647){
                         cutoff = true;
                         break ;
                     }
@@ -201,7 +179,7 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                 else {
                     if (recursiveResult.getHeuristic() < value)
                         value = recursiveResult.getHeuristic();
-                    if (value <= alpha){
+                    if (value <= alpha || long(result.rbegin()->getHeuristic()) == -21474836478){
                         cutoff = true;
                         break ;
                     }

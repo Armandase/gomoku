@@ -68,11 +68,9 @@ int Heuristic::counterAnalysis(int count, bool capture, int empty, int inRow, in
 bool Heuristic::checkCapture(int checkY, int checkX, int dirY, int dirX, int player) {
     int ennemy = (player == WHITE) ? BLACK : WHITE;
 
-    if (checkY + dirY >= 0 && checkY + dirY <= BOARD_SIZE 
-        && checkX + dirX >= 0 && checkX + dirX <= BOARD_SIZE
-        && this->_gamePtr.get()->getPos(checkX + dirX, checkY + dirY) == ennemy
-        && checkX + dirX * 2 >= 0 && checkX + dirX * 2 <= BOARD_SIZE
+    if (checkX + dirX * 2 >= 0 && checkX + dirX * 2 <= BOARD_SIZE
         && checkY + dirY * 2 >= 0 && checkY + dirY * 2 <= BOARD_SIZE
+        && this->_gamePtr.get()->getPos(checkX + dirX, checkY + dirY) == ennemy
         && this->_gamePtr.get()->getPos(checkX + (dirX * 2), checkY + (dirY * 2)) == player)
             return true;
     return false;
