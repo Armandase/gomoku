@@ -28,8 +28,8 @@ class Heuristic
 
         static constexpr int   dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
         static constexpr int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
-        //a shared pointer to the game
-        std::shared_ptr<Board> _gamePtr;
+
+        Board _game;
 
         int   _initPlayer;
         int         _heuristic;

@@ -95,7 +95,7 @@ bool checkWin(const Board& game, const int& y, const int& x, const int& player){
 //     return false;
 // }
 
-//return true when there are a double three
+//return false when there are a double three
 bool    validGame(Board& copy, int yPoint, int xPoint, int player){
     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
@@ -120,76 +120,94 @@ bool    validGame(Board& copy, int yPoint, int xPoint, int player){
             }
         }
     }
-    return false;
+    return true;
 }
 
 Heuristic minMaxRecursive(const Board &game, int init_player, int player, int depth, const int yGame, const int xGame, int alpha, int beta) {
     if (depth == 0 || checkWin(game, yGame, xGame, player) == true) {
         return (Heuristic (player, game, xGame, yGame));
     }
-
     // std::vector< std::future<cost> > threadResult;
     int value = (player == init_player) ? -2147483648 : 2147483647;
     bool cutoff = false;
     heuristicSet result;
     for (int y = 0; y < BOARD_SIZE && !cutoff; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
-            if (game.isPosEmpty(x, y) == false){
-                Board::patternMap multiDirectionnalPatterns = game.extractPatterns(x, y, 4, player);
-                if (!multiDirectionnalPatterns.size())
-                    continue;
-                bool found = Pattern::compareBoardsWithPattern(multiDirectionnalPatterns);
-                if (found == false)
-                    continue;
-            }
+            // if (game.isPosEmpty(x, y) == false){
+            //     Board::patternMap multiDirectionnalPatterns = game.extractPatterns(x, y, 4, player);
+            //     if (!multiDirectionnalPatterns.size())
+            //         continue;
+            //     bool found = Pattern::compareBoardsWithPattern(multiDirectionnalPatterns);
+            //     if (found == false)
+            //         continue;
+            // }
             if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
                 Board copy = game;
                 copy.setPos(x, y, player);
-                if (checkWin(copy, y, x, player) && depth == DEPTH){
-                    // return Heuristic{INT_MAX, x, y};
+                if (validGame(copy, y, x, player) == false)
+                    continue;
+                if (checkWin(copy, y, x, player) == true){
                     Heuristic h = Heuristic(player, copy, x, y);
                     h.setHeuristic(INT_MAX);
                     return h;
                 }
 
-                if (validGame(copy, y, x, player) == true)
-                    continue;
                 int next_player = (player == BLACK) ? WHITE : BLACK;
 
                 // if (depth == DEPTH)
                 //     threadResult.push_back(async(std::launch::async, minMaxRecursive, copy, init_player, next_player, depth - 1, y, x, alpha, beta));
                 // else{
-                Heuristic recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x, alpha, beta);
-                result.insert(recursiveResult);
-                if (player == init_player){
-                    if (recursiveResult.getHeuristic() > value)
-                        value = recursiveResult.getHeuristic();
-                    if (value >= beta || result.begin()->getHeuristic() == 2147483647){
-                        cutoff = true;
-                        break ;
-                    }
-                    if (value > alpha)
-                        alpha = value;
-                }
-                else {
-                    if (recursiveResult.getHeuristic() < value)
-                        value = recursiveResult.getHeuristic();
-                    if (value <= alpha || long(result.rbegin()->getHeuristic()) == -21474836478){
-                        cutoff = true;
-                        break ;
-                    }
-                    if (value < beta)
-                        beta = value;
-                }
+                Heuristic h = Heuristic(player, copy, x, y);
+                h.setHeuristic(h.localHeuristic(x, y));
+                // Heuristic recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x, alpha, beta);
+                result.insert(h);
+                // if (player == init_player){
+                //     if (recursiveResult.getHeuristic() > value)
+                //         value = recursiveResult.getHeuristic();
+                //     if (value >= beta || result.begin()->getHeuristic() == 2147483647){
+                //         cutoff = true;
+                //         break ;
+                //     }
+                //     if (value > alpha)
+                //         alpha = value;
+                // }
+                // else {
+                //     if (recursiveResult.getHeuristic() < value)
+                //         value = recursiveResult.getHeuristic();
+                //     if (value <= alpha || long(result.rbegin()->getHeuristic()) == -21474836478){
+                //         cutoff = true;
+                //         break ;
+                //     }
+                //     if (value < beta)
+                //         beta = value;
+                // }
                 // }
             }
         }
     }
 
-    if (init_player == player)
-        return finCorrectValue(result, MAX);
+    heuristicSet recursiveResult;
+    int limit = (PRUNING < result.size()) ? PRUNING : result.size();
+    for (int i = 0; i < limit; i ++){
+        if (init_player == player){
+            auto it = result.begin();
+            std::advance(it, i);    
+            int next_player = (it->getPlayer() == BLACK) ? WHITE : BLACK;
+            recursiveResult.insert(minMaxRecursive(it->getGame(), init_player, next_player, depth - 1, it->getY(), it->getX(), alpha, beta));
+        }
+        else{
+            auto it = result.rbegin();
+            std::advance(it, i);
+            int next_player = (it->getPlayer() == BLACK) ? WHITE : BLACK;
+            recursiveResult.insert(minMaxRecursive(it->getGame(), init_player, next_player, depth - 1, it->getY(), it->getX(), alpha, beta));
+        } 
 
-    return finCorrectValue(result, MIN);;
+    }
+
+    if (init_player == player)
+        return finCorrectValue(recursiveResult, MAX);
+
+    return finCorrectValue(recursiveResult, MIN);
 }
 
 
@@ -198,13 +216,13 @@ void minMaxAlgorithm(Board &game, int &player, SDL_Renderer *renderer)
     int alpha = -2147483648, beta = 2147483647;
 
     // clock_t begin = clock();
+    try {
     auto t_start = std::chrono::high_resolution_clock::now();
-    Heuristic result =  minMaxRecursive(game, player, player, DEPTH, 0, 0, alpha, beta);
+        Heuristic result =  minMaxRecursive(game, player, player, DEPTH, 0, 0, alpha, beta);
     const auto t_end = std::chrono::high_resolution_clock::now();
 	// clock_t end = clock();
 	// double timer = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
     double timer = std::chrono::duration<double, std::milli>(t_end - t_start).count() / 1000;
-
     std::cout << "heuristic:" << result.getHeuristic() << " X: " << result.getX() << " Y: " << result.getY() <<"\n";
     {
         std::ostringstream message;
@@ -219,5 +237,8 @@ void minMaxAlgorithm(Board &game, int &player, SDL_Renderer *renderer)
         writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24,renderer);
     }
     place_stone(game, player, renderer, result.getY(), result.getX());
+    } catch (std::exception& e){
+        (void)e;
+    }
 
 }
