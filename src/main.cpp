@@ -1,9 +1,9 @@
 #include "../inc/gomoku.hpp"
 #include "../inc/utils.hpp"
-#include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Button.hpp"
 #include "../inc/Heuristic.hpp"
 #include "../inc/Board.hpp"
+#include "../inc/minMaxAlgorithm.hpp"
 
 // render the board base on the number of square and them size
 void render_board(SDL_Renderer *renderer)

@@ -1,7 +1,7 @@
 MAKEFLAGS += -j
 
 CXX		=	c++
-NAME 	= 	gomoku
+NAME 	= 	Gomoku
 SRC 	=	main.cpp utils.cpp drawCircle.cpp \
 			minMaxAlgorithm.cpp handleMouse.cpp \
 			Button.cpp startMenu.cpp \
