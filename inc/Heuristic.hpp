@@ -11,11 +11,13 @@ class Heuristic
 	public:
         Heuristic(int player, const Board& game, int x, int y);
         ~Heuristic();
+        Heuristic(const Heuristic &cpy);
+        Heuristic &operator=(const Heuristic &rhs);
 
-        int heuristic();
+        int globalHeuristic();
+        int localHeuristic(int x, int y);
         const Board& getGame() const;
         int getHeuristic() const { return (this->_heuristic); }
-        int getIndex() const { return (this->_index); }
         int getX() const { return (this->_xPos); }
         int getY() const { return (this->_yPos); }
         void setHeuristic(int heuristic) { this->_heuristic = heuristic; }
@@ -28,9 +30,8 @@ class Heuristic
         //a shared pointer to the game
         std::shared_ptr<Board> _gamePtr;
 
-        const int   _initPlayer;
+        int   _initPlayer;
         int         _heuristic;
-        int         _index;
         int         _xPos;
         int         _yPos;
 };

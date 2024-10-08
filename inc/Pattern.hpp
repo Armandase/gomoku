@@ -13,6 +13,10 @@ class Pattern{
             return (Pattern()._patterns);
         }
 
+        static patternBitset getCapturePatterns(){
+            return (Pattern()._capturePattern);
+        }
+
         static bool compareBoardsWithPattern(Board::patternMap patterns)
         {
             ulong defaultPattern = patterns[Board::DEFAULT].to_ulong();
@@ -45,6 +49,8 @@ class Pattern{
             patternBitset("1101"),
             patternBitset("1011")
         };
+
+         const patternBitset _capturePattern = patternBitset("1001");
 };
 
 #endif
