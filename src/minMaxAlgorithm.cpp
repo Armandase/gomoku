@@ -144,7 +144,6 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
                 if (!multiDirectionnalPatterns.size())
                     continue;
                 bool found = Pattern::compareBoardsWithPattern(multiDirectionnalPatterns);
-                // std::cout << std::boolalpha << "Matching pattern found: " << found << std::endl;
                 if (found == false)
                     continue;
             }

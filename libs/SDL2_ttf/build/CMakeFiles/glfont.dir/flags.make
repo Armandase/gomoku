@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -DHAVE_OPENGL
 
-C_INCLUDES = -I/nfs/homes/adamiens/42/gomoku/libs/SDL2_ttf -isystem /usr/include/SDL2
+C_INCLUDES = -I/home/nlocusso/42/gomoku/libs/SDL2_ttf -isystem /usr/include/SDL2
 
 C_FLAGS = -fPIE
 

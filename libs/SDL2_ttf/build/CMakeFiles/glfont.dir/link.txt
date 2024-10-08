@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/glfont.dir/glfont.c.o -o glfont  -Wl,-rpath,/nfs/homes/adamiens/42/gomoku/libs/SDL2_ttf/build /usr/lib/x86_64-linux-gnu/libOpenGL.so libSDL2_ttf-2.0.so.0.2000.2 /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so 
+/usr/bin/cc CMakeFiles/glfont.dir/glfont.c.o -o glfont  -Wl,-rpath,/home/nlocusso/42/gomoku/libs/SDL2_ttf/build /usr/lib/x86_64-linux-gnu/libOpenGL.so libSDL2_ttf-2.0.so.0.2000.2 /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so 
