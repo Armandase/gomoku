@@ -57,6 +57,13 @@ Board &Board::operator=(const Board &rhs)
     return (*this);
 }
 
+bool Board::isValidPos(int x, int y)
+{
+    if (x < 0 || x > this->_width || y < 0 || y > this->_width)
+        return false;
+    return true;
+}
+
 void Board::setPos(int x, int y, int player)
 {
     int coordinateToTranspose1d = this->coordinateToTranspose1D(x, y);

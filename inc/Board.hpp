@@ -31,6 +31,7 @@ class Board{
         Board &operator=(const Board &rhs);
 
         void    setPos(int x, int y, int player);
+        bool     isValidPos(int x, int y);
         int    coordinateToTranspose1D(int x, int y) const;
         int    coordinateToDiag1D(int x, int y) const;
         int    coordinateToAntiDiag1D(int x, int y) const;

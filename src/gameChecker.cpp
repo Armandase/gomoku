@@ -50,14 +50,25 @@ bool checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX,
     return false;
 }
 
-bool checkPossibleCapture(Board& game, const int& y, const int& x, const int& player) {
-    if ((game.getPos(x - 1, y - 1) != player && game.getPos(x + 1, y + 1) == player) 
-    || (game.getPos(x - 1, y) != player && game.getPos(x + 1, y) == player)
-    || (game.getPos(x, y - 1) != player && game.getPos(x, y + 1) == player)
-    || (game.getPos(x - 1, y - 1) == player && game.getPos(x + 1, y + 1) != player) 
-    || (game.getPos(x - 1, y) == player && game.getPos(x + 1, y) != player)
-    || (game.getPos(x, y - 1) == player && game.getPos(x, y + 1) != player))
-        return true;
+bool checkPossibleCapture(Board& game, const int& x, const int& y, const int& player) {
+    int opponent = (player == WHITE) ? BLACK : WHITE;
+
+    int directions[6][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {1, 1}};
+
+    for (int i = 0; i < 3; ++i) {
+        int x1 = x + directions[i * 2][0], y1 = y + directions[i * 2][1];
+        int x2 = x + directions[i * 2 + 1][0], y2 = y + directions[i * 2 + 1][1];
+        int x3 = x2 + directions[i * 2 + 1][0], y3 = y2 + directions[i * 2 + 1][1];
+
+        if (game.isValidPos(x1, y1) && game.isValidPos(x2, y2) && game.isValidPos(x3, y3)) {
+            if (game.getPos(x1, y1) == opponent && game.getPos(x2, y2) == player && game.getPos(x3, y3) == 0)
+                return true;
+
+            if (game.getPos(x1, y1) == 0 && game.getPos(x2, y2) == player && game.getPos(x3, y3) == opponent)
+                return true;
+        }
+    }
+
     return false;
 }
 
@@ -67,6 +78,7 @@ int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_
     int         checkX = x, checkY = y;
     int         count[2] = {1, 1};
 
+    game.printBoard();
     int current = 0;
     for (int i = 0; i < 8; i++){
         if (checkCapture(game, y, x, dirY[i], dirX[i], player) == true){
@@ -76,24 +88,26 @@ int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_
             game.removePos(x + dirX[i] * 2, y + dirY[i] * 2);
             continue ;
         }
-        for (int j = 1; j < 5; ++j){
-            checkX = x + (dirX[i] * j);
-            checkY = y + (dirY[i] * j);
-            if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
-                break ;
-            
-            if (game.getPos(checkX, checkY) != player)
-                break ;
-            // checkpossibleCapture
-            else if (game.getPos(checkX, checkY) == player)
-                ++(count[i / 2 % 2]);
-        }
+        if (!checkPossibleCapture(game, x, y, player)) {
+            for (int j = 1; j < 5; ++j){
+                checkX = x + (dirX[i] * j);
+                checkY = y + (dirY[i] * j);
+                if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
+                    break ;
+                
+                if (game.getPos(checkX, checkY) != player)
+                    break ;
 
-        if (i % 2 == 1){
-            if (count[current] >= 5)
-                return (player);
-            count[current] = 1;
-            (current == 0) ? current = 1 : current = 0;
+                if (game.getPos(checkX, checkY) == player && !checkPossibleCapture(game, checkX, checkY, player))
+                    ++(count[i / 2 % 2]);
+            }
+
+            if (i % 2 == 1){
+                if (count[current] >= 5)
+                    return (player);
+                count[current] = 1;
+                (current == 0) ? current = 1 : current = 0;
+            }
         }
     }
     if (count[0] >= 5 || count[1] >= 5)
