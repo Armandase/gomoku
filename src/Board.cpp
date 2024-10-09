@@ -10,6 +10,8 @@ Board::Board():
     _player2Diag(),
     _player1AntiDiag(),
     _player2AntiDiag(),
+    _player1Capture(0),
+    _player2Capture(0),
     _idPlayer1(WHITE),
     _idPlayer2(BLACK)
 {
@@ -30,6 +32,8 @@ Board::Board(const Board &cpy):
     _player1AntiDiag(cpy._player1AntiDiag),
     _player2AntiDiag(cpy._player2AntiDiag),
     _width(cpy._width),
+    _player1Capture(cpy._player1Capture),
+    _player2Capture(cpy._player2Capture),
     _idPlayer1(cpy._idPlayer1),
     _idPlayer2(cpy._idPlayer2)
 {
@@ -51,6 +55,8 @@ Board &Board::operator=(const Board &rhs)
         this->_player1AntiDiag = rhs._player1AntiDiag;
         this->_player2AntiDiag = rhs._player2AntiDiag;
         this->_width = rhs._width;
+        this->_player1Capture = rhs._player1Capture;
+        this->_player2Capture = rhs._player2Capture;
         this->_idPlayer1 = rhs._idPlayer1;
         this->_idPlayer2 = rhs._idPlayer2;
     }
@@ -62,6 +68,20 @@ bool Board::isValidPos(int x, int y)
     if (x < 0 || x > this->_width || y < 0 || y > this->_width)
         return false;
     return true;
+}
+
+int Board::getCapture(int player) {
+    if (player == this->_idPlayer1)
+        return _player1Capture;
+    else if (player == this->_idPlayer2)
+        return _player2Capture;
+}
+
+void Board::addCapture(int player) {
+    if (player == this->_idPlayer1)
+        _player1Capture++;
+    else if (player == this->_idPlayer2)
+        _player2Capture++;
 }
 
 void Board::setPos(int x, int y, int player)

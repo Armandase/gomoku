@@ -78,7 +78,7 @@ int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_
     int         checkX = x, checkY = y;
     int         count[2] = {1, 1};
 
-    game.printBoard();
+    // game.printBoard();
     int current = 0;
     for (int i = 0; i < 8; i++){
         if (checkCapture(game, y, x, dirY[i], dirX[i], player) == true){
@@ -86,6 +86,9 @@ int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_
             erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2, renderer);
             game.removePos(x + dirX[i], y + dirY[i]);
             game.removePos(x + dirX[i] * 2, y + dirY[i] * 2);
+            game.addCapture(player);
+            if (game.getCapture(player) == 5)
+                return (player);
             continue ;
         }
         if (!checkPossibleCapture(game, x, y, player)) {

@@ -55,6 +55,8 @@ class Board{
         
         int     countInDirection(int startRow, int startCol, int rowDelta, int colDelta, int player);
         bool    checkDoubleThree(int col, int row, int player);
+        void    addCapture(int player);
+        int     getCapture(int player);
 
     private:
         void printBoardX() const;
@@ -74,6 +76,8 @@ class Board{
         bitboard _player2AntiDiag;
 
         int _width = {BOARD_SIZE + 1};
+        int _player1Capture;
+        int _player2Capture;
         int _idPlayer1;
         int _idPlayer2;
 };
