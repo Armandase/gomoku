@@ -1,17 +1,15 @@
 #ifndef __GOMOKU_HPP__
 #define __GOMOKU_HPP__
 
-# include <SDL.h>
 # include <exception>
 # include <iostream>
 # include <vector>
-# include <SDL_ttf.h>
-# include <SDL_image.h>
 # include <climits>
 # include <set>
 # include <bitset>
 // # include "Board.hpp"
 # include "Button.hpp"
+# include "Render.hpp" 
 
 # define GRID_SIZE 50
 # define MARGIN 20
@@ -37,17 +35,16 @@ enum mode {
 
 class Board;
 class Button;
+class Render;
 
 typedef std::bitset<PARTTERN_SIZE> patternBitset;
 typedef std::vector<patternBitset> patternsVector;
 
-void    drawCircle(int, int, SDL_Renderer *);
-int     handleMouse(Board& board, int& player, SDL_Renderer* renderer);
-int     handleStart(SDL_Renderer *, Button &player, Button &IA);
-void    start_menu(SDL_Renderer *, Button &player, Button &IA);
-void    render_board(SDL_Renderer *);
-int     gameChecker(Board&, const int&, const int&, const int&, SDL_Renderer*);
-int     place_stone(Board& board, int& player, SDL_Renderer *renderer, const int& y, const int& x);
+int     handleMouse(Board& board, int& player, Render& render);
+int     handleStart(Render& render, Button &player, Button &IA);
+void    start_menu(Render& render, Button &player, Button &IA);
+int     gameChecker(Board&, const int&, const int&, const int&, Render& render);
+int     place_stone(Board& board, int& player, Render& render, const int& y, const int& x);
 bool    checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX, int player);
 bool    checkDoubleThree(Board& game, int col, int row);
 

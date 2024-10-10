@@ -4,27 +4,7 @@
 #include "../inc/Heuristic.hpp"
 #include "../inc/Board.hpp"
 #include "../inc/minMaxAlgorithm.hpp"
-
-// render the board base on the number of square and them size
-void render_board(SDL_Renderer *renderer)
-{
-    // select brown color and clear the board with this color
-    SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
-    SDL_RenderClear(renderer);
-    //select black color to draw lines
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
-    // Draw grid of Board size + 1 ^ 2
-    int line = BOARD_SIZE * (GRID_SIZE + 1);
-    for (int x = MARGIN, i = 0; x < line + GRID_SIZE && i <= BOARD_SIZE; x += GRID_SIZE, i++)
-    {
-        // draw line on x and y axis
-        SDL_RenderDrawLine(renderer, x, MARGIN, x, line);
-        SDL_RenderDrawLine(renderer, MARGIN, x, line , x);
-    }
-    //render the board
-    SDL_RenderPresent(renderer);
-}
+#include "../inc/Render.hpp"
 
 // int main(int argc, char const *argv[])
 // {
@@ -46,17 +26,10 @@ void render_board(SDL_Renderer *renderer)
 
 int main()
 {
-    //init sdl variables
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-        SDL_Error("Failed to init SDL:", NULL, NULL);
-    if (TTF_Init() == -1)
-        SDL_Error("Failed to init TTF:", NULL, NULL);
-    SDL_Window *window = SDL_CreateWindow("Gomoku", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (!window)
-        SDL_Error("Failed to create SDL window:", window, NULL);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer)
-        SDL_Error("Failed to create SDL renderer:", window, renderer);
+    // try {
+
+    Render render;
+    render.init_sdl("Gomoku", SCREEN_WIDTH, SCREEN_HEIGHT);
 
     int start = 0;
     bool quit = false;
@@ -68,7 +41,7 @@ int main()
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
 
     // Render Start Menu
-    start_menu(renderer, playerButton, IAButton);   
+    start_menu(render, playerButton, IAButton);   
 
     Board board;
     while (!quit)
@@ -89,21 +62,21 @@ int main()
                 // if start is equal to 0 then no game mode is chosen
                 if (!start)
                 {
-                    start = handleStart(renderer, playerButton, IAButton);
+                    start = handleStart(render, playerButton, IAButton);
                     continue;
                 }
-                if ((player == WHITE || start == PLAYER_MODE) && handleMouse(board, player, renderer))
+                if ((player == WHITE || start == PLAYER_MODE) && handleMouse(board, player, render))
                     continue;
                 if (player == BLACK && start == IA_MODE) {
-                    minMaxAlgorithm(board, player, renderer);
+                    minMaxAlgorithm(board, player, render);
                     player = WHITE;
                 }
-                SDL_RenderPresent(renderer);
+                SDL_RenderPresent(render.getRenderer());
             }
         }
     }
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    // } catch (std::exception& e){
+        // std::cout << e.what() << std::endl;
+    // }
     return 0;
 }

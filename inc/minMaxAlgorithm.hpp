@@ -1,11 +1,13 @@
 #ifndef __MINMAXALGORITHM_HPP__
 #define __MINMAXALGORITHM_HPP__
 
-# include "gomoku.hpp"
 # include <algorithm>
 # include <map>
+
+# include "gomoku.hpp"
 # include "Heuristic.hpp"
 # include "Board.hpp"
+# include "Render.hpp"
 
 
 enum side {
@@ -32,7 +34,7 @@ struct CompareHeuristic {
 
 typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 
-void    minMaxAlgorithm(Board&, int&,  SDL_Renderer *);
+void    minMaxAlgorithm(Board&, int&,  Render& render);
 // bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center);
 
 #endif

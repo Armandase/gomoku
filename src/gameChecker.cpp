@@ -3,37 +3,6 @@
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Board.hpp"
 
-void    erasePlayer(const int& y_case, const int& x_case, SDL_Renderer* renderer){
-    int x_square = x_case * GRID_SIZE + MARGIN - RADIUS;
-    int y_square = y_case * GRID_SIZE + MARGIN - RADIUS;
-
-    SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
-    SDL_Rect rect = {x_square, y_square, RADIUS * 2, RADIUS * 2}; // x, y, width, height
-    SDL_RenderFillRect(renderer, &rect);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
-    int borderX = DIAMETER;
-    if (x_square + borderX > MARGIN + (GRID_SIZE * BOARD_SIZE))
-        borderX = RADIUS;
-
-    int borderY = DIAMETER;
-    if (y_square + borderY > MARGIN + (GRID_SIZE * BOARD_SIZE))
-        borderY = RADIUS;
-
-    int startX = 0;
-    if (x_square < MARGIN)
-        startX = RADIUS;
-
-    int startY = 0;
-    if (y_square < MARGIN)
-        startY = RADIUS;
-
-    SDL_RenderDrawLine(renderer, x_square + startX , y_square + RADIUS, x_square + borderX, y_square + RADIUS);
-    SDL_RenderDrawLine(renderer, x_square + RADIUS, y_square + startY, x_square + RADIUS, y_square + borderY);
-    SDL_RenderPresent(renderer);
-
-}
-
 bool checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX, int player) {
     int ennemy = (player == WHITE) ? BLACK : WHITE;
 
@@ -72,7 +41,7 @@ bool checkPossibleCapture(Board& game, const int& x, const int& y, const int& pl
     return false;
 }
 
-int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_Renderer* renderer){
+int gameChecker(Board& game, const int& y, const int& x, const int& player, Render& render){
     const int   dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
     int         checkX = x, checkY = y;
@@ -82,8 +51,8 @@ int gameChecker(Board& game, const int& y, const int& x, const int& player, SDL_
     int current = 0;
     for (int i = 0; i < 8; i++){
         if (checkCapture(game, y, x, dirY[i], dirX[i], player) == true){
-            erasePlayer(y + dirY[i], x + dirX[i], renderer);
-            erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2, renderer);
+            render.erasePlayer(y + dirY[i], x + dirX[i]);
+            render.erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2);
             game.removePos(x + dirX[i], y + dirY[i]);
             game.removePos(x + dirX[i] * 2, y + dirY[i] * 2);
             game.addCapture(player);

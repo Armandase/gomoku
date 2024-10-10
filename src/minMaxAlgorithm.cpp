@@ -211,7 +211,7 @@ Heuristic minMaxRecursive(const Board &game, int init_player, int player, int de
 }
 
 
-void minMaxAlgorithm(Board &game, int &player, SDL_Renderer *renderer)
+void minMaxAlgorithm(Board &game, int &player, Render& render)
 {
     int alpha = -2147483648, beta = 2147483647;
 
@@ -228,15 +228,15 @@ void minMaxAlgorithm(Board &game, int &player, SDL_Renderer *renderer)
         std::ostringstream message;
 
         message << std::fixed << std::setprecision(3) << timer;
-        SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
+        SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
 
         SDL_Color textColor = {80, 0, 80, 255};
         SDL_Rect msg_rect = {SCREEN_WIDTH - MARGIN - OFFSET, SCREEN_HEIGHT - SCREEN_HEIGHT / 15, MARGIN + OFFSET, OFFSET};
-        SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
-        SDL_RenderFillRect(renderer, &msg_rect);
-        writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24,renderer);
+        SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
+        SDL_RenderFillRect(render.getRenderer(), &msg_rect);
+        render.writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
     }
-    place_stone(game, player, renderer, result.getY(), result.getX());
+    place_stone(game, player, render, result.getY(), result.getX());
     } catch (std::exception& e){
         (void)e;
     }

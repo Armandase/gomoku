@@ -2,16 +2,18 @@ MAKEFLAGS += -j
 
 CXX		=	c++
 NAME 	= 	Gomoku
-SRC 	=	main.cpp utils.cpp drawCircle.cpp \
+SRC 	=	main.cpp utils.cpp \
 			minMaxAlgorithm.cpp handleMouse.cpp \
 			Button.cpp startMenu.cpp \
 			gameChecker.cpp \
-			Heuristic.cpp Board.cpp
+			Heuristic.cpp Board.cpp \
+			Render.cpp
 
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			inc/minMaxAlgorithm.hpp inc/Button.hpp \
 			inc/Heuristic.hpp inc/Board.hpp \
-			inc/Pattern.hpp
+			inc/Pattern.hpp inc/Render.hpp
+	
 OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))
 CXXFLAGS=	-Wall -Wextra --std=c++17 -Weffc++ -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
 SDL2_TTF=	libs/SDL2_ttf

@@ -75,6 +75,7 @@ int Board::getCapture(int player) {
         return _player1Capture;
     else if (player == this->_idPlayer2)
         return _player2Capture;
+    return 0;
 }
 
 void Board::addCapture(int player) {
