@@ -44,15 +44,15 @@ int Heuristic::counterAnalysis(int count, bool capture, int empty, int inRow, in
     int result = 0;
 
     if (inRow >= 5)
-        result = 1000000;
+        result = INT32_MAX - 1;
     else if ((inRow >= 4 || count >= 5) && empty > 0 )
-        result = 500000;
+        result = 1000000;
     else if ((inRow == 3 || count >= 4) && empty > 1)
         result = 500000;
     else if ((inRow == 3 || count >= 4) && empty > 0)
-        result = 100000;
-    else if (capture)
         result = 10000;
+    else if (capture)
+        result = 1000;
     else if ((inRow == 2 || count >= 3) && empty > 1)
         result = 100;
     else if ((inRow == 2 || count >= 3) && empty > 0)

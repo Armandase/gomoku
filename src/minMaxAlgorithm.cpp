@@ -218,7 +218,7 @@ void minMaxAlgorithm(Board &game, int &player, Render& render)
     // clock_t begin = clock();
     try {
     auto t_start = std::chrono::high_resolution_clock::now();
-        Heuristic result =  minMaxRecursive(game, player, player, DEPTH, 0, 0, alpha, beta);
+    Heuristic result =  minMaxRecursive(game, player, player, DEPTH, 0, 0, alpha, beta);
     const auto t_end = std::chrono::high_resolution_clock::now();
 	// clock_t end = clock();
 	// double timer = static_cast<double>(end - begin) / CLOCKS_PER_SEC;

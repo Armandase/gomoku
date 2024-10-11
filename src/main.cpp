@@ -6,23 +6,34 @@
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Render.hpp"
 
-// int main(int argc, char const *argv[])
-// {
-//     Board test;
-//     test.setPos(4, 1, WHITE);
-//     test.setPos(5, 1, WHITE);
-//     test.setPos(7, 3, WHITE);
-//     test.setPos(7, 4, WHITE);
+/*
+int main(int argc, char const *argv[])
+{
+    Board test;
+    test.setPos(4, 1, WHITE);
+    test.setPos(5, 1, WHITE);
+    test.setPos(7, 3, WHITE);
+    test.setPos(7, 4, WHITE);
 
-//     // test.setPos(7, 2, BLACK);      
-//     int test_col = 7, test_row = 1; // Position to test (the X)
-//     if (checkDoubleThree(test._player1, test._player2, test_col, test_row)) {
-//         std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") would create a double three!" << std::endl;
-//     } else {
-//         std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") is allowed." << std::endl;
-//     }
-//     return 0;
-// }
+    // test.setPos(7, 2, BLACK);      
+    int test_col = 7, test_row = 1; // Position to test (the X)
+    if (checkDoubleThree(test._player1, test._player2, test_col, test_row)) {
+        std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") would create a double three!" << std::endl;
+    } else {
+        std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") is allowed." << std::endl;
+    }
+    return 0;
+}
+
+void testBoardClass(){
+    Board board;
+
+    board.setPos(2, 2, WHITE);
+    board.setPos(2, 3, BLACK);
+
+    std::cout << "Pos empty" << board.isPosEmpty(2, 2) << std::endl; 
+}
+*/
 
 int main()
 {

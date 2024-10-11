@@ -91,21 +91,22 @@ void Board::setPos(int x, int y, int player)
     int coordinateToDiag1d = this->coordinateToDiag1D(x, y);
     int coordinateToAntiDiag1d = this->coordinateToAntiDiag1D(x, y);
 
-    if (player == this->_idPlayer1 && !this->_player2.test(x + y * this->_width)){
+    if (this->isPosEmpty(x, y) == false){
+        std::cerr << "Error: Invalid move to place stone in (" << x << ";" << y << ")"  << std::endl;
+        return ;
+    }
+
+    if (player == this->_idPlayer1){
         this->_player1.set(x + y * this->_width);
         this->_player1Transposed.set(coordinateToTranspose1d);
         this->_player1Diag.set(coordinateToDiag1d);
         this->_player1AntiDiag.set(coordinateToAntiDiag1d);
     }
-    else if (player == this->_idPlayer2 && !this->_player1.test(x + y * this->_width)){
+    else if (player == this->_idPlayer2){
         this->_player2.set(x + y * this->_width);
         this->_player2Transposed.set(coordinateToTranspose1d);
         this->_player2Diag.set(coordinateToDiag1d);
         this->_player2AntiDiag.set(coordinateToAntiDiag1d);
-    }
-    else{
-        std::cerr << "Error: Invalid player ID" << std::endl;
-        return ;
     }
 }
 
@@ -117,7 +118,6 @@ int Board::coordinateToTranspose1D(int x, int y) const
 int Board::coordinateToDiag1D(int x, int y) const
 {
     int newY = (x + y) % this->_width;
-    // return (newRow + y * this->_width);
     return (x + newY * this->_width);
 }
 
@@ -208,6 +208,14 @@ void Board::printBoardX() const
 void Board::resetBoard(){
     this->_player1.reset();
     this->_player2.reset();
+    this->_player1Transposed.reset();
+    this->_player2Transposed.reset();
+    this->_player1Diag.reset();
+    this->_player2Diag.reset();
+    this->_player1AntiDiag.reset();
+    this->_player2AntiDiag.reset();
+    _player1Capture = 0;
+    _player2Capture = 0;
 }
 
 bool    Board::isPosEmpty(int x, int y) const {
