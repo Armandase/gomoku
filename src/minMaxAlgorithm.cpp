@@ -242,24 +242,36 @@ heuristicSet generatePossibleMoves(Board& game, int player){
     return possibleMoves;
 }
 
+int indexOfMaxValue(const std::vector<Heuristic>& vec){
+    int max = INT32_MIN;
+    int idx = -1;
+    int size = vec.size();
+
+    for (int i = 0; i < size; i++){
+        if (vec[i].getHeuristic() > max)
+        {
+            max = vec[i].getHeuristic();
+            idx = i;
+        }
+    }
+    if (idx == -1)
+        throw std::runtime_error((std::string(__FUNCTION__ ) + std::string(": not found")));
+
+    return idx;
+}
+
 Heuristic    minMaxFirstStep(Board& game, int player){
-    
-//     threadResult.push_back(async(std::launch::async, minMaxRecursive, copy, init_player, next_player, depth - 1, y, x, alpha, beta));
     heuristicSet possibleMoves = generatePossibleMoves(game, player);
     std::vector<std::future<Heuristic>> threadResult;
 
     int alpha = -2147483648, beta = 2147483647;
 
-    // heuristicSet recursiveResult;
     int limit = (PRUNING < possibleMoves.size()) ? PRUNING : possibleMoves.size();
     for (int i = 0; i < limit; i ++){
         auto it = possibleMoves.begin();
         std::advance(it, i);    
         int next_player = (player == BLACK) ? WHITE : BLACK;
         Heuristic tmp = *it;
-        // Heuristic tmp = std::get<0>(*it);
-        // recursiveResult.insert(minMaxRecursive(tmp, next_player, DEPTH - 1, alpha, beta));
-        // test.insert({minMaxRecursive(tmp, next_player, DEPTH - 1, alpha, beta), i});
         threadResult.push_back(std::async(std::launch::async, minMaxRecursive, std::ref(tmp), next_player, DEPTH - 1, alpha, beta));
     }
 
@@ -269,40 +281,24 @@ Heuristic    minMaxFirstStep(Board& game, int player){
         if (threadResult[i].valid() == true){
             Heuristic threadReturn = threadResult[i].get();
             recursiveResult.push_back(threadReturn);
+        } else {
+            std::cerr << "Fail to join a future" << std::endl; 
         }
     }
-
-    int max = INT32_MIN;
-    int idx = -1;
-    for (int i = 0; i < recursiveResult.size(); i++){
-        if (recursiveResult[i].getHeuristic() > max)
-        {
-            max = recursiveResult[i].getHeuristic();
-            idx = i;
-        }
-    }
+    int idx =  indexOfMaxValue(recursiveResult);
 
     auto finalIt = possibleMoves.begin();   
     std::advance(finalIt, idx);
-    std::cout << "Index of the best move: " << idx << std::endl;
     return *finalIt;
-    // return finCorrectValue(recursiveResult, MAX);
 }
 
 void    minMaxAlgorithm(Board &game, int &player, Render& render)
 {
 
-    // clock_t begin = clock();
     try {
     auto t_start = std::chrono::high_resolution_clock::now();
-    // Heuristic result =  minMaxRecursive(game, player, player, DEPTH, 0, 0, alpha, beta);
-
-    // Heuristic currentGame(game, 0, 0);
-    // Heuristic result =  minMaxRecursive(currentGame, player, DEPTH, alpha, beta);
     Heuristic result =  minMaxFirstStep(game, player);
     const auto t_end = std::chrono::high_resolution_clock::now();
-	// clock_t end = clock();
-	// double timer = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
     double timer = std::chrono::duration<double, std::milli>(t_end - t_start).count() / 1000;
     std::cout << "heuristic:" << result.getHeuristic() << " X: " << result.getX() << " Y: " << result.getY() <<"\n";
     {
