@@ -6,14 +6,10 @@
 bool checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX, int player) {
     int ennemy = (player == WHITE) ? BLACK : WHITE;
 
-    if (checkY + dirY >= 0 && checkY + dirY <= BOARD_SIZE 
-        && checkX + dirX >= 0 && checkX + dirX <= BOARD_SIZE
-        && game.getPos(checkX + dirX, checkY + dirY) == ennemy
-        && checkX + dirX * 2 >= 0 && checkX + dirX * 2 <= BOARD_SIZE
-        && checkY + dirY * 2 >= 0 && checkY + dirY * 2 <= BOARD_SIZE
-        && game.getPos(checkX + (dirX * 2), checkY + (dirY * 2)) == ennemy
-        && checkX + dirX * 3 >= 0 && checkX + dirX * 3 <= BOARD_SIZE
+    if (checkX + dirX * 3 >= 0 && checkX + dirX * 3 <= BOARD_SIZE
         && checkY + dirY * 3 >= 0 && checkY + dirY * 3 <= BOARD_SIZE
+        && game.getPos(checkX + dirX, checkY + dirY) == ennemy
+        && game.getPos(checkX + (dirX * 2), checkY + (dirY * 2)) == ennemy
         && game.getPos(checkX + (dirX * 3), checkY + (dirY * 3)) == player)
             return true;
     return false;

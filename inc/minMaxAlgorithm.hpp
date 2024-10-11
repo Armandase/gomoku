@@ -3,6 +3,8 @@
 
 # include <algorithm>
 # include <map>
+# include <tuple>
+# include <future>
 
 # include "gomoku.hpp"
 # include "Heuristic.hpp"
@@ -35,6 +37,5 @@ struct CompareHeuristic {
 typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 
 void    minMaxAlgorithm(Board&, int&,  Render& render);
-// bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center);
 
 #endif

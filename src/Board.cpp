@@ -87,6 +87,9 @@ void Board::addCapture(int player) {
 
 void Board::setPos(int x, int y, int player)
 {
+    if (this->isValidPos(x, y) == false)
+        return ;
+
     int coordinateToTranspose1d = this->coordinateToTranspose1D(x, y);
     int coordinateToDiag1d = this->coordinateToDiag1D(x, y);
     int coordinateToAntiDiag1d = this->coordinateToAntiDiag1D(x, y);

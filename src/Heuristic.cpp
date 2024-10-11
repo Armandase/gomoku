@@ -3,9 +3,8 @@
 Heuristic::~Heuristic(){
 }
 
-Heuristic::Heuristic(int player, const Board& game, int x, int y) :
+Heuristic::Heuristic(const Board& game, int x, int y) :
     _game(game),
-    _initPlayer(player),
     _heuristic(0),
     _xPos(x),
     _yPos(y)
@@ -15,7 +14,6 @@ Heuristic::Heuristic(int player, const Board& game, int x, int y) :
 
 Heuristic::Heuristic(const Heuristic &cpy):
     _game(cpy._game),
-    _initPlayer(cpy._initPlayer),
     _heuristic(cpy._heuristic),
     _xPos(cpy._xPos),
     _yPos(cpy._yPos)
@@ -28,7 +26,6 @@ Heuristic &Heuristic::operator=(const Heuristic &rhs)
     if (this != &rhs)
     {
         this->_game = rhs._game;
-        this->_initPlayer = rhs._initPlayer;
         this->_heuristic = rhs._heuristic;
         this->_xPos = rhs._xPos;
         this->_yPos = rhs._yPos;
@@ -40,7 +37,7 @@ Heuristic &Heuristic::operator=(const Heuristic &rhs)
 const Board& Heuristic::getGame() const { return (this->_game); }
 
 
-int Heuristic::counterAnalysis(int count, bool capture, int empty, int inRow, int player) {
+int Heuristic::counterAnalysis(int count, bool capture, int empty, int inRow, int initPlayer) {
     int result = 0;
 
     if (inRow >= 5)
@@ -60,7 +57,7 @@ int Heuristic::counterAnalysis(int count, bool capture, int empty, int inRow, in
     else
         result = 5 * count + 5 * inRow + empty * 5;
     
-    if (player != this->_initPlayer)
+    if (this->getPlayer() != initPlayer)
         result *= -1;
     return (result);
 }
