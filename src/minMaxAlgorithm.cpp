@@ -42,14 +42,11 @@ Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
 //     return false;
 // }
 
-
 Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int alpha, int beta) {
     if (depth == 0 || checkWin(heuristic) == true) {
         heuristic.globalHeuristic();
         return (heuristic);
-        // return (Heuristic (player, game, xGame, yGame));
     }
-    // std::vector< std::future<cost> > threadResult;
     // int value = (initPlayer == heuristic.getPlayer()) ? -2147483648 : 2147483647;
     bool cutoff = false;
     heuristicSet result;
@@ -66,6 +63,8 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
             if (heuristic.getGame().isPosEmpty(x, y) == true && emptyNeighbour(heuristic.getGame(), x, y) == false) {
                 Board copy = heuristic.getGame();
                 copy.setPos(x, y, getCurrentPlayer(depth, initPlayer));
+                std::cout << "Current player" << getCurrentPlayer(depth, initPlayer) << "depth" << depth ;
+                std::cout  << " depth mod" << (depth + 2) % 2 << " DEPTH mod:" << (DEPTH % 2) << std::endl;
                 if (validGame(copy, y, x, heuristic.getPlayer()) == false)
                     continue;
                 if (checkWin(heuristic) == true){

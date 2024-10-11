@@ -18,9 +18,14 @@ int indexOfMaxValue(const std::vector<Heuristic>& vec){
 
     return idx;
 }
-
+// d1 = 2 => mod 1 DEPTH 1
+// d2 = 1 => mod 0 DEPTH 1
+// d3 = 1 => mod 1 DEPTH 1
+// d4 = 2 => mod 0 DEPTH 1
 int getCurrentPlayer(int depth, int initPlayer){
-    if (depth % 2 == DEPTH % 2)
+    // jsp si ca marche pour depth == 0
+    // if ((depth == 1 && DEPTH % 2 == 0) || depth % 2 == DEPTH % 2)
+    if ((depth + 2) % 2 == DEPTH % 2)
         return initPlayer;
     return initPlayer == BLACK ? WHITE : BLACK;
 }
