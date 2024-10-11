@@ -37,5 +37,12 @@ struct CompareHeuristic {
 typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 
 void    minMaxAlgorithm(Board&, int&,  Render& render);
+int     indexOfMaxValue(const std::vector<Heuristic>& vec);
+int     getCurrentPlayer(int depth, int initPlayer);
+bool    emptyNeighbour(const Board &game, const int x, const int y);
+bool    checkWin(const Heuristic& heuristic);
+bool    validGame(Board& copy, int yPoint, int xPoint, int player);
+heuristicSet generatePossibleMoves(Board& game, int player);
+
 
 #endif
