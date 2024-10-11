@@ -108,13 +108,10 @@ bool    validGame(Board& copy, int yPoint, int xPoint, int player){
     if (copy.checkDoubleThree(xPoint, yPoint, player))
         return true;
         
-    int doubleThree = 0;
-    
     for (int y = 0; y < BOARD_SIZE; y++){
         for (int x = 0; x < BOARD_SIZE; x++){
             if (copy.isPosEmpty(x, y) == true)
                 continue;
-            doubleThree = 0;
 
             for (int i = 0; i < 8; i++){
 
