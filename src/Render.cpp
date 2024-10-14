@@ -54,7 +54,7 @@ void Render::init_sdl(const std::string& windowName, int windowWidth, int window
 }
 
 
-void    Render::writeText(const std::string& msg, const std::string& font, const SDL_Rect& rect, const SDL_Color& color, int size){
+void    Render::writeText(const std::string& msg, const std::string& font, const SDL_Rect& rect, const SDL_Color& color, int size) const{
     TTF_Font* Font = TTF_OpenFont(font.c_str(), size);
     if (Font == NULL)
         throw std::runtime_error(std::string("Failed to open TTF Font: ") + std::string(SDL_GetError()));
@@ -78,28 +78,34 @@ void    Render::writeText(const std::string& msg, const std::string& font, const
 
 void Render::render_board() const
 {
-    // select brown color and clear the board with this color
-    if (SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255) != 0)
-        throw std::runtime_error(std::string("Failed to set render draw color: ") + std::string(SDL_GetError()));
-    if (SDL_RenderClear(this->_renderer) != 0)
-        throw std::runtime_error(std::string("Failed to clear the render: ") + std::string(SDL_GetError()));
+    int cnt = 0;
+    SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
+    SDL_RenderClear(this->_renderer);
+    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
 
-    //select black color to draw lines
-    if (SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255))
-        throw std::runtime_error(std::string("Failed to set render draw color: ") + std::string(SDL_GetError()));
-
-    // Draw grid of Board size + 1 ^ 2
-    int line = BOARD_SIZE * (GRID_SIZE + 1);
-    for (int x = MARGIN, i = 0; x < line + GRID_SIZE && i <= BOARD_SIZE; x += GRID_SIZE, i++)
+    int line = BOARD_SIZE * (GRID_SIZE + 1)  + MARGIN / 2;
+    for (int x = MARGIN, i = 0; x <= line + GRID_SIZE && i <= BOARD_SIZE; x += GRID_SIZE, i++)
     {
-        // draw line on x and y axis
-        if (SDL_RenderDrawLine(this->_renderer, x, MARGIN, x, line) != 0)
-            throw std::runtime_error(std::string("Failed to render draw a line") + std::string(SDL_GetError()));
-        if (SDL_RenderDrawLine(this->_renderer, MARGIN, x, line , x) != 0)
-            throw std::runtime_error(std::string("Failed to render draw a line") + std::string(SDL_GetError()));
+        // draw lines
+        SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+        SDL_RenderDrawLine(this->_renderer, x, MARGIN, x, line);
+        SDL_RenderDrawLine(this->_renderer, MARGIN, x, line, x);
 
+        // draw number around the board
+        SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
+        SDL_Color textColor = {0, 0, 0, 255};
+        
+        SDL_Rect msg_rect_x = {x - (intlen(cnt) * (MARGIN / 3) / 2), 0 + MARGIN / 10, intlen(cnt) * (MARGIN / 3), MARGIN / 2};
+        SDL_RenderFillRect(this->_renderer, &msg_rect_x);
+        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_x, textColor, 24);
+
+        SDL_Rect msg_rect_y = {0 + MARGIN / 10, x - (intlen(cnt) * (MARGIN / 3) / 2), intlen(cnt) * (MARGIN / 3), MARGIN / 2};
+        SDL_RenderFillRect(this->_renderer, &msg_rect_y);
+        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_y, textColor, 24);
+
+        cnt++;
     }
-    //render the board
+
     SDL_RenderPresent(this->_renderer);
 }
 

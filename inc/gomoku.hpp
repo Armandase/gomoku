@@ -11,7 +11,7 @@
 # include "Render.hpp" 
 
 # define GRID_SIZE 50
-# define MARGIN 20
+# define MARGIN 40
 # define OFFSET 50
 # define BOARD_SIZE 18
 # define SCREEN_HEIGHT ((GRID_SIZE * BOARD_SIZE) + (2 * (MARGIN)))
