@@ -3,11 +3,14 @@
 Heuristic::~Heuristic(){
 }
 
-Heuristic::Heuristic(const Board& game, int x, int y) :
+Heuristic::Heuristic(const Board& game, int x, int y, int xBegin, int yBegin) :
     _game(game),
     _heuristic(0),
     _xPos(x),
-    _yPos(y)
+    _yPos(y),
+    _xBeginPos(xBegin),
+    _yBeginPos(yBegin)
+
 {
     this->globalHeuristic();
 }
@@ -16,7 +19,9 @@ Heuristic::Heuristic(const Heuristic &cpy):
     _game(cpy._game),
     _heuristic(cpy._heuristic),
     _xPos(cpy._xPos),
-    _yPos(cpy._yPos)
+    _yPos(cpy._yPos),
+    _xBeginPos(cpy._xBeginPos),
+    _yBeginPos(cpy._yBeginPos)
 {
 }
 
@@ -29,6 +34,9 @@ Heuristic &Heuristic::operator=(const Heuristic &rhs)
         this->_heuristic = rhs._heuristic;
         this->_xPos = rhs._xPos;
         this->_yPos = rhs._yPos;
+        this->_xBeginPos = rhs._xBeginPos;
+        this->_yBeginPos = rhs._yBeginPos;
+
     }
 
     return (*this);
@@ -66,106 +74,60 @@ const Board& Heuristic::getGame() const { return (this->_game); }
 //     return (result);
 // }
 
-int Heuristic::counterAnalysis(int counter, int player, int color, bool openEnds) {
+int Heuristic::counterAnalysis(int counter, int player, int color){
     int result = 0;
 
     if (counter == 5 && player == color)
-        result = 10000;  // Higher value for a winning move
+        result = 1000;
     else if (counter == 5 && player != color)
-        result = 9000;   // High value for blocking an opponent's win
-    else if (counter == 4 && player != color && openEnds)
-        result = 800;    // Opponent open four
-    else if (counter == 4 && player == color && openEnds)
-        result = 700;    // Your open four
-    else if (counter == 4 && player != color && !openEnds)
-        result = 600;    // Opponent closed four (not as dangerous as open four)
-    else if (counter == 4 && player == color && !openEnds)
-        result = 500;    // Closed four
-    else if (counter == 3 && player != color && openEnds)
-        result = 300;    // Opponent open three
-    else if (counter == 3 && player == color && openEnds)
-        result = 250;    // Your open three
-    else if (counter == 3 && player != color && !openEnds)
-        result = 150;    // Opponent closed three
-    else if (counter == 3 && player == color && !openEnds)
-        result = 100;    // Closed three
+        result = 900;
+    else if (counter == 4 && player != color)
+        result = 600;
+    else if (counter == 4 && player == color)
+        result = 500;
+    else if (counter != 3)
+        result = 250;
+    else if (counter == 3)
+        result = 250;
     else
-        result = counter * 50;  // Default weight for smaller patterns
-    
-    return result;
+        result = counter * 100;
+    return (result);
 }
 
 bool Heuristic::checkCapture(int checkY, int checkX, int dirY, int dirX, int player) {
-    int enemy = (player == WHITE) ? BLACK : WHITE;
+    int ennemy = (player == WHITE) ? BLACK : WHITE;
 
-    if (checkX + dirX * 2 >= 0 && checkX + dirX * 2 < BOARD_SIZE
-        && checkY + dirY * 2 >= 0 && checkY + dirY * 2 < BOARD_SIZE
-        && this->_game.getPos(checkX + dirX, checkY + dirY) == enemy
-        && this->_game.getPos(checkX + dirX * 2, checkY + dirY * 2) == player)
+    if (checkX + dirX * 2 >= 0 && checkX + dirX * 2 <= BOARD_SIZE
+        && checkY + dirY * 2 >= 0 && checkY + dirY * 2 <= BOARD_SIZE
+        && this->_game.getPos(checkX + dirX, checkY + dirY) == ennemy
+        && this->_game.getPos(checkX + (dirX * 2), checkY + (dirY * 2)) == player)
             return true;
-
     return false;
 }
 
-int Heuristic::localHeuristic(int x, int y) {
-    int heuristic = 0;
+int Heuristic::localHeuristic(int x, int y){
+    int checkX = 0, checkY = 0;
+    int counter, color, heuristic = 0;
     int player = this->_game.getPos(x, y);
 
-    // Check all 4 directions (horizontal, vertical, and two diagonals)
-    for (int i = 0; i < 4; i++) {
-        int counter = 1;
-        int color = 0;
-        bool openEnds = false;
-
-        // Forward check
-        int checkX, checkY;
-        for (int j = 1; j < 5; j++) {
+    for (int i = 0; i < 8; i++){
+        counter = 1;
+        color = 0;
+        for (int j = 1; j < 5; j++){
             checkX = x + (dirX[i] * j);
             checkY = y + (dirY[i] * j);
-            
-            if (checkX < 0 || checkY < 0 || checkX >= BOARD_SIZE || checkY >= BOARD_SIZE) 
-                break;
-            if (this->_game.isPosEmpty(checkX, checkY)) {
-                openEnds = true;  // There is space to extend the line
-                break;
-            }
-
+            if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE || this->_game.isPosEmpty(checkX, checkY) == 0)
+                break ;
             int posValue = this->_game.getPos(checkX, checkY);
-            if (j == 1) color = posValue;
-
-            if (posValue == color) 
+            if (j == 1)
+                color = posValue;
+            if (posValue == color && counter + 1 < 5)
                 counter++;
             else
-                break;
+                break ;
         }
-
-        // Check the opposite direction to determine if it's an open-ended line
-        for (int j = 1; j < 5; j++) {
-            checkX = x - (dirX[i] * j);
-            checkY = y - (dirY[i] * j);
-
-            if (checkX < 0 || checkY < 0 || checkX >= BOARD_SIZE || checkY >= BOARD_SIZE)
-                break;
-            if (this->_game.isPosEmpty(checkX, checkY)) {
-                openEnds = true;
-                break;
-            }
-
-            int posValue = this->_game.getPos(checkX, checkY);
-            if (posValue == color) 
-                counter++;
-            else
-                break;
-        }
-
-        heuristic += counterAnalysis(counter, player, color, openEnds);
-        
-        // Add capture check heuristic
-        if (this->checkCapture(y, x, dirY[i], dirX[i], player)) {
-            heuristic -= 200;  // Penalize positions vulnerable to capture
-        }
+        heuristic += counterAnalysis(counter + 1, player, color);
     }
-
     return heuristic;
 }
 

@@ -15,7 +15,7 @@ bool checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX,
     return false;
 }
 
-bool checkPossibleCapture(Board& game, const int& x, const int& y, const int& player) {
+bool checkPossibleCapture(Board& game, int x, int y, const int player) {
     int opponent = (player == WHITE) ? BLACK : WHITE;
 
     int directions[6][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {1, 1}};
@@ -37,7 +37,7 @@ bool checkPossibleCapture(Board& game, const int& x, const int& y, const int& pl
     return false;
 }
 
-int gameChecker(Board& game, const int& y, const int& x, const int& player, Render& render){
+int gameChecker(Board& game, int y, int x, int player, Render& render){
     const int   dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
     const int   dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
     int         checkX = x, checkY = y;

@@ -18,7 +18,7 @@
 # define SCREEN_WIDTH ((GRID_SIZE * BOARD_SIZE) + (2 * (MARGIN + OFFSET)))
 # define RADIUS (GRID_SIZE / 3)
 # define DIAMETER (RADIUS * 2)
-# define DEPTH 4
+# define DEPTH 3
 # define PRUNING 10
 # define PARTTERN_SIZE 4
 
@@ -42,7 +42,7 @@ typedef std::vector<patternBitset> patternsVector;
 int     handleMouse(Board& board, int& player, Render& render);
 int     handleStart(Render& render, Button &player, Button &IA);
 void    start_menu(Render& render, Button &player, Button &IA);
-int     gameChecker(Board&, const int&, const int&, const int&, Render& render);
+int     gameChecker(Board&, int, int, int, Render& render);
 int     place_stone(Board& board, int& player, Render& render, const int& y, const int& x);
 bool    checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX, int player);
 bool    checkDoubleThree(Board& game, int col, int row);
