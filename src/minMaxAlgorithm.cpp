@@ -40,9 +40,8 @@ Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
 
 Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int alpha, int beta) {
     if (depth == 0 || checkWin(heuristic) == true) {
-        Heuristic h = heuristic;
-        h.setHeuristic(h.globalHeuristic());
-        return (h);
+        heuristic.setHeuristic(heuristic.globalHeuristic());
+        return (heuristic);
     }
     // int value = (initPlayer == heuristic.getPlayer()) ? -2147483648 : 2147483647;
     bool cutoff = false;
@@ -133,7 +132,7 @@ Heuristic    minMaxFirstStep(Board& game, int player){
         int limit = (PRUNING < possibleMoves.size()) ? PRUNING : possibleMoves.size();
         for (int i = 0; i < limit; i ++){
             auto it = possibleMoves.begin();
-            std::advance(it, i);    
+            std::advance(it, i);
             Heuristic tmp = *it;
             threadResult.push_back(std::async(std::launch::async, minMaxRecursive, std::ref(tmp), player, DEPTH , alpha, beta));
         }

@@ -12,7 +12,6 @@ Heuristic::Heuristic(const Board& game, int x, int y, int xBegin, int yBegin) :
     _yBeginPos(yBegin)
 
 {
-    this->globalHeuristic();
 }
 
 Heuristic::Heuristic(const Heuristic &cpy):
