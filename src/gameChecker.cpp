@@ -18,9 +18,9 @@ bool checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX,
 bool checkPossibleCapture(Board& game, int x, int y, const int player) {
     int opponent = (player == WHITE) ? BLACK : WHITE;
 
-    int directions[6][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {1, 1}};
+    int directions[8][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {1, 1}, {1, -1}, {-1, 1}};
 
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 4; ++i) {
         int x1 = x + directions[i * 2][0], y1 = y + directions[i * 2][1];
         int x2 = x + directions[i * 2 + 1][0], y2 = y + directions[i * 2 + 1][1];
         int x3 = x2 + directions[i * 2 + 1][0], y3 = y2 + directions[i * 2 + 1][1];

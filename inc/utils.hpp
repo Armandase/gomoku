@@ -5,5 +5,6 @@
 # include <unistd.h>
 
 int     intlen(int number);
+int     coordToBoard(int coor);
 
 #endif

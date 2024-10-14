@@ -21,3 +21,8 @@ int intlen(int number) {
     }
     return length;
 }
+
+int coordToBoard(int coor)
+{
+    return ((coor - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
+}

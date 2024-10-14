@@ -46,6 +46,7 @@ int main()
     bool quit = false;
     SDL_Event e;
     int player = WHITE;
+    int mouseX, mouseY;
 
     // create 2 button to choose human vs ia or human vs human
     Button playerButton(SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
@@ -76,12 +77,16 @@ int main()
                     start = handleStart(render, playerButton, IAButton);
                     continue;
                 }
-                if ((player == WHITE || start == PLAYER_MODE) && handleMouse(board, player, render))
-                    continue;
-                if (player == BLACK && start == IA_MODE) {
-                    minMaxAlgorithm(board, player, render);
-                    player = WHITE;
+                SDL_GetMouseState(&mouseX, &mouseY);
+                if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) 
+                {
+                    int x = coordToBoard(mouseX);
+                    int y = coordToBoard(mouseY);
+                    if (posValid(board, player, render, x, y))
+                        place_stone(board, player, render, x, y);
                 }
+
+
                 SDL_RenderPresent(render.getRenderer());
             }
         }

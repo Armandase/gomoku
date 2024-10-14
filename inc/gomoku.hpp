@@ -22,6 +22,7 @@
 # define PRUNING 10
 # define PARTTERN_SIZE 4
 
+
 enum player {
     WHITE = 1,
     BLACK,
@@ -39,12 +40,13 @@ class Render;
 typedef std::bitset<PARTTERN_SIZE> patternBitset;
 typedef std::vector<patternBitset> patternsVector;
 
-int     handleMouse(Board& board, int& player, Render& render);
+bool    handleMouse(int mouseX, int mouseY);
 int     handleStart(Render& render, Button &player, Button &IA);
 void    start_menu(Render& render, Button &player, Button &IA);
 int     gameChecker(Board&, int, int, int, Render& render);
-int     place_stone(Board& board, int& player, Render& render, const int& y, const int& x);
+void    place_stone(Board& board, int& player, Render& render, int x, int y);
 bool    checkCapture(const Board& game, int checkY, int checkX, int dirY, int dirX, int player);
 bool    checkDoubleThree(Board& game, int col, int row);
+bool    posValid(const Board& game, int player, Render& render, int x, int y);
 
 #endif
