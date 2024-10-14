@@ -37,8 +37,6 @@ SDL_Renderer* Render::getRenderer() const {
 }
 
 void Render::init_sdl(const std::string& windowName, int windowWidth, int windowHeight){
-    std::cout << "windowWidth" << windowWidth << std::endl;
-    std::cout << "windowHeight" << windowHeight << std::endl;
     if (_renderer != NULL || _window != NULL)
         return ;
     //init sdl variables

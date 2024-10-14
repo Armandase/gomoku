@@ -30,7 +30,7 @@ enum comparison {
 
 struct CompareHeuristic {
     bool operator()(const Heuristic& a, const Heuristic& b) const {
-        return a.getHeuristic() < b.getHeuristic();
+        return a.getHeuristic() > b.getHeuristic();
     }
 };
 

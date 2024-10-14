@@ -2,8 +2,6 @@
 #include "../inc/utils.hpp"
 #include "../inc/Pattern.hpp"
 
-
-
 Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
     if (recursiveResult.empty())
         throw std::runtime_error("Empty vector of recursive\n");
@@ -12,8 +10,6 @@ Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
     }
     return *recursiveResult.begin();
 }
-
-
 
 // bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center){
 //     int count = 1, empty = 0;
@@ -60,11 +56,10 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
             //     if (found == false)
             //         continue;
             // }
-            if (heuristic.getGame().isPosEmpty(x, y) == true && emptyNeighbour(heuristic.getGame(), x, y) == false) {
+            if (heuristic.getGame().isPosEmpty(x, y) == true ) {
+            // if (heuristic.getGame().isPosEmpty(x, y) == true && emptyNeighbour(heuristic.getGame(), x, y) == false) {
                 Board copy = heuristic.getGame();
                 copy.setPos(x, y, getCurrentPlayer(depth, initPlayer));
-                std::cout << "Current player" << getCurrentPlayer(depth, initPlayer) << "depth" << depth ;
-                std::cout  << " depth mod" << (depth + 2) % 2 << " DEPTH mod:" << (DEPTH % 2) << std::endl;
                 if (validGame(copy, y, x, heuristic.getPlayer()) == false)
                     continue;
                 if (checkWin(heuristic) == true){
@@ -73,12 +68,8 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
                     return h;
                 }
 
-                // if (depth == DEPTH)
-                //     threadResult.push_back(async(std::launch::async, minMaxRecursive, copy, init_player, next_player, depth - 1, y, x, alpha, beta));
-                // else{
                 Heuristic h = Heuristic(copy, x, y);
                 h.setHeuristic(h.localHeuristic(x, y));
-                // Heuristic recursiveResult = minMaxRecursive(copy, init_player, next_player, depth - 1, y, x, alpha, beta);
                 result.insert(h);
                 // if (player == init_player){
                 //     if (recursiveResult.getHeuristic() > value)
@@ -108,23 +99,22 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
     heuristicSet recursiveResult;
     int limit = (PRUNING < result.size()) ? PRUNING : result.size();
     for (int i = 0; i < limit; i ++){
+        //takes the max values
         if (getCurrentPlayer(depth, initPlayer) == initPlayer){
             auto it = result.begin();
             std::advance(it, i);    
-            int next_player = (getCurrentPlayer(depth, initPlayer) == BLACK) ? WHITE : BLACK;
             Heuristic tmp = *it;
-            recursiveResult.insert(minMaxRecursive(tmp, next_player, depth - 1, alpha, beta));
+            recursiveResult.insert(minMaxRecursive(tmp, initPlayer, depth - 1, alpha, beta));
         }
         else{
             auto it = result.rbegin();
             std::advance(it, i);
-            int next_player = (getCurrentPlayer(depth, initPlayer) == BLACK) ? WHITE : BLACK;
             Heuristic tmp = *it;
-            recursiveResult.insert(minMaxRecursive(tmp, next_player, depth - 1, alpha, beta));
+            recursiveResult.insert(minMaxRecursive(tmp, initPlayer, depth - 1, alpha, beta));
         } 
 
     }
-
+    
     if (initPlayer == getCurrentPlayer(depth, initPlayer))
         return finCorrectValue(recursiveResult, MAX);
 
@@ -134,7 +124,7 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
 
 Heuristic    minMaxFirstStep(Board& game, int player){
     heuristicSet possibleMoves = generatePossibleMoves(game, player);
-    std::vector<std::future<Heuristic>> threadResult;
+    std::vector<std::future<Heuristic> > threadResult;
 
     int alpha = -2147483648, beta = 2147483647;
 
@@ -159,7 +149,6 @@ Heuristic    minMaxFirstStep(Board& game, int player){
         }
     }
     int idx =  indexOfMaxValue(recursiveResult);
-
     auto finalIt = possibleMoves.begin();   
     std::advance(finalIt, idx);
     return *finalIt;
