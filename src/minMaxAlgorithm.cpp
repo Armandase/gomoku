@@ -40,8 +40,9 @@ Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
 
 Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int alpha, int beta) {
     if (depth == 0 || checkWin(heuristic) == true) {
-        heuristic.globalHeuristic();
-        return (heuristic);
+        Heuristic h = heuristic;
+        h.setHeuristic(h.globalHeuristic());
+        return (h);
     }
     // int value = (initPlayer == heuristic.getPlayer()) ? -2147483648 : 2147483647;
     bool cutoff = false;
@@ -56,19 +57,19 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
             //     if (found == false)
             //         continue;
             // }
-            if (heuristic.getGame().isPosEmpty(x, y) == true ) {
-            // if (heuristic.getGame().isPosEmpty(x, y) == true && emptyNeighbour(heuristic.getGame(), x, y) == false) {
+            // if (heuristic.getGame().isPosEmpty(x, y) == true ) {
+            if (heuristic.getGame().isPosEmpty(x, y) == true && emptyNeighbour(heuristic.getGame(), x, y) == false) {
                 Board copy = heuristic.getGame();
                 copy.setPos(x, y, getCurrentPlayer(depth, initPlayer));
                 if (validGame(copy, y, x, heuristic.getPlayer()) == false)
                     continue;
                 if (checkWin(heuristic) == true){
-                    Heuristic h = Heuristic(copy, x, y);
+                    Heuristic h(copy, x, y, heuristic.getBeginX(), heuristic.getBeginY());
                     h.setHeuristic(INT_MAX);
                     return h;
                 }
 
-                Heuristic h = Heuristic(copy, x, y);
+                Heuristic h(copy, x, y, heuristic.getBeginX(), heuristic.getBeginY());
                 h.setHeuristic(h.localHeuristic(x, y));
                 result.insert(h);
                 // if (player == init_player){
@@ -123,35 +124,35 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
 
 
 Heuristic    minMaxFirstStep(Board& game, int player){
-    heuristicSet possibleMoves = generatePossibleMoves(game, player);
     std::vector<std::future<Heuristic> > threadResult;
+    
+    {
+        heuristicSet possibleMoves = generatePossibleMoves(game, player);
 
-    int alpha = -2147483648, beta = 2147483647;
+        int alpha = -2147483648, beta = 2147483647;
 
-    int limit = (PRUNING < possibleMoves.size()) ? PRUNING : possibleMoves.size();
-    for (int i = 0; i < limit; i ++){
-        auto it = possibleMoves.begin();
-        std::advance(it, i);    
-        int next_player = (player == BLACK) ? WHITE : BLACK;
-        Heuristic tmp = *it;
-        threadResult.push_back(std::async(std::launch::async, minMaxRecursive, std::ref(tmp), next_player, DEPTH - 1, alpha, beta));
+        int limit = (PRUNING < possibleMoves.size()) ? PRUNING : possibleMoves.size();
+        for (int i = 0; i < limit; i ++){
+            auto it = possibleMoves.begin();
+            std::advance(it, i);    
+            Heuristic tmp = *it;
+            threadResult.push_back(std::async(std::launch::async, minMaxRecursive, std::ref(tmp), player, DEPTH , alpha, beta));
+        }
     }
 
-    std::vector<Heuristic> recursiveResult;
+    heuristicSet recursiveResult;
     int size = threadResult.size();
     for (int i = 0; i < size; i ++){
         threadResult[i].wait();
         if (threadResult[i].valid() == true){
             Heuristic threadReturn = threadResult[i].get();
-            recursiveResult.push_back(threadReturn);
+            recursiveResult.insert(threadReturn);
         } else {
             std::cerr << "Fail to join a future" << std::endl; 
         }
     }
-    int idx =  indexOfMaxValue(recursiveResult);
-    auto finalIt = possibleMoves.begin();   
-    std::advance(finalIt, idx);
-    return *finalIt;
+    Heuristic result = *recursiveResult.begin();
+    return result;
 }
 
 void    minMaxAlgorithm(Board &game, int &player, Render& render)
@@ -162,7 +163,7 @@ void    minMaxAlgorithm(Board &game, int &player, Render& render)
     Heuristic result =  minMaxFirstStep(game, player);
     const auto t_end = std::chrono::high_resolution_clock::now();
     double timer = std::chrono::duration<double, std::milli>(t_end - t_start).count() / 1000;
-    std::cout << "heuristic:" << result.getHeuristic() << " X: " << result.getX() << " Y: " << result.getY() <<"\n";
+    std::cout << "heuristic:" << result.getHeuristic() << " X: " << result.getBeginX() << " Y: " << result.getBeginY() <<"\n";
     {
         std::ostringstream message;
 
@@ -175,7 +176,7 @@ void    minMaxAlgorithm(Board &game, int &player, Render& render)
         SDL_RenderFillRect(render.getRenderer(), &msg_rect);
         render.writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
     }
-    place_stone(game, player, render, result.getY(), result.getX());
+    place_stone(game, player, render, result.getBeginY(), result.getBeginX());
     } catch (std::exception& e){
         std::cout << e.what() << std::endl;
     }

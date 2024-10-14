@@ -3,20 +3,23 @@
 Heuristic::~Heuristic(){
 }
 
-Heuristic::Heuristic(const Board& game, int x, int y) :
+Heuristic::Heuristic(const Board& game, int x, int y, int xBegin, int yBegin) :
     _game(game),
     _heuristic(0),
     _xPos(x),
-    _yPos(y)
+    _yPos(y),
+    _xBeginPos(xBegin),
+    _yBeginPos(yBegin)
 {
-    this->globalHeuristic();
 }
 
 Heuristic::Heuristic(const Heuristic &cpy):
     _game(cpy._game),
     _heuristic(cpy._heuristic),
     _xPos(cpy._xPos),
-    _yPos(cpy._yPos)
+    _yPos(cpy._yPos),
+    _xBeginPos(cpy._xBeginPos),
+    _yBeginPos(cpy._yBeginPos)
 {
 }
 
@@ -29,6 +32,8 @@ Heuristic &Heuristic::operator=(const Heuristic &rhs)
         this->_heuristic = rhs._heuristic;
         this->_xPos = rhs._xPos;
         this->_yPos = rhs._yPos;
+        this->_xBeginPos = rhs._xBeginPos;
+        this->_yBeginPos = rhs._yBeginPos;
     }
 
     return (*this);

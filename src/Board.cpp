@@ -131,10 +131,27 @@ int Board::coordinateToAntiDiag1D(int x, int y) const
 }
 
 void Board::removePos(int x, int y){
-    if (this->_player1.test(x + y * this->_width))
-        this->_player1.reset(x + y * this->_width);
-    else if (this->_player2.test(x + y * this->_width))
-        this->_player2.reset(x + y * this->_width);
+    if (this->isPosEmpty(x, y) == false){
+        // std::cerr << "Error: Remove an empty stone at (" << x << ";" << y << ")"  << std::endl;
+        return ;
+    }
+
+    int coordinate = x + y * this->_width;
+    int coordinateToTranspose1d = this->coordinateToTranspose1D(x, y);
+    int coordinateToDiag1d = this->coordinateToDiag1D(x, y);
+    int coordinateToAntiDiag1d = this->coordinateToAntiDiag1D(x, y);
+
+    if (this->_player1.test(coordinate)){
+        this->_player1.reset(coordinate);
+        this->_player1Transposed.reset(coordinateToTranspose1d);
+        this->_player1Diag.reset(coordinateToDiag1d);
+        this->_player1AntiDiag.reset(coordinateToAntiDiag1d);
+    } else if (this->_player2.test(coordinate)){
+        this->_player2.reset(coordinate);
+        this->_player2Transposed.reset(coordinateToTranspose1d);
+        this->_player2Diag.reset(coordinateToDiag1d);
+        this->_player2AntiDiag.reset(coordinateToAntiDiag1d);
+    }
 }
 
 int Board::getPos(int x, int y) const

@@ -1,24 +1,5 @@
 #include "../inc/minMaxAlgorithm.hpp"
 
-
-int indexOfMaxValue(const std::vector<Heuristic>& vec){
-    int max = INT32_MIN;
-    int idx = -1;
-    int size = vec.size();
-
-    for (int i = 0; i < size; i++){
-        if (vec[i].getHeuristic() > max)
-        {
-            max = vec[i].getHeuristic();
-            idx = i;
-        }
-    }
-    if (idx == -1)
-        throw std::runtime_error((std::string(__FUNCTION__ ) + std::string(": not found")));
-
-    return idx;
-}
-
 int getCurrentPlayer(int depth, int initPlayer){
     if ((depth + 2) % 2 == DEPTH % 2)
         return initPlayer;
@@ -29,14 +10,14 @@ heuristicSet generatePossibleMoves(Board& game, int player){
     heuristicSet possibleMoves;
     for (int y = 0; y < BOARD_SIZE; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
-            // if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
-            if (game.isPosEmpty(x, y) == true) {
+            if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
+            // if (game.isPosEmpty(x, y) == true) {
                 Board copy = game;
                 copy.setPos(x, y, getCurrentPlayer(DEPTH, player));
                 if (validGame(copy, y, x, player) == false)
                     continue;
 
-                Heuristic h = Heuristic(copy, x, y);
+                Heuristic h(copy, x, y, x, y);
                 if (checkWin(h) == true){
                     h.setHeuristic(INT_MAX);
                     possibleMoves.insert(h);
