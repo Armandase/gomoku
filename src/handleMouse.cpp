@@ -4,9 +4,6 @@
 
 bool posValid(const Board& game, int player, Render& render, int x, int y)
 {
-    if (x < 0 || x > BOARD_SIZE || y < 0 || y > BOARD_SIZE)
-        return false;
-
     if (game.isPosEmpty(x, y) == false) {
         std::cout << "Position already used" << std::endl;
         return false;
@@ -33,6 +30,7 @@ void place_stone(Board& game, int &player, Render& render, int x, int y)
     // check Rules using bit operator if possible
     //  all older check function in gameChecker.cpp but lets do new check 
     //  - capture
+    //  - end capture can cancel win
     //  - win
 
     // if (winner > 0){
@@ -56,8 +54,8 @@ void place_stone(Board& game, int &player, Render& render, int x, int y)
 
 bool    handleMouse(int mouseX, int mouseY)
 {
-    if (mouseX <= MARGIN || mouseX >= SCREEN_WIDTH - MARGIN
-        || mouseY <= MARGIN || mouseY >= SCREEN_HEIGHT - MARGIN)
+    if (mouseX < MARGIN || mouseX > MARGIN + BOARD_DIMENSIONS
+        || mouseY < MARGIN || mouseY > MARGIN + BOARD_DIMENSIONS)
         return (false);
     return (true);
 }

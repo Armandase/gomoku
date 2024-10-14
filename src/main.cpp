@@ -6,39 +6,8 @@
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Render.hpp"
 
-/*
-int main(int argc, char const *argv[])
-{
-    Board test;
-    test.setPos(4, 1, WHITE);
-    test.setPos(5, 1, WHITE);
-    test.setPos(7, 3, WHITE);
-    test.setPos(7, 4, WHITE);
-
-    // test.setPos(7, 2, BLACK);      
-    int test_col = 7, test_row = 1; // Position to test (the X)
-    if (checkDoubleThree(test._player1, test._player2, test_col, test_row)) {
-        std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") would create a double three!" << std::endl;
-    } else {
-        std::cout << "Placing a stone at (" << test_row << ", " << test_col << ") is allowed." << std::endl;
-    }
-    return 0;
-}
-
-void testBoardClass(){
-    Board board;
-
-    board.setPos(2, 2, WHITE);
-    board.setPos(2, 3, BLACK);
-
-    std::cout << "Pos empty" << board.isPosEmpty(2, 2) << std::endl; 
-}
-*/
-
-int main()
-{
-    // try {
-
+// Function to initialize the SDL window and run the game loop
+int main(int argc, char const *argv[]) {
     Render render;
     render.init_sdl("Gomoku", SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -48,7 +17,7 @@ int main()
     int player = WHITE;
     int mouseX, mouseY;
 
-    // create 2 button to choose human vs ia or human vs human
+    // Create buttons for choosing human vs AI or human vs human
     Button playerButton(SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
 
@@ -56,43 +25,26 @@ int main()
     start_menu(render, playerButton, IAButton);   
 
     Board board;
-    while (!quit)
-    {
-        // Handle q and echap for quit the programm
-        // If SDL receive an event SDL_PollEvent return 1
-        while (SDL_PollEvent(&e) != 0)
-        {
-            if (e.type == SDL_QUIT)
-                quit = true;
-            else if (e.type == SDL_KEYDOWN)
-            {
-                if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q)
-                    quit = true;
-            }
-            else if (e.type == SDL_MOUSEBUTTONDOWN)
-            {
-                // if start is equal to 0 then no game mode is chosen
-                if (!start)
-                {
+    while (!quit) {
+        while (SDL_PollEvent(&e) != 0) {
+            if (e.type == SDL_QUIT) quit = true;
+            else if (e.type == SDL_KEYDOWN) {
+                if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q) quit = true;
+            } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+                if (!start) {
                     start = handleStart(render, playerButton, IAButton);
                     continue;
                 }
                 SDL_GetMouseState(&mouseX, &mouseY);
-                if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) 
-                {
+                if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) {
                     int x = coordToBoard(mouseX);
                     int y = coordToBoard(mouseY);
-                    if (posValid(board, player, render, x, y))
+                    if (posValid(board, player, render, x, y)) {
                         place_stone(board, player, render, x, y);
+                    }
                 }
-
-
                 SDL_RenderPresent(render.getRenderer());
             }
         }
     }
-    // } catch (std::exception& e){
-        // std::cout << e.what() << std::endl;
-    // }
-    return 0;
 }
