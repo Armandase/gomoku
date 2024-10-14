@@ -56,8 +56,8 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
             //     if (found == false)
             //         continue;
             // }
-            if (heuristic.getGame().isPosEmpty(x, y) == true ) {
-            // if (heuristic.getGame().isPosEmpty(x, y) == true && emptyNeighbour(heuristic.getGame(), x, y) == false) {
+            // if (heuristic.getGame().isPosEmpty(x, y) == true ) {
+            if (heuristic.getGame().isPosEmpty(x, y) == true && emptyNeighbour(heuristic.getGame(), x, y) == false) {
                 Board copy = heuristic.getGame();
                 copy.setPos(x, y, getCurrentPlayer(depth, initPlayer));
                 if (validGame(copy, y, x, heuristic.getPlayer()) == false)
@@ -112,7 +112,6 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
             Heuristic tmp = *it;
             recursiveResult.insert(minMaxRecursive(tmp, initPlayer, depth - 1, alpha, beta));
         } 
-
     }
     
     if (initPlayer == getCurrentPlayer(depth, initPlayer))
@@ -149,7 +148,7 @@ Heuristic    minMaxFirstStep(Board& game, int player){
         }
     }
     int idx =  indexOfMaxValue(recursiveResult);
-    auto finalIt = possibleMoves.begin();   
+    auto finalIt = possibleMoves.begin();
     std::advance(finalIt, idx);
     return *finalIt;
 }

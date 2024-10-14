@@ -23,7 +23,8 @@ class Heuristic
         int getPlayer() const { return (_game.getPos(this->_xPos, this->_yPos)); }
         void setHeuristic(int heuristic) { this->_heuristic = heuristic; }
     private:
-        int     counterAnalysis(int count, bool capture, int empty, int inRow, int player);
+        // int     counterAnalysis(int count, int opponent, bool capture, int empty, int inRow, int player);
+        int     counterAnalysis(int counter, int player, int color, bool openEnds);
         bool    checkCapture(int checkY, int checkX, int dirY, int dirX, int player);
 
         static constexpr int   dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};

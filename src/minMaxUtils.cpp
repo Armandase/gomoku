@@ -29,8 +29,8 @@ heuristicSet generatePossibleMoves(Board& game, int player){
     heuristicSet possibleMoves;
     for (int y = 0; y < BOARD_SIZE; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
-            // if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
-            if (game.isPosEmpty(x, y) == true) {
+            if (game.isPosEmpty(x, y) == true && emptyNeighbour(game, x, y) == false) {
+            // if (game.isPosEmpty(x, y) == true) {
                 Board copy = game;
                 copy.setPos(x, y, getCurrentPlayer(DEPTH, player));
                 if (validGame(copy, y, x, player) == false)
