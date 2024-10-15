@@ -30,15 +30,13 @@ all       : ${NAME}
 
 lib       :
 		cd ${SDL2_TTF} && \
-		git fetch --tags && \
-		git checkout tags/release-2.20.2 && \
+		git checkout release-2.20.2 && \
 		./configure && \
 		cmake -S . -B build && \
 		make -C build
 
 		cd ${SDL2_IMAGE} && \
-		git fetch --tags && \
-		git checkout tags/release-2.8.0 && \
+		git checkout release-2.8.0 && \
 		./configure && \
 		cmake -S . -B build && \
 		make -C build
