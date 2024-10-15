@@ -20,33 +20,37 @@ OBJS      = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(SRC_MAIN:.cpp=
 TEST_OBJS = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(TEST_MAIN:.cpp=.o)) \
              obj/gtest-all.o
 
-CXXFLAGS  = -Wall -Wextra --std=c++17 -Weffc++ -I${GTEST}/include -I${GTEST} -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
+CXXFLAGS  = -Wall -Wextra --std=c++17 -Weffc++ -I${GTEST}/googletest/include -I${GTEST}/googletest -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
 SDL2_TTF  = libs/SDL2_ttf
 SDL2_IMAGE = libs/SDL2_image
-GTEST     = libs/googletest/googletest
+GTEST     = libs/googletest
 LDFLAGS   = -lSDL2 -L$(SDL2_TTF)/build -lSDL2_ttf -L$(SDL2_IMAGE)/build -lSDL2_image -Wl,-rpath,$(SDL2_TTF)/build -Wl,-rpath,$(SDL2_IMAGE)/build -Ofast -g
 
 all       : ${NAME} 
 
 lib       :
 		cd ${SDL2_TTF} && \
+		git fetch --tags && \
+		git checkout tags/release-2.20.2 && \
 		./configure && \
 		cmake -S . -B build && \
 		make -C build
 
 		cd ${SDL2_IMAGE} && \
+		git fetch --tags && \
+		git checkout tags/release-2.8.0 && \
 		./configure && \
 		cmake -S . -B build && \
 		make -C build
 
-		cd libs/googletest && \
+		cd ${GTEST} && \
 		mkdir -p build && cd build && \
 		cmake .. && make
 
 lib_clean :
 		rm -r ${SDL2_TTF}/build
 		rm -r ${SDL2_IMAGE}/build
-		rm -r ${GTEST}/build
+		rm -r ${GTEST}/googletest/build
 
 ${NAME} : ${OBJS} ${HEADER}
 		${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
@@ -65,7 +69,7 @@ obj/test_main.o: test/${TEST_MAIN}
 	@mkdir -p $(@D)
 	${CXX} ${CXXFLAGS} -c $< -o $@
 
-obj/gtest-all.o: libs/googletest/googletest/src/gtest-all.cc
+obj/gtest-all.o: ${GTEST}/googletest/src/gtest-all.cc
 	@mkdir -p $(@D)
 	${CXX} ${CXXFLAGS} -c $< -o $@
 
