@@ -1,9 +1,3 @@
 [submodule "libs/googletest"]
 	path = libs/googletest
 	url = https://github.com/google/googletest.git
-[submodule "libs/SDL2_ttf"]
-	path = libs/SDL2_ttf
-	url = https://github.com/libsdl/SDL_ttf.git
-[submodule "libs/SDL2_image"]
-	path = libs/SDL2_image
-	url = https://github.com/libsdl/SDL_image.git
