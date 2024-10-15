@@ -1,5 +1,3 @@
-MAKEFLAGS += -j
-
 CXX       = c++
 NAME      = Gomoku
 TEST_NAME = run_test
@@ -26,31 +24,41 @@ SDL2_IMAGE = libs/SDL2_image
 GTEST     = libs/gtest
 LDFLAGS   = -lSDL2 -L$(SDL2_TTF)/build -lSDL2_ttf -L$(SDL2_IMAGE)/build -lSDL2_image -Wl,-rpath,$(SDL2_TTF)/build -Wl,-rpath,$(SDL2_IMAGE)/build -Ofast -g
 
-all       : ${NAME} 
+all: lib ${NAME}
 
-lib       :
-		git submodule update --init
-
+lib:
+	@if [ ! -d "$(SDL2_TTF)/build" ]; then \
+		echo "Building SDL2_ttf..."; \
+		git submodule update --init && \
 		cd ${SDL2_TTF} && \
 		git checkout release-2.20.2 && \
 		./configure && \
 		cmake -S . -B build && \
-		make -C build
+		make -C build; \
+	fi
 
+	@if [ ! -d "$(SDL2_IMAGE)/build" ]; then \
+		echo "Building SDL2_image..."; \
+		git submodule update --init && \
 		cd ${SDL2_IMAGE} && \
 		git checkout release-2.8.0 && \
 		./configure && \
 		cmake -S . -B build && \
-		make -C build
+		make -C build; \
+	fi
 
+	@if [ ! -d "$(GTEST)/build" ]; then \
+		echo "Building googletest..."; \
+		git submodule update --init && \
 		cd ${GTEST} && \
 		mkdir -p build && cd build && \
-		cmake .. && make
+		cmake .. && make; \
+	fi
 
 lib_clean :
-		rm -r ${SDL2_TTF}/build
-		rm -r ${SDL2_IMAGE}/build
-		rm -r ${GTEST}/googletest/build
+		rm -rf ${SDL2_TTF}/build
+		rm -rf ${SDL2_IMAGE}/build
+		rm -rf ${GTEST}/googletest/build
 
 ${NAME} : ${OBJS} ${HEADER}
 		${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
