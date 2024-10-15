@@ -39,7 +39,7 @@ lib       :
 		cmake -S . -B build && \
 		make -C build
 
-		cd ${GTEST} && \
+		cd libs/googletest && \
 		mkdir -p build && cd build && \
 		cmake .. && make
 

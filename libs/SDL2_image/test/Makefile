@@ -397,23 +397,23 @@ TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/depcomp \
 	$(top_srcdir)/test-driver README.md
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' aclocal-1.16
+ACLOCAL = ${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
 AS = as
-AUTOCONF = ${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' autoconf
-AUTOHEADER = ${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' autoheader
-AUTOMAKE = ${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' automake-1.16
-AWK = mawk
+AUTOCONF = ${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' autoconf
+AUTOHEADER = ${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' autoheader
+AUTOMAKE = ${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' automake-1.16
+AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -I/usr/include/x86_64-linux-gnu  -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden
+CFLAGS = -I/usr/include/x86_64-linux-gnu -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden
 CPPFLAGS = 
 CSCOPE = cscope
 CTAGS = ctags
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"SDL2_image\" -DPACKAGE_TARNAME=\"SDL2_image\" -DPACKAGE_VERSION=\"2.6.3\" -DPACKAGE_STRING=\"SDL2_image\ 2.6.3\" -DPACKAGE_BUGREPORT=\"https://github.com/libsdl-org/SDL_image/issues\" -DPACKAGE_URL=\"\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=6 -DSDL_BUILD_MICRO_VERSION=3 -DPACKAGE=\"SDL2_image\" -DVERSION=\"2.6.3\" -DUSE_STBIMAGE=1 -DLOAD_JPG=1 -DLOAD_PNG=1 -DLOAD_TIF=1 -DLOAD_WEBP=1 -DLOAD_BMP=1 -DLOAD_GIF=1 -DLOAD_LBM=1 -DLOAD_PCX=1 -DLOAD_PNM=1 -DLOAD_SVG=1 -DLOAD_TGA=1 -DLOAD_XCF=1 -DLOAD_XPM=1 -DLOAD_XV=1 -DLOAD_QOI=1 -DLOAD_WEBP_DYNAMIC=\"libwebp.so.7\" -DLOAD_TIF_DYNAMIC=\"libtiff.so.5\" -DSDL_IMAGE_SAVE_PNG=1 -DSDL_IMAGE_SAVE_JPG=1
+DEFS = -DPACKAGE_NAME=\"SDL2_image\" -DPACKAGE_TARNAME=\"SDL2_image\" -DPACKAGE_VERSION=\"2.6.3\" -DPACKAGE_STRING=\"SDL2_image\ 2.6.3\" -DPACKAGE_BUGREPORT=\"https://github.com/libsdl-org/SDL_image/issues\" -DPACKAGE_URL=\"\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=6 -DSDL_BUILD_MICRO_VERSION=3 -DPACKAGE=\"SDL2_image\" -DVERSION=\"2.6.3\" -DUSE_STBIMAGE=1 -DLOAD_JPG=1 -DLOAD_PNG=1 -DLOAD_TIF=1 -DLOAD_BMP=1 -DLOAD_GIF=1 -DLOAD_LBM=1 -DLOAD_PCX=1 -DLOAD_PNM=1 -DLOAD_SVG=1 -DLOAD_TGA=1 -DLOAD_XCF=1 -DLOAD_XPM=1 -DLOAD_XV=1 -DLOAD_QOI=1 -DLOAD_TIF_DYNAMIC=\"libtiff.so.5\" -DSDL_IMAGE_SAVE_PNG=1 -DSDL_IMAGE_SAVE_JPG=1
 DEPDIR = .deps
 DLLTOOL = dlltool
 DSYMUTIL = 
@@ -448,7 +448,7 @@ LIBTIFF_CFLAGS = -I/usr/include/x86_64-linux-gnu
 LIBTIFF_LIBS = -ltiff
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIBWEBP_CFLAGS = 
-LIBWEBP_LIBS = -lwebp
+LIBWEBP_LIBS = 
 LIPO = 
 LN_S = ln -s
 LOAD_AVIF = 0
@@ -464,7 +464,7 @@ LOAD_QOI = 1
 LOAD_SVG = 1
 LOAD_TGA = 1
 LOAD_TIF = 1
-LOAD_WEBP = 1
+LOAD_WEBP = 0
 LOAD_XCF = 1
 LOAD_XPM = 1
 LOAD_XV = 1
@@ -475,7 +475,7 @@ LT_EXTRA =
 LT_RELEASE = 2.0
 LT_REVISION = 3
 MAJOR_VERSION = 2
-MAKEINFO = ${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' makeinfo
+MAKEINFO = ${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' makeinfo
 MICRO_VERSION = 3
 MINOR_VERSION = 6
 MKDIR_P = /usr/bin/mkdir -p
@@ -483,7 +483,7 @@ NM = /usr/bin/nm -B
 NMEDIT = 
 OBJC = gcc
 OBJCDEPMODE = depmode=gcc3
-OBJCFLAGS = -I/usr/include/x86_64-linux-gnu  -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden
+OBJCFLAGS = -I/usr/include/x86_64-linux-gnu -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden
 OBJDUMP = objdump
 OBJEXT = o
 OTOOL = 
@@ -517,10 +517,10 @@ USE_IMAGEIO = 0
 USE_STBIMAGE = 1
 USE_WIC = 0
 VERSION = 2.6.3
-abs_builddir = /home/nlocusso/42/gomoku/libs/SDL2_image/test
-abs_srcdir = /home/nlocusso/42/gomoku/libs/SDL2_image/test
-abs_top_builddir = /home/nlocusso/42/gomoku/libs/SDL2_image
-abs_top_srcdir = /home/nlocusso/42/gomoku/libs/SDL2_image
+abs_builddir = /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/test
+abs_srcdir = /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/test
+abs_top_builddir = /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image
+abs_top_srcdir = /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
 ac_ct_OBJC = gcc
@@ -550,7 +550,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/nlocusso/42/gomoku/libs/SDL2_image/install-sh
+install_sh = ${SHELL} /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale

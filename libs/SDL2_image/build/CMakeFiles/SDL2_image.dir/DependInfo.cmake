@@ -8,33 +8,33 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG.c" "CMakeFiles/SDL2_image.dir/IMG.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_WIC.c" "CMakeFiles/SDL2_image.dir/IMG_WIC.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_WIC.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_avif.c" "CMakeFiles/SDL2_image.dir/IMG_avif.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_avif.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_bmp.c" "CMakeFiles/SDL2_image.dir/IMG_bmp.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_bmp.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_gif.c" "CMakeFiles/SDL2_image.dir/IMG_gif.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_gif.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_jpg.c" "CMakeFiles/SDL2_image.dir/IMG_jpg.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_jpg.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_jxl.c" "CMakeFiles/SDL2_image.dir/IMG_jxl.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_jxl.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_lbm.c" "CMakeFiles/SDL2_image.dir/IMG_lbm.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_lbm.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_pcx.c" "CMakeFiles/SDL2_image.dir/IMG_pcx.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_pcx.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_png.c" "CMakeFiles/SDL2_image.dir/IMG_png.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_png.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_pnm.c" "CMakeFiles/SDL2_image.dir/IMG_pnm.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_pnm.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_qoi.c" "CMakeFiles/SDL2_image.dir/IMG_qoi.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_qoi.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_stb.c" "CMakeFiles/SDL2_image.dir/IMG_stb.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_stb.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_svg.c" "CMakeFiles/SDL2_image.dir/IMG_svg.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_svg.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_tga.c" "CMakeFiles/SDL2_image.dir/IMG_tga.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_tga.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_tif.c" "CMakeFiles/SDL2_image.dir/IMG_tif.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_tif.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_webp.c" "CMakeFiles/SDL2_image.dir/IMG_webp.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_webp.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_xcf.c" "CMakeFiles/SDL2_image.dir/IMG_xcf.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_xcf.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_xpm.c" "CMakeFiles/SDL2_image.dir/IMG_xpm.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_xpm.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_xv.c" "CMakeFiles/SDL2_image.dir/IMG_xv.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_xv.c.o.d"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/IMG_xxx.c" "CMakeFiles/SDL2_image.dir/IMG_xxx.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_xxx.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG.c" "CMakeFiles/SDL2_image.dir/IMG.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_WIC.c" "CMakeFiles/SDL2_image.dir/IMG_WIC.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_WIC.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_avif.c" "CMakeFiles/SDL2_image.dir/IMG_avif.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_avif.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_bmp.c" "CMakeFiles/SDL2_image.dir/IMG_bmp.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_bmp.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_gif.c" "CMakeFiles/SDL2_image.dir/IMG_gif.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_gif.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_jpg.c" "CMakeFiles/SDL2_image.dir/IMG_jpg.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_jpg.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_jxl.c" "CMakeFiles/SDL2_image.dir/IMG_jxl.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_jxl.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_lbm.c" "CMakeFiles/SDL2_image.dir/IMG_lbm.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_lbm.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pcx.c" "CMakeFiles/SDL2_image.dir/IMG_pcx.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_pcx.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_png.c" "CMakeFiles/SDL2_image.dir/IMG_png.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_png.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_pnm.c" "CMakeFiles/SDL2_image.dir/IMG_pnm.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_pnm.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_qoi.c" "CMakeFiles/SDL2_image.dir/IMG_qoi.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_qoi.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_stb.c" "CMakeFiles/SDL2_image.dir/IMG_stb.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_stb.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_svg.c" "CMakeFiles/SDL2_image.dir/IMG_svg.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_svg.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_tga.c" "CMakeFiles/SDL2_image.dir/IMG_tga.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_tga.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_tif.c" "CMakeFiles/SDL2_image.dir/IMG_tif.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_tif.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_webp.c" "CMakeFiles/SDL2_image.dir/IMG_webp.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_webp.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xcf.c" "CMakeFiles/SDL2_image.dir/IMG_xcf.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_xcf.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xpm.c" "CMakeFiles/SDL2_image.dir/IMG_xpm.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_xpm.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xv.c" "CMakeFiles/SDL2_image.dir/IMG_xv.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_xv.c.o.d"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/IMG_xxx.c" "CMakeFiles/SDL2_image.dir/IMG_xxx.c.o" "gcc" "CMakeFiles/SDL2_image.dir/IMG_xxx.c.o.d"
   )
 
 # Pairs of files generated by the same build rule.
 set(CMAKE_MULTIPLE_OUTPUT_PAIRS
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/build/libSDL2_image-2.0.so" "/home/nlocusso/42/gomoku/libs/SDL2_image/build/libSDL2_image-2.0.so.0.600.3"
-  "/home/nlocusso/42/gomoku/libs/SDL2_image/build/libSDL2_image-2.0.so.0" "/home/nlocusso/42/gomoku/libs/SDL2_image/build/libSDL2_image-2.0.so.0.600.3"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/libSDL2_image-2.0.so" "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/libSDL2_image-2.0.so.0.600.3"
+  "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/libSDL2_image-2.0.so.0" "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/build/libSDL2_image-2.0.so.0.600.3"
   )
 
 

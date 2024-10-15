@@ -424,11 +424,11 @@ Copyright (C) 2021 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/nlocusso/42/gomoku/libs/SDL2_image'
+ac_pwd='/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/usr/bin/mkdir -p'
-AWK='mawk'
+AWK='gawk'
 test -n "$AWK" || AWK=awk
 # The default lists apply if the user does not specify any file.
 ac_need_defaults=:
@@ -565,7 +565,7 @@ old_postinstall_cmds='chmod 644 $oldlib~$RANLIB $oldlib'
 old_postuninstall_cmds=''
 old_archive_cmds='$AR $AR_FLAGS $oldlib$oldobjs~$RANLIB $oldlib'
 CC='gcc'
-CFLAGS='-I/usr/include/x86_64-linux-gnu  -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden'
+CFLAGS='-I/usr/include/x86_64-linux-gnu -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden'
 compiler='gcc'
 GCC='yes'
 lt_cv_sys_global_symbol_pipe='sed -n -e '\''s/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p'\'''
@@ -640,7 +640,7 @@ finish_cmds='PATH="\$PATH:/sbin" ldconfig -n $libdir'
 finish_eval=''
 hardcode_into_libs='yes'
 sys_lib_search_path_spec='/usr/lib/gcc/x86_64-linux-gnu/11 /usr/lib/x86_64-linux-gnu /usr/lib /lib/x86_64-linux-gnu /lib'
-sys_lib_dlsearch_path_spec='/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib /usr/local/lib/x86_64-linux-gnu /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu '
+sys_lib_dlsearch_path_spec='/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib /usr/local/lib/x86_64-linux-gnu /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /lib32 /usr/lib32 '
 hardcode_action='immediate'
 enable_dlopen='unknown'
 enable_dlopen_self='unknown'
@@ -805,8 +805,8 @@ S["LOAD_PCX"]="1"
 S["LOAD_LBM"]="1"
 S["LOAD_GIF"]="1"
 S["LOAD_BMP"]="1"
-S["LOAD_WEBP"]="1"
-S["LIBWEBP_LIBS"]="-lwebp"
+S["LOAD_WEBP"]="0"
+S["LIBWEBP_LIBS"]=""
 S["LIBWEBP_CFLAGS"]=""
 S["LOAD_TIF"]="1"
 S["LIBTIFF_LIBS"]="-ltiff"
@@ -842,7 +842,7 @@ S["am__fastdepOBJC_FALSE"]="#"
 S["am__fastdepOBJC_TRUE"]=""
 S["OBJCDEPMODE"]="depmode=gcc3"
 S["ac_ct_OBJC"]="gcc"
-S["OBJCFLAGS"]="-I/usr/include/x86_64-linux-gnu  -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden"
+S["OBJCFLAGS"]="-I/usr/include/x86_64-linux-gnu -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden"
 S["OBJC"]="gcc"
 S["AM_BACKSLASH"]="\\"
 S["AM_DEFAULT_VERBOSITY"]="1"
@@ -865,16 +865,16 @@ S["am__tar"]="tar --format=ustar -cf - \"$$tardir\""
 S["AMTAR"]="$${TAR-tar}"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
-S["AWK"]="mawk"
+S["AWK"]="gawk"
 S["mkdir_p"]="$(MKDIR_P)"
 S["MKDIR_P"]="/usr/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
-S["install_sh"]="${SHELL} /home/nlocusso/42/gomoku/libs/SDL2_image/install-sh"
-S["MAKEINFO"]="${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' makeinfo"
-S["AUTOHEADER"]="${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' autoheader"
-S["AUTOMAKE"]="${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' automake-1.16"
-S["AUTOCONF"]="${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' autoconf"
-S["ACLOCAL"]="${SHELL} '/home/nlocusso/42/gomoku/libs/SDL2_image/missing' aclocal-1.16"
+S["install_sh"]="${SHELL} /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/install-sh"
+S["MAKEINFO"]="${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' makeinfo"
+S["AUTOHEADER"]="${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' autoheader"
+S["AUTOMAKE"]="${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' automake-1.16"
+S["AUTOCONF"]="${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' autoconf"
+S["ACLOCAL"]="${SHELL} '/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_image/missing' aclocal-1.16"
 S["VERSION"]="2.6.3"
 S["PACKAGE"]="SDL2_image"
 S["CYGPATH_W"]="echo"
@@ -910,7 +910,7 @@ S["EXEEXT"]=""
 S["ac_ct_CC"]="gcc"
 S["CPPFLAGS"]=""
 S["LDFLAGS"]=" -Wl,--no-undefined"
-S["CFLAGS"]="-I/usr/include/x86_64-linux-gnu  -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden"
+S["CFLAGS"]="-I/usr/include/x86_64-linux-gnu -g -O2 -D_REENTRANT -I/usr/include/SDL2 -Wall -fvisibility=hidden"
 S["CC"]="gcc"
 S["host_os"]="linux-gnu"
 S["host_vendor"]="pc"
@@ -938,9 +938,8 @@ S["DEFS"]="-DPACKAGE_NAME=\\\"SDL2_image\\\" -DPACKAGE_TARNAME=\\\"SDL2_image\\\
 "T=\\\"https://github.com/libsdl-org/SDL_image/issues\\\" -DPACKAGE_URL=\\\"\\\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DH"\
 "AVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\\\".libs/\\"\
 "\" -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=6 -DSDL_BUILD_MICRO_VERSION=3 -DPACKAGE=\\\"SDL2_image\\\" -DVERSION=\\\"2.6.3\\\" -DUSE_STBIMAGE=1 "\
-"-DLOAD_JPG=1 -DLOAD_PNG=1 -DLOAD_TIF=1 -DLOAD_WEBP=1 -DLOAD_BMP=1 -DLOAD_GIF=1 -DLOAD_LBM=1 -DLOAD_PCX=1 -DLOAD_PNM=1 -DLOAD_SVG=1 -DLOAD_TGA=1 -DLO"\
-"AD_XCF=1 -DLOAD_XPM=1 -DLOAD_XV=1 -DLOAD_QOI=1 -DLOAD_WEBP_DYNAMIC=\\\"libwebp.so.7\\\" -DLOAD_TIF_DYNAMIC=\\\"libtiff.so.5\\\" -DSDL_IMAGE_SAVE_PNG=1 -DSDL"\
-"_IMAGE_SAVE_JPG=1"
+"-DLOAD_JPG=1 -DLOAD_PNG=1 -DLOAD_TIF=1 -DLOAD_BMP=1 -DLOAD_GIF=1 -DLOAD_LBM=1 -DLOAD_PCX=1 -DLOAD_PNM=1 -DLOAD_SVG=1 -DLOAD_TGA=1 -DLOAD_XCF=1 -DLOA"\
+"D_XPM=1 -DLOAD_XV=1 -DLOAD_QOI=1 -DLOAD_TIF_DYNAMIC=\\\"libtiff.so.5\\\" -DSDL_IMAGE_SAVE_PNG=1 -DSDL_IMAGE_SAVE_JPG=1"
 S["mandir"]="${datarootdir}/man"
 S["localedir"]="${datarootdir}/locale"
 S["libdir"]="${exec_prefix}/lib"

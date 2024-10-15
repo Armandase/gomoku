@@ -1,4 +1,4 @@
-# Install script for directory: /home/nlocusso/42/gomoku/libs/SDL2_ttf
+# Install script for directory: /nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -55,8 +55,8 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xlibraryx" OR NOT CMAKE_INSTALL_COMP
     endif()
   endforeach()
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES
-    "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/libSDL2_ttf-2.0.so.0.2000.2"
-    "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/libSDL2_ttf-2.0.so.0"
+    "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/libSDL2_ttf-2.0.so.0.2000.2"
+    "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/libSDL2_ttf-2.0.so.0"
     )
   foreach(file
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libSDL2_ttf-2.0.so.0.2000.2"
@@ -78,7 +78,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xlibraryx" OR NOT CMAKE_INSTALL_COMP
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libSDL2_ttf-2.0.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/libSDL2_ttf-2.0.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/libSDL2_ttf-2.0.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libSDL2_ttf-2.0.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libSDL2_ttf-2.0.so")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -88,13 +88,13 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xlibraryx" OR NOT CMAKE_INSTALL_COMP
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xdevelx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/SDL2" TYPE FILE FILES "/home/nlocusso/42/gomoku/libs/SDL2_ttf/SDL_ttf.h")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/SDL2" TYPE FILE FILES "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/SDL_ttf.h")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xdevelx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SDL2_ttf" TYPE FILE FILES
-    "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/SDL2_ttfConfig.cmake"
-    "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/SDL2_ttfConfigVersion.cmake"
+    "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/SDL2_ttfConfig.cmake"
+    "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/SDL2_ttfConfigVersion.cmake"
     )
 endif()
 
@@ -102,7 +102,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xdevelx" OR NOT CMAKE_INSTALL_COMPON
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets.cmake"
-         "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/CMakeFiles/Export/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets.cmake")
+         "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/CMakeFiles/Export/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -111,28 +111,28 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xdevelx" OR NOT CMAKE_INSTALL_COMPON
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SDL2_ttf" TYPE FILE FILES "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/CMakeFiles/Export/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SDL2_ttf" TYPE FILE FILES "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/CMakeFiles/Export/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SDL2_ttf" TYPE FILE FILES "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/CMakeFiles/Export/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets-noconfig.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SDL2_ttf" TYPE FILE FILES "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/CMakeFiles/Export/lib/cmake/SDL2_ttf/SDL2_ttf-shared-targets-noconfig.cmake")
   endif()
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   
         # FIXME: use file(COPY_FILE) if CMake 3.21+
-        execute_process(COMMAND "/usr/bin/cmake" -E copy "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/SDL2_ttf-.pc"
-            "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/SDL2_ttf.pc")
+        execute_process(COMMAND "/usr/bin/cmake" -E copy "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/SDL2_ttf-.pc"
+            "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/SDL2_ttf.pc")
         file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig"
             TYPE FILE
-            FILES "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/SDL2_ttf.pc")
+            FILES "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/SDL2_ttf.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xdevelx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/libSDL2_ttf.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/libSDL2_ttf.so")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xlibraryx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/licenses/SDL2_ttf" TYPE FILE FILES "/home/nlocusso/42/gomoku/libs/SDL2_ttf/LICENSE.txt")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/licenses/SDL2_ttf" TYPE FILE FILES "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/LICENSE.txt")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -143,5 +143,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/nlocusso/42/gomoku/libs/SDL2_ttf/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/nfs/homes/nlocusso/spe_project/gomoku/libs/SDL2_ttf/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
