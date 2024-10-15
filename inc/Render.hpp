@@ -2,8 +2,6 @@
 #define __RENDER_HPP__
 
 # include <SDL.h>
-# include <SDL_ttf.h>
-# include <SDL_image.h>
 # include <iostream>
 # include "gomoku.hpp"
 # include "utils.hpp"

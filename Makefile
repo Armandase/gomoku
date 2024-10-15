@@ -18,7 +18,7 @@ OBJS	=	$(addprefix obj/, $(SRC:.cpp=.o))
 CXXFLAGS=	-Wall -Wextra --std=c++17 -Weffc++ -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
 SDL2_TTF=	libs/SDL2_ttf
 SDL2_IMAGE=	libs/SDL2_image
-LDFLAGS = -lSDL2 -L$(SDL2_TTF)/build -lSDL2_ttf -L$(SDL2_IMAGE)/build -lSDL2_image -Wl,-rpath,$(SDL2_TTF)/build -Wl,-rpath,$(SDL2_IMAGE)/build -Ofast -g
+LDFLAGS = -lSDL2 	 -Wl,-rpath,$(SDL2_TTF)/build -Wl,-rpath,$(SDL2_IMAGE)/build -Ofast -g
 
 all		:	${NAME} 
 

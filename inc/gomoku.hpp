@@ -7,6 +7,9 @@
 # include <climits>
 # include <set>
 # include <bitset>
+# include <SDL.h>
+# include <SDL_ttf.h>
+# include <SDL_image.h>
 # include "Button.hpp"
 # include "Render.hpp" 
 

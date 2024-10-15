@@ -2,8 +2,6 @@
 #define __BUTTON_HPP__
 
 # include "gomoku.hpp"
-# include <SDL.h>
-
 
 class Button
 {
