@@ -1,4 +1,4 @@
 obj/
 *.vscode
-gomoku
-run_tests
+Gomoku
+test_executable

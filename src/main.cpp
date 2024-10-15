@@ -27,9 +27,10 @@ int main(int argc, char const *argv[]) {
     Board board;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q)))
-                quit = true;
-            else if (e.type == SDL_MOUSEBUTTONDOWN) {
+            if (e.type == SDL_QUIT) quit = true;
+            else if (e.type == SDL_KEYDOWN) {
+                if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q) quit = true;
+            } else if (e.type == SDL_MOUSEBUTTONDOWN) {
                 if (!start) {
                     start = handleStart(render, playerButton, IAButton);
                     continue;

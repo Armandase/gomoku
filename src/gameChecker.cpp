@@ -101,5 +101,5 @@ bool doubleThree(const Board& game, int x, int y, int player){
             return true;
         }
     }
-    return false
+    return false;
 }

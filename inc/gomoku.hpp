@@ -23,8 +23,8 @@
 # define PRUNING 10
 # define PARTTERN_SIZE 4
 
-extern const u_int8_t g_dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
-extern const u_int8_t g_dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
+// extern const int8_t g_dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
+// extern const int8_t g_dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
 
 enum player {
     WHITE = 1,
