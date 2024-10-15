@@ -18,7 +18,7 @@ HEADER    = inc/gomoku.hpp inc/utils.hpp \
 
 OBJS      = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(SRC_MAIN:.cpp=.o)) 
 TEST_OBJS = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(TEST_MAIN:.cpp=.o)) \
-             obj/gtest-all.o  # Include gtest-all.o
+             obj/gtest-all.o
 
 CXXFLAGS  = -Wall -Wextra --std=c++17 -Weffc++ -I${GTEST}/include -I${GTEST} -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
 SDL2_TTF  = libs/SDL2_ttf
