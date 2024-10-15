@@ -82,3 +82,24 @@ int gameChecker(Board& game, int y, int x, int player, Render& render){
         return (player);
     return 0;
 }
+
+bool doubleThree(const Board& game, int x, int y, int player){
+    patternBitset close_doubleThree("1100"); 
+    patternBitset distant_doubleThree("0110"); 
+    int double_three = 0;
+
+    Board::patternMap patterns = game.extractPatterns(x, y, 3, player);
+    patterns.merge(game.extractPatternsReversed(x, y, 3, player));
+
+    for (auto const& [key, val] : patterns){
+        if ((val & close_doubleThree) == close_doubleThree)
+            double_three++;
+        else if ((val & distant_doubleThree) == distant_doubleThree)
+            double_three++;
+
+        if (double_three >= 2){
+            return true;
+        }
+    }
+    return false
+}

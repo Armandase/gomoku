@@ -18,7 +18,11 @@ class Board{
             DEFAULT,
             TRANSPOS,
             DIAG,
-            ANTIDIAG
+            ANTIDIAG,
+            REV_DEFAULT,
+            REV_TRANSPOS,
+            REV_DIAG,
+            REV_ANTIDIAG,
         } PatternType;
         typedef std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> bitboard;
         typedef std::map<PatternType, patternBitset> patternMap;
@@ -38,6 +42,8 @@ class Board{
         void    removePos(int x, int y);
         int     getPos(int x, int y) const;
         patternMap extractPatterns(int xStart, int yStart, int length, int player) const;
+        patternMap extractPatternsReversed(int xPos, int yPos, int length, int player) const;
+
         bool    isPosEmpty(int x, int y) const;
 
         void    printBoard() const;
