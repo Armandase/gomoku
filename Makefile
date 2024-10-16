@@ -79,7 +79,7 @@ ${NAME} : lib ${OBJS} ${HEADER}
 test: ${TEST_NAME}
 	./${TEST_NAME}
 
-${TEST_NAME}: ${TEST_OBJS}
+${TEST_NAME}: lib ${TEST_OBJS}
 		${CXX} -o ${TEST_NAME} ${TEST_OBJS} ${LDFLAGS} -pthread
 
 obj/%.o: src/%.cpp $(HEADER)
