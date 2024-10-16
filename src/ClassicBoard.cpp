@@ -44,8 +44,6 @@ patternBitset ClassicBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_
     
     int convertedCoordinate = this->convertCoordinate(xPos, yPos);
 
-    patternBitset result(0);
-
     bitboard mask("1111");
     bitboard extractedPattern(0);
     if (player == IBoard::getIdPlayer1())

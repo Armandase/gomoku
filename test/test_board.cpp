@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <gtest/gtest.h>
 
-TEST(IBoard, TestTransposedBoard){
+TEST(IBoardTest, TestTransposedBoard){
     IBoard::bitboard test(
 "0111110000000000000"
 "0000000000000000000"
@@ -58,7 +58,7 @@ TEST(IBoard, TestTransposedBoard){
     EXPECT_EQ(gameTest.getTransposedBoard().getPlayer1(), waited_result);
 }
 
-TEST(IBoard, TestDiagBoard){
+TEST(IBoardTest, TestDiagBoard){
 
     std::string str_test(
 "0000000000000001000"
@@ -119,7 +119,7 @@ TEST(IBoard, TestDiagBoard){
     EXPECT_EQ(gameTest.getDiagBoard().getPlayer1(), waited_result);
 }
 
-TEST(IBoard, TestAntiDiagBoard){
+TEST(IBoardTest, TestAntiDiagBoard){
 
     std::string str_test(
 "1111111111111111111"
@@ -204,7 +204,7 @@ TEST(IBoard, TestAntiDiagBoard){
 // "0000000000000000000");
 
 
-TEST(ClassicBoard, extractPattern){
+TEST(ClassicBoardTest, extractPattern){
     std::string str_test(
 "0000000000000000000"
 "0101100000000000000"
@@ -241,4 +241,135 @@ TEST(ClassicBoard, extractPattern){
     patternBitset  waitedResult("1101");
 
     EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
+}
+
+TEST(TransposedBoardTest, extractPattern){
+    std::string str_test(
+"0000000000000000000"
+"0101100000000000000"
+"0100000000000000000"
+"0100000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000");
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
+
+    TransposedBoard board;
+
+    int size = test.size();
+    int width = board.getWidth();
+    for (int i = 0; i < size; i++){
+        if (!test[i])
+            continue;
+        board.setPos(i % width, i / width, test[i]);
+    }
+    
+    patternBitset  waitedResult("0111");
+
+    EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
+}
+
+TEST(DiagBoardTest, extractPattern){
+    std::string str_test(
+"0000000000000000000"
+"0101100000000000000"
+"0100000000000000000"
+"0101000000000000000"
+"0000100000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000");
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
+
+    DiagBoard board;
+
+    int size = test.size();
+    int width = board.getWidth();
+    for (int i = 0; i < size; i++){
+        if (!test[i])
+            continue;
+        board.setPos(i % width, i / width, test[i]);
+    }
+    
+    {
+        patternBitset  waitedResult("0000");
+        //Doit etre null car l'extraction est trop grande par rapport aux coordonnes (ca sort du plateau)
+        EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
+    }
+    {
+        patternBitset  waitedResult("0010");
+        EXPECT_EQ(board.extractPattern(0, 3, 4, 1), waitedResult);
+    }
+
+}
+
+TEST(AntiDiagBoardTest, extractPattern){
+    std::string str_test(
+"0000000000000000000"
+"0101100000000000000"
+"0100000000000000000"
+"0101000000000000000"
+"0000100000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000");
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
+
+    AntiDiagBoard board;
+
+    int size = test.size();
+    int width = board.getWidth();
+    for (int i = 0; i < size; i++){
+        if (!test[i])
+            continue;
+        board.setPos(i % width, i / width, test[i]);
+    }
+    
+    {
+        patternBitset  waitedResult("0000");
+        //Doit etre null car l'extraction est trop grande par rapport aux coordonnes (ca sort du plateau)
+        EXPECT_EQ(board.extractPattern(4 - 2, 4, 4, 1), waitedResult);
+    }
+    {
+        patternBitset  waitedResult("1101");
+        EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
+    }
+
 }

@@ -31,6 +31,26 @@ uint16_t  AntiDiagBoard::convertCoordinate(uint16_t x, uint16_t y) const noexcep
     return (x + newY * IBoard::getWidth());
 };
 
+patternBitset AntiDiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
+    int xEnd = xPos + length % IBoard::getWidth();
+    int yEnd = yPos + (length / IBoard::getWidth());
+
+    if (IBoard::isValidPos(xEnd, yEnd) == false || (IBoard::getWidth() - xPos < yEnd - 1 && IBoard::getWidth() - xEnd > yEnd - 1))
+        return patternBitset(0);
+
+    int convertedCoordinate = this->convertCoordinate(xPos, yPos);
+
+    bitboard mask("1111");
+    bitboard extractedPattern(0);
+    if (player == IBoard::getIdPlayer1())
+        extractedPattern = IBoard::getPlayer1() &  (mask << convertedCoordinate);
+    else
+        extractedPattern = IBoard::getPlayer2() &  (mask << convertedCoordinate);
+    extractedPattern >>= convertedCoordinate;
+    return patternBitset(extractedPattern.to_ulong());
+}
+
+
 // IBoard::patternBitset AntiDiagBoard::extractPattern(uint16 xPos, uint16 yPos, uint16 length, int player) const{
 //     int xEnd = xPos + length % this->_width;
 //     int yEnd = yPos + (length / this->_width);

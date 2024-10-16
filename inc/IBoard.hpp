@@ -48,13 +48,10 @@ class IBoard{
         void    printBoard() const;
 
         virtual uint16_t  convertCoordinate(uint16_t x, uint16_t y) const = 0;
-        // patternBitset extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const = 0;
-
+        virtual patternBitset extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const = 0;
+        // virtual patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const = 0;
         // void    convertBoard(const BoardClassic& board);
         
-        // patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const = 0;
-        // patternBitset extractPattern(uint16_t xStart, uint16_t yStart, uint16_t length, int player) const = 0;
-
     private:
         void printBoardX() const;
         void swapBits(bitboard& board, int pos1, int pos2);
