@@ -135,6 +135,14 @@ uint8_t IBoard::getPos(uint8_t x, uint8_t y) const
         return (0);
 }
 
+IBoard::bitboard IBoard::getPlayer1() const noexcept{
+    return (this->_player1);
+}
+
+IBoard::bitboard IBoard::getPlayer2() const noexcept{
+    return (this->_player2);
+}
+
 // IBoard::patternMap IBoard::extractPatterns(uint8_t xPos, uint8_t yPos, uint8_t length, int player) const{
 //     patternMap result{};
 //     bool handleDiag = true;

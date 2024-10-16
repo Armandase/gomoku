@@ -32,21 +32,22 @@ class IBoard{
         IBoard(const IBoard &cpy);
         IBoard &operator=(const IBoard &rhs);
 
-        bool    isValidPos(uint8_t x, uint8_t y) const;
-        void    setPos(uint8_t x, uint8_t y, int player);
-        virtual uint16_t  convertCoordinate(uint8_t x, uint8_t y) const = 0;
-        void    removePos(uint8_t x, uint8_t y);
         uint8_t getPos(uint8_t x,uint8_t y) const;
         uint8_t getWidth() const noexcept;
         uint8_t getIdPlayer1() const noexcept;
         uint8_t getIdPlayer2() const noexcept;
-
+        bitboard getPlayer1() const noexcept;
+        bitboard getPlayer2() const noexcept;
+        
+        bool    isValidPos(uint8_t x, uint8_t y) const;
         bool    isPosEmpty(uint8_t x, uint8_t y) const;
-
+        void    setPos(uint8_t x, uint8_t y, int player);
+        void    removePos(uint8_t x, uint8_t y);
+        
         void    resetBoard();
-
         void    printBoard() const;
 
+        virtual uint16_t  convertCoordinate(uint8_t x, uint8_t y) const = 0;
         // void    convertBoard(const BoardClassic& board);
         
         // patternBitset extractPatternReversed(uint8_t xPos, uint8_t yPos, uint8_t length, int player) const = 0;
