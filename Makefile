@@ -94,6 +94,11 @@ obj/gtest-all.o: ${GTEST}/googletest/src/gtest-all.cc
 	@mkdir -p $(@D)
 	${CXX} ${CXXFLAGS} -c $< -o $@
 
+push: fclean
+	git add .
+	git commit -m "${arg}"
+	git push
+
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(TEST_NAME)
