@@ -2,7 +2,7 @@
 #include "../inc/utils.hpp"
 #include "../inc/Button.hpp"
 #include "../inc/Heuristic.hpp"
-#include "../inc/Board.hpp"
+#include "../inc/Game.hpp"
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Render.hpp"
 
@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
     // Render Start Menu
     start_menu(render, playerButton, IAButton);   
 
-    Board board;
+    Game board;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) quit = true;

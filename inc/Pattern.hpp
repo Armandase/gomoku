@@ -33,7 +33,6 @@ class Pattern{
             }
             return false;
         }
-
     private:
         const patternsVector _patterns = {
             patternBitset("1001"),

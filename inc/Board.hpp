@@ -34,17 +34,20 @@ class Board{
         Board(const Board &cpy);
         Board &operator=(const Board &rhs);
 
-        void    setPos(int x, int y, int player);
-        bool     isValidPos(int x, int y);
-        int    coordinateToTranspose1D(int x, int y) const;
-        int    coordinateToDiag1D(int x, int y) const;
-        int    coordinateToAntiDiag1D(int x, int y) const;
-        void    removePos(int x, int y);
-        int     getPos(int x, int y) const;
-        patternMap extractPatterns(int xStart, int yStart, int length, int player) const;
-        patternMap extractPatternsReversed(int xPos, int yPos, int length, int player) const;
+        bool operator==(const Board &a);
 
-        bool    isPosEmpty(int x, int y) const;
+        bool     isValidPos(unsigned int x, unsigned int y) const;
+        void    setPos(unsigned int x, unsigned int y, int player);
+        int    coordinateToTranspose1D(unsigned int x, unsigned  int y) const;
+        int    coordinateToDiag1D(unsigned int x, unsigned int y) const;
+        int    coordinateToAntiDiag1D(unsigned int x, unsigned int y) const;
+        void    removePos(unsigned int x, unsigned int y);
+        int     getPos(unsigned int x,unsigned int y) const;
+        int     getWidth() const;
+        patternMap extractPatterns(unsigned int xStart, unsigned int yStart, unsigned int length, int player) const;
+        patternMap extractPatternsReversed(unsigned int xPos, unsigned int yPos, unsigned int length, int player) const;
+
+        bool    isPosEmpty(unsigned int x, unsigned int y) const;
 
         void    printBoard() const;
         void    printDiagBoard() const;

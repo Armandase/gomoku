@@ -153,30 +153,30 @@ Heuristic    minMaxFirstStep(Board& game, int player){
     return result;
 }
 
-void    minMaxAlgorithm(Board &game, int &player, Render& render)
-{
+// void    minMaxAlgorithm(Board &game, int &player, Render& render)
+// {
 
-    try {
-    auto t_start = std::chrono::high_resolution_clock::now();
-    Heuristic result =  minMaxFirstStep(game, player);
-    const auto t_end = std::chrono::high_resolution_clock::now();
-    double timer = std::chrono::duration<double, std::milli>(t_end - t_start).count() / 1000;
-    std::cout << "heuristic:" << result.getHeuristic() << " X: " << result.getBeginX() << " Y: " << result.getBeginY() <<"\n";
-    {
-        std::ostringstream message;
+//     try {
+//     auto t_start = std::chrono::high_resolution_clock::now();
+//     Heuristic result =  minMaxFirstStep(game, player);
+//     const auto t_end = std::chrono::high_resolution_clock::now();
+//     double timer = std::chrono::duration<double, std::milli>(t_end - t_start).count() / 1000;
+//     std::cout << "heuristic:" << result.getHeuristic() << " X: " << result.getBeginX() << " Y: " << result.getBeginY() <<"\n";
+//     {
+//         std::ostringstream message;
 
-        message << std::fixed << std::setprecision(3) << timer;
-        SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
+//         message << std::fixed << std::setprecision(3) << timer;
+//         SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
 
-        SDL_Color textColor = {80, 0, 80, 255};
-        SDL_Rect msg_rect = {SCREEN_WIDTH - MARGIN - OFFSET, SCREEN_HEIGHT - SCREEN_HEIGHT / 15, MARGIN + OFFSET, OFFSET};
-        SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
-        SDL_RenderFillRect(render.getRenderer(), &msg_rect);
-        render.writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
-    }
-    place_stone(game, player, render, result.getBeginY(), result.getBeginX());
-    } catch (std::exception& e){
-        std::cout << e.what() << std::endl;
-    }
+//         SDL_Color textColor = {80, 0, 80, 255};
+//         SDL_Rect msg_rect = {SCREEN_WIDTH - MARGIN - OFFSET, SCREEN_HEIGHT - SCREEN_HEIGHT / 15, MARGIN + OFFSET, OFFSET};
+//         SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
+//         SDL_RenderFillRect(render.getRenderer(), &msg_rect);
+//         render.writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
+//     }
+//     place_stone(game, player, render, result.getBeginY(), result.getBeginX());
+//     } catch (std::exception& e){
+//         std::cout << e.what() << std::endl;
+//     }
 
-}
+// }

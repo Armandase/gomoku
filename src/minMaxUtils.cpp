@@ -82,27 +82,27 @@ bool checkWin(const Heuristic& heuristic){
     return (false);
 }
 
-//return false when there are a double three
-bool    validGame(Board& copy, int yPoint, int xPoint, int player){
-    const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
-    const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
+// //return false when there are a double three
+// bool    validGame(Game& copy, int yPoint, int xPoint, int player){
+//     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
+//     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
     
-    if (copy.checkDoubleThree(xPoint, yPoint, player))
-        return true;
+//     if (copy.checkDoubleThree(xPoint, yPoint, player))
+//         return true;
         
-    for (int y = 0; y < BOARD_SIZE; y++){
-        for (int x = 0; x < BOARD_SIZE; x++){
-            if (copy.isPosEmpty(x, y) == true)
-                continue;
+//     for (int y = 0; y < BOARD_SIZE; y++){
+//         for (int x = 0; x < BOARD_SIZE; x++){
+//             if (copy.isPosEmpty(x, y) == true)
+//                 continue;
 
-            for (int i = 0; i < 8; i++){
+//             for (int i = 0; i < 8; i++){
 
-                if (y == yPoint && x == xPoint && checkCapture(copy, y, x, dirY[i], dirX[i], player) == true){
-                    copy.removePos(x + dirX[i], y + dirY[i]);
-                    copy.removePos(x + (dirX[i] * 2), y + (dirY[i] * 2));
-                }
-            }
-        }
-    }
-    return true;
-}
+//                 if (y == yPoint && x == xPoint && checkCapture(copy, y, x, dirY[i], dirX[i], player) == true){
+//                     copy.removePos(x + dirX[i], y + dirY[i]);
+//                     copy.removePos(x + (dirX[i] * 2), y + (dirY[i] * 2));
+//                 }
+//             }
+//         }
+//     }
+//     return true;
+// }

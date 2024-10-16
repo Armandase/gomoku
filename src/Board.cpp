@@ -42,30 +42,32 @@ Board::Board(const Board &cpy):
     generateTransposedBoard();
 }
 
-Board &Board::operator=(const Board &rhs)
-{
-    if (this != &rhs)
-    {
-        this->_player1 = rhs._player1;
-        this->_player2 = rhs._player2;
-        this->_player1Transposed = rhs._player1Transposed;
-        this->_player2Transposed = rhs._player2Transposed;
-        this->_player1Diag = rhs._player1Diag;
-        this->_player2Diag = rhs._player2Diag;
-        this->_player1AntiDiag = rhs._player1AntiDiag;
-        this->_player2AntiDiag = rhs._player2AntiDiag;
-        this->_width = rhs._width;
-        this->_player1Capture = rhs._player1Capture;
-        this->_player2Capture = rhs._player2Capture;
-        this->_idPlayer1 = rhs._idPlayer1;
-        this->_idPlayer2 = rhs._idPlayer2;
-    }
-    return (*this);
+
+
+bool Board::operator==(const Board &a){
+    if (
+        this->_player1 == a._player1 &&
+        this->_player2 == a._player2 &&
+        this->_player1Transposed == a._player1Transposed &&
+        this->_player2Transposed == a._player2Transposed &&
+        this->_player1Diag == a._player1Diag &&
+        this->_player2Diag == a._player2Diag &&
+        this->_player1AntiDiag == a._player1AntiDiag &&
+        this->_player2AntiDiag == a._player2AntiDiag &&
+        this->_width == a._width &&
+        this->_player1Capture == a._player1Capture &&
+        this->_player2Capture == a._player2Capture &&
+        this->_idPlayer1 == a._idPlayer1 &&
+        this->_idPlayer2 == a._idPlayer2
+    )
+        return true;
+    return false;
 }
 
-bool Board::isValidPos(int x, int y)
+
+bool Board::isValidPos(unsigned int  x, unsigned int y) const
 {
-    if (x < 0 || x > this->_width || y < 0 || y > this->_width)
+    if (x < 0 || x >= this->_width || y < 0 || y >= this->_width)
         return false;
     return true;
 }
@@ -78,6 +80,11 @@ int Board::getCapture(int player) {
     return 0;
 }
 
+int Board::getWidth() const{
+    return (this->_width);
+}
+
+
 void Board::addCapture(int player) {
     if (player == this->_idPlayer1)
         _player1Capture++;
@@ -85,7 +92,7 @@ void Board::addCapture(int player) {
         _player2Capture++;
 }
 
-void Board::setPos(int x, int y, int player)
+void Board::setPos(unsigned int x, unsigned int y, int player)
 {
     if (this->isValidPos(x, y) == false)
         return ;
@@ -113,26 +120,26 @@ void Board::setPos(int x, int y, int player)
     }
 }
 
-int Board::coordinateToTranspose1D(int x, int y) const
+int Board::coordinateToTranspose1D(unsigned int x, unsigned int y) const
 {
     return (y + x * this->_width);
 }
 
-int Board::coordinateToDiag1D(int x, int y) const
+int Board::coordinateToDiag1D(unsigned int x, unsigned int y) const
 {
     int newY = (x + y) % this->_width;
     return (x + newY * this->_width);
 }
 
-int Board::coordinateToAntiDiag1D(int x, int y) const
+int Board::coordinateToAntiDiag1D(unsigned int x, unsigned int y) const
 {
     int newY = (y - x + this->_width) % this->_width;
     return (x + newY * this->_width);
 }
 
-void Board::removePos(int x, int y){
+void Board::removePos(unsigned int x, unsigned int y){
     if (this->isPosEmpty(x, y) == false){
-        // std::cerr << "Error: Remove an empty stone at (" << x << ";" << y << ")"  << std::endl;
+        std::cerr << "Error: Remove an empty stone at (" << x << ";" << y << ")"  << std::endl;
         return ;
     }
 
@@ -154,8 +161,11 @@ void Board::removePos(int x, int y){
     }
 }
 
-int Board::getPos(int x, int y) const
+int Board::getPos(unsigned int x, unsigned int y) const
 {
+    if (this->isValidPos(x, y) == false)
+        return (0);
+
     if (this->_player1.test(x + y * this->_width))
         return (this->_idPlayer1);
     else if (this->_player2.test(x + y * this->_width))
@@ -164,7 +174,7 @@ int Board::getPos(int x, int y) const
         return (0);
 }
 
-Board::patternMap Board::extractPatterns(int xPos, int yPos, int length, int player) const{
+Board::patternMap Board::extractPatterns(unsigned int xPos, unsigned int yPos, unsigned int length, int player) const{
     patternMap result{};
     bool handleDiag = true;
     bool handleAntiDiag = true;
@@ -215,7 +225,7 @@ Board::patternMap Board::extractPatterns(int xPos, int yPos, int length, int pla
     return result;
 }
 
-Board::patternMap Board::extractPatternsReversed(int xPos, int yPos, int length, int player) const{
+Board::patternMap Board::extractPatternsReversed(unsigned int xPos, unsigned int yPos, unsigned int length, int player) const{
     patternMap result{};
     bool handleDiag = true;
     bool handleAntiDiag = true;
@@ -289,7 +299,7 @@ void Board::resetBoard(){
     _player2Capture = 0;
 }
 
-bool    Board::isPosEmpty(int x, int y) const {
+bool    Board::isPosEmpty(unsigned int x, unsigned int y) const {
     if (this->_player1.test(x + y * this->_width) || this->_player2.test(x + y * this->_width))
         return false;
     return true;

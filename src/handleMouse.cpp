@@ -1,10 +1,10 @@
 #include "../inc/utils.hpp"
-#include "../inc/Board.hpp"
+#include "../inc/Game.hpp"
 
 
-bool posValid(const Board& game, int player, Render& render, int x, int y)
+bool posValid(const Game& game, int player, Render& render, int x, int y)
 {
-    if (game.isPosEmpty(x, y) == false) {
+    if (game.getClassicBoard().isPosEmpty(x, y) == false) {
         std::cout << "Position already used" << std::endl;
         return false;
     }
@@ -15,9 +15,9 @@ bool posValid(const Board& game, int player, Render& render, int x, int y)
     return true;
 }
 
-void place_stone(Board& game, int &player, Render& render, int x, int y)
+void place_stone(Game& game, int &player, Render& render, int x, int y)
 {
-    game.setPos(x, y, player);
+    game.setPosToBoards(x, y, player);
     // draw white or black depending of player's color
     if (player == WHITE)
         SDL_SetRenderDrawColor(render.getRenderer(), 255, 255, 255, 255);
@@ -37,7 +37,7 @@ void place_stone(Board& game, int &player, Render& render, int x, int y)
     //     // if someone win, it prints the winner to the screen
     //     std::string message;
     //     winner == BLACK ? message = "black wins" : message = "white wins";
-    //     //reset game's board with game's color
+    //     //reset game's Game with game's color
     //     SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
     //     SDL_RenderClear(render.getRenderer());
 
@@ -47,8 +47,8 @@ void place_stone(Board& game, int &player, Render& render, int x, int y)
     //     render.writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
         
     //     sleep(1);
-    //     game.resetBoard();
-    //     render.render_board();
+    //     game.resetGame();
+    //     render.render_Game();
     // }
 }
 
