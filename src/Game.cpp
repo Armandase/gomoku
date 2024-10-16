@@ -38,7 +38,7 @@ Game &Game::operator=(const Game &rhs)
     return (*this);
 }
 
-uint8_t Game::getCapture(int player) {
+uint16_t Game::getCapture(int player) {
     if (player == this->getClassicBoard().getIdPlayer1())
         return _player1Capture;
     else if (player == this->getClassicBoard().getIdPlayer2())
@@ -69,14 +69,14 @@ DiagBoard Game::getDiagBoard() const noexcept{
     return(this->_diagBoard);
 }
 
-void    Game::setPosToBoards(uint8_t x, uint8_t y, int player){
+void    Game::setPosToBoards(uint16_t x, uint16_t y, int player){
     _classicBoard.setPos(x, y, player);
     _transposedBoard.setPos(x, y, player);
     _antiDiagBoard.setPos(x, y, player);
     _diagBoard.setPos(x, y, player);
 }
 
-void    Game::removePosToBoards(uint8_t x, uint8_t y){
+void    Game::removePosToBoards(uint16_t x, uint16_t y){
     _classicBoard.removePos(x, y);
     _transposedBoard.removePos(x, y);
     _antiDiagBoard.removePos(x, y);

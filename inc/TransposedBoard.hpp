@@ -13,9 +13,9 @@ class TransposedBoard: public IBoard{
 
         // bool operator==(const TransposedBoard &a);
         
-        uint16_t     convertCoordinate(uint8_t x, uint8_t y) const noexcept;
-        // patternBitset extractPattern(uint8_t xStart, uint8_t yStart, uint8_t length, int player) const;
-        // patternBitset extractPatternReversed(uint8_t xPos, uint8_t yPos, uint8_t length, int player) const;
+        uint16_t     convertCoordinate(uint16_t x, uint16_t y) const noexcept;
+        // patternBitset extractPattern(uint16_t xStart, uint16_t yStart, uint16_t length, int player) const;
+        // patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
 
         // void    patternMatching();
 };

@@ -25,6 +25,7 @@ TEST(Board_isValidPos, TestValidPos){
     EXPECT_EQ(gameTest.getClassicBoard().isValidPos( 2, gameTest.getClassicBoard().getWidth() ), false);
 }
 
+// JSP POURQUOI IL MARCHE PAS LUI
 TEST(Board_setPos, TestSetPos){
     Game gameTest;
 
@@ -42,6 +43,22 @@ TEST(Board_setPos, TestSetPos){
     EXPECT_EQ(gameTest.getClassicBoard().getPos(x, y), 0);
 }
 
+TEST(ClassicBoard, TestSetPos){
+    ClassicBoard classicBoard;
+
+    int x = 0;
+    int y = classicBoard.getWidth() - 1;
+    
+    classicBoard.setPos(x, y, WHITE);
+    EXPECT_EQ(classicBoard.getPos(x, y), WHITE);
+    
+    classicBoard.setPos(x, y, BLACK);
+    EXPECT_EQ(classicBoard.getPos(x, y), WHITE);
+
+    x = 100000, y = 100000;
+    classicBoard.setPos(x, y, WHITE);
+    EXPECT_EQ(classicBoard.getPos(x, y), 0);
+}
 
 // TEST(Board_extractPatterns, TestInputExtraction){
 //     Board::bitboard test(

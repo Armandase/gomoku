@@ -26,32 +26,34 @@ class IBoard{
         typedef std::pair<PatternType, patternBitset> patternPair;
     public:
         IBoard();
-        IBoard(bitboard& player1, bitboard& player2, uint8_t width, uint8_t idPlayer1, uint8_t idPlayer2);
+        IBoard(bitboard& player1, bitboard& player2, uint16_t width, uint16_t idPlayer1, uint16_t idPlayer2);
         virtual ~IBoard() = 0;
         
         IBoard(const IBoard &cpy);
         IBoard &operator=(const IBoard &rhs);
 
-        uint8_t getPos(uint8_t x,uint8_t y) const;
-        uint8_t getWidth() const noexcept;
-        uint8_t getIdPlayer1() const noexcept;
-        uint8_t getIdPlayer2() const noexcept;
+        uint16_t getPos(uint16_t x,uint16_t y) const;
+        uint16_t getWidth() const noexcept;
+        uint16_t getIdPlayer1() const noexcept;
+        uint16_t getIdPlayer2() const noexcept;
         bitboard getPlayer1() const noexcept;
         bitboard getPlayer2() const noexcept;
         
-        bool    isValidPos(uint8_t x, uint8_t y) const;
-        bool    isPosEmpty(uint8_t x, uint8_t y) const;
-        void    setPos(uint8_t x, uint8_t y, int player);
-        void    removePos(uint8_t x, uint8_t y);
+        bool    isValidPos(uint16_t x, uint16_t y) const;
+        bool    isPosEmpty(uint16_t x, uint16_t y) const;
+        void    setPos(uint16_t x, uint16_t y, int player);
+        void    removePos(uint16_t x, uint16_t y);
         
         void    resetBoard();
         void    printBoard() const;
 
-        virtual uint16_t  convertCoordinate(uint8_t x, uint8_t y) const = 0;
+        virtual uint16_t  convertCoordinate(uint16_t x, uint16_t y) const = 0;
+        // patternBitset extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const = 0;
+
         // void    convertBoard(const BoardClassic& board);
         
-        // patternBitset extractPatternReversed(uint8_t xPos, uint8_t yPos, uint8_t length, int player) const = 0;
-        // patternBitset extractPattern(uint8_t xStart, uint8_t yStart, uint8_t length, int player) const = 0;
+        // patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const = 0;
+        // patternBitset extractPattern(uint16_t xStart, uint16_t yStart, uint16_t length, int player) const = 0;
 
     private:
         void printBoardX() const;
@@ -60,9 +62,9 @@ class IBoard{
         bitboard _player1;
         bitboard _player2;
 
-        uint8_t _width;
-        uint8_t _idPlayer1;
-        uint8_t _idPlayer2;
+        uint16_t _width;
+        uint16_t _idPlayer1;
+        uint16_t _idPlayer2;
 };
 
 #endif

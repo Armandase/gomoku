@@ -2,19 +2,20 @@
 #include "../inc/Pattern.hpp"
 
 IBoard::IBoard():
-    _player1(0),
-    _player2(0),
+    _player1(),
+    _player2(),
     _width(BOARD_SIZE + 1),
     _idPlayer1(WHITE),
     _idPlayer2(BLACK)
 {
+    resetBoard();
 }
 
 IBoard::~IBoard()
 {
 }
 
-IBoard::IBoard(bitboard& player1, bitboard& player2, uint8_t width, uint8_t idPlayer1, uint8_t idPlayer2):
+IBoard::IBoard(bitboard& player1, bitboard& player2, uint16_t width, uint16_t idPlayer1, uint16_t idPlayer2):
     _player1(player1),
     _player2(player1),
     _width(width),
@@ -53,7 +54,7 @@ IBoard &IBoard::operator=(const IBoard &rhs)
 // }
 
 
-bool IBoard::isValidPos(uint8_t x, uint8_t y) const
+bool IBoard::isValidPos(uint16_t x, uint16_t y) const
 {
     if (x < 0 || x >= this->_width || y < 0 || y >= this->_width)
         return false;
@@ -61,20 +62,20 @@ bool IBoard::isValidPos(uint8_t x, uint8_t y) const
 }
 
 
-uint8_t IBoard::getWidth() const noexcept{
+uint16_t IBoard::getWidth() const noexcept{
     return (this->_width);
 }
 
-uint8_t IBoard::getIdPlayer1() const noexcept{
+uint16_t IBoard::getIdPlayer1() const noexcept{
     return (this->_idPlayer1);
 }
 
-uint8_t IBoard::getIdPlayer2() const noexcept{
+uint16_t IBoard::getIdPlayer2() const noexcept{
     return (this->_idPlayer2);
 }
 
 
-bool    IBoard::isPosEmpty(uint8_t x, uint8_t y) const {
+bool    IBoard::isPosEmpty(uint16_t x, uint16_t y) const {
     int convertedCoordinate = this->convertCoordinate(x, y);
 
     if (this->_player1.test(convertedCoordinate) || this->_player2.test(convertedCoordinate))
@@ -82,7 +83,7 @@ bool    IBoard::isPosEmpty(uint8_t x, uint8_t y) const {
     return true;
 }
 
-void IBoard::setPos(uint8_t x, uint8_t y, int player)
+void IBoard::setPos(uint16_t x, uint16_t y, int player)
 {
     if (this->isValidPos(x, y) == false)
         return ;
@@ -103,7 +104,7 @@ void IBoard::setPos(uint8_t x, uint8_t y, int player)
     }
 }
 
-void IBoard::removePos(uint8_t x, uint8_t y){
+void IBoard::removePos(uint16_t x, uint16_t y){
     if (this->isValidPos(x, y) == false)
         return ;
     if (this->isPosEmpty(x, y) == false){
@@ -120,11 +121,11 @@ void IBoard::removePos(uint8_t x, uint8_t y){
     }
 }
 
-uint8_t IBoard::getPos(uint8_t x, uint8_t y) const
+uint16_t IBoard::getPos(uint16_t x, uint16_t y) const
 {
     if (this->isValidPos(x, y) == false)
         return (0);
-
+    
     int convertedCoordinate = this->convertCoordinate(x, y);
 
     if (this->_player1.test(convertedCoordinate))
@@ -143,7 +144,7 @@ IBoard::bitboard IBoard::getPlayer2() const noexcept{
     return (this->_player2);
 }
 
-// IBoard::patternMap IBoard::extractPatterns(uint8_t xPos, uint8_t yPos, uint8_t length, int player) const{
+// IBoard::patternMap IBoard::extractPatterns(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
 //     patternMap result{};
 //     bool handleDiag = true;
 //     bool handleAntiDiag = true;
@@ -194,7 +195,7 @@ IBoard::bitboard IBoard::getPlayer2() const noexcept{
 //     return result;
 // }
 
-// IBoard::patternMap IBoard::extractPatternsReversed(uint8_t xPos, uint8_t yPos, uint8_t length, int player) const{
+// IBoard::patternMap IBoard::extractPatternsReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
 //     patternMap result{};
 //     bool handleDiag = true;
 //     bool handleAntiDiag = true;

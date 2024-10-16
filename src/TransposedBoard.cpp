@@ -34,7 +34,7 @@ TransposedBoard &TransposedBoard::operator=(const TransposedBoard &rhs)
 //     return false;
 // }
 
-uint16_t  TransposedBoard::convertCoordinate(uint8_t x, uint8_t y) const noexcept
+uint16_t  TransposedBoard::convertCoordinate(uint16_t x, uint16_t y) const noexcept
 {
     return (y + x * IBoard::getWidth());
 };

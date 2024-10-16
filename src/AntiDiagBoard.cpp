@@ -25,7 +25,7 @@ AntiDiagBoard &AntiDiagBoard::operator=(const AntiDiagBoard &rhs)
     return (*this);
 }
 
-uint16_t  AntiDiagBoard::convertCoordinate(uint8_t x, uint8_t y) const noexcept
+uint16_t  AntiDiagBoard::convertCoordinate(uint16_t x, uint16_t y) const noexcept
 {
     int newY = (y - x + IBoard::getWidth()) % IBoard::getWidth();
     return (x + newY * IBoard::getWidth());

@@ -1,5 +1,6 @@
 #include "../inc/Game.hpp"
 #include "../inc/ClassicBoard.hpp"
+#include <algorithm>
 #include <gtest/gtest.h>
 
 TEST(IBoard, TestTransposedBoard){
@@ -46,12 +47,12 @@ TEST(IBoard, TestTransposedBoard){
 "0000000000000000000");
 
     Game gameTest;
-    int player = 0;
     int width = gameTest.getClassicBoard().getWidth();
-    for (int i = 0; i < test.size(); i++){
+    int size = test.size();
+    for (int i = 0; i < size; i++){
         if (!test[i])
             continue;
-        gameTest.setPosToBoards(i % width, i / width, test[i]);
+        gameTest.setPosToBoards(i % width, i / width, 1);
     }
     
     EXPECT_EQ(gameTest.getTransposedBoard().getPlayer1(), waited_result);
@@ -59,7 +60,8 @@ TEST(IBoard, TestTransposedBoard){
 
 
 TEST(IBoard, TestDiagBoard){
-    IBoard::bitboard test(
+
+    std::string str_test(
 "0111110000000000000"
 "0000000000000000000"
 "0000000000000000000"
@@ -78,9 +80,11 @@ TEST(IBoard, TestDiagBoard){
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
-"0000000000000000000");
+"0000000000000001111");
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
 
-    IBoard::bitboard waited_result(
+    std::string str_result(
 "0000000000000000000"
 "0100000000000000000"
 "0010000000000000000"
@@ -95,29 +99,30 @@ TEST(IBoard, TestDiagBoard){
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
-"0000000000000000000"
-"0000000000000000000"
-"0000000000000000000"
-"0000000000000000000"
+"0000000000000001000"
+"0000000000000000100"
+"0000000000000000010"
+"0000000000000000001"
 "0000000000000000000");
+    std::reverse(str_result.begin(), str_result.end());
+    IBoard::bitboard waited_result(str_result);
+
 
     Game gameTest;
-    int player = 0;
+    int size = test.size();
     int width = gameTest.getDiagBoard().getWidth();
-    for (int i = 0; i < test.size(); i++){
+    for (int i = 0; i < size; i++){
         if (!test[i])
             continue;
-        gameTest.setPosToBoards(i % width, i / width, test[i]);
+        gameTest.setPosToBoards(i % width, i / width, 1);
     }
     
-    gameTest.getClassicBoard().printBoard();
-    gameTest.getDiagBoard().printBoard();
-
     EXPECT_EQ(gameTest.getDiagBoard().getPlayer1(), waited_result);
 }
 
+
 TEST(ClassicBoard, extractPattern){
-    IBoard::bitboard test(
+    std::string str_test(
 "0000000000000000000"
 "0101100000000000000"
 "0000000000000000000"
@@ -137,20 +142,20 @@ TEST(ClassicBoard, extractPattern){
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000");
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
 
     ClassicBoard board;
 
-    int player = 0;
+    int size = test.size();
     int width = board.getWidth();
-    for (int i = 0; i < test.size(); i++){
+    for (int i = 0; i < size; i++){
         if (!test[i])
             continue;
         board.setPos(i % width, i / width, test[i]);
     }
     
-    board.printBoard();
-    patternBitset  waitedResult("1011");
+    patternBitset  waitedResult("1101");
 
     EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
 }
-

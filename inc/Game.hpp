@@ -17,9 +17,9 @@ class Game{
         Game &operator=(const Game &rhs);
 
         void    addCapture(int player);
-        uint8_t getCapture(int player);
-        void    setPosToBoards(uint8_t x, uint8_t y, int player);
-        void    removePosToBoards(uint8_t x, uint8_t y);
+        uint16_t getCapture(int player);
+        void    setPosToBoards(uint16_t x, uint16_t y, int player);
+        void    removePosToBoards(uint16_t x, uint16_t y);
 
         ClassicBoard getClassicBoard() const noexcept;
         TransposedBoard getTransposedBoard() const noexcept;
@@ -31,8 +31,8 @@ class Game{
         AntiDiagBoard   _antiDiagBoard;
         DiagBoard       _diagBoard;
 
-        uint8_t _player1Capture;
-        uint8_t _player2Capture;
+        uint16_t _player1Capture;
+        uint16_t _player2Capture;
 };
 
 #endif
