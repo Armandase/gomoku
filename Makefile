@@ -25,10 +25,10 @@ HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			
 TEST_NAME = run_test
 SRC_MAIN  = main.cpp
-TEST_MAIN = test_main.cpp
+TEST_FILES = test_main.cpp test_board.cpp
 
 OBJS      = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(SRC_MAIN:.cpp=.o)) 
-TEST_OBJS = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(TEST_MAIN:.cpp=.o)) \
+TEST_OBJS = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(TEST_FILES:.cpp=.o)) \
              obj/gtest-all.o
 
 CXXFLAGS  = -Wall -Wextra --std=c++17 -Weffc++ -I${GTEST}/googletest/include -I${GTEST}/googletest -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
@@ -86,7 +86,7 @@ obj/%.o: src/%.cpp $(HEADER)
 	@mkdir -p $(@D)
 	${CXX} ${CXXFLAGS} -c $< -o $@
 
-obj/test_main.o: test/${TEST_MAIN}
+obj/%.o: test/%.cpp
 	@mkdir -p $(@D)
 	${CXX} ${CXXFLAGS} -c $< -o $@
 
