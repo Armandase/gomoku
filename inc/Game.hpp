@@ -21,10 +21,10 @@ class Game{
         void    setPosToBoards(uint16_t x, uint16_t y, int player);
         void    removePosToBoards(uint16_t x, uint16_t y);
 
-        ClassicBoard getClassicBoard() const noexcept;
-        TransposedBoard getTransposedBoard() const noexcept;
-        AntiDiagBoard getAntiDiagBoard() const noexcept;
-        DiagBoard getDiagBoard() const noexcept;
+        ClassicBoard& getClassicBoard() noexcept;
+        TransposedBoard& getTransposedBoard() noexcept;
+        AntiDiagBoard& getAntiDiagBoard() noexcept;
+        DiagBoard& getDiagBoard() noexcept;
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;

@@ -2,7 +2,7 @@
 #include "../inc/Game.hpp"
 
 
-bool posValid(const Game& game, int player, Render& render, int x, int y)
+bool posValid(Game& game, int player, Render& render, int x, int y)
 {
     if (game.getClassicBoard().isPosEmpty(x, y) == false) {
         std::cout << "Position already used" << std::endl;

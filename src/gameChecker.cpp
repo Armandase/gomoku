@@ -3,7 +3,7 @@
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Game.hpp"
 
-bool checkCapture(const Game& game, int checkY, int checkX, int dirY, int dirX, int player) {
+bool checkCapture(Game& game, int checkY, int checkX, int dirY, int dirX, int player) {
     int ennemy = (player == WHITE) ? BLACK : WHITE;
 
     if (checkX + dirX * 3 >= 0 && checkX + dirX * 3 <= BOARD_SIZE

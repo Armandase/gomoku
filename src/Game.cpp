@@ -53,20 +53,20 @@ void Game::addCapture(int player) {
         _player2Capture++;
 }
 
-ClassicBoard Game::getClassicBoard() const noexcept{
+ClassicBoard& Game::getClassicBoard() noexcept{
     return(this->_classicBoard);
 }
 
-TransposedBoard Game::getTransposedBoard() const noexcept{
+TransposedBoard& Game::getTransposedBoard() noexcept{
     return(this->_transposedBoard);
 }
 
-AntiDiagBoard Game::getAntiDiagBoard() const noexcept{
+AntiDiagBoard& Game::getAntiDiagBoard() noexcept{
     return(this->_antiDiagBoard);
 }
 
-DiagBoard Game::getDiagBoard() const noexcept{
-    return(this->_diagBoard);
+DiagBoard& Game::getDiagBoard() noexcept{
+    return((this->_diagBoard));
 }
 
 void    Game::setPosToBoards(uint16_t x, uint16_t y, int player){
