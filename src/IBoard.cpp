@@ -144,107 +144,43 @@ IBoard::bitboard IBoard::getPlayer2() const noexcept{
     return (this->_player2);
 }
 
-// IBoard::patternMap IBoard::extractPatterns(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-//     patternMap result{};
-//     bool handleDiag = true;
-//     bool handleAntiDiag = true;
+patternBitset IBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
+    int xEnd = xPos + length % getWidth();
+    int yEnd = yPos + (length / getWidth());
 
-//     int xEnd = xPos + length % this->_width;
-//     int yEnd = yPos + (length / this->_width);
-    
-//     if (xEnd > this->_width || yEnd > this->_width){
-//         return result;
-//     }
-//     if (xPos <= yEnd + 1 && xEnd >= yEnd + 1)
-//         handleDiag = false;
-//     if (this->_width - xPos <= yEnd - 1 && this->_width - xEnd >= yEnd - 1)
-//         handleAntiDiag = false;
-    
+    if (isValidPos(xEnd, yEnd) == false)
+        return patternBitset(0);
 
-//     int beginDefault = xPos + yPos * this->_width;
-//     int beginTranspose = this->coordinateToTranspose1D(xPos, yPos);
-//     int beginDiag = this->coordinateToDiag1D(xPos, yPos);
-//     int beginAntiDiag = this->coordinateToAntiDiag1D(xPos, yPos);
+    int convertedCoordinate = this->convertCoordinate(xPos, yPos);
 
-//     patternBitset defaultBitset(0);
-//     patternBitset transposBitset(0);
-//     patternBitset diagBitset(0);
-//     patternBitset antiDiagBitset(0);
-//     for (int i = 0; i < length; ++i) {
-//         if (player == this->_idPlayer1){
-//             defaultBitset[i] = _player1[beginDefault + i];
-//             transposBitset[i] = _player1Transposed[beginTranspose + i];
-//             if (handleDiag)
-//                 diagBitset[i] = _player1Diag[beginDiag + i];
-//             if (handleAntiDiag)
-//                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
-//         } else {
-//             defaultBitset[i] = _player2[beginDefault + i];
-//             transposBitset[i] = _player2Transposed[beginTranspose + i];
-//             if (handleDiag)
-//                 diagBitset[i] = _player1Diag[beginDiag + i];
-//             if (handleAntiDiag)
-//                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
-//         }
-//     }
-//     result.insert(patternPair(IBoard::PatternType::DEFAULT, defaultBitset));
-//     result.insert(patternPair(IBoard::PatternType::TRANSPOS, transposBitset));
-//     result.insert(patternPair(IBoard::PatternType::DIAG, diagBitset));
-//     result.insert(patternPair(IBoard::PatternType::ANTIDIAG, antiDiagBitset));
+    bitboard mask("1111");
+    bitboard extractedPattern(0);
+    if (player == getIdPlayer1())
+        extractedPattern = getPlayer1() &  (mask << convertedCoordinate);
+    else
+        extractedPattern = getPlayer2() &  (mask << convertedCoordinate);
+    extractedPattern >>= convertedCoordinate;
+    return patternBitset(extractedPattern.to_ulong());
+}
 
-//     return result;
-// }
+patternBitset IBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
+    int xEnd = xPos - length % getWidth();
+    int yEnd = yPos - (length / getWidth());
 
-// IBoard::patternMap IBoard::extractPatternsReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-//     patternMap result{};
-//     bool handleDiag = true;
-//     bool handleAntiDiag = true;
+    if (isValidPos(xEnd, yEnd) == false)
+        return patternBitset(0);
 
-//     int xEnd = xPos - length % this->_width;
-//     int yEnd = yPos - (length / this->_width);
-    
-//     if (xEnd > this->_width || yEnd > this->_width){
-//         return result;
-//     }
-//     if (xPos <= yEnd + 1 && xEnd >= yEnd + 1)
-//         handleDiag = false;
-//     if (this->_width - xPos <= yEnd - 1 && this->_width - xEnd >= yEnd - 1)
-//         handleAntiDiag = false;
-    
+    int convertedCoordinate = this->convertCoordinate(xEnd, yEnd);
 
-//     int beginDefault = xPos + yPos * this->_width;
-//     int beginTranspose = this->coordinateToTranspose1D(xPos, yPos);
-//     int beginDiag = this->coordinateToDiag1D(xPos, yPos);
-//     int beginAntiDiag = this->coordinateToAntiDiag1D(xPos, yPos);
-
-//     patternBitset defaultBitset(0);
-//     patternBitset transposBitset(0);
-//     patternBitset diagBitset(0);
-//     patternBitset antiDiagBitset(0);
-//     for (int i = 0; i < length; ++i) {
-//         if (player == this->_idPlayer1){
-//             defaultBitset[i] = _player1[beginDefault - i];
-//             transposBitset[i] = _player1Transposed[beginTranspose - i];
-//             if (handleDiag)
-//                 diagBitset[i] = _player1Diag[beginDiag - i];
-//             if (handleAntiDiag)
-//                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag - i];
-//         } else {
-//             defaultBitset[i] = _player2[beginDefault - i];
-//             transposBitset[i] = _player2Transposed[beginTranspose - i];
-//             if (handleDiag)
-//                 diagBitset[i] = _player1Diag[beginDiag - i];
-//             if (handleAntiDiag)
-//                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag - i];
-//         }
-//     }
-//     result.insert(patternPair(IBoard::PatternType::REV_DEFAULT, defaultBitset));
-//     result.insert(patternPair(IBoard::PatternType::REV_TRANSPOS, transposBitset));
-//     result.insert(patternPair(IBoard::PatternType::REV_DIAG, diagBitset));
-//     result.insert(patternPair(IBoard::PatternType::REV_ANTIDIAG, antiDiagBitset));
-
-//     return result;
-// }
+    bitboard mask("1111");
+    bitboard extractedPattern(0);
+    if (player == getIdPlayer1())
+        extractedPattern = getPlayer1() &  (mask << convertedCoordinate);
+    else
+        extractedPattern = getPlayer2() &  (mask << convertedCoordinate);
+    extractedPattern >>= convertedCoordinate;
+    return patternBitset(extractedPattern.to_ulong());
+}
 
 void IBoard::printBoardX() const
 {
@@ -260,27 +196,6 @@ void IBoard::resetBoard(){
     this->_player1.reset();
     this->_player2.reset();
 }
-
-// void    IBoard::convertBoard(const IBoardClassic& board){
-//     uint16_t convertedCoordiante = 0;
-//     uint16_t boardPos = 0;
-
-//     for (int y = 0; y < this->_width; ++y) 
-//     {
-//         for (int x = 0; x < this->_width; ++x) 
-//         {
-//             convertedCoordiante = this->convertCoordinate(x, y);
-//             if (board.isPosEmpty(x, y) == true){
-//                 continue ;
-//             }
-//             boardPos = board.getPos(x, y);
-//             if (boardPos == this->_player1[convertedCoordiante])
-//                 this->_player1[convertedCoordiante] = boardPos;
-//             else
-//                 this->_player2[convertedCoordiante] = boardPos;
-//         }
-//     }
-// }
 
 void IBoard::swapBits(bitboard& board, int pos1, int pos2){
     bool temp = board[pos1];
@@ -308,93 +223,3 @@ void IBoard::printBoard() const{
     }
     std::cout << std::endl;
 }
-
-// void IBoard::checkDiagPattern() {
-//     std::bitset<4> patternToCheck;
-//     int cnt;
-//     for (int row = 0; row < this->_width; ++row) 
-//     {
-//         cnt = 0;
-//         for (int col = 0; col < this->_width; ++col) 
-//         {
-//             if (col == row + 1) {
-//                 patternToCheck.reset();
-//                 cnt = 0;
-//             }
-//             patternToCheck[cnt] = _player1Diag[row + col * this->_width];
-//             cnt++;
-//             if (cnt == 4) {
-//                 std::cout << "CHECK: " << patternToCheck << std::endl;
-//                 patternToCheck <<= 1;
-//                 cnt = 3;
-//             }
-//         }
-//         std::cout << std::endl;
-//     }
-// }
-
-// void IBoard::checkAntiDiagPattern() {
-//     std::bitset<4> patternToCheck;
-//     int cnt;
-//     for (int row = 0; row < this->_width; ++row) 
-//     {
-//         cnt = 0;
-//         for (int col = 0; col < this->_width; ++col) 
-//         {
-//             if (col == this->_width - row) {
-//                 patternToCheck.reset();
-//                 cnt = 0;
-//             }
-//             patternToCheck[cnt] = _player1AntiDiag[row + col * this->_width];
-//             cnt++;
-//             if (cnt == 4) {
-//                 std::cout << "CHECK: " << patternToCheck << std::endl;
-//                 patternToCheck <<= 1;
-//                 cnt = 3;
-//             }
-//         }
-//         std::cout << std::endl;
-//     }
-// }
-
-// int IBoard::countInDirection(int startRow, int startCol, int rowDelta, int colDelta, int player) {
-//     int count = 0;
-    
-//     for (int d = 1; d < 4; d++) {
-//         int newRow = startRow + d * rowDelta;
-//         int newCol = startCol + d * colDelta;
-
-//         if (newRow < 0 || newRow >= this->_width || newCol < 0 || newCol >= this->_width)
-//             break;
-
-//         if ((player == _idPlayer1 && _player2[newRow * this->_width + newCol])
-//         || (player == _idPlayer2 && _player1[newRow * this->_width + newCol]))
-//             return -1;
-        
-//         if ((player == _idPlayer1 && _player1[newRow * this->_width + newCol]) 
-//         || (player == _idPlayer2 && _player2[newRow * this->_width + newCol]))
-//             count++;
-//     }
-    
-//     return count;
-// }
-
-// bool IBoard::checkDoubleThree(int col, int row, int player) {
-//     const int   dirX[] = { 0, 0, 1, -1, 1, -1, 1, -1};
-//     const int   dirY[] = { 1, -1, 0, 0, 1, -1, -1, 1};
-//     int count;
-//     int double_three = 0;
-
-//     for (int i = 0; i < 8; i += 2){
-//         count = 1;
-//         int dirA = countInDirection(row, col, dirX[i], dirY[i], player); 
-//         int dirB = countInDirection(row, col, dirX[i + 1], dirY[i + 1], player);
-//         if (dirA == 2 && dirB == 2)
-//             return true;
-//         count += dirA + dirB;
-//         if (count == 3)
-//             double_three++;
-//     }
-
-//     return double_three >= 2;
-// }

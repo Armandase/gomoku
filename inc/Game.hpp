@@ -5,10 +5,24 @@
 # include "TransposedBoard.hpp" 
 # include "AntiDiagBoard.hpp" 
 # include "DiagBoard.hpp" 
+# include "Pattern.hpp"
 
 // bitboard representation of the board
 
 class Game{
+    public:
+        typedef enum {
+            DEFAULT,
+            TRANSPOS,
+            DIAG,
+            ANTIDIAG,
+            REV_DEFAULT,
+            REV_TRANSPOS,
+            REV_DIAG,
+            REV_ANTIDIAG,
+        } PatternType;
+        typedef std::map<Game::PatternType, patternBitset> patternMap;
+        typedef std::pair<Game::PatternType, patternBitset> patternPair;
     public:
         Game();
         ~Game();
@@ -25,6 +39,8 @@ class Game{
         TransposedBoard& getTransposedBoard() noexcept;
         AntiDiagBoard& getAntiDiagBoard() noexcept;
         DiagBoard& getDiagBoard() noexcept;
+
+        patternMap extractePatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;

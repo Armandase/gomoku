@@ -238,9 +238,16 @@ TEST(ClassicBoardTest, extractPattern){
         board.setPos(i % width, i / width, test[i]);
     }
     
-    patternBitset  waitedResult("1101");
+    {
+        patternBitset  waitedResult("1101");
 
-    EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
+        EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
+    }
+    {
+        patternBitset  waitedResult("1101");
+
+        EXPECT_EQ(board.extractPatternReversed(5, 1, 4, 1), waitedResult);
+    }
 }
 
 TEST(TransposedBoardTest, extractPattern){
@@ -277,9 +284,16 @@ TEST(TransposedBoardTest, extractPattern){
         board.setPos(i % width, i / width, test[i]);
     }
     
-    patternBitset  waitedResult("0111");
+    {
+        patternBitset  waitedResult("0111");
 
-    EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
+        EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
+    }
+    {
+        patternBitset  waitedResult("0111");
+
+        EXPECT_EQ(board.extractPatternReversed(5, 1, 4, 1), waitedResult);
+    }
 }
 
 TEST(DiagBoardTest, extractPattern){
@@ -325,6 +339,15 @@ TEST(DiagBoardTest, extractPattern){
         patternBitset  waitedResult("0010");
         EXPECT_EQ(board.extractPattern(0, 3, 4, 1), waitedResult);
     }
+    {
+        patternBitset  waitedResult("0000");
+        //Doit etre null car l'extraction est trop grande par rapport aux coordonnes (ca sort du plateau)
+        EXPECT_EQ(board.extractPatternReversed(5, 1, 4, 1), waitedResult);
+    }
+    {
+        patternBitset  waitedResult("0010");
+        EXPECT_EQ(board.extractPatternReversed(4, 3, 4, 1), waitedResult);
+    }
 
 }
 
@@ -365,11 +388,20 @@ TEST(AntiDiagBoardTest, extractPattern){
     {
         patternBitset  waitedResult("0000");
         //Doit etre null car l'extraction est trop grande par rapport aux coordonnes (ca sort du plateau)
-        EXPECT_EQ(board.extractPattern(4 - 2, 4, 4, 1), waitedResult);
+        EXPECT_EQ(board.extractPattern(2, 4, 4, 1), waitedResult);
     }
     {
         patternBitset  waitedResult("1101");
         EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
     }
 
+    {
+        patternBitset  waitedResult("0000");
+        //Doit etre null car l'extraction est trop grande par rapport aux coordonnes (ca sort du plateau)
+        EXPECT_EQ(board.extractPatternReversed(6, 4, 4, 1), waitedResult);
+    }
+    {
+        patternBitset  waitedResult("1101");
+        EXPECT_EQ(board.extractPatternReversed(5, 1, 4, 1), waitedResult);
+    }
 }

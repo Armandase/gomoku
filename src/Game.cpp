@@ -82,3 +82,18 @@ void    Game::removePosToBoards(uint16_t x, uint16_t y){
     _antiDiagBoard.removePos(x, y);
     _diagBoard.removePos(x, y);
 }
+
+Game::patternMap Game::extractePatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player){
+    patternMap result;
+
+    result.insert({Game::DEFAULT, this->_classicBoard.extractPattern(x, y, length, player)});
+    result.insert({Game::TRANSPOS, this->_transposedBoard.extractPattern(x, y, length, player)});
+    result.insert({Game::ANTIDIAG, this->_antiDiagBoard.extractPattern(x, y, length, player)});
+    result.insert({Game::DIAG, this->_diagBoard.extractPattern(x, y, length, player)});
+    result.insert({Game::REV_DEFAULT, this->_classicBoard.extractPatternReversed(x, y, length, player)});
+    result.insert({Game::REV_TRANSPOS, this->_transposedBoard.extractPatternReversed(x, y, length, player)});
+    result.insert({Game::REV_ANTIDIAG, this->_antiDiagBoard.extractPatternReversed(x, y, length, player)});
+    result.insert({Game::REV_DIAG, this->_diagBoard.extractPatternReversed(x, y, length, player)});
+
+    return result;
+}

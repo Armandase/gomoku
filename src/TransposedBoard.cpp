@@ -30,22 +30,3 @@ uint16_t  TransposedBoard::convertCoordinate(uint16_t x, uint16_t y) const noexc
     return (y + x * IBoard::getWidth());
 };
 
-
-patternBitset TransposedBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    int xEnd = xPos + length % IBoard::getWidth();
-    int yEnd = yPos + (length / IBoard::getWidth());
-
-    if (IBoard::isValidPos(xEnd, yEnd) == false)
-        return patternBitset(0);
-    
-    int convertedCoordinate = this->convertCoordinate(xPos, yPos);
-
-    bitboard mask("1111");
-    bitboard extractedPattern(0);
-    if (player == IBoard::getIdPlayer1())
-        extractedPattern = IBoard::getPlayer1() &  (mask << convertedCoordinate);
-    else
-        extractedPattern = IBoard::getPlayer2() &  (mask << convertedCoordinate);
-    extractedPattern >>= convertedCoordinate;
-    return patternBitset(extractedPattern.to_ulong());
-}

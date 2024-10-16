@@ -3,6 +3,8 @@
 
 #include <bitset>
 #include <map>
+#include <iostream>
+#include <iomanip>
 
 #include "gomoku.hpp"
 # include "utils.hpp"
@@ -11,19 +13,8 @@
 
 class IBoard{
     public:
-        typedef enum {
-            DEFAULT,
-            TRANSPOS,
-            DIAG,
-            ANTIDIAG,
-            REV_DEFAULT,
-            REV_TRANSPOS,
-            REV_DIAG,
-            REV_ANTIDIAG,
-        } PatternType;
         typedef std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> bitboard;
-        typedef std::map<PatternType, patternBitset> patternMap;
-        typedef std::pair<PatternType, patternBitset> patternPair;
+
     public:
         IBoard();
         IBoard(bitboard& player1, bitboard& player2, uint16_t width, uint16_t idPlayer1, uint16_t idPlayer2);
@@ -48,9 +39,9 @@ class IBoard{
         void    printBoard() const;
 
         virtual uint16_t  convertCoordinate(uint16_t x, uint16_t y) const = 0;
-        virtual patternBitset extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const = 0;
-        // virtual patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const = 0;
-        // void    convertBoard(const BoardClassic& board);
+
+        virtual patternBitset extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
+        virtual patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
         
     private:
         void printBoardX() const;
