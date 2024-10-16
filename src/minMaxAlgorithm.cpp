@@ -1,6 +1,6 @@
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/utils.hpp"
-#include "../inc/Pattern.hpp"
+// #include "../inc/Pattern.hpp"
 
 Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
     if (recursiveResult.empty())

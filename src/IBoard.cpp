@@ -144,107 +144,43 @@ IBoard::bitboard IBoard::getPlayer2() const noexcept{
     return (this->_player2);
 }
 
-// IBoard::patternMap IBoard::extractPatterns(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-//     patternMap result{};
-//     bool handleDiag = true;
-//     bool handleAntiDiag = true;
+patternBitset IBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
+    int xEnd = xPos + length % getWidth();
+    int yEnd = yPos + (length / getWidth());
 
-//     int xEnd = xPos + length % this->_width;
-//     int yEnd = yPos + (length / this->_width);
-    
-//     if (xEnd > this->_width || yEnd > this->_width){
-//         return result;
-//     }
-//     if (xPos <= yEnd + 1 && xEnd >= yEnd + 1)
-//         handleDiag = false;
-//     if (this->_width - xPos <= yEnd - 1 && this->_width - xEnd >= yEnd - 1)
-//         handleAntiDiag = false;
-    
+    if (isValidPos(xEnd, yEnd) == false)
+        return patternBitset(0);
 
-//     int beginDefault = xPos + yPos * this->_width;
-//     int beginTranspose = this->coordinateToTranspose1D(xPos, yPos);
-//     int beginDiag = this->coordinateToDiag1D(xPos, yPos);
-//     int beginAntiDiag = this->coordinateToAntiDiag1D(xPos, yPos);
+    int convertedCoordinate = this->convertCoordinate(xPos, yPos);
 
-//     patternBitset defaultBitset(0);
-//     patternBitset transposBitset(0);
-//     patternBitset diagBitset(0);
-//     patternBitset antiDiagBitset(0);
-//     for (int i = 0; i < length; ++i) {
-//         if (player == this->_idPlayer1){
-//             defaultBitset[i] = _player1[beginDefault + i];
-//             transposBitset[i] = _player1Transposed[beginTranspose + i];
-//             if (handleDiag)
-//                 diagBitset[i] = _player1Diag[beginDiag + i];
-//             if (handleAntiDiag)
-//                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
-//         } else {
-//             defaultBitset[i] = _player2[beginDefault + i];
-//             transposBitset[i] = _player2Transposed[beginTranspose + i];
-//             if (handleDiag)
-//                 diagBitset[i] = _player1Diag[beginDiag + i];
-//             if (handleAntiDiag)
-//                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag + i];
-//         }
-//     }
-//     result.insert(patternPair(IBoard::PatternType::DEFAULT, defaultBitset));
-//     result.insert(patternPair(IBoard::PatternType::TRANSPOS, transposBitset));
-//     result.insert(patternPair(IBoard::PatternType::DIAG, diagBitset));
-//     result.insert(patternPair(IBoard::PatternType::ANTIDIAG, antiDiagBitset));
+    bitboard mask("1111");
+    bitboard extractedPattern(0);
+    if (player == getIdPlayer1())
+        extractedPattern = getPlayer1() &  (mask << convertedCoordinate);
+    else
+        extractedPattern = getPlayer2() &  (mask << convertedCoordinate);
+    extractedPattern >>= convertedCoordinate;
+    return patternBitset(extractedPattern.to_ulong());
+}
 
-//     return result;
-// }
+patternBitset IBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
+    int xEnd = xPos - length % getWidth();
+    int yEnd = yPos - (length / getWidth());
 
-// IBoard::patternMap IBoard::extractPatternsReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-//     patternMap result{};
-//     bool handleDiag = true;
-//     bool handleAntiDiag = true;
+    if (isValidPos(xEnd, yEnd) == false)
+        return patternBitset(0);
 
-//     int xEnd = xPos - length % this->_width;
-//     int yEnd = yPos - (length / this->_width);
-    
-//     if (xEnd > this->_width || yEnd > this->_width){
-//         return result;
-//     }
-//     if (xPos <= yEnd + 1 && xEnd >= yEnd + 1)
-//         handleDiag = false;
-//     if (this->_width - xPos <= yEnd - 1 && this->_width - xEnd >= yEnd - 1)
-//         handleAntiDiag = false;
-    
+    int convertedCoordinate = this->convertCoordinate(xEnd, yEnd);
 
-//     int beginDefault = xPos + yPos * this->_width;
-//     int beginTranspose = this->coordinateToTranspose1D(xPos, yPos);
-//     int beginDiag = this->coordinateToDiag1D(xPos, yPos);
-//     int beginAntiDiag = this->coordinateToAntiDiag1D(xPos, yPos);
-
-//     patternBitset defaultBitset(0);
-//     patternBitset transposBitset(0);
-//     patternBitset diagBitset(0);
-//     patternBitset antiDiagBitset(0);
-//     for (int i = 0; i < length; ++i) {
-//         if (player == this->_idPlayer1){
-//             defaultBitset[i] = _player1[beginDefault - i];
-//             transposBitset[i] = _player1Transposed[beginTranspose - i];
-//             if (handleDiag)
-//                 diagBitset[i] = _player1Diag[beginDiag - i];
-//             if (handleAntiDiag)
-//                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag - i];
-//         } else {
-//             defaultBitset[i] = _player2[beginDefault - i];
-//             transposBitset[i] = _player2Transposed[beginTranspose - i];
-//             if (handleDiag)
-//                 diagBitset[i] = _player1Diag[beginDiag - i];
-//             if (handleAntiDiag)
-//                 antiDiagBitset[i] = _player1AntiDiag[beginAntiDiag - i];
-//         }
-//     }
-//     result.insert(patternPair(IBoard::PatternType::REV_DEFAULT, defaultBitset));
-//     result.insert(patternPair(IBoard::PatternType::REV_TRANSPOS, transposBitset));
-//     result.insert(patternPair(IBoard::PatternType::REV_DIAG, diagBitset));
-//     result.insert(patternPair(IBoard::PatternType::REV_ANTIDIAG, antiDiagBitset));
-
-//     return result;
-// }
+    bitboard mask("1111");
+    bitboard extractedPattern(0);
+    if (player == getIdPlayer1())
+        extractedPattern = getPlayer1() &  (mask << convertedCoordinate);
+    else
+        extractedPattern = getPlayer2() &  (mask << convertedCoordinate);
+    extractedPattern >>= convertedCoordinate;
+    return patternBitset(extractedPattern.to_ulong());
+}
 
 void IBoard::printBoardX() const
 {
@@ -260,27 +196,6 @@ void IBoard::resetBoard(){
     this->_player1.reset();
     this->_player2.reset();
 }
-
-// void    IBoard::convertBoard(const IBoardClassic& board){
-//     uint16_t convertedCoordiante = 0;
-//     uint16_t boardPos = 0;
-
-//     for (int y = 0; y < this->_width; ++y) 
-//     {
-//         for (int x = 0; x < this->_width; ++x) 
-//         {
-//             convertedCoordiante = this->convertCoordinate(x, y);
-//             if (board.isPosEmpty(x, y) == true){
-//                 continue ;
-//             }
-//             boardPos = board.getPos(x, y);
-//             if (boardPos == this->_player1[convertedCoordiante])
-//                 this->_player1[convertedCoordiante] = boardPos;
-//             else
-//                 this->_player2[convertedCoordiante] = boardPos;
-//         }
-//     }
-// }
 
 void IBoard::swapBits(bitboard& board, int pos1, int pos2){
     bool temp = board[pos1];
