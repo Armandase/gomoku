@@ -25,6 +25,7 @@ class Game{
         TransposedBoard& getTransposedBoard() noexcept;
         AntiDiagBoard& getAntiDiagBoard() noexcept;
         DiagBoard& getDiagBoard() noexcept;
+
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;
