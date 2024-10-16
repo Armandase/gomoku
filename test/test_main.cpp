@@ -1,5 +1,5 @@
 #include "../inc/gomoku.hpp"
-#include "../inc/Board.hpp"
+#include "../inc/Game.hpp"
 #include <gtest/gtest.h>
 
 TEST(HandleMouse, TestOut) {
@@ -17,29 +17,29 @@ TEST(HandleMouse, TestIn) {
 }
 
 TEST(Board_isValidPos, TestValidPos){
-    Board gameTest;
+    Game gameTest;
 
-    EXPECT_EQ(gameTest.isValidPos(0, gameTest.getWidth() - 1), true);
-    EXPECT_EQ(gameTest.isValidPos(1, gameTest.getWidth() - 2), true);
-    EXPECT_EQ(gameTest.isValidPos(-15, gameTest.getWidth() - 2), false);
-    EXPECT_EQ(gameTest.isValidPos( 2, gameTest.getWidth() ), false);
+    EXPECT_EQ(gameTest.getClassicBoard().isValidPos(0, gameTest.getClassicBoard().getWidth() - 1), true);
+    EXPECT_EQ(gameTest.getClassicBoard().isValidPos(1, gameTest.getClassicBoard().getWidth() - 2), true);
+    EXPECT_EQ(gameTest.getClassicBoard().isValidPos(-15, gameTest.getClassicBoard().getWidth() - 2), false);
+    EXPECT_EQ(gameTest.getClassicBoard().isValidPos( 2, gameTest.getClassicBoard().getWidth() ), false);
 }
 
 TEST(Board_setPos, TestSetPos){
-    Board gameTest;
+    Game gameTest;
 
     int x = 0;
-    int y = gameTest.getWidth() - 1;
+    int y = gameTest.getClassicBoard().getWidth() - 1;
     
-    gameTest.setPos(x, y, WHITE);
-    EXPECT_EQ(gameTest.getPos(x, y), WHITE);
+    gameTest.getClassicBoard().setPos(x, y, WHITE);
+    EXPECT_EQ(gameTest.getClassicBoard().getPos(x, y), WHITE);
     
-    gameTest.setPos(x, y, BLACK);
-    EXPECT_EQ(gameTest.getPos(x, y), WHITE);
+    gameTest.getClassicBoard().setPos(x, y, BLACK);
+    EXPECT_EQ(gameTest.getClassicBoard().getPos(x, y), WHITE);
 
     x = 100000, y = 100000;
-    gameTest.setPos(x, y, WHITE);
-    EXPECT_EQ(gameTest.getPos(x, y), 0);
+    gameTest.getClassicBoard().setPos(x, y, WHITE);
+    EXPECT_EQ(gameTest.getClassicBoard().getPos(x, y), 0);
 }
 
 
