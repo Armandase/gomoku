@@ -1,5 +1,6 @@
 #include "../inc/Game.hpp"
 #include "../inc/ClassicBoard.hpp"
+#include <algorithm>
 #include <gtest/gtest.h>
 
 TEST(IBoard, TestTransposedBoard){
@@ -51,7 +52,7 @@ TEST(IBoard, TestTransposedBoard){
     for (int i = 0; i < test.size(); i++){
         if (!test[i])
             continue;
-        gameTest.setPosToBoards(i % width, i / width, test[i]);
+        gameTest.setPosToBoards(i % width, i / width, 1);
     }
     
     EXPECT_EQ(gameTest.getTransposedBoard().getPlayer1(), waited_result);
@@ -59,7 +60,8 @@ TEST(IBoard, TestTransposedBoard){
 
 
 TEST(IBoard, TestDiagBoard){
-    IBoard::bitboard test(
+
+    std::string str_test(
 "0111110000000000000"
 "0000000000000000000"
 "0000000000000000000"
@@ -78,9 +80,11 @@ TEST(IBoard, TestDiagBoard){
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
-"0000000000000000000");
+"0000000000000001111");
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
 
-    IBoard::bitboard waited_result(
+    std::string str_result(
 "0000000000000000000"
 "0100000000000000000"
 "0010000000000000000"
@@ -95,11 +99,14 @@ TEST(IBoard, TestDiagBoard){
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
-"0000000000000000000"
-"0000000000000000000"
-"0000000000000000000"
-"0000000000000000000"
+"0000000000000001000"
+"0000000000000000100"
+"0000000000000000010"
+"0000000000000000001"
 "0000000000000000000");
+    std::reverse(str_result.begin(), str_result.end());
+    IBoard::bitboard waited_result(str_result);
+
 
     Game gameTest;
     int player = 0;
@@ -107,12 +114,9 @@ TEST(IBoard, TestDiagBoard){
     for (int i = 0; i < test.size(); i++){
         if (!test[i])
             continue;
-        gameTest.setPosToBoards(i % width, i / width, test[i]);
+        gameTest.setPosToBoards(i % width, i / width, 1);
     }
     
-    gameTest.getClassicBoard().printBoard();
-    gameTest.getDiagBoard().printBoard();
-
     EXPECT_EQ(gameTest.getDiagBoard().getPlayer1(), waited_result);
 }
 // TEST(Board_extractPatterns, TestInputExtraction){
@@ -155,28 +159,3 @@ TEST(IBoard, TestDiagBoard){
 
 //     EXPECT_EQ(gameTest.extractPatterns(19-7, 19-7, 5, 1), waitedResult);
 // }
-
-// Custom listener that triggers on failure of specific tests
-class FailListener : public ::testing::TestEventListener {
- public:
-  // Override the method to check for test results
-  void OnTestPartResult(const ::testing::TestPartResult& result) override {
-    if (result.failed()) {
-      const ::testing::TestInfo* test_info =
-          ::testing::UnitTest::GetInstance()->current_test_info();
-      if (test_info != nullptr) {
-        std::string test_name = std::string(test_info->test_suite_name()) + "." + test_info->name();
-        
-        // Specify the test you want to call the custom function for
-        if (test_name == "IBoard.TestTransposedBoard") {
-          OnTestFailure();
-        }
-      }
-    }
-  }
-
-  void OnTestFailure() {
-
-  }
-};
-
