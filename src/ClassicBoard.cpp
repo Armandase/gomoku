@@ -55,7 +55,7 @@ patternBitset ClassicBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos,
     if (isValidPos(xEnd, yPos) == false)
         return patternBitset(0);
 
-    int convertedCoordinate = this->convertCoordinate(xEnd, yPos);
+    int convertedCoordinate = this->convertCoordinate(xEnd + 1, yPos);
 
     bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);

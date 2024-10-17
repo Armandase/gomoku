@@ -31,10 +31,6 @@ uint16_t  TransposedBoard::convertCoordinate(uint16_t x, uint16_t y) const noexc
 };
 
 patternBitset TransposedBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    uint16_t tmp = xPos;
-    xPos = yPos;
-    yPos = tmp;
-
     int xEnd = xPos + length % IBoard::getWidth();
 
     if (IBoard::isValidPos(xEnd, yPos) == false)
@@ -53,16 +49,13 @@ patternBitset TransposedBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint
 }
 
 patternBitset TransposedBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    uint16_t tmp = xPos;
-    xPos = yPos;
-    yPos = tmp;
+    int yEnd = yPos - (length % IBoard::getWidth()) + 1;
 
-    int xEnd = xPos - length % getWidth();
-
-    if (isValidPos(xEnd, yPos) == false)
+    if (isValidPos(xPos, yEnd) == false){
         return patternBitset(0);
 
-    int convertedCoordinate = this->convertCoordinate(xEnd, yPos);
+    }
+    int convertedCoordinate = this->convertCoordinate(xPos, yEnd);
 
     bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);

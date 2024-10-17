@@ -32,11 +32,13 @@ uint16_t  DiagBoard::convertCoordinate(uint16_t x, uint16_t y) const noexcept
 };
 
 patternBitset DiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    int xEnd = xPos + length % IBoard::getWidth();
-    int yEnd = yPos + (length / IBoard::getWidth());
+    int xEnd = xPos + length;
 
-    if (IBoard::isValidPos(xEnd, yEnd) == false || (xPos < yEnd + 1 && xEnd > yEnd + 1))
+    // if (IBoard::isValidPos(xEnd, yPos) == false || (xPos <= yPos + 1 && xEnd >= yPos + 1)){
+    std::cout << "xEnd" << xEnd << "Ypos" << yPos << std::endl;
+    if (IBoard::isValidPos(xEnd, yPos) == false){
         return patternBitset(0);
+    }
     
     int convertedCoordinate = this->convertCoordinate(xPos, yPos);
 
@@ -51,13 +53,14 @@ patternBitset DiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t l
 }
 
 patternBitset DiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    int xEnd = xPos - length % getWidth();
-    int yEnd = yPos - (length / getWidth());
+    int xEnd = xPos - (length % getWidth()) + 1;
 
-    if (isValidPos(xEnd, yEnd) == false || (xEnd < yPos + 1 && xPos > yPos + 1))
+    // if (isValidPos(xEnd, yPos) == false || (xEnd < yPos + 1 && xPos > yPos + 1))
+    if (isValidPos(xEnd, yPos) == false)
         return patternBitset(0);
 
-    int convertedCoordinate = this->convertCoordinate(xEnd, yEnd);
+    // int convertedCoordinate = this->convertCoordinate(xEnd + 1, yPos);
+    int convertedCoordinate = xEnd + yPos * IBoard::getWidth();
 
     bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);
