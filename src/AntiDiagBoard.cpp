@@ -31,38 +31,50 @@ uint16_t  AntiDiagBoard::convertCoordinate(uint16_t x, uint16_t y) const noexcep
     return (x + newY * IBoard::getWidth());
 };
 
-patternBitset AntiDiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    int xEnd = xPos + length % IBoard::getWidth();
-
-    if (IBoard::isValidPos(xEnd, yPos) == false || (IBoard::getWidth() - xPos < yPos - 1 && IBoard::getWidth() - xEnd > yPos - 1))
-        return patternBitset(0);
-
+patternBitset AntiDiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const {
     int convertedCoordinate = this->convertCoordinate(xPos, yPos);
+    xPos = convertedCoordinate % IBoard::getWidth();
+    yPos = convertedCoordinate / IBoard::getWidth();
+    int xEnd = xPos + length - 1;
 
-    bitboard mask((1 << length) - 1);
+    if (!IBoard::isValidPos(xEnd, yPos) || (IBoard::getWidth() - xPos < yPos + 1 && IBoard::getWidth() - xEnd > yPos + 1)) {
+        return patternBitset(0);
+    }
+
+    bitboard mask((1ULL << length) - 1);
     bitboard extractedPattern(0);
+
     if (player == IBoard::getIdPlayer1())
-        extractedPattern = IBoard::getPlayer1() &  (mask << convertedCoordinate);
+        extractedPattern = IBoard::getPlayer1() & (mask << convertedCoordinate);
     else
-        extractedPattern = IBoard::getPlayer2() &  (mask << convertedCoordinate);
+        extractedPattern = IBoard::getPlayer2() & (mask << convertedCoordinate);
+
     extractedPattern >>= convertedCoordinate;
+
     return patternBitset(extractedPattern.to_ulong());
 }
 
-patternBitset AntiDiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    int xEnd = xPos - length % getWidth();
+patternBitset AntiDiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const {
+    int convertedCoordinate = this->convertCoordinate(xPos, yPos);
+    xPos = convertedCoordinate % IBoard::getWidth();
+    yPos = convertedCoordinate / IBoard::getWidth();
+    int xStart = xPos - length + 1;
+    int xEnd = xPos;
+    convertedCoordinate = xStart + (yPos * IBoard::getWidth());
 
-    if (isValidPos(xEnd, yPos) == false || (IBoard::getWidth() - xEnd < yPos - 1 && IBoard::getWidth() - xPos > yPos - 1))
+    if (!IBoard::isValidPos(xStart, yPos) || (IBoard::getWidth() - xStart < yPos + 1 && IBoard::getWidth() - xPos> yPos + 1)) {
         return patternBitset(0);
+    }
 
-    int convertedCoordinate = this->convertCoordinate(xEnd, yPos);
-
-    bitboard mask((1 << length) - 1);
+    bitboard mask((1ULL << length) - 1);
     bitboard extractedPattern(0);
-    if (player == getIdPlayer1())
-        extractedPattern = getPlayer1() &  (mask << convertedCoordinate);
+
+    if (player == IBoard::getIdPlayer1())
+        extractedPattern = IBoard::getPlayer1() & (mask << convertedCoordinate);
     else
-        extractedPattern = getPlayer2() &  (mask << convertedCoordinate);
+        extractedPattern = IBoard::getPlayer2() & (mask << convertedCoordinate);
+
     extractedPattern >>= convertedCoordinate;
+
     return patternBitset(extractedPattern.to_ulong());
 }

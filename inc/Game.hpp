@@ -19,7 +19,7 @@ class Game{
             REV_DEFAULT,
             REV_TRANSPOS,
             REV_DIAG,
-            REV_ANTIDIAG,
+            REV_ANTIDIAG
         } PatternType;
         typedef std::map<Game::PatternType, patternBitset> patternMap;
         typedef std::pair<Game::PatternType, patternBitset> patternPair;

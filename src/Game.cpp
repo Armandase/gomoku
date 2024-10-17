@@ -88,12 +88,12 @@ Game::patternMap Game::extractPatterns(uint16_t x, uint16_t y, uint16_t length, 
 
     result.insert({Game::DEFAULT, this->_classicBoard.extractPattern(x, y, length, player)});
     result.insert({Game::TRANSPOS, this->_transposedBoard.extractPattern(x, y, length, player)});
-    result.insert({Game::ANTIDIAG, this->_antiDiagBoard.extractPattern(x, y, length, player)});
     result.insert({Game::DIAG, this->_diagBoard.extractPattern(x, y, length, player)});
+    result.insert({Game::ANTIDIAG, this->_antiDiagBoard.extractPattern(x, y, length, player)});
     result.insert({Game::REV_DEFAULT, this->_classicBoard.extractPatternReversed(x, y, length, player)});
     result.insert({Game::REV_TRANSPOS, this->_transposedBoard.extractPatternReversed(x, y, length, player)});
-    result.insert({Game::REV_ANTIDIAG, this->_antiDiagBoard.extractPatternReversed(x, y, length, player)});
     result.insert({Game::REV_DIAG, this->_diagBoard.extractPatternReversed(x, y, length, player)});
+    result.insert({Game::REV_ANTIDIAG, this->_antiDiagBoard.extractPatternReversed(x, y, length, player)});
 
     return result;
 }
@@ -102,10 +102,19 @@ bool Game::checkDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
     int doubleThreeCnt = 0;
     int opponent = player == WHITE ? BLACK : WHITE;
 
+    patternBitset  playerPattern1("0110");
+    patternBitset  playerPattern2("1100");
+    patternBitset  playerPattern3("0011");
+
     patternMap playerPattern = extractPatterns(x, y, 4, player);
-    for (const auto& pair : playerPattern) {
-        std::cout << "Key: " << pair.first << ", Value: " << pair.second << std::endl;
-        if (pair.second.to_string() == "0110" || pair.second.to_string() == "1100")
+    patternMap opponentPattern = extractPatterns(x, y, 5, opponent);
+
+    for (int i = 0; i < 8; i++) {
+        // std::cout << playerPattern[static_cast<Game::PatternType>(i)] << std::endl;
+        if (opponentPattern[static_cast<Game::PatternType>(i)] == 0 
+        && (playerPattern[static_cast<Game::PatternType>(i)] == playerPattern1 
+            || playerPattern[static_cast<Game::PatternType>(i)] == playerPattern2
+            || playerPattern[static_cast<Game::PatternType>(i)] == playerPattern3))
             doubleThreeCnt++;
     }
     std::cout << doubleThreeCnt << std::endl;

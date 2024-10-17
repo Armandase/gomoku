@@ -31,16 +31,13 @@ uint16_t  TransposedBoard::convertCoordinate(uint16_t x, uint16_t y) const noexc
 };
 
 patternBitset TransposedBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    uint16_t tmp = xPos;
-    xPos = yPos;
-    yPos = tmp;
-
-    int xEnd = xPos + length % IBoard::getWidth();
+    int convertedCoordinate = this->convertCoordinate(xPos, yPos);
+    xPos = convertedCoordinate % IBoard::getWidth();
+    yPos = convertedCoordinate / IBoard::getWidth();
+    int xEnd = xPos + length;
 
     if (IBoard::isValidPos(xEnd, yPos) == false)
         return patternBitset(0);
-
-    int convertedCoordinate = this->convertCoordinate(xPos, yPos);
 
     bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);
@@ -48,21 +45,20 @@ patternBitset TransposedBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint
         extractedPattern = IBoard::getPlayer1() &  (mask << convertedCoordinate);
     else
         extractedPattern = IBoard::getPlayer2() &  (mask << convertedCoordinate);
+
     extractedPattern >>= convertedCoordinate;
     return patternBitset(extractedPattern.to_ulong());
 }
 
 patternBitset TransposedBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    uint16_t tmp = xPos;
-    xPos = yPos;
-    yPos = tmp;
+    int convertedCoordinate = this->convertCoordinate(xPos, yPos);
+    xPos = convertedCoordinate % IBoard::getWidth();
+    yPos = convertedCoordinate / IBoard::getWidth();
+    int xStart = xPos - length + 1;
+    convertedCoordinate = xStart + (yPos * IBoard::getWidth());
 
-    int xEnd = xPos - length % getWidth();
-
-    if (isValidPos(xEnd, yPos) == false)
+    if (IBoard::isValidPos(xStart, yPos) == false)
         return patternBitset(0);
-
-    int convertedCoordinate = this->convertCoordinate(xEnd, yPos);
 
     bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);
@@ -70,6 +66,7 @@ patternBitset TransposedBoard::extractPatternReversed(uint16_t xPos, uint16_t yP
         extractedPattern = getPlayer1() &  (mask << convertedCoordinate);
     else
         extractedPattern = getPlayer2() &  (mask << convertedCoordinate);
+
     extractedPattern >>= convertedCoordinate;
     return patternBitset(extractedPattern.to_ulong());
 }
