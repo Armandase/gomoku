@@ -203,7 +203,6 @@ void IBoard::swapBits(bitboard& board, int pos1, int pos2){
     board[pos2] = temp;
 }
 
-
 void IBoard::printBoard() const{
     printBoardX();
     int sliceLen = intlen(this->_width);

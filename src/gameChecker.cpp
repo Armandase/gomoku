@@ -87,7 +87,7 @@ int gameChecker(Game& game, int y, int x, int player, Render& render){
     return 0;
 }
 
-// bool doubleThree(const Game& game, int x, int y, int player){
+// bool doubleThree(const Game& game, int x, int y, int player){ 
 //     patternBitset close_doubleThree("1100"); 
 //     patternBitset distant_doubleThree("0110"); 
 //     int double_three = 0;

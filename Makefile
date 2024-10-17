@@ -109,4 +109,4 @@ clean:
 re: fclean
 	@make all
 
-.PHONY: all fclean clean re test lib lib_clean
+.PHONY: all fclean clean push re test lib lib_clean
