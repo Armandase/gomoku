@@ -300,7 +300,7 @@ TEST(TransposedBoardTest, extractPattern){
         EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
     }
     {
-        patternBitset  waitedResult("0111");
+        patternBitset  waitedResult("0001");
 
         EXPECT_EQ(board.extractPatternReversed(1, 4, 4, 1), waitedResult);
     }
@@ -348,6 +348,10 @@ TEST(DiagBoardTest, extractPattern){
     {
         patternBitset  waitedResult("0010");
         EXPECT_EQ(board.extractPattern(0, 3, 4, 1), waitedResult);
+    }
+    {
+        patternBitset  waitedResult("1010");
+        EXPECT_EQ(board.extractPattern(0, 4, 4, 1), waitedResult);
     }
     {
         patternBitset  waitedResult("0000");
@@ -417,13 +421,13 @@ TEST(AntiDiagBoardTest, extractPattern){
 TEST(IBoardTest, doubleThree) {
         std::string str_test(
 "0000000000000000000"
-"0000000000000000000"
-"0010101000000000000"
-"0001110000000000000"
-"0011011000000000000"
-"0001110000000000000"
+"0100100100000000000"
 "0010101000000000000"
 "0000000000000000000"
+"0110001100000000000"
+"0000000000000000000"
+"0010101000000000000"
+"0100100100000000000"
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
@@ -446,6 +450,7 @@ TEST(IBoardTest, doubleThree) {
             continue;
         gameTest.setPosToBoards(i % width, i / width, test[i]);
     }
+    // gameTest.setPosToBoards(5, 4, BLACK);
     gameTest.getClassicBoard().printBoard();
     EXPECT_EQ(gameTest.checkDoubleThree(4, 4, WHITE), false);
     
