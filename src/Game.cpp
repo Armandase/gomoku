@@ -104,6 +104,7 @@ bool Game::checkDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
 
     patternMap playerPattern = extractPatterns(x, y, 4, player);
     for (const auto& pair : playerPattern) {
+        std::cout << "Key: " << pair.first << ", Value: " << pair.second << std::endl;
         if (pair.second.to_string() == "0110" || pair.second.to_string() == "1100")
             doubleThreeCnt++;
     }

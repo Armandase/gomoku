@@ -302,7 +302,7 @@ TEST(TransposedBoardTest, extractPattern){
     {
         patternBitset  waitedResult("0111");
 
-        EXPECT_EQ(board.extractPatternReversed(1, 5, 4, 1), waitedResult);
+        EXPECT_EQ(board.extractPatternReversed(1, 4, 4, 1), waitedResult);
     }
 }
 
@@ -418,11 +418,11 @@ TEST(IBoardTest, doubleThree) {
         std::string str_test(
 "0000000000000000000"
 "0000000000000000000"
-"0000100000000000000"
-"0000100000000000000"
-"0000001100000000000"
-"0000000000000000000"
-"0000000000000000000"
+"0010101000000000000"
+"0001110000000000000"
+"0011011000000000000"
+"0001110000000000000"
+"0010101000000000000"
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
