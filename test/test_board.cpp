@@ -394,7 +394,6 @@ TEST(AntiDiagBoardTest, extractPattern){
             continue;
         board.setPos(i % width, i / width, test[i]);
     }
-    
     {
         patternBitset  waitedResult("0000");
         //Doit etre null car l'extraction est trop grande par rapport aux coordonnes (ca sort du plateau)
@@ -404,8 +403,6 @@ TEST(AntiDiagBoardTest, extractPattern){
         patternBitset  waitedResult("1101");
         EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
     }
-
-
     {
         patternBitset  waitedResult("0000");
         //Doit etre null car l'extraction est trop grande par rapport aux coordonnes (ca sort du plateau)
@@ -415,4 +412,40 @@ TEST(AntiDiagBoardTest, extractPattern){
         patternBitset  waitedResult("1101");
         EXPECT_EQ(board.extractPatternReversed(5, 1, 4, 1), waitedResult);
     }
+}
+
+TEST(IBoardTest, doubleThree) {
+        std::string str_test(
+"0000000000000000000"
+"0000000000000000000"
+"0000100000000000000"
+"0000100000000000000"
+"0000001100000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000");
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
+
+    Game gameTest;
+    int size = test.size();
+    int width = gameTest.getClassicBoard().getWidth();
+    for (int i = 0; i < size; i++){
+        if (!test[i])
+            continue;
+        gameTest.setPosToBoards(i % width, i / width, test[i]);
+    }
+    gameTest.getClassicBoard().printBoard();
+    EXPECT_EQ(gameTest.checkDoubleThree(4, 4, WHITE), false);
 }

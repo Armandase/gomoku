@@ -97,3 +97,15 @@ Game::patternMap Game::extractePatterns(uint16_t x, uint16_t y, uint16_t length,
 
     return result;
 }
+
+bool Game::checkDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
+    int opponent = player == WHITE ? BLACK : WHITE;
+
+    patternMap playerPattern = extractePatterns(x, y, 4, player);
+        std::cout << playerPattern[Game::DEFAULT] <<std::endl;
+    for (const auto& pair : playerPattern) {
+        // std::cout << "Key: " << pair.first << ", Value: " << pair.second << std::endl;
+    }
+
+    return false;
+}
