@@ -40,7 +40,7 @@ class Game{
         AntiDiagBoard& getAntiDiagBoard() noexcept;
         DiagBoard& getDiagBoard() noexcept;
 
-        patternMap extractePatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
+        patternMap extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
         bool checkDoubleThree(uint16_t x, uint16_t y, uint16_t player);
     private:
         ClassicBoard    _classicBoard;

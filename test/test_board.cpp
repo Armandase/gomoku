@@ -448,4 +448,5 @@ TEST(IBoardTest, doubleThree) {
     }
     gameTest.getClassicBoard().printBoard();
     EXPECT_EQ(gameTest.checkDoubleThree(4, 4, WHITE), false);
+    
 }

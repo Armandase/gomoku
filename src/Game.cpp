@@ -83,7 +83,7 @@ void    Game::removePosToBoards(uint16_t x, uint16_t y){
     _diagBoard.removePos(x, y);
 }
 
-Game::patternMap Game::extractePatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player){
+Game::patternMap Game::extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player){
     patternMap result;
 
     result.insert({Game::DEFAULT, this->_classicBoard.extractPattern(x, y, length, player)});
@@ -101,8 +101,7 @@ Game::patternMap Game::extractePatterns(uint16_t x, uint16_t y, uint16_t length,
 bool Game::checkDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
     int opponent = player == WHITE ? BLACK : WHITE;
 
-    patternMap playerPattern = extractePatterns(x, y, 4, player);
-        std::cout << playerPattern[Game::DEFAULT] <<std::endl;
+    patternMap playerPattern = extractPatterns(x, y, 4, player);
     for (const auto& pair : playerPattern) {
         // std::cout << "Key: " << pair.first << ", Value: " << pair.second << std::endl;
     }
