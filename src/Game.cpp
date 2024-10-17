@@ -98,7 +98,7 @@ Game::patternMap Game::extractPatterns(uint16_t x, uint16_t y, uint16_t length, 
     return result;
 }
 
-bool Game::checkDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
+bool Game::isDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
     int doubleThreeCnt = 0;
     int opponent = player == WHITE ? BLACK : WHITE;
 
@@ -106,17 +106,32 @@ bool Game::checkDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
     patternBitset  playerPattern2("1100");
     patternBitset  playerPattern3("0011");
 
-    patternMap playerPattern = extractPatterns(x, y, 4, player);
-    patternMap opponentPattern = extractPatterns(x, y, 5, opponent);
+    patternMap playerPatterns = extractPatterns(x, y, 4, player);
+    patternMap opponentPatterns = extractPatterns(x, y, 5, opponent);
 
     for (int i = 0; i < 8; i++) {
-        // std::cout << playerPattern[static_cast<Game::PatternType>(i)] << std::endl;
-        if (opponentPattern[static_cast<Game::PatternType>(i)] == 0 
-        && (playerPattern[static_cast<Game::PatternType>(i)] == playerPattern1 
-            || playerPattern[static_cast<Game::PatternType>(i)] == playerPattern2
-            || playerPattern[static_cast<Game::PatternType>(i)] == playerPattern3))
+        Game::PatternType boardType = static_cast<Game::PatternType>(i);
+        if (opponentPatterns[boardType] == 0 && (playerPatterns[boardType] == playerPattern1 || playerPatterns[boardType] == playerPattern2 || playerPatterns[boardType] == playerPattern3))
+            doubleThreeCnt++;
+        else if ((opponentPatterns[boardType] == 1 || opponentPatterns[boardType] == 16) && playerPatterns[boardType] == playerPattern1)
             doubleThreeCnt++;
     }
-    std::cout << doubleThreeCnt << std::endl;
     return doubleThreeCnt >= 2;
+}
+
+bool Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
+    int opponent = player == WHITE ? BLACK : WHITE;
+
+    patternBitset  playerPattern("1001");
+    patternBitset  opponentPattern("0110");
+
+    patternMap playerPatterns = extractPatterns(x, y, 4, player);
+    patternMap opponentPatterns = extractPatterns(x, y, 4, opponent);
+
+    for (int i = 0; i < 8; i++) {
+        Game::PatternType boardType = static_cast<Game::PatternType>(i);
+        if (playerPatterns[boardType] == playerPattern && opponentPatterns[boardType] == opponentPattern)
+            return true;
+    }
+    return false;
 }

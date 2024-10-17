@@ -41,7 +41,8 @@ class Game{
         DiagBoard& getDiagBoard() noexcept;
 
         patternMap extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
-        bool checkDoubleThree(uint16_t x, uint16_t y, uint16_t player);
+        bool isDoubleThree(uint16_t x, uint16_t y, uint16_t player);
+        bool isCapture(uint16_t x, uint16_t y, uint16_t player);
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;

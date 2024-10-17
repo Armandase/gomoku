@@ -471,6 +471,5 @@ TEST(IBoardTest, doubleThree) {
         gameTest.setPosToBoards(i % width, i / width, test[i]);
     }
     gameTest.setPosToBoards(8, 4, BLACK);
-    EXPECT_EQ(gameTest.checkDoubleThree(4, 4, WHITE), true);
-    
+    EXPECT_EQ(gameTest.isDoubleThree(4, 4, WHITE), true);
 }

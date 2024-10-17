@@ -8,10 +8,10 @@ bool posValid(Game& game, int player, Render& render, int x, int y)
         std::cout << "Position already used" << std::endl;
         return false;
     }
-
-    // check:
-    //  - double three
-
+    if (game.isDoubleThree(x, y, player)) {
+        std::cout << "Double Three" << std::endl;
+        return false;
+    }
     return true;
 }
 
@@ -23,6 +23,10 @@ void place_stone(Game& game, int &player, Render& render, int x, int y)
         SDL_SetRenderDrawColor(render.getRenderer(), 255, 255, 255, 255);
     else
         SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);
+    if (game.isCapture(x, y, player)){
+        std::cout << "CAPTURE BY PLAYER: " << player << std::endl;
+        game.addCapture(player);
+    }
     player = player == WHITE ? BLACK : WHITE;
 
     render.drawCircle(x, y);

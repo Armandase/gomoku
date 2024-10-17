@@ -48,8 +48,8 @@ int     handleStart(Render& render, Button &player, Button &IA);
 void    start_menu(Render& render, Button &player, Button &IA);
 int     gameChecker(Game&, int, int, int, Render& render);
 void    place_stone(Game& board, int& player, Render& render, int x, int y);
-bool    checkCapture(Game& game, int checkY, int checkX, int dirY, int dirX, int player);
-// bool    checkDoubleThree(Board& game, int col, int row);
+bool    isCapture(Game& game, int checkY, int checkX, int dirY, int dirX, int player);
+// bool    isDoubleThree(Board& game, int col, int row);
 bool    posValid(Game& game, int player, Render& render, int x, int y);
 
 #endif

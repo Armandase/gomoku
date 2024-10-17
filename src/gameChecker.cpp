@@ -3,7 +3,7 @@
 #include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Game.hpp"
 
-bool checkCapture(Game& game, int checkY, int checkX, int dirY, int dirX, int player) {
+bool isCapture(Game& game, int checkY, int checkX, int dirY, int dirX, int player) {
     int ennemy = (player == WHITE) ? BLACK : WHITE;
 
     if (checkX + dirX * 3 >= 0 && checkX + dirX * 3 <= BOARD_SIZE
@@ -50,7 +50,7 @@ int gameChecker(Game& game, int y, int x, int player, Render& render){
     // game.printBoard();
     int current = 0;
     for (int i = 0; i < 8; i++){
-        if (checkCapture(game, y, x, dirY[i], dirX[i], player) == true){
+        if (isCapture(game, y, x, dirY[i], dirX[i], player) == true){
             render.erasePlayer(y + dirY[i], x + dirX[i]);
             render.erasePlayer(y + dirY[i] * 2, x + dirX[i] * 2);
             game.removePosToBoards(x + dirX[i], y + dirY[i]);
