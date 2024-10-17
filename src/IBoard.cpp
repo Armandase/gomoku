@@ -148,12 +148,12 @@ patternBitset IBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t leng
     int xEnd = xPos + length % getWidth();
     int yEnd = yPos + (length / getWidth());
 
-    if (isValidPos(xEnd, yEnd) == false)
+    if (isValidPos(xEnd, yEnd) == false){
         return patternBitset(0);
+    }
 
     int convertedCoordinate = this->convertCoordinate(xPos, yPos);
-
-    bitboard mask("1111");
+    bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);
     if (player == getIdPlayer1())
         extractedPattern = getPlayer1() &  (mask << convertedCoordinate);
@@ -172,7 +172,7 @@ patternBitset IBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint1
 
     int convertedCoordinate = this->convertCoordinate(xEnd, yEnd);
 
-    bitboard mask("1111");
+    bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);
     if (player == getIdPlayer1())
         extractedPattern = getPlayer1() &  (mask << convertedCoordinate);

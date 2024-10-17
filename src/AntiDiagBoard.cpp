@@ -40,7 +40,7 @@ patternBitset AntiDiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16
 
     int convertedCoordinate = this->convertCoordinate(xPos, yPos);
 
-    bitboard mask("1111");
+    bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);
     if (player == IBoard::getIdPlayer1())
         extractedPattern = IBoard::getPlayer1() &  (mask << convertedCoordinate);
@@ -59,7 +59,7 @@ patternBitset AntiDiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos
 
     int convertedCoordinate = this->convertCoordinate(xEnd, yEnd);
 
-    bitboard mask("1111");
+    bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);
     if (player == getIdPlayer1())
         extractedPattern = getPlayer1() &  (mask << convertedCoordinate);

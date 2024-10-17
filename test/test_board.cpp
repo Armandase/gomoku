@@ -207,7 +207,7 @@ TEST(IBoardTest, TestAntiDiagBoard){
 TEST(ClassicBoardTest, extractPattern){
     std::string str_test(
 "0000000000000000000"
-"0101100000000000000"
+"0101100000000000010"
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
@@ -247,6 +247,16 @@ TEST(ClassicBoardTest, extractPattern){
         patternBitset  waitedResult("1101");
 
         EXPECT_EQ(board.extractPatternReversed(5, 1, 4, 1), waitedResult);
+    }
+
+    {
+        patternBitset  waitedResult("0000");
+        EXPECT_EQ(board.extractPattern(width-3, 1, 4, 1), waitedResult);
+    }
+
+    {
+        patternBitset  waitedResult("0001");
+        EXPECT_EQ(board.extractPattern(width-2, 1, 1, 1), waitedResult);
     }
 }
 
@@ -394,6 +404,7 @@ TEST(AntiDiagBoardTest, extractPattern){
         patternBitset  waitedResult("1101");
         EXPECT_EQ(board.extractPattern(1, 1, 4, 1), waitedResult);
     }
+
 
     {
         patternBitset  waitedResult("0000");
