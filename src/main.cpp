@@ -1,9 +1,7 @@
 #include "../inc/gomoku.hpp"
 #include "../inc/utils.hpp"
 #include "../inc/Button.hpp"
-#include "../inc/Heuristic.hpp"
 #include "../inc/Game.hpp"
-#include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Render.hpp"
 
 // Function to initialize the SDL window and run the game loop

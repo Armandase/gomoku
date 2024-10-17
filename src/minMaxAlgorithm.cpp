@@ -11,33 +11,6 @@ Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
     return *recursiveResult.begin();
 }
 
-// bool checkDoubleThree(Board& copy, int y, int x, int dirY, int dirX, int center){
-//     int count = 1, empty = 0;
-//     int checkX = x, checkY = y;
-
-//     for (int j = 1; j < 5; j++) {
-//         checkX = x + (dirX * j);
-//         checkY = y + (dirY * j);
-//         if (checkX < 0 || checkY < 0 || checkX > BOARD_SIZE || checkY > BOARD_SIZE)
-//             break ;
-
-//         if (empty > 1 || (count == 3 && copy.isPosEmpty(checkX, checkY) == false))
-//             return false;
-//         else if (count == 3)
-//             break ;
-//         if (copy.getPos(checkX, checkY) == center)
-//             ++(count);
-//         else if (copy.getPos(checkX, checkY) == 0)
-//             ++empty;
-//         else
-//             break;
-//     }
-//     if (count == 3 && empty <= 1){
-//         return true;
-//     }
-//     return false;
-// }
-
 Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int alpha, int beta) {
     if (depth == 0 || checkWin(heuristic) == true) {
         heuristic.setHeuristic(heuristic.globalHeuristic());

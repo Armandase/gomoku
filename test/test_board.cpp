@@ -302,7 +302,7 @@ TEST(TransposedBoardTest, extractPattern){
     {
         patternBitset  waitedResult("0111");
 
-        EXPECT_EQ(board.extractPatternReversed(5, 1, 4, 1), waitedResult);
+        EXPECT_EQ(board.extractPatternReversed(1, 5, 4, 1), waitedResult);
     }
 }
 
