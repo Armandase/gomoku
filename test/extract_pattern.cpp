@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <gtest/gtest.h>
 
-TEST(ClassicBoardTest, extractPattern){
+TEST(extractPattern, Classic){
     std::string str_test(
 "0000000000000000000"
 "0101100000000000010"
@@ -59,7 +59,7 @@ TEST(ClassicBoardTest, extractPattern){
     }
 }
 
-TEST(TransposedBoardTest, extractPattern){
+TEST(extractPattern, Transpose){
     std::string str_test(
 "0000000000000000000"
 "0101100000000000000"
@@ -107,7 +107,7 @@ TEST(TransposedBoardTest, extractPattern){
     }
 }
 
-TEST(DiagBoardTest, extractPattern){
+TEST(extractPattern, Diag){
     std::string str_test(
 "0000000000000000000"
 "0101100000000000000"
@@ -174,7 +174,7 @@ TEST(DiagBoardTest, extractPattern){
     }
 }
 
-TEST(AntiDiagBoardTest, extractPattern){
+TEST(extractPattern, AntiDiag){
     std::string str_test(
 "0000000000000000000"
 "0101100000000000000"

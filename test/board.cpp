@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <gtest/gtest.h>
 
-TEST(IBoardTest, TestTransposedBoard){
+TEST(IBoard, TestTransposedBoard){
     IBoard::bitboard test(
 "0111110000000000000"
 "0000000000000000000"
@@ -58,7 +58,7 @@ TEST(IBoardTest, TestTransposedBoard){
     EXPECT_EQ(gameTest.getTransposedBoard().getPlayer1(), waited_result);
 }
 
-TEST(IBoardTest, TestDiagBoard){
+TEST(IBoard, TestDiagBoard){
 
     std::string str_test(
 "0000000000000001000"
@@ -119,7 +119,7 @@ TEST(IBoardTest, TestDiagBoard){
     EXPECT_EQ(gameTest.getDiagBoard().getPlayer1(), waited_result);
 }
 
-TEST(IBoardTest, TestAntiDiagBoard){
+TEST(IBoard, TestAntiDiagBoard){
 
     std::string str_test(
 "1111111111111111111"

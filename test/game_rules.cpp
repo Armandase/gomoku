@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <gtest/gtest.h>
 
-TEST(IBoardTest, doubleThree) {
+TEST(BoardRules, doubleThree) {
         std::string str_test(
 "0000000000000000000"
 "0100100100000000000"
@@ -37,4 +37,7 @@ TEST(IBoardTest, doubleThree) {
     }
     gameTest.setPosToBoards(8, 4, BLACK);
     EXPECT_EQ(gameTest.isDoubleThree(4, 4, WHITE), true);
+}
+
+TEST(BoardRules, Capture) {
 }
