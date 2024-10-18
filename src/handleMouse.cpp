@@ -18,15 +18,14 @@ bool posValid(Game& game, int player, Render& render, int x, int y)
 void place_stone(Game& game, int &player, Render& render, int x, int y)
 {
     game.setPosToBoards(x, y, player);
+    int boardType = game.isCapture(x, y, player);
+    if (boardType >= 0)
+        game.handleCapture(x, y, boardType, player, render);
     // draw white or black depending of player's color
     if (player == WHITE)
         SDL_SetRenderDrawColor(render.getRenderer(), 255, 255, 255, 255);
     else
         SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);
-    if (game.isCapture(x, y, player)){
-        std::cout << "CAPTURE BY PLAYER: " << player << std::endl;
-        game.addCapture(player);
-    }
     player = player == WHITE ? BLACK : WHITE;
 
     render.drawCircle(x, y);

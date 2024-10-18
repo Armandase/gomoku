@@ -20,7 +20,7 @@ class Render{
 
         void    writeText(const std::string& msg, const std::string& font, const SDL_Rect& rect, const SDL_Color& color, int size) const;
         void    render_board() const;
-        void    erasePlayer(int y, int x) const;
+        void    erasePlayer(int x, int y) const;
         void    drawCircle(int centreX, int centreY) const;
 
     private:

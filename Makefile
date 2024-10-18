@@ -25,7 +25,7 @@ HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			
 TEST_NAME = run_test
 SRC_MAIN  = main.cpp
-TEST_FILES = test_main.cpp test_board.cpp
+TEST_FILES = test_main.cpp board.cpp extract_pattern.cpp game_rules.cpp
 
 OBJS      = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(SRC_MAIN:.cpp=.o)) 
 TEST_OBJS = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(TEST_FILES:.cpp=.o)) \

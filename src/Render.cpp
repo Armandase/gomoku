@@ -110,7 +110,7 @@ void Render::render_board() const
 }
 
 
-void    Render::erasePlayer(int y, int x) const {
+void    Render::erasePlayer(int x, int y) const {
     int x_square = x * GRID_SIZE + MARGIN - RADIUS;
     int y_square = y * GRID_SIZE + MARGIN - RADIUS;
 

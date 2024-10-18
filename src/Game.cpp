@@ -119,7 +119,7 @@ bool Game::isDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
     return doubleThreeCnt >= 2;
 }
 
-bool Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
+int Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
     int opponent = player == WHITE ? BLACK : WHITE;
 
     patternBitset  playerPattern("1001");
@@ -131,7 +131,18 @@ bool Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
     for (int i = 0; i < 8; i++) {
         Game::PatternType boardType = static_cast<Game::PatternType>(i);
         if (playerPatterns[boardType] == playerPattern && opponentPatterns[boardType] == opponentPattern)
-            return true;
+            return boardType;
     }
-    return false;
+    return -1;
+}
+
+void Game::handleCapture(uint16_t x, uint16_t y, int boardType, uint16_t player, Render& render) {
+    const int   dirX[8] = {1, 0, 1, 1, -1, 0, -1, -1};
+    const int   dirY[8] = {0, 1, -1, 1, 0, -1, 1, -1};
+
+    render.erasePlayer(x + dirX[boardType], y + dirY[boardType]);
+    render.erasePlayer(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
+    removePosToBoards(x + dirX[boardType], y + dirY[boardType]);
+    removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
+    addCapture(player);
 }
