@@ -7,7 +7,7 @@
 // Function to initialize the SDL window and run the game loop
 int main() {
     Render render;
-    render.init_sdl("Gomoku", SCREEN_WIDTH, SCREEN_HEIGHT);
+    render.initSDL("Gomoku", SCREEN_WIDTH, SCREEN_HEIGHT);
 
     int start = 0;
     bool quit = false;

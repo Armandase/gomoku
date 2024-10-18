@@ -11,11 +11,11 @@ int handleStart(Render& render, Button &player, Button &IA) {
     // get the coordinate of the click to know which button has been hit
     SDL_GetMouseState(&mouseX, &mouseY);
     if (player.inButton(mouseX, mouseY)) {
-        render.render_board();
+        render.renderBoard();
         return PLAYER_MODE;
     }
     if (IA.inButton(mouseX, mouseY)) {
-        render.render_board();
+        render.renderBoard();
         return IA_MODE;
     }
     return 0;

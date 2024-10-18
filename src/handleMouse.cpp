@@ -30,23 +30,12 @@ void place_stone(Game& game, Render& render, int x, int y, int &player)
     render.drawCircle(x, y);
 
     if (game.playerWin(player)) {
-        std::cout << "PLAYER WIN: " << player << std::endl;
-        std::string message;
-        player == BLACK ? message = "black wins" : message = "white wins";
-        //reset game's Game with game's color
-        SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
-        SDL_RenderClear(render.getRenderer());
-
-        // select text color and where it should be placed and his size
-        SDL_Color textColor = {80, 0, 80, 255};
-        SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
-        render.writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
-        
+        render.renderWin(player);
         sleep(1);
         game.resetBoards();
-        render.render_board();
+        render.renderBoard();
     }
-    player = player == WHITE ? BLACK : WHITE;
+    player =  player == WHITE ? BLACK : WHITE;
 }
 
 bool    handleMouse(int mouseX, int mouseY)

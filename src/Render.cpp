@@ -36,7 +36,7 @@ SDL_Renderer* Render::getRenderer() const {
     return (this->_renderer);
 }
 
-void Render::init_sdl(const std::string& windowName, int windowWidth, int windowHeight){
+void Render::initSDL(const std::string& windowName, int windowWidth, int windowHeight){
     if (_renderer != NULL || _window != NULL)
         return ;
     //init sdl variables
@@ -76,7 +76,7 @@ void    Render::writeText(const std::string& msg, const std::string& font, const
     TTF_CloseFont(Font);
 }
 
-void Render::render_board() const
+void Render::renderBoard() const
 {
     int cnt = 0;
     SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
@@ -183,3 +183,17 @@ void Render::drawCircle(int centreX, int centreY) const {
     }
     SDL_RenderPresent(this->_renderer);
 }
+
+void Render::renderWin(uint16_t player) const {
+    std::string message;
+    player == BLACK ? message = "black wins" : message = "white wins";
+    //reset game's Game with game's color
+    SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
+    SDL_RenderClear(_renderer);
+
+    // select text color and where it should be placed and his size
+    SDL_Color textColor = {80, 0, 80, 255};
+    SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
+    writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
+}
+        
