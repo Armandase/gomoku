@@ -91,7 +91,7 @@ void    Game::resetBoards(){
     _diagBoard.resetBoard();
 }
 
-bool Game::checkPossibleCapture(uint16_t x, uint16_t y, Game::PatternType boardType, uint16_t player) {
+bool Game::canBeCaptured(uint16_t x, uint16_t y, Game::PatternType boardType, uint16_t player) {
     const int   opponent = (player == WHITE) ? BLACK : WHITE;
     const int   dirX[8] = {1, 0, 1, 1, -1, 0, -1, -1};
     const int   dirY[8] = {0, 1, -1, 1, 0, -1, 1, -1};
@@ -99,15 +99,35 @@ bool Game::checkPossibleCapture(uint16_t x, uint16_t y, Game::PatternType boardT
         x = x + dirX[boardType];
         y = y + dirY[boardType];
 
+        // std::cout << "X: " << x << " Y: " << y << std::endl; 
+        if (!getClassicBoard().isValidPos(x, y))
+            continue;
         for (int j = 0; j < 4; j++) {
             if (getClassicBoard().isValidPos(x + dirX[j + 4], y + dirY[j + 4])
             && getClassicBoard().isValidPos(x + dirX[j] * 2, y + dirY[j] * 2)) {
+
                 if (getClassicBoard().getPos(x + dirX[j + 4], y + dirY[j + 4]) == opponent
                 && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player
                 && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == 0)
                     return true;
 
                 if (getClassicBoard().getPos(x + dirX[j + 4], y + dirY[j + 4]) == 0 
+                && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player 
+                && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == opponent)
+                    return true;
+            }
+        }
+
+        for (int j = 4; j < 8; j++) {
+            if (getClassicBoard().isValidPos(x + dirX[j - 4], y + dirY[j - 4])
+            && getClassicBoard().isValidPos(x + dirX[j] * 2, y + dirY[j] * 2)) {
+                
+                if (getClassicBoard().getPos(x + dirX[j - 4], y + dirY[j - 4]) == opponent
+                && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player
+                && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == 0)
+                    return true;
+
+                if (getClassicBoard().getPos(x + dirX[j - 4], y + dirY[j - 4]) == 0 
                 && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player 
                 && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == opponent)
                     return true;
@@ -129,16 +149,16 @@ bool Game::playerWin(uint16_t player){
     {
         int x = i % (width - len_mask - 1), y = i / width;
         if (getClassicBoard().findMatch(x, y, player, mask, len_mask))
-            return !checkPossibleCapture(x, y, PatternType::CLASSIC, player);
+            return !canBeCaptured(x, y, PatternType::CLASSIC, player);
 
         if (getTransposedBoard().findMatch(x, y, player, mask, len_mask))
-            return !checkPossibleCapture(x, y, PatternType::TRANSPOS, player);
+            return !canBeCaptured(x, y, PatternType::TRANSPOS, player);
 
         if (getDiagBoard().findMatch(x, y, player, mask, len_mask))
-            return !checkPossibleCapture(x, y, PatternType::DIAG, player);
+            return !canBeCaptured(x, y, PatternType::DIAG, player);
             
         if (getAntiDiagBoard().findMatch(x, y, player, mask, len_mask))
-            return !checkPossibleCapture(x, y, PatternType::ANTIDIAG, player);
+            return !canBeCaptured(x, y, PatternType::ANTIDIAG, player);
     }
     return false;
 }
@@ -195,6 +215,31 @@ std::vector<uint16_t> Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
             capturesBoard.push_back(boardType);
     }
     return capturesBoard;
+}
+
+
+bool Game::canCapture(uint16_t x, uint16_t y, uint16_t player) {
+    if (!getClassicBoard().isPosEmpty(x, y))
+        return false;
+
+    setPosToBoards(x, y, player);
+    int opponent = player == WHITE ? BLACK : WHITE;
+
+    patternBitset  playerPattern("1001");
+    patternBitset  opponentPattern("0110");
+
+    patternMap playerPatterns = extractPatterns(x, y, 4, player);
+    patternMap opponentPatterns = extractPatterns(x, y, 4, opponent);
+
+    for (int i = 0; i < 8; i++) {
+        Game::PatternType boardType = static_cast<Game::PatternType>(i);
+        if (playerPatterns[boardType] == playerPattern && opponentPatterns[boardType] == opponentPattern) {
+            removePosToBoards(x, y);
+            return true;
+        }
+    }
+    removePosToBoards(x, y);
+    return false;
 }
 
 void Game::handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t> capturesBoard, uint16_t player, Render& render) {

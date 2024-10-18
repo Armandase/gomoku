@@ -104,6 +104,53 @@ TEST(BoardRules, Capture) {
     }
 }
 
+TEST(BoardRules, CanCapture) {
+    std::string str_test(
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0011200100000000000"
+"0000001000000000000"
+"0000020000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000200000000000000"
+"0000020000000000000"
+"0000001000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0020000000000000000"
+"0200001000000000000"
+"1000001000000000000"
+"0000002000000000000"
+"0000000000000000000");
+
+    Game gameTest;
+    int size = str_test.size();
+    int width = gameTest.getClassicBoard().getWidth();
+    for (int i = 0; i < size; i++){
+        if (str_test[i] == '0')
+            continue;
+        gameTest.setPosToBoards(i % width, i / width, str_test[i] - 48);
+    }
+
+    EXPECT_EQ(gameTest.canCapture(1, 3, BLACK), true);
+    EXPECT_EQ(gameTest.canCapture(1, 3, WHITE), false);
+
+    EXPECT_EQ(gameTest.canCapture(8, 2, BLACK), true);
+    EXPECT_EQ(gameTest.canCapture(8, 2, WHITE), false);
+
+    EXPECT_EQ(gameTest.canCapture(3, 8, WHITE), true);
+    EXPECT_EQ(gameTest.canCapture(3, 8, BLACK), false);
+
+    EXPECT_EQ(gameTest.canCapture(3, 13, WHITE), true);
+    EXPECT_EQ(gameTest.canCapture(3, 13, BLACK), false);
+
+    EXPECT_EQ(gameTest.canCapture(6, 14, BLACK), true);
+    EXPECT_EQ(gameTest.canCapture(6, 14, WHITE), false);
+}
+
 TEST(BoardRules, Win) {
     {
         std::string str_test(
@@ -264,6 +311,40 @@ TEST(BoardRules, EndCapture) {
     "0000002000000000000"
     "0000002200000000000"
     "0000001020000000000"
+    "0000000000000000000");
+
+        Game gameTest;
+        int size = str_test.size();
+        int width = gameTest.getClassicBoard().getWidth();
+        for (int i = 0; i < size; i++){
+            if (str_test[i] == '0')
+                continue;
+            gameTest.setPosToBoards(i % width, i / width, str_test[i] - 48);
+        }
+
+        EXPECT_EQ(gameTest.playerWin(WHITE), false);
+        EXPECT_EQ(gameTest.playerWin(BLACK), false);
+    }
+        {
+        std::string str_test(
+    "0000000000000000000"
+    "0000000000000000000"
+    "0000000000000000000"
+    "0000001000000000000"
+    "0000000110000000000"
+    "0000000010000000000"
+    "0000000021000000000"
+    "0000000000100000000"
+    "0000000000000000000"
+    "0000000000000000000"
+    "0000000000000000000"
+    "0000000000000000000"
+    "0000000020000000000"
+    "0000222220000000000"
+    "0000001000000000000"
+    "0000000000000000000"
+    "0000000000000000000"
+    "0000000000000000000"
     "0000000000000000000");
 
         Game gameTest;

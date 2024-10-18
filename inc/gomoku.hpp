@@ -48,8 +48,8 @@ bool    handleMouse(int mouseX, int mouseY);
 int     handleStart(Render& render, Button &player, Button &IA);
 void    start_menu(Render& render, Button &player, Button &IA);
 int     gameChecker(Game&, int, int, int, Render& render);
-void    place_stone(Game& board, int& player, Render& render, int x, int y);
+void    place_stone(Game& board, Render& render, int x, int y, int& player);
 bool    isCapture(Game& game, int checkY, int checkX, int dirY, int dirX, int player);
-bool    posValid(Game& game, int player, int x, int y);
+bool    posValid(Game& game, int x, int y, int player);
 
 #endif

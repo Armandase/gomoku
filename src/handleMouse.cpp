@@ -2,20 +2,20 @@
 #include "../inc/Game.hpp"
 
 
-bool posValid(Game& game, int player, int x, int y)
+bool posValid(Game& game, int x, int y, int player)
 {
     if (game.getClassicBoard().isPosEmpty(x, y) == false) {
         std::cout << "Position already used" << std::endl;
         return false;
     }
-    if (game.isDoubleThree(x, y, player)) {
+    if (!game.canCapture(x, y, player) && game.isDoubleThree(x, y, player)) {
         std::cout << "Double Three" << std::endl;
         return false;
     }
     return true;
 }
 
-void place_stone(Game& game, int &player, Render& render, int x, int y)
+void place_stone(Game& game, Render& render, int x, int y, int &player)
 {
     game.setPosToBoards(x, y, player);
     std::vector<uint16_t> capturesBoard = game.isCapture(x, y, player);
