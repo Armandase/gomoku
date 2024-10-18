@@ -1,4 +1,5 @@
-#include "../inc/Game.hpp" 
+#include "../inc/Game.hpp"
+#include "../inc/IBoard.hpp"
 
 Game::Game():
     _classicBoard(),
@@ -83,14 +84,75 @@ void    Game::removePosToBoards(uint16_t x, uint16_t y){
     _diagBoard.removePos(x, y);
 }
 
+void    Game::resetBoards(){
+    _classicBoard.resetBoard();
+    _transposedBoard.resetBoard();
+    _antiDiagBoard.resetBoard();
+    _diagBoard.resetBoard();
+}
+
+bool Game::checkPossibleCapture(uint16_t x, uint16_t y, Game::PatternType boardType, uint16_t player) {
+    const int   opponent = (player == WHITE) ? BLACK : WHITE;
+    const int   dirX[8] = {1, 0, 1, 1, -1, 0, -1, -1};
+    const int   dirY[8] = {0, 1, -1, 1, 0, -1, 1, -1};
+    for (int i = 0; i < 5; i++) {
+        x = x + dirX[boardType];
+        y = y + dirY[boardType];
+
+        for (int j = 0; j < 4; j++) {
+            if (getClassicBoard().isValidPos(x + dirX[j + 4], y + dirY[j + 4])
+            && getClassicBoard().isValidPos(x + dirX[j] * 2, y + dirY[j] * 2)) {
+                if (getClassicBoard().getPos(x + dirX[j + 4], y + dirY[j + 4]) == opponent
+                && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player
+                && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == 0)
+                    return true;
+
+                if (getClassicBoard().getPos(x + dirX[j + 4], y + dirY[j + 4]) == 0 
+                && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player 
+                && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == opponent)
+                    return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Game::playerWin(uint16_t player){
+    if (getCapture(player) >= 5)
+        return true;
+
+    int index; 
+    uint16_t len_mask = 5;
+    int width = getClassicBoard().getWidth();
+    int size = width * width - width * (len_mask - 1);
+    IBoard::bitboard mask("11111");
+    for (int i = 0; i < size; ++i)
+    {
+        int x = i % (width - len_mask - 1), y = i / width;
+        if (getClassicBoard().findMatch(x, y, player, mask, len_mask)) {
+            return !checkPossibleCapture(x, y, PatternType::CLASSIC, player);
+        }
+        else if (getTransposedBoard().findMatch(x, y, player, mask, len_mask)) {
+            return !checkPossibleCapture(x, y, PatternType::TRANSPOS, player);
+        }
+        else if (getDiagBoard().findMatch(x, y, player, mask, len_mask)) {
+            return !checkPossibleCapture(x, y, PatternType::DIAG, player);
+        }
+        else if (getAntiDiagBoard().findMatch(x, y, player, mask, len_mask)) {
+            return !checkPossibleCapture(x, y, PatternType::ANTIDIAG, player);
+        }
+    }
+    return false;
+}
+
 Game::patternMap Game::extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player){
     patternMap result;
 
-    result.insert({Game::DEFAULT, this->_classicBoard.extractPattern(x, y, length, player)});
+    result.insert({Game::CLASSIC, this->_classicBoard.extractPattern(x, y, length, player)});
     result.insert({Game::TRANSPOS, this->_transposedBoard.extractPattern(x, y, length, player)});
     result.insert({Game::DIAG, this->_diagBoard.extractPattern(x, y, length, player)});
     result.insert({Game::ANTIDIAG, this->_antiDiagBoard.extractPattern(x, y, length, player)});
-    result.insert({Game::REV_DEFAULT, this->_classicBoard.extractPatternReversed(x, y, length, player)});
+    result.insert({Game::REV_CLASSIC, this->_classicBoard.extractPatternReversed(x, y, length, player)});
     result.insert({Game::REV_TRANSPOS, this->_transposedBoard.extractPatternReversed(x, y, length, player)});
     result.insert({Game::REV_DIAG, this->_diagBoard.extractPatternReversed(x, y, length, player)});
     result.insert({Game::REV_ANTIDIAG, this->_antiDiagBoard.extractPatternReversed(x, y, length, player)});
@@ -100,7 +162,7 @@ Game::patternMap Game::extractPatterns(uint16_t x, uint16_t y, uint16_t length, 
 
 bool Game::isDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
     int doubleThreeCnt = 0;
-    int opponent = player == WHITE ? BLACK : WHITE;
+    const int opponent = player == WHITE ? BLACK : WHITE;
 
     patternBitset  playerPattern1("0110");
     patternBitset  playerPattern2("1100");
@@ -119,7 +181,8 @@ bool Game::isDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
     return doubleThreeCnt >= 2;
 }
 
-int Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
+std::vector<uint16_t> Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
+    std::vector<uint16_t> capturesBoard;
     int opponent = player == WHITE ? BLACK : WHITE;
 
     patternBitset  playerPattern("1001");
@@ -131,18 +194,21 @@ int Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
     for (int i = 0; i < 8; i++) {
         Game::PatternType boardType = static_cast<Game::PatternType>(i);
         if (playerPatterns[boardType] == playerPattern && opponentPatterns[boardType] == opponentPattern)
-            return boardType;
+            capturesBoard.push_back(boardType);
     }
-    return -1;
+    return capturesBoard;
 }
 
-void Game::handleCapture(uint16_t x, uint16_t y, int boardType, uint16_t player, Render& render) {
+void Game::handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t> capturesBoard, uint16_t player, Render& render) {
     const int   dirX[8] = {1, 0, 1, 1, -1, 0, -1, -1};
     const int   dirY[8] = {0, 1, -1, 1, 0, -1, 1, -1};
 
-    render.erasePlayer(x + dirX[boardType], y + dirY[boardType]);
-    render.erasePlayer(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
-    removePosToBoards(x + dirX[boardType], y + dirY[boardType]);
-    removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
-    addCapture(player);
+    for (int boardType: capturesBoard)
+    {
+        render.erasePlayer(x + dirX[boardType], y + dirY[boardType]);
+        render.erasePlayer(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
+        removePosToBoards(x + dirX[boardType], y + dirY[boardType]);
+        removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
+        addCapture(player);
+    }
 }

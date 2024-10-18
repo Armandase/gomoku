@@ -27,7 +27,8 @@
 // extern const int8_t g_dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
 
 enum player {
-    WHITE = 1,
+    EMPTY,
+    WHITE,
     BLACK,
 };
 
@@ -49,7 +50,6 @@ void    start_menu(Render& render, Button &player, Button &IA);
 int     gameChecker(Game&, int, int, int, Render& render);
 void    place_stone(Game& board, int& player, Render& render, int x, int y);
 bool    isCapture(Game& game, int checkY, int checkX, int dirY, int dirX, int player);
-// bool    isDoubleThree(Board& game, int col, int row);
 bool    posValid(Game& game, int player, Render& render, int x, int y);
 
 #endif

@@ -19,7 +19,7 @@
 
 //         static bool compareBoardsWithPattern(Game::patternMap patterns)
 //         {
-//             ulong defaultPattern = patterns[Game::DEFAULT].to_ulong();
+//             ulong defaultPattern = patterns[Game::CLASSIC].to_ulong();
 //             ulong transposPattern = patterns[Game::TRANSPOS].to_ulong();
 //             ulong diagPattern = patterns[Game::DIAG].to_ulong();
 //             ulong antiDiagPattern = patterns[Game::ANTIDIAG].to_ulong();

@@ -12,11 +12,11 @@
 class Game{
     public:
         typedef enum {
-            DEFAULT,
+            CLASSIC,
             TRANSPOS,
             DIAG,
             ANTIDIAG,
-            REV_DEFAULT,
+            REV_CLASSIC,
             REV_TRANSPOS,
             REV_DIAG,
             REV_ANTIDIAG
@@ -34,6 +34,7 @@ class Game{
         uint16_t getCapture(int player);
         void    setPosToBoards(uint16_t x, uint16_t y, int player);
         void    removePosToBoards(uint16_t x, uint16_t y);
+        void    resetBoards();
 
         ClassicBoard& getClassicBoard() noexcept;
         TransposedBoard& getTransposedBoard() noexcept;
@@ -42,8 +43,10 @@ class Game{
 
         patternMap extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
         bool isDoubleThree(uint16_t x, uint16_t y, uint16_t player);
-        int isCapture(uint16_t x, uint16_t y, uint16_t player);
-        void handleCapture(uint16_t x, uint16_t y, int boardType, uint16_t player, Render& render);
+        std::vector<uint16_t> isCapture(uint16_t x, uint16_t y, uint16_t player);
+        void handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t> capturesBoard, uint16_t player, Render& render);
+        bool checkPossibleCapture(uint16_t x, uint16_t y, PatternType boardType, uint16_t player);
+        bool playerWin(uint16_t player);
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;

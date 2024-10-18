@@ -18,41 +18,35 @@ bool posValid(Game& game, int player, Render& render, int x, int y)
 void place_stone(Game& game, int &player, Render& render, int x, int y)
 {
     game.setPosToBoards(x, y, player);
-    int boardType = game.isCapture(x, y, player);
-    if (boardType >= 0)
-        game.handleCapture(x, y, boardType, player, render);
+    std::vector<uint16_t> capturesBoard = game.isCapture(x, y, player);
+    if (capturesBoard.size() > 0)
+        game.handleCapture(x, y, capturesBoard, player, render);
     // draw white or black depending of player's color
     if (player == WHITE)
         SDL_SetRenderDrawColor(render.getRenderer(), 255, 255, 255, 255);
     else
         SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);
-    player = player == WHITE ? BLACK : WHITE;
 
     render.drawCircle(x, y);
 
-    // check Rules using bit operator if possible
-    //  all older check function in gameChecker.cpp but lets do new check 
-    //  - capture
-    //  - end capture can cancel win
-    //  - win
+    if (game.playerWin(player)) {
+        std::cout << "PLAYER WIN: " << player << std::endl;
+        std::string message;
+        player == BLACK ? message = "black wins" : message = "white wins";
+        //reset game's Game with game's color
+        SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
+        SDL_RenderClear(render.getRenderer());
 
-    // if (winner > 0){
-    //     // if someone win, it prints the winner to the screen
-    //     std::string message;
-    //     winner == BLACK ? message = "black wins" : message = "white wins";
-    //     //reset game's Game with game's color
-    //     SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
-    //     SDL_RenderClear(render.getRenderer());
-
-    //     // select text color and where it should be placed and his size
-    //     SDL_Color textColor = {80, 0, 80, 255};
-    //     SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
-    //     render.writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
+        // select text color and where it should be placed and his size
+        SDL_Color textColor = {80, 0, 80, 255};
+        SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
+        render.writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
         
-    //     sleep(1);
-    //     game.resetGame();
-    //     render.render_Game();
-    // }
+        sleep(1);
+        game.resetBoards();
+        render.render_board();
+    }
+    player = player == WHITE ? BLACK : WHITE;
 }
 
 bool    handleMouse(int mouseX, int mouseY)

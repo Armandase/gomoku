@@ -78,3 +78,18 @@ patternBitset AntiDiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos
 
     return patternBitset(extractedPattern.to_ulong());
 }
+
+bool AntiDiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length) {
+    int xEnd = x + length - 1;
+    if (!IBoard::isValidPos(xEnd, y) || (IBoard::getWidth() - x < y + 1 && IBoard::getWidth() - xEnd > y + 1))
+        return false;
+
+    int index = this->convertCoordinate(x, y);
+    if (player == getIdPlayer1() 
+        && (getPlayer1() & (mask << index)) == (mask << index))
+        return true;
+    else if (player == getIdPlayer2() 
+        && (getPlayer2() & (mask << index)) == (mask << index))
+        return true;
+    return false;
+}

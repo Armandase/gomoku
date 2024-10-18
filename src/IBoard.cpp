@@ -169,6 +169,17 @@ void IBoard::swapBits(bitboard& board, int pos1, int pos2){
     board[pos2] = temp;
 }
 
+bool IBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length){
+    int index = this->convertCoordinate(x, y);
+    if (player == getIdPlayer1() 
+        && (getPlayer1() & (mask << index)) == (mask << index))
+        return true;
+    else if (player == getIdPlayer2() 
+        && (getPlayer2() & (mask << index)) == (mask << index))
+        return true;
+    return false;
+}
+
 void IBoard::printBoard() const{
     printBoardX();
     int sliceLen = intlen(this->_width);
