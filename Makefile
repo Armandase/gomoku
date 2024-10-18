@@ -3,7 +3,7 @@ MAKEFLAGS += -j
 CXX		=	c++
 NAME 	= 	Gomoku
 SRC 	=	utils.cpp \
-			handleMouse.cpp gameChecker.cpp \
+			handleMouse.cpp \
 			Button.cpp startMenu.cpp \
 			Render.cpp \
 			IBoard.cpp \
