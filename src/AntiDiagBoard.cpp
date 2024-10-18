@@ -59,7 +59,6 @@ patternBitset AntiDiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos
     xPos = convertedCoordinate % IBoard::getWidth();
     yPos = convertedCoordinate / IBoard::getWidth();
     int xStart = xPos - length + 1;
-    int xEnd = xPos;
     convertedCoordinate = xStart + (yPos * IBoard::getWidth());
 
     if (!IBoard::isValidPos(xStart, yPos) || (IBoard::getWidth() - xStart < yPos + 1 && IBoard::getWidth() - xPos> yPos + 1)) {

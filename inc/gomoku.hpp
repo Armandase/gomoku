@@ -50,6 +50,6 @@ void    start_menu(Render& render, Button &player, Button &IA);
 int     gameChecker(Game&, int, int, int, Render& render);
 void    place_stone(Game& board, int& player, Render& render, int x, int y);
 bool    isCapture(Game& game, int checkY, int checkX, int dirY, int dirX, int player);
-bool    posValid(Game& game, int player, Render& render, int x, int y);
+bool    posValid(Game& game, int player, int x, int y);
 
 #endif

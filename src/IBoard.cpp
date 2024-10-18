@@ -17,7 +17,7 @@ IBoard::~IBoard()
 
 IBoard::IBoard(bitboard& player1, bitboard& player2, uint16_t width, uint16_t idPlayer1, uint16_t idPlayer2):
     _player1(player1),
-    _player2(player1),
+    _player2(player2),
     _width(width),
     _idPlayer1(idPlayer1),
     _idPlayer2(idPlayer2)

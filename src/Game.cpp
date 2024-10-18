@@ -121,7 +121,6 @@ bool Game::playerWin(uint16_t player){
     if (getCapture(player) >= 5)
         return true;
 
-    int index; 
     uint16_t len_mask = 5;
     int width = getClassicBoard().getWidth();
     int size = width * width - width * (len_mask - 1);
@@ -129,18 +128,17 @@ bool Game::playerWin(uint16_t player){
     for (int i = 0; i < size; ++i)
     {
         int x = i % (width - len_mask - 1), y = i / width;
-        if (getClassicBoard().findMatch(x, y, player, mask, len_mask)) {
+        if (getClassicBoard().findMatch(x, y, player, mask, len_mask))
             return !checkPossibleCapture(x, y, PatternType::CLASSIC, player);
-        }
-        else if (getTransposedBoard().findMatch(x, y, player, mask, len_mask)) {
+
+        if (getTransposedBoard().findMatch(x, y, player, mask, len_mask))
             return !checkPossibleCapture(x, y, PatternType::TRANSPOS, player);
-        }
-        else if (getDiagBoard().findMatch(x, y, player, mask, len_mask)) {
+
+        if (getDiagBoard().findMatch(x, y, player, mask, len_mask))
             return !checkPossibleCapture(x, y, PatternType::DIAG, player);
-        }
-        else if (getAntiDiagBoard().findMatch(x, y, player, mask, len_mask)) {
+            
+        if (getAntiDiagBoard().findMatch(x, y, player, mask, len_mask))
             return !checkPossibleCapture(x, y, PatternType::ANTIDIAG, player);
-        }
     }
     return false;
 }

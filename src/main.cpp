@@ -5,7 +5,7 @@
 #include "../inc/Render.hpp"
 
 // Function to initialize the SDL window and run the game loop
-int main(int argc, char const *argv[]) {
+int main() {
     Render render;
     render.init_sdl("Gomoku", SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
                 if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) {
                     int x = coordToBoard(mouseX);
                     int y = coordToBoard(mouseY);
-                    if (posValid(board, player, render, x, y)) {
+                    if (posValid(board, player, x, y)) {
                         place_stone(board, player, render, x, y);
                     }
                 }
