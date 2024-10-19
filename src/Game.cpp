@@ -38,6 +38,13 @@ Game &Game::operator=(const Game &rhs)
     return (*this);
 }
 
+bool Game::operator==(Game &rhs){
+    if (getClassicBoard() == rhs.getClassicBoard())
+        return true;
+    return false;
+}
+
+
 uint16_t Game::getCapture(int player) {
     if (player == this->getClassicBoard().getIdPlayer1())
         return _player1Capture;
@@ -145,4 +152,10 @@ void Game::handleCapture(uint16_t x, uint16_t y, int boardType, uint16_t player,
     removePosToBoards(x + dirX[boardType], y + dirY[boardType]);
     removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
     addCapture(player);
+}
+
+size_t  Game::hashGame()const{
+    std::size_t h1 = std::hash<IBoard::bitboard>{}(this->_classicBoard.getPlayer1());
+    std::size_t h2 = std::hash<IBoard::bitboard>{}(this->_classicBoard.getPlayer2());
+    return h1 ^ (h2 << 1);
 }

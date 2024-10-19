@@ -4,6 +4,7 @@ CXX		=	c++
 NAME 	= 	Gomoku
 SRC 	=	utils.cpp \
 			handleMouse.cpp gameChecker.cpp \
+			algorithm.cpp \
 			Button.cpp startMenu.cpp \
 			Render.cpp \
 			IBoard.cpp \
@@ -11,9 +12,11 @@ SRC 	=	utils.cpp \
 			AntiDiagBoard.cpp \
 			TransposedBoard.cpp \
 			ClassicBoard.cpp \
-			Game.cpp
+			Game.cpp \
+			TranspositionTable.cpp
 
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
+			inc/algorithm.hpp \
 			inc/Pattern.hpp \
 			inc/Render.hpp \
 			inc/IBoard.hpp \
@@ -21,17 +24,19 @@ HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			inc/AntiDiagBoard.hpp \
 			inc/TransposedBoard.hpp \
 			inc/ClassicBoard.hpp \
-			inc/Game.hpp
+			inc/Game.hpp \
+			inc/TranspositionTable.hpp
 			
 TEST_NAME = run_test
 SRC_MAIN  = main.cpp
-TEST_FILES = test_main.cpp board.cpp extract_pattern.cpp game_rules.cpp
+TEST_FILES = test_main.cpp board.cpp extract_pattern.cpp game_rules.cpp algo.cpp
 
 OBJS      = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(SRC_MAIN:.cpp=.o)) 
 TEST_OBJS = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(TEST_FILES:.cpp=.o)) \
              obj/gtest-all.o
 
-CXXFLAGS  = -Wall -Wextra --std=c++17 -Weffc++ -I${GTEST}/googletest/include -I${GTEST}/googletest -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
+# CXXFLAGS  = -Wall -Wextra --std=c++17 -Weffc++ -I${GTEST}/googletest/include -I${GTEST}/googletest -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
+CXXFLAGS  = -Wall -Wextra --std=c++17 -I${GTEST}/googletest/include -I${GTEST}/googletest -I$(SDL2_TTF) -I$(SDL2_IMAGE) -I/usr/include/SDL2 -Ofast -g
 SDL2_TTF  = libs/SDL2_ttf
 SDL2_IMAGE = libs/SDL2_image
 GTEST     = libs/gtest

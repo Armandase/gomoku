@@ -29,6 +29,7 @@ class Game{
         
         Game(const Game &cpy);
         Game &operator=(const Game &rhs);
+        bool operator==(Game &rhs);
 
         void    addCapture(int player);
         uint16_t getCapture(int player);
@@ -41,9 +42,10 @@ class Game{
         DiagBoard& getDiagBoard() noexcept;
 
         patternMap extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
-        bool isDoubleThree(uint16_t x, uint16_t y, uint16_t player);
-        int isCapture(uint16_t x, uint16_t y, uint16_t player);
-        void handleCapture(uint16_t x, uint16_t y, int boardType, uint16_t player, Render& render);
+        bool    isDoubleThree(uint16_t x, uint16_t y, uint16_t player);
+        int     isCapture(uint16_t x, uint16_t y, uint16_t player);
+        void    handleCapture(uint16_t x, uint16_t y, int boardType, uint16_t player, Render& render);
+        size_t  hashGame()const;
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;

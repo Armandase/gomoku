@@ -179,3 +179,4 @@ TEST(IBoard, TestAntiDiagBoard){
     
     EXPECT_EQ(gameTest.getAntiDiagBoard().getPlayer1(), waited_result);
 }
+

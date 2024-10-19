@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
                 if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) {
                     int x = coordToBoard(mouseX);
                     int y = coordToBoard(mouseY);
-                    if (posValid(board, player, render, x, y)) {
+                    if (posValid(board, player, x, y)) {
                         place_stone(board, player, render, x, y);
                     }
                 }

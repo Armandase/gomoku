@@ -13,7 +13,7 @@
 
 class IBoard{
     public:
-        typedef std::bitset<(BOARD_SIZE + 1) * (BOARD_SIZE + 1)> bitboard;
+        typedef std::bitset<NB_PLACEMENTS> bitboard;
 
     public:
         IBoard();
@@ -22,6 +22,7 @@ class IBoard{
         
         IBoard(const IBoard &cpy);
         IBoard &operator=(const IBoard &rhs);
+        bool operator==(const IBoard &rhs);
 
         uint16_t getPos(uint16_t x,uint16_t y) const;
         uint16_t getWidth() const noexcept;

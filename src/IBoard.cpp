@@ -17,7 +17,7 @@ IBoard::~IBoard()
 
 IBoard::IBoard(bitboard& player1, bitboard& player2, uint16_t width, uint16_t idPlayer1, uint16_t idPlayer2):
     _player1(player1),
-    _player2(player1),
+    _player2(player2),
     _width(width),
     _idPlayer1(idPlayer1),
     _idPlayer2(idPlayer2)
@@ -44,14 +44,14 @@ IBoard &IBoard::operator=(const IBoard &rhs)
     return (*this);
 }
 
-// bool IBoard::operator==(const IBoard &a){
-//     if (
-//         this->_player1 == a._player1 &&
-//         this->_player2 == a._player2
-//     )
-//         return true;
-//     return false;
-// }
+bool IBoard::operator==(const IBoard &rhs){
+    if (
+        this->_player1 == rhs._player1 &&
+        this->_player2 == rhs._player2
+    )
+        return true;
+    return false;
+}
 
 
 bool IBoard::isValidPos(uint16_t x, uint16_t y) const
