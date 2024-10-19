@@ -102,35 +102,30 @@ bool Game::canBeCaptured(uint16_t x, uint16_t y, Game::PatternType boardType, ui
         // std::cout << "X: " << x << " Y: " << y << std::endl; 
         if (!getClassicBoard().isValidPos(x, y))
             continue;
+            
         for (int j = 0; j < 4; j++) {
-            if (getClassicBoard().isValidPos(x + dirX[j + 4], y + dirY[j + 4])
-            && getClassicBoard().isValidPos(x + dirX[j] * 2, y + dirY[j] * 2)) {
+            // Forward check
+            uint16_t xFwd1 = x + dirX[j], yFwd1 = y + dirY[j];
+            uint16_t xFwd2 = xFwd1 + dirX[j], yFwd2 = yFwd1 + dirY[j];
+            uint16_t xOpp1 = x + dirX[j + 4], yOpp1 = y + dirY[j + 4];
 
-                if (getClassicBoard().getPos(x + dirX[j + 4], y + dirY[j + 4]) == opponent
-                && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player
-                && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == 0)
+            if (getClassicBoard().isValidPos(xOpp1, yOpp1) && getClassicBoard().isValidPos(xFwd2, yFwd2)) {
+                if ((getClassicBoard().getPos(xOpp1, yOpp1) == opponent && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == 0) ||
+                    (getClassicBoard().getPos(xOpp1, yOpp1) == 0 && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == opponent)) {
                     return true;
-
-                if (getClassicBoard().getPos(x + dirX[j + 4], y + dirY[j + 4]) == 0 
-                && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player 
-                && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == opponent)
-                    return true;
+                }
             }
-        }
 
-        for (int j = 4; j < 8; j++) {
-            if (getClassicBoard().isValidPos(x + dirX[j - 4], y + dirY[j - 4])
-            && getClassicBoard().isValidPos(x + dirX[j] * 2, y + dirY[j] * 2)) {
-                
-                if (getClassicBoard().getPos(x + dirX[j - 4], y + dirY[j - 4]) == opponent
-                && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player
-                && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == 0)
-                    return true;
+            // Reverse check
+            uint16_t xRev1 = x + dirX[j + 4], yRev1 = y + dirY[j + 4];
+            uint16_t xRev2 = xRev1 + dirX[j + 4], yRev2 = yRev1 + dirY[j + 4];
+            uint16_t xOpp2 = x + dirX[j], yOpp2 = y + dirY[j];
 
-                if (getClassicBoard().getPos(x + dirX[j - 4], y + dirY[j - 4]) == 0 
-                && getClassicBoard().getPos(x + dirX[j], y + dirY[j]) == player 
-                && getClassicBoard().getPos(x + dirX[j] * 2, y + dirY[j] * 2) == opponent)
+            if (getClassicBoard().isValidPos(xOpp2, yOpp2) && getClassicBoard().isValidPos(xRev2, yRev2)) {
+                if ((getClassicBoard().getPos(xOpp2, yOpp2) == opponent && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == 0) ||
+                    (getClassicBoard().getPos(xOpp2, yOpp2) == 0 && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == opponent)) {
                     return true;
+                }
             }
         }
     }

@@ -61,7 +61,6 @@ bool IBoard::isValidPos(uint16_t x, uint16_t y) const
     return true;
 }
 
-
 uint16_t IBoard::getWidth() const noexcept{
     return (this->_width);
 }
@@ -76,7 +75,7 @@ uint16_t IBoard::getIdPlayer2() const noexcept{
 
 
 bool    IBoard::isPosEmpty(uint16_t x, uint16_t y) const {
-    int coor = x + y * IBoard::getWidth();
+    int coor = x + y * this->_width;
     if (this->_player1.test(coor) || this->_player2.test(coor))
         return false;
     return true;
@@ -89,8 +88,8 @@ void IBoard::setPos(uint16_t x, uint16_t y, int player)
         return ;
 
     int convertedCoordinate = this->convertCoordinate(x, y);
-    x = convertedCoordinate % IBoard::getWidth();
-    y = convertedCoordinate / IBoard::getWidth();
+    x = convertedCoordinate % this->_width;
+    y = convertedCoordinate / this->_width;
 
     if (this->isPosEmpty(x, y) == false){
         std::cerr << "Error: Invalid move to place stone in (" << x << ";" << y << ")"  << std::endl;
@@ -110,8 +109,8 @@ void IBoard::removePos(uint16_t x, uint16_t y){
         return ;
 
     int convertedCoordinate = this->convertCoordinate(x, y);
-    x = convertedCoordinate % IBoard::getWidth();
-    y = convertedCoordinate / IBoard::getWidth();
+    x = convertedCoordinate % this->_width;
+    y = convertedCoordinate / this->_width;
 
     if (this->isPosEmpty(x, y) == true){
         std::cerr << "Error: Remove an empty stone at (" << x << ";" << y << ")"  << std::endl;

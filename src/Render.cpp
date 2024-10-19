@@ -189,7 +189,7 @@ void Render::renderWin(uint16_t player) const {
     player == BLACK ? message = "black wins" : message = "white wins";
     //reset game's Game with game's color
     SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
-    SDL_RenderClear(_renderer);
+    // SDL_RenderClear(_renderer);
 
     // select text color and where it should be placed and his size
     SDL_Color textColor = {80, 0, 80, 255};
