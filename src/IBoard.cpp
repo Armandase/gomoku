@@ -75,7 +75,7 @@ uint16_t IBoard::getIdPlayer2() const noexcept{
 
 
 bool    IBoard::isPosEmpty(uint16_t x, uint16_t y) const {
-    int coor = x + y * this->_width;
+    const int coor = x + y * this->_width;
     if (this->_player1.test(coor) || this->_player2.test(coor))
         return false;
     return true;
@@ -87,7 +87,7 @@ void IBoard::setPos(uint16_t x, uint16_t y, int player)
     if (this->isValidPos(x, y) == false)
         return ;
 
-    int convertedCoordinate = this->convertCoordinate(x, y);
+    const int convertedCoordinate = this->convertCoordinate(x, y);
     x = convertedCoordinate % this->_width;
     y = convertedCoordinate / this->_width;
 
@@ -108,7 +108,7 @@ void IBoard::removePos(uint16_t x, uint16_t y){
     if (this->isValidPos(x, y) == false)
         return ;
 
-    int convertedCoordinate = this->convertCoordinate(x, y);
+    const int convertedCoordinate = this->convertCoordinate(x, y);
     x = convertedCoordinate % this->_width;
     y = convertedCoordinate / this->_width;
 
@@ -129,7 +129,7 @@ uint16_t IBoard::getPos(uint16_t x, uint16_t y) const
     if (this->isValidPos(x, y) == false)
         return (0);
     
-    int convertedCoordinate = this->convertCoordinate(x, y);
+    const int convertedCoordinate = this->convertCoordinate(x, y);
 
     if (this->_player1.test(convertedCoordinate))
         return (this->_idPlayer1);
@@ -149,7 +149,7 @@ IBoard::bitboard IBoard::getPlayer2() const noexcept{
 
 void IBoard::printBoardX() const
 {
-    int sliceLen = intlen(this->_width);
+    const int sliceLen = intlen(this->_width);
     std::cout << "\033[4m"<< std::setw(sliceLen + 1) << "|";
     for (int i = 0; i < this->_width; i++)
         std::cout << std::setw(sliceLen + 1) << i;
@@ -169,7 +169,7 @@ void IBoard::swapBits(bitboard& board, int pos1, int pos2){
 }
 
 bool IBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length){
-    int index = this->convertCoordinate(x, y);
+    const int index = this->convertCoordinate(x, y);
     if (player == getIdPlayer1() 
         && (getPlayer1() & (mask << index)) == (mask << index))
         return true;
@@ -181,7 +181,7 @@ bool IBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, 
 
 void IBoard::printBoard() const{
     printBoardX();
-    int sliceLen = intlen(this->_width);
+    const int sliceLen = intlen(this->_width);
     for (int y = 0; y < this->_width; y++)
     {
         std::cout << std::setw(sliceLen) << y << "|";

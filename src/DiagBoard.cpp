@@ -77,11 +77,11 @@ patternBitset DiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, ui
 }
 
 bool DiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length) {
-    int xEnd = x + length - 1;
+    const int xEnd = x + length - 1;
     if (!IBoard::isValidPos(xEnd, y) || (x < y + 1 && xEnd > y + 1))
         return false;
 
-    int index = this->convertCoordinate(x, y);
+    const int index = this->convertCoordinate(x, y);
     if (player == getIdPlayer1() 
         && (getPlayer1() & (mask << index)) == (mask << index))
         return true;

@@ -83,7 +83,7 @@ void Render::renderBoard() const
     SDL_RenderClear(this->_renderer);
     SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
 
-    int line = BOARD_SIZE * (GRID_SIZE + 1)  + MARGIN / 2;
+    const int line = BOARD_SIZE * (GRID_SIZE + 1)  + MARGIN / 2;
     for (int x = MARGIN, i = 0; x <= line + GRID_SIZE && i <= BOARD_SIZE; x += GRID_SIZE, i++)
     {
         // draw lines
@@ -111,8 +111,8 @@ void Render::renderBoard() const
 
 
 void    Render::erasePlayer(int x, int y) const {
-    int x_square = x * GRID_SIZE + MARGIN - RADIUS;
-    int y_square = y * GRID_SIZE + MARGIN - RADIUS;
+    const int x_square = x * GRID_SIZE + MARGIN - RADIUS;
+    const int y_square = y * GRID_SIZE + MARGIN - RADIUS;
 
     if (SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255) != 0)
         throw std::runtime_error(std::string("Failed to set render draw color: ") + std::string(SDL_GetError()));
@@ -192,8 +192,8 @@ void Render::renderWin(uint16_t player) const {
     // SDL_RenderClear(_renderer);
 
     // select text color and where it should be placed and his size
-    SDL_Color textColor = {80, 0, 80, 255};
-    SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
+    const SDL_Color textColor = {80, 0, 80, 255};
+    const SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
     writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
 }
         

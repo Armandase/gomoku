@@ -35,7 +35,7 @@ void place_stone(Game& game, Render& render, int x, int y, int &player)
         game.resetBoards();
         render.renderBoard();
     }
-    player =  player == WHITE ? BLACK : WHITE;
+    player = (player == WHITE) ? BLACK : WHITE;
 }
 
 bool    handleMouse(int mouseX, int mouseY)
