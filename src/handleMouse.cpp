@@ -33,7 +33,7 @@ void place_stone(Game& game, Render& render, int x, int y, int &player)
         render.renderWin(player);
         sleep(1);
         game.resetBoards();
-        render.renderBoard();
+        render.renderBoard(game);
     }
     player = (player == WHITE) ? BLACK : WHITE;
 }

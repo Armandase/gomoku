@@ -6,6 +6,10 @@
 # include <iostream>
 # include "gomoku.hpp"
 # include "utils.hpp"
+# include "Button.hpp"
+
+class Game;
+class Button;
 
 class Render{
     public:
@@ -19,11 +23,12 @@ class Render{
         void    initSDL(const std::string& windowName, int windowWidth, int windowHeight);
         void    renderWin(uint16_t player) const;
 
-
-        void    renderBoard() const;
+        void    renderBoard(Game& game) const;
+        void    renderMenu(Button &player, Button &IA) const;
         void    erasePlayer(int x, int y) const;
         void    drawCircle(int centreX, int centreY) const;
         void    writeText(const std::string& msg, const std::string& font, const SDL_Rect& rect, const SDL_Color& color, int size) const;
+        void    renderCapture(uint16_t p1Capture, uint16_t p2Capture) const;
 
     private:
         SDL_Renderer *_renderer;

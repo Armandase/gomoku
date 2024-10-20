@@ -110,8 +110,8 @@ bool Game::canBeCaptured(uint16_t x, uint16_t y, Game::PatternType boardType, ui
             const uint16_t xOpp1 = x + dirX[j + 4], yOpp1 = y + dirY[j + 4];
 
             if (getClassicBoard().isValidPos(xOpp1, yOpp1) && getClassicBoard().isValidPos(xFwd2, yFwd2)) {
-                if ((getClassicBoard().getPos(xOpp1, yOpp1) == opponent && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == 0) ||
-                    (getClassicBoard().getPos(xOpp1, yOpp1) == 0 && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == opponent)) {
+                if ((getClassicBoard().getPos(xOpp1, yOpp1) == opponent && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == EMPTY) ||
+                    (getClassicBoard().getPos(xOpp1, yOpp1) == EMPTY && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == opponent)) {
                     return true;
                 }
             }
@@ -122,8 +122,8 @@ bool Game::canBeCaptured(uint16_t x, uint16_t y, Game::PatternType boardType, ui
             const uint16_t xOpp2 = x + dirX[j], yOpp2 = y + dirY[j];
 
             if (getClassicBoard().isValidPos(xOpp2, yOpp2) && getClassicBoard().isValidPos(xRev2, yRev2)) {
-                if ((getClassicBoard().getPos(xOpp2, yOpp2) == opponent && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == 0) ||
-                    (getClassicBoard().getPos(xOpp2, yOpp2) == 0 && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == opponent)) {
+                if ((getClassicBoard().getPos(xOpp2, yOpp2) == opponent && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == EMPTY) ||
+                    (getClassicBoard().getPos(xOpp2, yOpp2) == EMPTY && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == opponent)) {
                     return true;
                 }
             }
@@ -177,9 +177,9 @@ bool Game::isDoubleThree(uint16_t x, uint16_t y, uint16_t player) {
     int doubleThreeCnt = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
 
-    patternBitset  playerPattern1("0110");
-    patternBitset  playerPattern2("1100");
-    patternBitset  playerPattern3("0011");
+    const patternBitset  playerPattern1("0110");
+    const patternBitset  playerPattern2("1100");
+    const patternBitset  playerPattern3("0011");
 
     patternMap playerPatternMap = extractPatterns(x, y, 4, player);
     patternMap opponentPatternMap = extractPatterns(x, y, 5, opponent);
@@ -203,8 +203,8 @@ std::vector<uint16_t> Game::isCapture(uint16_t x, uint16_t y, uint16_t player) {
     std::vector<uint16_t> capturesBoard;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
 
-    patternBitset  playerPattern("1001");
-    patternBitset  opponentPattern("0110");
+    const patternBitset  playerPattern("1001");
+    const patternBitset  opponentPattern("0110");
 
     patternMap playerPatternMap = extractPatterns(x, y, 4, player);
     patternMap opponentPatternMap = extractPatterns(x, y, 4, opponent);
@@ -225,8 +225,8 @@ bool Game::canCapture(uint16_t x, uint16_t y, uint16_t player) {
     setPosToBoards(x, y, player);
     const int opponent = (player == WHITE) ? BLACK : WHITE;
 
-    patternBitset  playerPattern("1001");
-    patternBitset  opponentPattern("0110");
+    const patternBitset  playerPattern("1001");
+    const patternBitset  opponentPattern("0110");
 
     patternMap playerPatternMap = extractPatterns(x, y, 4, player);
     patternMap opponentPatternMap = extractPatterns(x, y, 4, opponent);
@@ -242,7 +242,7 @@ bool Game::canCapture(uint16_t x, uint16_t y, uint16_t player) {
     return false;
 }
 
-void Game::handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t> capturesBoard, uint16_t player, Render& render) {
+void Game::handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t>& capturesBoard, uint16_t player, Render& render) {
     const int   dirX[8] = {1, 0, 1, 1, -1, 0, -1, -1};
     const int   dirY[8] = {0, 1, -1, 1, 0, -1, 1, -1};
 
@@ -253,5 +253,6 @@ void Game::handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t> capturesB
         removePosToBoards(x + dirX[boardType], y + dirY[boardType]);
         removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
         addCapture(player);
+        // renderCapture need to fix it
     }
 }

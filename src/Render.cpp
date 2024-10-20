@@ -1,4 +1,5 @@
 #include "../inc/Render.hpp"
+#include "../inc/Game.hpp"
 
 Render::Render():
     _renderer(NULL),
@@ -76,7 +77,7 @@ void    Render::writeText(const std::string& msg, const std::string& font, const
     TTF_CloseFont(Font);
 }
 
-void Render::renderBoard() const
+void Render::renderBoard(Game& game) const
 {
     int cnt = 0;
     SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
@@ -97,15 +98,15 @@ void Render::renderBoard() const
         
         SDL_Rect msg_rect_x = {x - (intlen(cnt) * (MARGIN / 3) / 2), 0 + MARGIN / 10, intlen(cnt) * (MARGIN / 3), MARGIN / 2};
         SDL_RenderFillRect(this->_renderer, &msg_rect_x);
-        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_x, textColor, 24);
+        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_x, textColor, FONT_SIZE);
 
         SDL_Rect msg_rect_y = {0 + MARGIN / 10, x - (intlen(cnt) * (MARGIN / 3) / 2), intlen(cnt) * (MARGIN / 3), MARGIN / 2};
         SDL_RenderFillRect(this->_renderer, &msg_rect_y);
-        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_y, textColor, 24);
+        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_y, textColor, FONT_SIZE);
 
         cnt++;
     }
-
+    renderCapture(game.getCapture(WHITE), game.getCapture(BLACK));
     SDL_RenderPresent(this->_renderer);
 }
 
@@ -194,6 +195,51 @@ void Render::renderWin(uint16_t player) const {
     // select text color and where it should be placed and his size
     const SDL_Color textColor = {80, 0, 80, 255};
     const SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
-    writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
+    writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, FONT_SIZE);
 }
-        
+
+void Render::renderMenu(Button &player, Button &IA) const {
+    SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
+    SDL_RenderClear(this->_renderer);
+    IA.renderButton(this->_renderer, 205, 127, 50);
+    player.renderButton(this->_renderer,205, 127, 50);
+    const SDL_Rect playerText = {SCREEN_WIDTH / 3 - 140, SCREEN_HEIGHT / 2 - 50, 280, 100};
+
+    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(this->_renderer, &playerText);
+    
+    writeText("Player VS Player", "fonts/OpenSans-Bold.ttf",
+                playerText, {0, 0, 0, 255}, 50);
+
+    const SDL_Rect IAText = {SCREEN_WIDTH / 3 * 2 - 140, SCREEN_HEIGHT / 2 - 50, 280, 100};
+    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(this->_renderer, &IAText);
+    writeText("Player VS IA", "fonts/OpenSans-Bold.ttf",
+                IAText, {0, 0, 0, 255}, 50);
+    
+    const SDL_Rect titleText = {SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 4 - 50, 200, 100};
+    writeText("GOMOKU", "fonts/OpenSans-Bold.ttf", 
+                titleText, {0, 0, 0, 255}, FONT_SIZE);
+    
+    const SDL_Rect creditText = {SCREEN_WIDTH - 310, SCREEN_HEIGHT - 70, 300, 50};
+    writeText("made by adamiens & nlocusso", "fonts/OpenSans-Bold.ttf", 
+                creditText, {0, 0, 0, 255}, 50);
+
+    SDL_RenderPresent(this->_renderer);
+}
+
+void Render::renderCapture(uint16_t p1Capture, uint16_t p2Capture) const {
+    const SDL_Color textColor = {80, 0, 80, 255};
+
+    // RENDER P1 CAPTURES
+    const SDL_Rect p1rect = {MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5, OFFSET, GRID_SIZE};
+    writeText(" WHITE CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p1rect, textColor, FONT_SIZE);
+    const SDL_Rect p1CaptureRect = {MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5 + p1rect.h, OFFSET, SCREEN_HEIGHT / 5};
+    writeText(std::to_string(p1Capture), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p1CaptureRect, textColor, FONT_SIZE);
+
+    // RENDER P2 CAPTURES
+    const SDL_Rect p2rect = {MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5 * 3, OFFSET, GRID_SIZE};
+    writeText(" BLACK CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p2rect, textColor, FONT_SIZE);
+    const SDL_Rect p2CaptureRect = {MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5 * 3 + p2rect.h, OFFSET, SCREEN_HEIGHT / 5};
+    writeText(std::to_string(p2Capture), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p2CaptureRect, textColor, FONT_SIZE);
+}

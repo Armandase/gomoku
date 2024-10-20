@@ -11,6 +11,22 @@ void    writeText(const std::string& msg, const std::string& font, const SDL_Rec
     TTF_CloseFont(Font);
 }
 
+int modeSelection(Game& game, Render& render, Button &player, Button &IA) {
+    int mouseX, mouseY;
+
+    // get the coordinate of the click to know which button has been hit
+    SDL_GetMouseState(&mouseX, &mouseY);
+    if (player.inButton(mouseX, mouseY)) {
+        render.renderBoard(game);
+        return PLAYER_MODE;
+    }
+    if (IA.inButton(mouseX, mouseY)) {
+        render.renderBoard(game);
+        return IA_MODE;
+    }
+    return 0;
+}
+
 int intlen(int number) {
     if (number == 0)
         return 1;

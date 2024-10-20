@@ -145,7 +145,7 @@ Heuristic    minMaxFirstStep(Board& game, int player){
 //         SDL_Rect msg_rect = {SCREEN_WIDTH - MARGIN - OFFSET, SCREEN_HEIGHT - SCREEN_HEIGHT / 15, MARGIN + OFFSET, OFFSET};
 //         SDL_SetRenderDrawColor(render.getRenderer(), 205, 127, 50, 255);
 //         SDL_RenderFillRect(render.getRenderer(), &msg_rect);
-//         render.writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, 24);
+//         render.writeText(message.str(), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, FONT_SIZE);
 //     }
 //     place_stone(game, player, render, result.getBeginY(), result.getBeginX());
 //     } catch (std::exception& e){

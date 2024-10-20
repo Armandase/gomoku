@@ -4,7 +4,7 @@ CXX		=	c++
 NAME 	= 	Gomoku
 SRC 	=	utils.cpp \
 			handleMouse.cpp \
-			Button.cpp startMenu.cpp \
+			Button.cpp \
 			Render.cpp \
 			IBoard.cpp \
 			DiagBoard.cpp \

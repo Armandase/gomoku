@@ -20,9 +20,9 @@ int main() {
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
 
     // Render Start Menu
-    start_menu(render, playerButton, IAButton);   
+    render.renderMenu(playerButton, IAButton);   
 
-    Game board;
+    Game game;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) quit = true;
@@ -30,15 +30,15 @@ int main() {
                 if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q) quit = true;
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
                 if (!start) {
-                    start = handleStart(render, playerButton, IAButton);
+                    start = modeSelection(game, render, playerButton, IAButton);
                     continue;
                 }
                 SDL_GetMouseState(&mouseX, &mouseY);
                 if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) {
                     int x = coordToBoard(mouseX);
                     int y = coordToBoard(mouseY);
-                    if (posValid(board, x, y, player)) {
-                        place_stone(board, render, x, y, player);
+                    if (posValid(game, x, y, player)) {
+                        place_stone(game, render, x, y, player);
                     }
                 }
                 SDL_RenderPresent(render.getRenderer());
