@@ -169,9 +169,9 @@ TEST(IBoard, TestAntiDiagBoard){
 
 
     Game gameTest;
-    int player = 0;
+    int size = test.size();
     int width = gameTest.getDiagBoard().getWidth();
-    for (int i = 0; i < test.size(); i++){
+    for (int i = 0; i < size; i++){
         if (!test[i])
             continue;
         gameTest.setPosToBoards(i % width, i / width, 1);
@@ -179,4 +179,3 @@ TEST(IBoard, TestAntiDiagBoard){
     
     EXPECT_EQ(gameTest.getAntiDiagBoard().getPlayer1(), waited_result);
 }
-

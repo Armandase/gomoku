@@ -7,20 +7,6 @@
 // # include <future>
 
 // # include "gomoku.hpp"
-// # include "Heuristic.hpp"
-// # include "Render.hpp"
-
-
-// enum side {
-//     LEFT,
-//     RIGHT,
-//     TOP,
-//     TOP_RIGHT,
-//     TOP_LEFT,
-//     BOTTOM,
-//     BOTTOM_RIGHT,
-//     BOTTOM_LEFT,
-// };
 
 // enum comparison {
 //     MAX,
@@ -35,12 +21,9 @@
 
 // typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 
-// void    minMaxAlgorithm(Board&, int&,  Render& render);
-// int     getCurrentPlayer(int depth, int initPlayer);
-// bool    emptyNeighbour(const Board &game, const int x, const int y);
-// bool    checkWin(const Heuristic& heuristic);
-// bool    validGame(Board& copy, int yPoint, int xPoint, int player);
-// heuristicSet generatePossibleMoves(Board& game, int player);
+// int getCurrentPlayer(int depth, int initPlayer) const noexcept;
+// bitboard getSurroundingBits(IBoard& game);
+
 
 
 // #endif

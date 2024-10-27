@@ -72,24 +72,79 @@ TEST(TranspositionTable, store){
 
 
     Game gameTest;
-    int player = 0;
     int width = gameTest.getDiagBoard().getWidth();
     int size = test.size(); 
-    for (int i = 0; i < test.size(); i++){
+    for (int i = 0; i < size; i++){
         if (!test[i])
             continue;
         gameTest.setPosToBoards(i % width, i / width, 1);
     }
     
     TranspositionTable table;
+    size_t cmp = 1;
+    table.store(gameTest, 10);
+    EXPECT_EQ(table.getTable().size(), cmp);
+    table.store(gameTest, 10);
+    EXPECT_EQ(table.getTable().size(), cmp);
 
+    cmp = 2;
+    gameTest.setPosToBoards(width - 1, width - 1, cmp);
     table.store(gameTest, 10);
-    EXPECT_EQ(table.getTable().size(), 1);
-    table.store(gameTest, 10);
-    EXPECT_EQ(table.getTable().size(), 1);
-
-    gameTest.setPosToBoards(width - 1, width - 1, 2);
-    table.store(gameTest, 10);
-    EXPECT_EQ(table.getTable().size(), 2);
+    EXPECT_EQ(table.getTable().size(), cmp);
     // EXPECT_EQ(gameTest.getAntiDiagBoard().getPlayer1(), waited_result);
+}
+
+TEST(MiniMaxUtils, surroundingBits){
+
+    std::string str_test(
+"1010000000000001100"
+"0010000000000000000"
+"0000000001010000000"
+"0000000010001000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000");
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
+
+    Game gameTest;
+    int width = gameTest.getDiagBoard().getWidth();
+    int size = test.size(); 
+    for (int i = 0; i < size; i++){
+        if (!test[i])
+            continue;
+        gameTest.setPosToBoards(i % width, i / width, 1);
+    }
+    
+    // std::cout << "Classic :"<< gameTest.getClassicBoard().getPlayer1() << std::endl;
+    auto bits = getSurroundingBits(gameTest);
+    // std::cout << "Bits :"<< bits << std::endl;
+
+    for (int i = 0; i < NB_PLACEMENTS; ++i) {
+        int x = i % (BOARD_SIZE + 1);
+        int y = i / (BOARD_SIZE + 1);
+        if (gameTest.getClassicBoard().getPos(x, y) && bits[i]) {
+            // success to found a neighbour
+            continue;
+        }
+    }
+    int x = 2;
+    int y = 0;
+    EXPECT_EQ(bits[x + y * width] && gameTest.getClassicBoard().getPos(x, y), true);
+    y = 1;
+    EXPECT_EQ(bits[x + y * width] && gameTest.getClassicBoard().getPos(x, y), true);
+    y = 2;
+    EXPECT_EQ(bits[x + y * width] && gameTest.getClassicBoard().getPos(x, y), false);
 }
