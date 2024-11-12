@@ -6,5 +6,6 @@
 
 int     intlen(int number);
 int     coordToBoard(int coor);
+int     boardToRender(int value);
 
 #endif

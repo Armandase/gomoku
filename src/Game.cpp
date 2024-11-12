@@ -253,6 +253,28 @@ void Game::handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t>& captures
         removePosToBoards(x + dirX[boardType], y + dirY[boardType]);
         removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
         addCapture(player);
-        // renderCapture need to fix it
+        render.renderCapture(getCapture(WHITE), getCapture(BLACK));
     }
+}
+
+int Game::heuristicTest(int x, int y, int player) {
+    patternMap extractMap = extractPatterns(x, y, PARTTERN_SIZE, player);
+    for (int i = 0; i < 4; i++) {
+        patternBitset boardPattern = extractMap[static_cast<Game::PatternType>(i)];
+        patternBitset revBoardPattern = extractMap[static_cast<Game::PatternType>(i + 4)];
+
+        std::bitset<9> mergedPattern = (boardPattern.to_ulong() << 4 | revBoardPattern.to_ulong());
+        
+        std::bitset<5> checkPattern("01111");
+
+        for (int j = 0; j <= 4; j++) {
+            std::bitset<5> window = (mergedPattern >> j).to_ulong() & 0x1F; // 0x1F is 31 (binary: 11111)
+            
+            if (window == checkPattern) {
+                std::cout << "Pattern found!" << std::endl;
+                break;
+            }
+        }
+    }
+    return 0;
 }

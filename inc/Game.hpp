@@ -48,6 +48,7 @@ class Game{
         std::vector<uint16_t> isCapture(uint16_t x, uint16_t y, uint16_t player);
         void handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t>& capturesBoard, uint16_t player, Render& render);
         bool playerWin(uint16_t player);
+        int  heuristicTest(int x, int y, int player);
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;

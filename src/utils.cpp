@@ -42,3 +42,8 @@ int coordToBoard(int coor)
 {
     return ((coor - MARGIN) + GRID_SIZE / 2) / GRID_SIZE;
 }
+
+int boardToRender(int value)
+{
+    return (value * GRID_SIZE + MARGIN);
+}
