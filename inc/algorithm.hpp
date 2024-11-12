@@ -5,12 +5,15 @@
 # include "../inc/Game.hpp"
 
 typedef std::chrono::time_point<std::chrono::high_resolution_clock> timePoint;
+typedef std::vector<Game> gameSet;
 
 // Game iterativeDeepening(Game& root);
 bool times_up(const timePoint& start);
 
 int getCurrentPlayer(int depth, int initPlayer);
 IBoard::bitboard getSurroundingBits(Game& game);
+
+gameSet generatePossibleMoves(Game& game, int player);
 
 // struct CompareHeuristic {
 //     bool operator()(const Heuristic& a, const Heuristic& b) const {
@@ -20,7 +23,6 @@ IBoard::bitboard getSurroundingBits(Game& game);
 
 // typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 
-typedef std::vector<Game> gameSet;
 
 
 # endif

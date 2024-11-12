@@ -159,3 +159,10 @@ size_t  Game::hashGame()const{
     std::size_t h2 = std::hash<IBoard::bitboard>{}(this->_classicBoard.getPlayer2());
     return h1 ^ (h2 << 1);
 }
+
+void    Game::setHeuristic(int64_t heuristic){
+    this->_heuristic = heuristic;
+}
+int64_t Game::getHeuristic() const{
+    return this->_heuristic;
+}

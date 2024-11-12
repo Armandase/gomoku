@@ -46,6 +46,10 @@ class Game{
         int     isCapture(uint16_t x, uint16_t y, uint16_t player);
         void    handleCapture(uint16_t x, uint16_t y, int boardType, uint16_t player, Render& render);
         size_t  hashGame()const;
+
+        void    setHeuristic(int64_t heuristic);
+        int64_t getHeuristic() const;
+
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;
@@ -54,6 +58,8 @@ class Game{
 
         uint16_t _player1Capture;
         uint16_t _player2Capture;
+
+        int64_t _heuristic;
 };
 
 #endif

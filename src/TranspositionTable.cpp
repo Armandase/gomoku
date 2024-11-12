@@ -11,7 +11,7 @@ TranspositionTable::~TranspositionTable()
 }
 
 TranspositionTable::TranspositionTable(const TranspositionTable &cpy):
-    _table(cpy.getTable())
+    _table(cpy.getTable())   
 {
 }
 
@@ -25,14 +25,24 @@ transTable TranspositionTable::getTable() const{
     return (_table);
 }
 
-void TranspositionTable::store(Game& game, int heuristic){
-    // _table.insert({game, heuristic});
-    _table.insert({game.hashGame(), heuristic});
+void TranspositionTable::store(Game& game, int heuristic, int bound){
+    auto fouded = _table.find(game.hashGame());
+    if (fouded != _table.end()){
+        if (bound == LOWERBOUND)
+            fouded->second.lowerbound = std::max(fouded->second.lowerbound, heuristic);
+        else if (bound == UPPERBOUND)
+            fouded->second.upperbound = std::min(fouded->second.upperbound, heuristic);
+        fouded->second.heuristic = heuristic;
+    } else {
+        dataTranspositionTable_t data;
+        data.heuristic = heuristic;
+        _table.insert({game.hashGame(), data});
+    }
 }
 
-bool TranspositionTable::retrieve(Game& game) const{
-    // if (_table.count(game) > 0)
-    if (_table.find(game.hashGame()) == _table.end())
-        return false;
-    return true;
+const dataTranspositionTable_t* TranspositionTable::retrieve(Game& game) const{
+    auto it = _table.find(game.hashGame());
+    if (it == _table.end())
+        return nullptr;
+    return &it->second;
 }

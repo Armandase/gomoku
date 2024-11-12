@@ -17,49 +17,45 @@ int computeHeuristic(const Game& node) {
 
 int alphaBetaWithMemory(Game& node, int alpha, int beta, int depth, TranspositionTable& memory){
     int heuristic = 0;
-    if (memory.retrieve(node) == true){
-        if (node.lowerbound >= beta)
-            return node.lowerbound;
-        else if (node.upperbound <= alpha)
-            return node.upperbound;
-        alpha = std::max(alpha, node.lowerbound);
-        beta = std::min(beta, node.uppernound);
+    const dataTranspositionTable_t* founded = memory.retrieve(node);
+    if (founded != nullptr){
+        if (founded->lowerbound >= beta)
+            return founded->lowerbound;
+        else if (founded->upperbound <= alpha)
+            return founded->upperbound;
+        alpha = std::max(alpha, founded->lowerbound);
+        beta = std::min(beta, founded->upperbound);
     }
     if (depth == 0)
         heuristic = computeHeuristic(node);
     // maximization node
-    else if (node == MAXNODE){
+    else if (depth % 2 == 0){
         heuristic = std::numeric_limits<int>::min();
         auto a = alpha;
-        gameSet possibleMoves = generatePossibleMoves(node);
+        // BESOIN DE DEFINIR UN VRAI PLAYER
+        gameSet possibleMoves = generatePossibleMoves(node, depth % 2);
         for (auto it = possibleMoves.begin(); it != possibleMoves.end() && heuristic < beta; ++it){
-        // while (heuristic < beta && c != NOCHILD){
-            heuristic = std::max(heuristic , alphaBetaWithMemory(it, a, beta, depth - 1, memory));
+            heuristic = std::max(heuristic , alphaBetaWithMemory(*it, a, beta, depth - 1, memory));
             a = std::max(a, heuristic);
         }
     } else {
         heuristic = std::numeric_limits<int>::max();
         auto b = beta;
-        gameSet possibleMoves = generatePossibleMoves(node);
-        // while (heuristic > alpha && c != NOCHILD){
+        gameSet possibleMoves = generatePossibleMoves(node, depth % 2);
         for (auto it = possibleMoves.begin(); it != possibleMoves.end() && heuristic > beta; ++it){
-            heuristic = std::min(heuristic , alphaBetaWithMemory(it, alpha, b, depth - 1, memory));
+            heuristic = std::min(heuristic , alphaBetaWithMemory(*it, alpha, b, depth - 1, memory));
             b = std::min(b, heuristic);
         }
     }
     if (heuristic <= alpha){
-        node.upperbound = heuristic
-        memory.store(node.upperbound);
+        memory.store(node, heuristic, UPPERBOUND);
     }
     if (heuristic > alpha && heuristic < beta){
-        node.lowerbound = heuristic;
-        node.upperbound = heuristic;
-        memory.store(n.lowerbound);
-        memory.store(n.upperbound);
+        memory.store(node, heuristic, LOWERBOUND);
+        memory.store(node, heuristic, UPPERBOUND);
     }
     if (heuristic >= beta){
-        node.lowerbound = heuristic;
-        memory.store(node.lowerbound);
+        memory.store(node, heuristic, LOWERBOUND);
     }
     return heuristic; 
 }
@@ -67,7 +63,7 @@ int alphaBetaWithMemory(Game& node, int alpha, int beta, int depth, Transpositio
 Game& mtdf(Game& root, int firstGuess, uint16_t depth, TranspositionTable& memory){
     int upperbound = std::numeric_limits<int>::max();
     int lowerbound = std::numeric_limits<int>::min();
-    int heuristic = firstGuess;
+    // int heuristic = firstGuess;
     int beta = 0;
     Game node = root;
     node.setHeuristic(0);
@@ -75,12 +71,14 @@ Game& mtdf(Game& root, int firstGuess, uint16_t depth, TranspositionTable& memor
     while(lowerbound < upperbound){
         beta = node.getHeuristic() + (node.getHeuristic() == lowerbound);
         
-        node = alphaBetaWithMemory(root, beta - 1, beta, depth, memory);
+        auto res_alphahBetaMemroy = alphaBetaWithMemory(root, beta - 1, beta, depth, memory);
+        std::cout << "res_alphahBetaMemroy: " << res_alphahBetaMemroy << std::endl;
+        // node = alphaBetaWithMemory(root, beta - 1, beta, depth, memory);
 
-        if (node.getHeurisitic() < beta)
-            upperbound = node.getHeurisitic();
-        else
-            lowerbound = node.getHeurisitic();
+        // if (node.getHeurisitic() < beta)
+        //     upperbound = node.getHeurisitic();
+        // else
+        //     lowerbound = node.getHeurisitic();
     }
     return node;
 }
