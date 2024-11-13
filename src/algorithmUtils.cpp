@@ -6,27 +6,68 @@ int getCurrentPlayer(int depth, int initPlayer){
     return initPlayer == BLACK ? WHITE : BLACK;
 }
 
-IBoard::bitboard getSurroundingBits(Game& game){
-    IBoard::bitboard surroundingBits;
-    auto firstPlayer = game.getClassicBoard().getPlayer1();
-    auto secondplayer = game.getClassicBoard().getPlayer2();
+// IBoard::bitboard getSurroundingBits(Game& game) {
+//     IBoard::bitboard surroundingBits = 0;
+//     auto firstPlayer = game.getClassicBoard().getPlayer1();
+//     auto secondPlayer = game.getClassicBoard().getPlayer2();
 
-    surroundingBits = (firstPlayer >> (BOARD_SIZE + 1)) // top
-        | (firstPlayer << (BOARD_SIZE + 1)) // bottom
-        | ((firstPlayer >> 1) & ~IBoard::bitboard(0b100000000000000000)) // left
-        | ((firstPlayer << 1) & ~IBoard::bitboard(0b1)) // right
-        | ((firstPlayer >> (BOARD_SIZE + 2)) & ~IBoard::bitboard(0b100000000000000000)) // top left
-        | ((firstPlayer >> (BOARD_SIZE)) & ~IBoard::bitboard(0b100000000000000000)) // top right
-        | ((firstPlayer << (BOARD_SIZE + 2)) & ~IBoard::bitboard(0b1)) // bottom left
-        | ((firstPlayer << (BOARD_SIZE)) & ~IBoard::bitboard(0b1)) // bottom right
-        | (secondplayer >> (BOARD_SIZE + 1)) // top
-        | (secondplayer << (BOARD_SIZE + 1)) // bottom
-        | ((secondplayer >> 1) & ~IBoard::bitboard(0b100000000000000000)) // left
-        | ((secondplayer << 1) & ~IBoard::bitboard(0b1))// right
-        | ((secondplayer >> (BOARD_SIZE + 2)) & ~IBoard::bitboard(0b100000000000000000)) // top left
-        | ((secondplayer >> (BOARD_SIZE)) & ~IBoard::bitboard(0b100000000000000000)) // top right
-        | ((secondplayer << (BOARD_SIZE + 2)) & ~IBoard::bitboard(0b1)) // bottom left
-        | ((secondplayer << (BOARD_SIZE)) & ~IBoard::bitboard(0b1)); // bottom right
+//     IBoard::bitboard allPieces = firstPlayer | secondPlayer;
+//     int board_size = BOARD_SIZE + 1;
+
+//     IBoard::bitboard leftBoundary = 0;
+//     IBoard::bitboard rightBoundary = 0;
+
+//     for (int i = 0; i < board_size; i++) {
+//         leftBoundary |= (IBoard::bitboard(1) << (i * board_size));
+//         rightBoundary |= (IBoard::bitboard(1) << (i * board_size + board_size - 1));
+//     }
+
+//     leftBoundary = ~leftBoundary;
+//     rightBoundary = ~rightBoundary;
+
+//     surroundingBits = (allPieces >> board_size) // top
+//         | (allPieces << board_size) // bottom
+//         | ((allPieces >> 1) & leftBoundary) // left
+//         | ((allPieces << 1) & rightBoundary) // right
+//         | ((allPieces >> (board_size + 1)) & leftBoundary) // top left
+//         | ((allPieces >> (board_size - 1)) & rightBoundary) // top right
+//         | ((allPieces << (board_size + 1)) & rightBoundary) // bottom right
+//         | ((allPieces << (board_size - 1)) & leftBoundary) // bottom left
+//         | allPieces; // center
+
+//     return surroundingBits;
+// }
+
+IBoard::bitboard getSurroundingBits(Game& game){
+    IBoard::bitboard surroundingBits = 0;
+    auto firstPlayer = game.getClassicBoard().getPlayer1();
+    auto secondPlayer = game.getClassicBoard().getPlayer2();
+
+    IBoard::bitboard allPieces = firstPlayer | secondPlayer;
+    int board_size = BOARD_SIZE + 1;
+
+    const int dir[8][2] = {
+        {0, 1}, {0, -1}, {1, 0}, {-1, 0},
+        {1, 1}, {-1, -1}, {1, -1}, {-1, 1}
+    };
+
+    for (int y = 0; y < board_size; y++) {
+        for (int x = 0; x < board_size; x++) {
+            if (game.getClassicBoard().isPosEmpty(x, y) == true)
+                continue;
+
+            for (int i = 0; i < 8; i++) {
+                int checkX = x + dir[i][0];
+                int checkY = y + dir[i][1];
+                if (checkX < 0 || checkY < 0 || checkX >= board_size || checkY >= board_size)
+                    continue;
+
+                surroundingBits |= (IBoard::bitboard(1) << (checkX + checkY * board_size));
+            }
+            surroundingBits |= (IBoard::bitboard(1) << (x + y * board_size));
+        }
+    }
+
     return surroundingBits;
 }
 

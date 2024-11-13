@@ -28,8 +28,7 @@ int alphaBetaWithMemory(Game& node, int alpha, int beta, int depth, Transpositio
     }
     if (depth == 0)
         heuristic = computeHeuristic(node);
-    // maximization node
-    else if (depth % 2 == 0){
+    else if (depth % 2 == 0){ // maximization node
         heuristic = std::numeric_limits<int>::min();
         auto a = alpha;
         // BESOIN DE DEFINIR UN VRAI PLAYER
@@ -38,7 +37,7 @@ int alphaBetaWithMemory(Game& node, int alpha, int beta, int depth, Transpositio
             heuristic = std::max(heuristic , alphaBetaWithMemory(*it, a, beta, depth - 1, memory));
             a = std::max(a, heuristic);
         }
-    } else {
+    } else { // minimization node
         heuristic = std::numeric_limits<int>::max();
         auto b = beta;
         gameSet possibleMoves = generatePossibleMoves(node, depth % 2);

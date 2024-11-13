@@ -6,6 +6,23 @@
 # include <chrono>
 # include <gtest/gtest.h>
 
+void fillGame(Game& gameBoard, std::string player1, std::string player2=""){
+    std::reverse(player1.begin(), player1.end());
+    IBoard::bitboard board_p1(player1);
+
+    std::reverse(player2.begin(), player2.end());
+    IBoard::bitboard board_p2(player2);
+
+    int width = gameBoard.getClassicBoard().getWidth();
+    int size = board_p1.size(); 
+    for (int i = 0; i < size; i++){
+        if (board_p1[i])
+            gameBoard.setPosToBoards(i % width, i / width, 1);
+        else if (int(board_p2.size()) > i && board_p2[i])
+            gameBoard.setPosToBoards(i % width, i / width, 2);
+    }
+}
+
 
 TEST(Algorithm, timesUp) {
     int increment = 10;
@@ -44,54 +61,21 @@ TEST(TranspositionTable, store){
 "0000000000000100000"
 "0000000000000010000"
 "0000000000000001000");
-    std::reverse(str_test.begin(), str_test.end());
-    IBoard::bitboard test(str_test);
-
-    std::string str_result(
-"1000000000000000000"
-"0000000000000000001"
-"0000000000000000010"
-"1111111111111111100"
-"0000000000000001000"
-"0000000000000010000"
-"0000000000000100000"
-"0000000000001000000"
-"0000000000010000000"
-"0000000000100000000"
-"0000000001000000000"
-"0000000010000000000"
-"0000000100000000000"
-"0000001000000000000"
-"0000010000000000000"
-"0000100000000000000"
-"0001000000000000000"
-"0010000000000000000"
-"0100000000000000000");
-    std::reverse(str_result.begin(), str_result.end());
-    IBoard::bitboard waited_result(str_result);
-
-
     Game gameTest;
-    int width = gameTest.getDiagBoard().getWidth();
-    int size = test.size(); 
-    for (int i = 0; i < size; i++){
-        if (!test[i])
-            continue;
-        gameTest.setPosToBoards(i % width, i / width, 1);
-    }
+    fillGame(gameTest, str_test);
     
     TranspositionTable table;
     size_t cmp = 1;
-    table.store(gameTest, 10);
+    int width = gameTest.getClassicBoard().getWidth();
+    table.store(gameTest, 10, 0);
     EXPECT_EQ(table.getTable().size(), cmp);
-    table.store(gameTest, 10);
+    table.store(gameTest, 10, 0);
     EXPECT_EQ(table.getTable().size(), cmp);
 
     cmp = 2;
     gameTest.setPosToBoards(width - 1, width - 1, cmp);
-    table.store(gameTest, 10);
+    table.store(gameTest, 10, 0);
     EXPECT_EQ(table.getTable().size(), cmp);
-    // EXPECT_EQ(gameTest.getAntiDiagBoard().getPlayer1(), waited_result);
 }
 
 TEST(MiniMaxUtils, surroundingBits){
@@ -112,39 +96,217 @@ TEST(MiniMaxUtils, surroundingBits){
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
+"0000000000000001000"
+"0000000000000000000"
+"0000000000000000000"
+"1000000000000000100");
+    std::string str_test_surronded(
+"1111000000000011110"
+"1111000011111011110"
+"0111000111111100000"
+"0000000111111100000"
+"0000000111011100000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000011100"
+"0000000000000011100"
+"0000000000000011100"
+"1100000000000001110"
+"1100000000000001110");
+    Game gameTest;
+    fillGame(gameTest, str_test);
+
+
+    std::reverse(str_test_surronded.begin(), str_test_surronded.end());
+    IBoard::bitboard surrounded(str_test_surronded);
+
+    auto bits = getSurroundingBits(gameTest);
+
+    EXPECT_EQ(bits, surrounded);
+}
+
+TEST(MiniMaxUtils, surroundingBitsTwoPlayers){
+
+    std::string str_p1(
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"1000000000000000000");
+    std::string str_p2(
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"1000000000000000000"
+"0100000000000000000");
+    std::string str_waited(
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"1100000000000000000"
+"1110000000000000000"
+"1110000000000000000");
+    Game gameTest;
+    fillGame(gameTest, str_p1, str_p2);
+
+    std::reverse(str_waited.begin(), str_waited.end());
+    IBoard::bitboard surrounded(str_waited);
+
+    auto bits = getSurroundingBits(gameTest);
+
+    EXPECT_EQ(bits, surrounded);
+}
+
+TEST(MiniMaxUtils, generatePossibleMoves){
+    
+    std::string str_test(
+"0010000000000000000"
+"0010000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000"
 "0000000000000000000");
+
     std::reverse(str_test.begin(), str_test.end());
     IBoard::bitboard test(str_test);
 
     Game gameTest;
-    int width = gameTest.getDiagBoard().getWidth();
+    int width = gameTest.getClassicBoard().getWidth();
     int size = test.size(); 
     for (int i = 0; i < size; i++){
         if (!test[i])
             continue;
         gameTest.setPosToBoards(i % width, i / width, 1);
     }
-    
-    // std::cout << "Classic :"<< gameTest.getClassicBoard().getPlayer1() << std::endl;
-    auto bits = getSurroundingBits(gameTest);
-    // std::cout << "Bits :"<< bits << std::endl;
 
-    for (int i = 0; i < NB_PLACEMENTS; ++i) {
-        int x = i % (BOARD_SIZE + 1);
-        int y = i / (BOARD_SIZE + 1);
-        if (gameTest.getClassicBoard().getPos(x, y) && bits[i]) {
-            // success to found a neighbour
-            continue;
-        }
+    gameSet nextMoves = generatePossibleMoves(gameTest, 1);
+    EXPECT_EQ(static_cast<int>(nextMoves.size()), 7);
+}
+
+TEST(MiniMaxUtils, generatePossibleMovesCompare){
+    
+    std::string str_test_p1(
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"1000000000000000000");
+        std::string str_test_p2(
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"0000000000000000000"
+"1000000000000000000"
+"0100000000000000000");
+
+    std::reverse(str_test_p1.begin(), str_test_p1.end());
+    IBoard::bitboard test_p1(str_test_p1);
+
+    std::reverse(str_test_p2.begin(), str_test_p2.end());
+    IBoard::bitboard test_p2(str_test_p2);
+
+    Game gameTest;
+    int width = gameTest.getClassicBoard().getWidth();
+    int size = test_p1.size(); 
+    for (int i = 0; i < size; i++){
+        if (test_p1[i])
+            gameTest.setPosToBoards(i % width, i / width, 1);
+        else if (test_p2[i])
+            gameTest.setPosToBoards(i % width, i / width, 2);
     }
-    int x = 2;
-    int y = 0;
-    EXPECT_EQ(bits[x + y * width] && gameTest.getClassicBoard().getPos(x, y), true);
-    y = 1;
-    EXPECT_EQ(bits[x + y * width] && gameTest.getClassicBoard().getPos(x, y), true);
-    y = 2;
-    EXPECT_EQ(bits[x + y * width] && gameTest.getClassicBoard().getPos(x, y), false);
+
+    gameSet nextMoves = generatePossibleMoves(gameTest, 1);
+    for (auto move : nextMoves){
+        move.getClassicBoard().printBoard();
+    }
+    int nb_new_moves = nextMoves.size();
+    EXPECT_EQ(nb_new_moves, 5);
 }
