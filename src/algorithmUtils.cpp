@@ -76,8 +76,8 @@ gameSet generatePossibleMoves(Game& game, int player){
     IBoard::bitboard neighbour = getSurroundingBits(game);
     int width = game.getClassicBoard().getWidth();
 
-    for (int y = 0; y < BOARD_SIZE; y++) {
-        for (int x = 0; x < BOARD_SIZE; x++) {
+    for (int y = 0; y < BOARD_SIZE + 1; y++) {
+        for (int x = 0; x < BOARD_SIZE+1; x++) {
             if (game.getClassicBoard().isPosEmpty(x, y) == true && neighbour.test(x + y * width)) {
                 Game copy = game;
                 copy.setPosToBoards(x, y, getCurrentPlayer(DEPTH, player));

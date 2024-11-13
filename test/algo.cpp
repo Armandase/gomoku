@@ -304,9 +304,6 @@ TEST(MiniMaxUtils, generatePossibleMovesCompare){
     }
 
     gameSet nextMoves = generatePossibleMoves(gameTest, 1);
-    for (auto move : nextMoves){
-        move.getClassicBoard().printBoard();
-    }
     int nb_new_moves = nextMoves.size();
     EXPECT_EQ(nb_new_moves, 5);
 }
