@@ -5,9 +5,9 @@
 #include "../inc/Render.hpp"
 
 // Function to initialize the SDL window and run the game loop
-int main(int argc, char const *argv[]) {
+int main() {
     Render render;
-    render.init_sdl("Gomoku", SCREEN_WIDTH, SCREEN_HEIGHT);
+    render.initSDL("Gomoku", SCREEN_WIDTH, SCREEN_HEIGHT);
 
     int start = 0;
     bool quit = false;
@@ -20,9 +20,9 @@ int main(int argc, char const *argv[]) {
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
 
     // Render Start Menu
-    start_menu(render, playerButton, IAButton);   
+    render.renderMenu(playerButton, IAButton);   
 
-    Game board;
+    Game game;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) quit = true;
@@ -30,15 +30,15 @@ int main(int argc, char const *argv[]) {
                 if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q) quit = true;
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
                 if (!start) {
-                    start = handleStart(render, playerButton, IAButton);
+                    start = modeSelection(game, render, playerButton, IAButton);
                     continue;
                 }
                 SDL_GetMouseState(&mouseX, &mouseY);
                 if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) {
                     int x = coordToBoard(mouseX);
                     int y = coordToBoard(mouseY);
-                    if (posValid(board, player, x, y)) {
-                        place_stone(board, player, render, x, y);
+                    if (posValid(game, x, y, player)) {
+                        place_stone(game, render, x, y, player);
                     }
                 }
                 SDL_RenderPresent(render.getRenderer());

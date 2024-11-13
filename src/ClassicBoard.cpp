@@ -50,12 +50,12 @@ patternBitset ClassicBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_
 }
 
 patternBitset ClassicBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const{
-    int xEnd = xPos - length % getWidth();
+    const int xEnd = xPos - length % getWidth();
 
     if (isValidPos(xEnd, yPos) == false)
         return patternBitset(0);
 
-    int convertedCoordinate = this->convertCoordinate(xEnd + 1, yPos);
+    const int convertedCoordinate = this->convertCoordinate(xEnd + 1, yPos);
 
     bitboard mask((1 << length) - 1);
     bitboard extractedPattern(0);

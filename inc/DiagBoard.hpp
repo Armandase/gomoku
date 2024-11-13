@@ -15,6 +15,8 @@ class DiagBoard: public IBoard{
 
         patternBitset extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
         patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
+        
+        bool findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length);
 };
 
 #endif

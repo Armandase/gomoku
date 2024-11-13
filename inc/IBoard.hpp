@@ -30,6 +30,7 @@ class IBoard{
         uint16_t getIdPlayer2() const noexcept;
         bitboard getPlayer1() const noexcept;
         bitboard getPlayer2() const noexcept;
+        virtual bool findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length);
         
         bool    isValidPos(uint16_t x, uint16_t y) const;
         bool    isPosEmpty(uint16_t x, uint16_t y) const;

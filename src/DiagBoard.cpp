@@ -37,9 +37,8 @@ patternBitset DiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t l
     yPos = convertedCoordinate / IBoard::getWidth();
     int xEnd = xPos + length;
 
-    if (!IBoard::isValidPos(xEnd, yPos) || (xPos < yPos + 1 && xEnd > yPos + 1)) {
+    if (!IBoard::isValidPos(xEnd, yPos) || (xPos < yPos + 1 && xEnd > yPos + 1))
         return patternBitset(0);
-    }
 
     bitboard mask((1ULL << length) - 1);
     bitboard extractedPattern(0);
@@ -61,9 +60,8 @@ patternBitset DiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, ui
     int xStart = xPos - length + 1;
     convertedCoordinate = xStart + (yPos * IBoard::getWidth());
 
-    if (!IBoard::isValidPos(xStart, yPos) || (xStart < yPos + 1 && xPos > yPos + 1)) {
+    if (!IBoard::isValidPos(xStart, yPos) || (xStart < yPos + 1 && xPos > yPos + 1))
         return patternBitset(0);
-    }
 
     bitboard mask((1ULL << length) - 1);
     bitboard extractedPattern(0);
@@ -76,4 +74,19 @@ patternBitset DiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, ui
     extractedPattern >>= convertedCoordinate;
 
     return patternBitset(extractedPattern.to_ulong());
+}
+
+bool DiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length) {
+    const int xEnd = x + length - 1;
+    if (!IBoard::isValidPos(xEnd, y) || (x < y + 1 && xEnd > y + 1))
+        return false;
+
+    const int index = this->convertCoordinate(x, y);
+    if (player == getIdPlayer1() 
+        && (getPlayer1() & (mask << index)) == (mask << index))
+        return true;
+    else if (player == getIdPlayer2() 
+        && (getPlayer2() & (mask << index)) == (mask << index))
+        return true;
+    return false;
 }

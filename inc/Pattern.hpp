@@ -9,17 +9,17 @@
 //     public:
 
 
-//         static patternsVector getPatterns(){
+//         static patternMap getPatterns(){
 //             return (Pattern()._patterns);
 //         }
 
-//         static patternBitset getCapturePatterns(){
+//         static patternMap getCapturePatterns(){
 //             return (Pattern()._capturePattern);
 //         }
 
 //         static bool compareBoardsWithPattern(Game::patternMap patterns)
 //         {
-//             ulong defaultPattern = patterns[Game::DEFAULT].to_ulong();
+//             ulong defaultPattern = patterns[Game::CLASSIC].to_ulong();
 //             ulong transposPattern = patterns[Game::TRANSPOS].to_ulong();
 //             ulong diagPattern = patterns[Game::DIAG].to_ulong();
 //             ulong antiDiagPattern = patterns[Game::ANTIDIAG].to_ulong();
@@ -34,7 +34,7 @@
 //             return false;
 //         }
 //     private:
-//         const patternsVector _patterns = {
+//         const heuristicMap _patterns = {
 //             patternBitset("1001"),
 //             patternBitset("1100"),
 //             patternBitset("0011"),

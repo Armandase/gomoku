@@ -6,6 +6,13 @@
 # include <iostream>
 # include "gomoku.hpp"
 # include "utils.hpp"
+# include "Button.hpp"
+
+const SDL_Color BLACK_COLOR = {0, 0, 0, 255};
+const SDL_Color WHITE_COLOR = {255, 255, 255, 255};
+
+class Game;
+class Button;
 
 class Render{
     public:
@@ -16,12 +23,16 @@ class Render{
         Render &operator=(const Render &rhs);
 
         SDL_Renderer* getRenderer() const;
-        void    init_sdl(const std::string& windowName, int windowWidth, int windowHeight);
+        void    initSDL(const std::string& windowName, int windowWidth, int windowHeight);
+        void    renderWin(uint16_t player) const;
 
-        void    writeText(const std::string& msg, const std::string& font, const SDL_Rect& rect, const SDL_Color& color, int size) const;
-        void    render_board() const;
+        void    renderBoard(Game& game) const;
+        void    renderMenu(Button &player, Button &IA) const;
         void    erasePlayer(int x, int y) const;
         void    drawCircle(int centreX, int centreY) const;
+        void    writeText(const std::string& msg, const std::string& font, const SDL_Rect& rect, const SDL_Color& color, int size) const;
+        void    renderCapture(uint16_t p1Capture, uint16_t p2Capture) const;
+        void    eraseCapture();
 
     private:
         SDL_Renderer *_renderer;

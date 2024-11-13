@@ -1,4 +1,5 @@
 #include "../inc/Render.hpp"
+#include "../inc/Game.hpp"
 
 Render::Render():
     _renderer(NULL),
@@ -36,7 +37,7 @@ SDL_Renderer* Render::getRenderer() const {
     return (this->_renderer);
 }
 
-void Render::init_sdl(const std::string& windowName, int windowWidth, int windowHeight){
+void Render::initSDL(const std::string& windowName, int windowWidth, int windowHeight){
     if (_renderer != NULL || _window != NULL)
         return ;
     //init sdl variables
@@ -76,14 +77,14 @@ void    Render::writeText(const std::string& msg, const std::string& font, const
     TTF_CloseFont(Font);
 }
 
-void Render::render_board() const
+void Render::renderBoard(Game& game) const
 {
     int cnt = 0;
     SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
     SDL_RenderClear(this->_renderer);
     SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
 
-    int line = BOARD_SIZE * (GRID_SIZE + 1)  + MARGIN / 2;
+    const int line = BOARD_SIZE * GRID_SIZE + MARGIN;
     for (int x = MARGIN, i = 0; x <= line + GRID_SIZE && i <= BOARD_SIZE; x += GRID_SIZE, i++)
     {
         // draw lines
@@ -93,26 +94,26 @@ void Render::render_board() const
 
         // draw number around the board
         SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
-        SDL_Color textColor = {0, 0, 0, 255};
+        SDL_Color textColor = BLACK_COLOR;
         
         SDL_Rect msg_rect_x = {x - (intlen(cnt) * (MARGIN / 3) / 2), 0 + MARGIN / 10, intlen(cnt) * (MARGIN / 3), MARGIN / 2};
         SDL_RenderFillRect(this->_renderer, &msg_rect_x);
-        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_x, textColor, 24);
+        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_x, textColor, FONT_SIZE);
 
         SDL_Rect msg_rect_y = {0 + MARGIN / 10, x - (intlen(cnt) * (MARGIN / 3) / 2), intlen(cnt) * (MARGIN / 3), MARGIN / 2};
         SDL_RenderFillRect(this->_renderer, &msg_rect_y);
-        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_y, textColor, 24);
+        writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_y, textColor, FONT_SIZE);
 
         cnt++;
     }
-
+    renderCapture(game.getCapture(WHITE), game.getCapture(BLACK));
     SDL_RenderPresent(this->_renderer);
 }
 
 
 void    Render::erasePlayer(int x, int y) const {
-    int x_square = x * GRID_SIZE + MARGIN - RADIUS;
-    int y_square = y * GRID_SIZE + MARGIN - RADIUS;
+    const int x_square = x * GRID_SIZE + MARGIN - RADIUS;
+    const int y_square = y * GRID_SIZE + MARGIN - RADIUS;
 
     if (SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255) != 0)
         throw std::runtime_error(std::string("Failed to set render draw color: ") + std::string(SDL_GetError()));
@@ -148,10 +149,7 @@ void    Render::erasePlayer(int x, int y) const {
     SDL_RenderPresent(this->_renderer);
 }
 
-
 void Render::drawCircle(int centreX, int centreY) const {
-    centreX = centreX * GRID_SIZE + MARGIN ;
-    centreY = centreY * GRID_SIZE + MARGIN ;
     int x = RADIUS - 1;
     int y = 0;
     int dx = 1, dy = 1;
@@ -182,4 +180,94 @@ void Render::drawCircle(int centreX, int centreY) const {
         }
     }
     SDL_RenderPresent(this->_renderer);
+}
+
+void Render::renderWin(uint16_t player) const {
+    std::string message;
+    player == BLACK ? message = "black wins" : message = "white wins";
+    //reset game's Game with game's color
+    SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
+    // SDL_RenderClear(_renderer);
+
+    // select text color and where it should be placed and his size
+    const SDL_Color textColor = {80, 0, 80, 255};
+    const SDL_Rect msg_rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3};
+    writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, FONT_SIZE);
+}
+
+void Render::renderMenu(Button &player, Button &IA) const {
+    SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
+    SDL_RenderClear(this->_renderer);
+    IA.renderButton(this->_renderer, 205, 127, 50);
+    player.renderButton(this->_renderer,205, 127, 50);
+    const SDL_Rect playerText = {SCREEN_WIDTH / 3 - 140, SCREEN_HEIGHT / 2 - 50, 280, 100};
+
+    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(this->_renderer, &playerText);
+    
+    writeText("Player VS Player", "fonts/OpenSans-Bold.ttf",
+                playerText, BLACK_COLOR, 50);
+
+    const SDL_Rect IAText = {SCREEN_WIDTH / 3 * 2 - 140, SCREEN_HEIGHT / 2 - 50, 280, 100};
+    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(this->_renderer, &IAText);
+    writeText("Player VS IA", "fonts/OpenSans-Bold.ttf",
+                IAText, BLACK_COLOR, 50);
+    
+    const SDL_Rect titleText = {SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 4 - 50, 200, 100};
+    writeText("GOMOKU", "fonts/OpenSans-Bold.ttf", 
+                titleText, BLACK_COLOR, FONT_SIZE);
+    
+    const SDL_Rect creditText = {SCREEN_WIDTH - 310, SCREEN_HEIGHT - 70, 300, 50};
+    writeText("made by adamiens & nlocusso", "fonts/OpenSans-Bold.ttf", 
+                creditText, BLACK_COLOR, 50);
+
+    SDL_RenderPresent(this->_renderer);
+}
+
+void Render::renderCapture(uint16_t p1Capture, uint16_t p2Capture) const {
+
+    // RENDER P1 CAPTURES
+    const SDL_Rect p1rect = {MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5, OFFSET, GRID_SIZE};
+    writeText(" WHITE CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p1rect, BLACK_COLOR, FONT_SIZE);
+
+    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+
+    for (int i = 1; i < p1Capture * 2 + 1; i++)
+    {
+        if (i <= 5)
+            drawCircle((MARGIN + BOARD_DIMENSIONS) + (i * RADIUS * 2) + i * 10, SCREEN_HEIGHT / 5 + GRID_SIZE + RADIUS);
+        else
+            drawCircle((MARGIN + BOARD_DIMENSIONS) + ((i - 5) * RADIUS * 2) + (i - 5) * 10, SCREEN_HEIGHT / 5 + GRID_SIZE + RADIUS * 3);
+    }
+
+    // RENDER P2 CAPTURES
+    const SDL_Rect p2rect = {MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5 * 3, OFFSET, GRID_SIZE};
+    writeText(" BLACK CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p2rect, BLACK_COLOR, FONT_SIZE);
+
+    SDL_SetRenderDrawColor(this->_renderer, 255, 255, 255, 255);
+
+    for (int i = 1; i < p2Capture * 2 + 1; i++)
+    {
+        if (i <= 5)
+            drawCircle((MARGIN + BOARD_DIMENSIONS) + (i * RADIUS * 2) + i * 10, SCREEN_HEIGHT / 5 * 3 + GRID_SIZE + RADIUS);
+        else
+            drawCircle((MARGIN + BOARD_DIMENSIONS) + ((i - 5) * RADIUS * 2) + (i - 5) * 10, SCREEN_HEIGHT / 5 * 3 + GRID_SIZE + RADIUS * 3);
+    }
+    
+    SDL_RenderPresent(this->_renderer);
+}
+
+void Render::eraseCapture() {
+    SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
+    for (int i = 1; i < 11; i++) {
+        if (i <= 5) {
+            drawCircle((MARGIN + BOARD_DIMENSIONS) + (i * RADIUS * 2) + i * 10, SCREEN_HEIGHT / 5 + GRID_SIZE + RADIUS);
+            drawCircle((MARGIN + BOARD_DIMENSIONS) + (i * RADIUS * 2) + i * 10, SCREEN_HEIGHT / 5 * 3 + GRID_SIZE + RADIUS);
+        } else {
+            drawCircle((MARGIN + BOARD_DIMENSIONS) + ((i - 5) * RADIUS * 2) + (i - 5) * 10, SCREEN_HEIGHT / 5 + GRID_SIZE + RADIUS * 3);
+            drawCircle((MARGIN + BOARD_DIMENSIONS) + ((i - 5) * RADIUS * 2) + (i - 5) * 10, SCREEN_HEIGHT / 5 * 3 + GRID_SIZE + RADIUS * 3);
+        }
+    }
+    SDL_RenderPresent(_renderer);
 }
