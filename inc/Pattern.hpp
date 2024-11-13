@@ -9,11 +9,11 @@
 //     public:
 
 
-//         static patternsVector getPatterns(){
+//         static patternMap getPatterns(){
 //             return (Pattern()._patterns);
 //         }
 
-//         static patternBitset getCapturePatterns(){
+//         static patternMap getCapturePatterns(){
 //             return (Pattern()._capturePattern);
 //         }
 
@@ -34,7 +34,7 @@
 //             return false;
 //         }
 //     private:
-//         const patternsVector _patterns = {
+//         const heuristicMap _patterns = {
 //             patternBitset("1001"),
 //             patternBitset("1100"),
 //             patternBitset("0011"),

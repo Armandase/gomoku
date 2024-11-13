@@ -257,22 +257,41 @@ void Game::handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t>& captures
     }
 }
 
+int bitsetLen = 4;
+
+bool checkPatternAtPosition(const patternMerge& playerLine, const patternMerge& opponentLine, t_pattern pattern, int startPos) {
+
+    patternMerge mask((1 << pattern.length) - 1);
+
+    // Shift bitset4 to align with startPos in bitset9
+    patternMerge playerShiftedPattern(playerLine.to_ulong() >> (9 - startPos));
+    patternMerge opponentShiftedPattern(opponentLine.to_ulong() >> (9 - startPos));
+    playerShiftedPattern &= mask;
+    opponentShiftedPattern &= mask;
+    // std::cout << startPos << ": " << playerShiftedPattern << "      " << opponentShiftedPattern << std::endl;
+    return playerShiftedPattern == pattern.player && opponentShiftedPattern == pattern.opponent;
+}
+
 int Game::heuristicTest(int x, int y, int player) {
-    patternMap extractMap = extractPatterns(x, y, PARTTERN_SIZE, player);
-    for (int i = 0; i < 4; i++) {
-        patternBitset boardPattern = extractMap[static_cast<Game::PatternType>(i)];
-        patternBitset revBoardPattern = extractMap[static_cast<Game::PatternType>(i + 4)];
+    const int opponent = (player == WHITE) ? BLACK : WHITE;
+    patternMap extractPlayer = extractPatterns(x, y, PARTTERN_SIZE, player);
+    patternMap extractOpponent = extractPatterns(x, y, PARTTERN_SIZE, opponent);
 
-        std::bitset<9> mergedPattern = (boardPattern.to_ulong() << 4 | revBoardPattern.to_ulong());
-        
-        std::bitset<5> checkPattern("01111");
-
-        for (int j = 0; j <= 4; j++) {
-            std::bitset<5> window = (mergedPattern >> j).to_ulong() & 0x1F; // 0x1F is 31 (binary: 11111)
+    for (const t_pattern& pattern: patternsArray) {
+        for (int i = 0; i < pattern.length; i++) {
+            patternBitset boardPlayerPattern = extractPlayer[static_cast<Game::PatternType>(i)];
+            patternBitset revBoardPlayerPattern = extractPlayer[static_cast<Game::PatternType>(i + 4)];
+            patternMerge mergedPlayerPattern = (boardPlayerPattern.to_ulong() << 4 | revBoardPlayerPattern.to_ulong());
             
-            if (window == checkPattern) {
-                std::cout << "Pattern found!" << std::endl;
-                break;
+            patternBitset boardOpponentPattern = extractOpponent[static_cast<Game::PatternType>(i)];
+            patternBitset revBoardOpponentPattern = extractOpponent[static_cast<Game::PatternType>(i + 4)];
+            patternMerge mergedOpponentPattern = (boardOpponentPattern.to_ulong() << 4 | revBoardOpponentPattern.to_ulong());
+
+            for (int i = 0; i < 5; i++) {
+                if (checkPatternAtPosition(mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - i))
+                    std::cout << "FIND: " << pattern.value << std::endl;
+                if (checkPatternAtPosition(mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + i))
+                    std::cout << "FIND: " << pattern.value << std::endl;
             }
         }
     }

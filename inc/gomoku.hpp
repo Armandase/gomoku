@@ -4,6 +4,7 @@
 # include <exception>
 # include <iostream>
 # include <vector>
+# include <array>
 # include <climits>
 # include <set>
 # include <bitset>
@@ -27,6 +28,11 @@
 // extern const int8_t g_dirX[8] = { 0, 0, 1, -1, 1, -1, 1, -1};
 // extern const int8_t g_dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
 
+enum side {
+    LEFT,
+    RIGHT,
+};
+
 enum player {
     EMPTY,
     WHITE,
@@ -38,12 +44,25 @@ enum mode {
     IA_MODE,
 };
 
+
 class Game;
 class Button;
 class Render;
 
 typedef std::bitset<PARTTERN_SIZE> patternBitset;
-typedef std::vector<patternBitset> patternsVector;
+typedef std::bitset<9> patternMerge;
+
+typedef struct s_pattern {
+    const patternMerge player;
+    const patternMerge opponent;
+    const int length;
+    const int value;
+} t_pattern;
+
+const std::array<const t_pattern, 2> patternsArray{{
+    {patternMerge("000001111"), patternMerge("000000000"), 4, 1000},
+    {patternMerge("000001101"), patternMerge("000000010"), 4, -1111},
+}};
 
 bool    handleMouse(int mouseX, int mouseY);
 int     modeSelection(Game& game, Render& render, Button &player, Button &IA);
