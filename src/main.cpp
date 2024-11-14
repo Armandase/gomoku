@@ -44,7 +44,8 @@ int main()
                     if (posValid(game, x, y, player)) {
                         place_stone(game, render, x, y, player);
                     }
-                } if (start == IA_MODE && player == BLACK) {
+                }
+                if (start == IA_MODE && player == BLACK) {
                     std::cout << "IA TURN" << std::endl;
                     t_playerGame gameIA = findBestMove(game, DEPTH);
                     place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,

@@ -4,7 +4,7 @@
 IBoard::IBoard()
     : _player1()
     , _player2()
-    , _width(BOARD_SIZE + 1)
+    , _width(BOARD_SIZE)
     , _idPlayer1(WHITE)
     , _idPlayer2(BLACK)
 {
