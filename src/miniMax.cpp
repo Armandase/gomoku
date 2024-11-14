@@ -23,15 +23,13 @@ int miniMax(Game& node, int depth, bool maximizingPlayer) {
     return node.globalHeurisitic(depth % 2);
   if (maximizingPlayer) {
     int value = std::numeric_limits<int>::min();
-    gameSet possibleMoves =
-        generatePossibleMoves(node, getCurrentPlayer(depth, depth % 2));
+    gameSet possibleMoves = generatePossibleMoves(node, depth % 2);
     for (auto& move : possibleMoves)
       value = std::max(value, miniMax(move.game, depth - 1, false));
     return value;
   } else {
     int value = std::numeric_limits<int>::max();
-    gameSet possibleMoves =
-        generatePossibleMoves(node, getCurrentPlayer(depth, depth % 2));
+    gameSet possibleMoves = generatePossibleMoves(node, depth % 2);
     for (auto& move : possibleMoves)
       value = std::min(value, miniMax(move.game, depth - 1, true));
     return value;
@@ -46,6 +44,7 @@ t_playerGame findBestMove(Game& root, int depth) {
       generatePossibleMoves(root, getCurrentPlayer(depth, 0));
   t_playerGame bestMove = possibleMoves.front();
   std::cout << "ALlez le foot" << std::endl;
+  std::cout << "Possibles moves" << possibleMoves.size() << std::endl;
   for (auto& move : possibleMoves) {
     int value = miniMax(move.game, depth, false);
     std::cout << "Value: " << value << std::endl;
