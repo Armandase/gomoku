@@ -22,6 +22,9 @@ int main()
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
 
     // Render Start Menu
+    // const SDL_Rect PvP = {SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100};
+    // render.renderImage("img/wlp_go.png", NULL);
+    // render.renderImage("img/PvP_Button.png", &PvP);
     render.renderMenu(playerButton, IAButton);
 
     Game game;

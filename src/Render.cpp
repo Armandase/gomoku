@@ -13,6 +13,8 @@ Render::~Render()
         SDL_DestroyRenderer(this->_renderer);
     if (this->_window) {
         SDL_DestroyWindow(this->_window);
+        TTF_Quit();
+        IMG_Quit();
         SDL_Quit();
     }
 };
@@ -46,6 +48,9 @@ void Render::initSDL(const std::string& windowName, int windowWidth, int windowH
         throw std::runtime_error(std::string("Failed to init SDL: ") + std::string(SDL_GetError()));
     if (TTF_Init() == -1)
         throw std::runtime_error(std::string("Failed to init TTF: ") + std::string(SDL_GetError()));
+    int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+    if (!(IMG_Init(imgFlags) & imgFlags))
+        throw std::runtime_error(std::string("Failed to init SDL_Image: ") + std::string(SDL_GetError()));
     this->_window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
     if (!_window)
         throw std::runtime_error(std::string("Failed to create SDL window: ") + std::string(SDL_GetError()));
@@ -76,6 +81,19 @@ void Render::writeText(const std::string& msg, const std::string& font, const SD
     SDL_FreeSurface(surfaceMsg);
     SDL_DestroyTexture(Message);
     TTF_CloseFont(Font);
+}
+
+void Render::renderImage(const std::string& path, const SDL_Rect* rect) {
+    SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+    if (!loadedSurface)
+        throw std::runtime_error(std::string("Failed to load Image: ") + std::string(SDL_GetError()));
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->_renderer, loadedSurface);
+    SDL_FreeSurface(loadedSurface);
+    if (!texture)
+        throw std::runtime_error(std::string("Failed to load Texture: ") + std::string(SDL_GetError()));
+    SDL_RenderCopy(this->_renderer, texture, NULL, rect);
+    SDL_RenderPresent(this->_renderer);
+    SDL_DestroyTexture(texture);
 }
 
 void Render::renderBoard(Game& game) const

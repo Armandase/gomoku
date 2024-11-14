@@ -342,20 +342,19 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
     playerShiftedPattern &= mask;
     opponentShiftedPattern &= mask;
 
-    // std::cout << startPos << ": " << playerShiftedPattern << "      " <<
-    // opponentShiftedPattern << std::endl;
     return playerShiftedPattern == pattern.player && opponentShiftedPattern == pattern.opponent;
 }
 
 int Game::heuristicTest(int x, int y, int player)
 {
+    bool exit = false;
     int counter = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
     patternMap extractPlayer = extractPatterns(x, y, PATTERN_SIZE, player);
     patternMap extractOpponent = extractPatterns(x, y, PATTERN_SIZE, opponent);
 
-    for (const t_pattern& pattern : patternsArray) {
-        for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
+        for (const t_pattern& pattern : patternsArray) {
             patternBitset boardPlayerPattern = extractPlayer[static_cast<Game::PatternType>(i)];
             patternBitset revBoardPlayerPattern = extractPlayer[static_cast<Game::PatternType>(i + 4)];
             patternMerge mergedPlayerPattern = (boardPlayerPattern.to_ulong() << 4 | revBoardPlayerPattern.to_ulong());
@@ -366,27 +365,23 @@ int Game::heuristicTest(int x, int y, int player)
 
             for (int i = 0; i < pattern.length; i++) {
                 if (checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - i)) {
-                    counter += pattern.value;
-                    // std::cout << "PLAYER: " << ((player == WHITE) ? "WHITE" : "BLACK")
-                    // << " | FIND: " << pattern.value << " | PLAYER PATTERN: " <<
-                    // pattern.player << " | OPP PATTERN: " << pattern.opponent <<
-                    // std::endl;
-                    break;
-                }
-                if (checkPatternAtPosition(
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - i)
+                    || checkPatternAtPosition(
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + i)) {
-                    counter += pattern.value;
                     // std::cout << "PLAYER: " << ((player == WHITE) ? "WHITE" : "BLACK")
                     // << " | FIND: " << pattern.value << " | PLAYER PATTERN: " <<
                     // pattern.player << " | OPP PATTERN: " << pattern.opponent <<
                     // std::endl;
+                    counter += pattern.value;
+                    exit = true;
                     break;
                 }
             }
+            if (exit)
+                break ;
         }
     }
-    return counter;
+    return 0;
 }
 
 int Game::globalHeurisitic(int player)
