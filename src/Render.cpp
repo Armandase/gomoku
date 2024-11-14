@@ -85,8 +85,8 @@ void Render::renderBoard(Game& game) const
     SDL_RenderClear(this->_renderer);
     SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
 
-    const int line = BOARD_SIZE * GRID_SIZE + MARGIN;
-    for (int x = MARGIN, i = 0; x <= line + GRID_SIZE && i <= BOARD_SIZE; x += GRID_SIZE, i++) {
+    const int line = BOARD_DIMENSIONS + MARGIN;
+    for (int x = MARGIN, i = 0; x <= line + GRID_SIZE && i < BOARD_SIZE; x += GRID_SIZE, i++) {
         // draw lines
         SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
         SDL_RenderDrawLine(this->_renderer, x, MARGIN, x, line);
@@ -125,11 +125,11 @@ void Render::erasePlayer(int x, int y) const
         throw std::runtime_error(std::string("Failed to set render draw color: ") + std::string(SDL_GetError()));
 
     int borderX = DIAMETER;
-    if (x_square + borderX > MARGIN + (GRID_SIZE * BOARD_SIZE))
+    if (x_square + borderX > MARGIN + BOARD_DIMENSIONS)
         borderX = RADIUS;
 
     int borderY = DIAMETER;
-    if (y_square + borderY > MARGIN + (GRID_SIZE * BOARD_SIZE))
+    if (y_square + borderY > MARGIN + BOARD_DIMENSIONS)
         borderY = RADIUS;
 
     int startX = 0;

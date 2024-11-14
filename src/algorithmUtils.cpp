@@ -47,7 +47,7 @@ IBoard::bitboard getSurroundingBits(Game& game)
     auto secondPlayer = game.getClassicBoard().getPlayer2();
 
     IBoard::bitboard allPieces = firstPlayer | secondPlayer;
-    int board_size = BOARD_SIZE + 1;
+    int board_size = BOARD_SIZE;
 
     const int dir[8][2] = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 },
         { 1, 1 }, { -1, -1 }, { 1, -1 }, { -1, 1 } };
@@ -79,8 +79,8 @@ gameSet generatePossibleMoves(Game& game, int player)
     int width = game.getClassicBoard().getWidth();
     int nextPlayer = player == BLACK ? WHITE : BLACK;
 
-    for (int y = 0; y < BOARD_SIZE + 1; y++) {
-        for (int x = 0; x < BOARD_SIZE + 1; x++) {
+    for (int y = 0; y < BOARD_SIZE; y++) {
+        for (int x = 0; x < BOARD_SIZE; x++) {
             if (game.getClassicBoard().isPosEmpty(x, y) == true && neighbour.test(x + y * width)) {
                 Game copy = game;
                 copy.setPosToBoards(x, y, nextPlayer);
