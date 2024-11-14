@@ -9,6 +9,7 @@ Game::Game()
     , _diagBoard()
     , _player1Capture(0)
     , _player2Capture(0)
+    , _heuristic(0)
 {
 }
 
@@ -21,6 +22,7 @@ Game::Game(const Game& cpy)
     , _diagBoard(cpy._diagBoard)
     , _player1Capture(cpy._player1Capture)
     , _player2Capture(cpy._player2Capture)
+    , _heuristic(cpy._heuristic)
 {
 }
 
@@ -33,6 +35,7 @@ Game& Game::operator=(const Game& rhs)
         this->_diagBoard = rhs._diagBoard;
         this->_player1Capture = rhs._player1Capture;
         this->_player2Capture = rhs._player2Capture;
+        this->_heuristic = rhs._heuristic;
     }
     return (*this);
 }

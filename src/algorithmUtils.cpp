@@ -1,12 +1,5 @@
 #include "../inc/algorithm.hpp"
 
-int getCurrentPlayer(int depth, int initPlayer)
-{
-    if ((depth + 2) % 2 == DEPTH % 2)
-        return initPlayer;
-    return initPlayer == BLACK ? WHITE : BLACK;
-}
-
 // IBoard::bitboard getSurroundingBits(Game& game) {
 //     IBoard::bitboard surroundingBits = 0;
 //     auto firstPlayer = game.getClassicBoard().getPlayer1();
@@ -77,13 +70,12 @@ gameSet generatePossibleMoves(Game& game, int player)
     gameSet possibleMoves;
     IBoard::bitboard neighbour = getSurroundingBits(game);
     int width = game.getClassicBoard().getWidth();
-    int nextPlayer = player == BLACK ? WHITE : BLACK;
 
     for (int y = 0; y < BOARD_SIZE; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
             if (game.getClassicBoard().isPosEmpty(x, y) == true && neighbour.test(x + y * width)) {
                 Game copy = game;
-                copy.setPosToBoards(x, y, nextPlayer);
+                copy.setPosToBoards(x, y, player);
                 // if (validGame(copy, y, x, player) == false)
                 // continue;
 
@@ -98,7 +90,7 @@ gameSet generatePossibleMoves(Game& game, int player)
                 t_playerGame playerGame;
                 playerGame.stone.x = x;
                 playerGame.stone.y = y;
-                playerGame.stone.player = nextPlayer;
+                playerGame.stone.player = player;
                 playerGame.game = copy;
                 possibleMoves.push_back(playerGame);
             }
