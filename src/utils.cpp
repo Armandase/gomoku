@@ -1,6 +1,7 @@
 #include "../inc/gomoku.hpp"
 
-void    writeText(const std::string& msg, const std::string& font, const SDL_Rect rect, const SDL_Color& color, const int &size, SDL_Renderer *renderer){
+void writeText(const std::string& msg, const std::string& font, const SDL_Rect rect, const SDL_Color& color, const int& size, SDL_Renderer* renderer)
+{
     TTF_Font* Font = TTF_OpenFont(font.c_str(), size);
     SDL_Surface* surfaceMsg = TTF_RenderText_Solid(Font, msg.c_str(), color);
     SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMsg);
@@ -11,7 +12,8 @@ void    writeText(const std::string& msg, const std::string& font, const SDL_Rec
     TTF_CloseFont(Font);
 }
 
-int modeSelection(Game& game, Render& render, Button &player, Button &IA) {
+int modeSelection(Game& game, Render& render, Button& player, Button& IA)
+{
     int mouseX, mouseY;
 
     // get the coordinate of the click to know which button has been hit
@@ -27,7 +29,8 @@ int modeSelection(Game& game, Render& render, Button &player, Button &IA) {
     return 0;
 }
 
-int intlen(int number) {
+int intlen(int number)
+{
     if (number == 0)
         return 1;
     int length = 0;

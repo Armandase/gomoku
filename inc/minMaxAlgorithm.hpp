@@ -24,6 +24,4 @@
 // int getCurrentPlayer(int depth, int initPlayer) const noexcept;
 // bitboard getSurroundingBits(IBoard& game);
 
-
-
 // #endif

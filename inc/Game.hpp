@@ -1,72 +1,74 @@
 #ifndef __GAME_HPP__
 #define __GAME_HPP__
 
-# include "ClassicBoard.hpp" 
-# include "TransposedBoard.hpp" 
-# include "AntiDiagBoard.hpp" 
-# include "DiagBoard.hpp" 
-# include "Pattern.hpp"
+#include "AntiDiagBoard.hpp"
+#include "ClassicBoard.hpp"
+#include "DiagBoard.hpp"
+#include "Pattern.hpp"
+#include "TransposedBoard.hpp"
 
 // bitboard representation of the board
 
-class Game{
-    public:
-        typedef enum {
-            CLASSIC,
-            TRANSPOS,
-            DIAG,
-            ANTIDIAG,
-            REV_CLASSIC,
-            REV_TRANSPOS,
-            REV_DIAG,
-            REV_ANTIDIAG
-        } PatternType;
-        typedef std::map<Game::PatternType, patternBitset> patternMap;
-        typedef std::pair<Game::PatternType, patternBitset> patternPair;
-    public:
-        Game();
-        ~Game();
-        
-        Game(const Game &cpy);
-        Game &operator=(const Game &rhs);
-        bool operator==(Game &rhs);
+class Game {
+public:
+    typedef enum {
+        CLASSIC,
+        TRANSPOS,
+        DIAG,
+        ANTIDIAG,
+        REV_CLASSIC,
+        REV_TRANSPOS,
+        REV_DIAG,
+        REV_ANTIDIAG
+    } PatternType;
+    typedef std::map<Game::PatternType, patternBitset> patternMap;
+    typedef std::pair<Game::PatternType, patternBitset> patternPair;
 
-        void    addCapture(int player);
-        uint16_t getCapture(int player);
-        void    setPosToBoards(uint16_t x, uint16_t y, int player);
-        void    removePosToBoards(uint16_t x, uint16_t y);
-        void    resetBoards();
-        bool    isFull() const;
+public:
+    Game();
+    ~Game();
 
-        ClassicBoard& getClassicBoard() noexcept;
-        TransposedBoard& getTransposedBoard() noexcept;
-        AntiDiagBoard& getAntiDiagBoard() noexcept;
-        DiagBoard& getDiagBoard() noexcept;
+    Game(const Game& cpy);
+    Game& operator=(const Game& rhs);
+    bool operator==(Game& rhs);
 
-        patternMap extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
-        size_t  hashGame()const;
+    void addCapture(int player);
+    uint16_t getCapture(int player);
+    void setPosToBoards(uint16_t x, uint16_t y, int player);
+    void removePosToBoards(uint16_t x, uint16_t y);
+    void resetBoards();
+    bool isFull() const;
 
-        void    setHeuristic(int64_t heuristic);
-        int64_t getHeuristic() const;
+    ClassicBoard& getClassicBoard() noexcept;
+    TransposedBoard& getTransposedBoard() noexcept;
+    AntiDiagBoard& getAntiDiagBoard() noexcept;
+    DiagBoard& getDiagBoard() noexcept;
 
-        bool isDoubleThree(uint16_t x, uint16_t y, uint16_t player);
-        bool canCapture(uint16_t x, uint16_t y, uint16_t player);
-        bool canBeCaptured(uint16_t x, uint16_t y, PatternType boardType, uint16_t player);
-        std::vector<uint16_t> isCapture(uint16_t x, uint16_t y, uint16_t player);
-        void handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t>& capturesBoard, uint16_t player, Render& render);
-        bool playerWin(uint16_t player);
-        int  heuristicTest(int x, int y, int player);
-        int  globalHeurisitic(int player);
-    private:
-        ClassicBoard    _classicBoard;
-        TransposedBoard _transposedBoard;
-        AntiDiagBoard   _antiDiagBoard;
-        DiagBoard       _diagBoard;
+    patternMap extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
+    size_t hashGame() const;
 
-        uint16_t _player1Capture;
-        uint16_t _player2Capture;
+    void setHeuristic(int64_t heuristic);
+    int64_t getHeuristic() const;
 
-        int64_t _heuristic;
+    bool isDoubleThree(uint16_t x, uint16_t y, uint16_t player);
+    bool canCapture(uint16_t x, uint16_t y, uint16_t player);
+    bool canBeCaptured(uint16_t x, uint16_t y, PatternType boardType, uint16_t player);
+    std::vector<uint16_t> isCapture(uint16_t x, uint16_t y, uint16_t player);
+    void handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t>& capturesBoard, uint16_t player, Render& render);
+    bool playerWin(uint16_t player);
+    int heuristicTest(int x, int y, int player);
+    int globalHeurisitic(int player);
+
+private:
+    ClassicBoard _classicBoard;
+    TransposedBoard _transposedBoard;
+    AntiDiagBoard _antiDiagBoard;
+    DiagBoard _diagBoard;
+
+    uint16_t _player1Capture;
+    uint16_t _player2Capture;
+
+    int64_t _heuristic;
 };
 
 #endif

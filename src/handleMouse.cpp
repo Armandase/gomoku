@@ -1,6 +1,5 @@
-#include "../inc/utils.hpp"
 #include "../inc/Game.hpp"
-
+#include "../inc/utils.hpp"
 
 bool posValid(Game& game, int x, int y, int player)
 {
@@ -15,7 +14,7 @@ bool posValid(Game& game, int x, int y, int player)
     return true;
 }
 
-void place_stone(Game& game, Render& render, int x, int y, int &player)
+void place_stone(Game& game, Render& render, int x, int y, int& player)
 {
     game.setPosToBoards(x, y, player);
     game.heuristicTest(x, y, player);
@@ -41,7 +40,7 @@ void place_stone(Game& game, Render& render, int x, int y, int &player)
     player = (player == WHITE) ? BLACK : WHITE;
 }
 
-bool    handleMouse(int mouseX, int mouseY)
+bool handleMouse(int mouseX, int mouseY)
 {
     if (mouseX < MARGIN || mouseX > MARGIN + BOARD_DIMENSIONS
         || mouseY < MARGIN || mouseY > MARGIN + BOARD_DIMENSIONS)

@@ -33,19 +33,19 @@
 // extern const int8_t g_dirY[8] = { 1, -1, 0, 0, 1, -1, -1, 1};
 
 enum side {
-  LEFT,
-  RIGHT,
+    LEFT,
+    RIGHT,
 };
 
 enum player {
-  EMPTY,
-  WHITE,
-  BLACK,
+    EMPTY,
+    WHITE,
+    BLACK,
 };
 
 enum mode {
-  PLAYER_MODE = 1,
-  IA_MODE,
+    PLAYER_MODE = 1,
+    IA_MODE,
 };
 
 class Game;
@@ -56,28 +56,28 @@ typedef std::bitset<PATTERN_SIZE> patternBitset;
 typedef std::bitset<MERGE_SIZE> patternMerge;
 
 typedef struct s_pattern {
-  const patternMerge player;
-  const patternMerge opponent;
-  const int length;
-  const int value;
+    const patternMerge player;
+    const patternMerge opponent;
+    const int length;
+    const int value;
 } t_pattern;
 
-const std::array<const t_pattern, 11> patternsArray{{
+const std::array<const t_pattern, 11> patternsArray { {
     // SIZE 4
-    {patternMerge("000001111"), patternMerge("000000000"), 4, 1000000},
-    {patternMerge("000001101"), patternMerge("000000000"), 4, 100000},
-    {patternMerge("000001011"), patternMerge("000000000"), 4, 100000},
-    {patternMerge("000001110"), patternMerge("000000001"), 4, 1000},
-    {patternMerge("000000111"), patternMerge("000001000"), 4, 1000},
-    {patternMerge("000001001"), patternMerge("000000110"), 4, 10000},
-    {patternMerge("000001001"), patternMerge("000000000"), 4, 10},
-    {patternMerge("000001010"), patternMerge("000000000"), 4, 10},
+    { patternMerge("000001111"), patternMerge("000000000"), 4, 1000000 },
+    { patternMerge("000001101"), patternMerge("000000000"), 4, 100000 },
+    { patternMerge("000001011"), patternMerge("000000000"), 4, 100000 },
+    { patternMerge("000001110"), patternMerge("000000001"), 4, 1000 },
+    { patternMerge("000000111"), patternMerge("000001000"), 4, 1000 },
+    { patternMerge("000001001"), patternMerge("000000110"), 4, 10000 },
+    { patternMerge("000001001"), patternMerge("000000000"), 4, 10 },
+    { patternMerge("000001010"), patternMerge("000000000"), 4, 10 },
     // SIZE 3
-    {patternMerge("000000111"), patternMerge("000000000"), 3, 10000},
-    {patternMerge("000000101"), patternMerge("000000000"), 3, 10},
+    { patternMerge("000000111"), patternMerge("000000000"), 3, 10000 },
+    { patternMerge("000000101"), patternMerge("000000000"), 3, 10 },
     // SIZE 2
-    {patternMerge("000000011"), patternMerge("000000000"), 2, 100},
-}};
+    { patternMerge("000000011"), patternMerge("000000000"), 2, 100 },
+} };
 
 bool handleMouse(int mouseX, int mouseY);
 int modeSelection(Game& game, Render& render, Button& player, Button& IA);

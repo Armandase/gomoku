@@ -1,22 +1,22 @@
 #ifndef __DIAGBOARD_HPP__
 #define __DIAGBOARD_HPP__
 
-# include "IBoard.hpp"
+#include "IBoard.hpp"
 
-class DiagBoard: public IBoard{
-    public:
-        DiagBoard();
-        ~DiagBoard();
-        
-        DiagBoard(const DiagBoard &cpy);
-        DiagBoard &operator=(const DiagBoard &rhs);
+class DiagBoard : public IBoard {
+public:
+    DiagBoard();
+    ~DiagBoard();
 
-        uint16_t     convertCoordinate(uint16_t x, uint16_t y) const noexcept;
+    DiagBoard(const DiagBoard& cpy);
+    DiagBoard& operator=(const DiagBoard& rhs);
 
-        patternBitset extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
-        patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
-        
-        bool findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length);
+    uint16_t convertCoordinate(uint16_t x, uint16_t y) const noexcept;
+
+    patternBitset extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
+    patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
+
+    bool findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length);
 };
 
 #endif

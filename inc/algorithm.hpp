@@ -8,14 +8,14 @@
 typedef std::chrono::time_point<std::chrono::high_resolution_clock> timePoint;
 // typedef std::vector<Game> gameSet;
 typedef struct s_stone {
-  int x;
-  int y;
-  int player;
+    int x;
+    int y;
+    int player;
 } t_stone;
 
 typedef struct s_playerGame {
-  t_stone stone;
-  Game game;
+    t_stone stone;
+    Game game;
 } t_playerGame;
 
 typedef std::vector<t_playerGame> gameSet;

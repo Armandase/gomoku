@@ -1,12 +1,12 @@
 #ifndef __TRANSPOSITION_TABLE_HPP__
-# define __TRANSPOSITION_TABLE_HPP__
+#define __TRANSPOSITION_TABLE_HPP__
 
-# define LOWERBOUND 0
-# define UPPERBOUND 1
+#define LOWERBOUND 0
+#define UPPERBOUND 1
 
-# include "Game.hpp"
-# include "gomoku.hpp"
-# include <unordered_map>
+#include "Game.hpp"
+#include "gomoku.hpp"
+#include <unordered_map>
 
 typedef struct s_dataTranspositionTable {
     int heuristic = 0;
@@ -16,21 +16,21 @@ typedef struct s_dataTranspositionTable {
 
 typedef std::unordered_map<size_t, dataTranspositionTable_t> transTable;
 
-class TranspositionTable{
-    public:
-        TranspositionTable();
-        ~TranspositionTable();
-        
-        TranspositionTable(const TranspositionTable &cpy);
-        TranspositionTable &operator=(const TranspositionTable &rhs);
+class TranspositionTable {
+public:
+    TranspositionTable();
+    ~TranspositionTable();
 
-        transTable getTable() const;
+    TranspositionTable(const TranspositionTable& cpy);
+    TranspositionTable& operator=(const TranspositionTable& rhs);
 
-        void store(Game& game, int heuristic, int bound);
-        const dataTranspositionTable_t* retrieve(Game& game) const;
+    transTable getTable() const;
 
-    private:
-        transTable _table;
+    void store(Game& game, int heuristic, int bound);
+    const dataTranspositionTable_t* retrieve(Game& game) const;
+
+private:
+    transTable _table;
 };
 
 #endif

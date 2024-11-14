@@ -8,7 +8,6 @@
 // class Pattern{
 //     public:
 
-
 //         static patternMap getPatterns(){
 //             return (Pattern()._patterns);
 //         }
@@ -25,7 +24,7 @@
 //             ulong antiDiagPattern = patterns[Game::ANTIDIAG].to_ulong();
 
 //             for (auto& pattern: Pattern::getPatterns()){
-//                 if (pattern.to_ulong() == defaultPattern 
+//                 if (pattern.to_ulong() == defaultPattern
 //                 ||  pattern.to_ulong() == transposPattern
 //                 ||  pattern.to_ulong() == diagPattern
 //                 ||  pattern.to_ulong() == antiDiagPattern)

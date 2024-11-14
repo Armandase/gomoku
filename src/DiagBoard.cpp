@@ -1,37 +1,37 @@
 #include "../inc/DiagBoard.hpp"
 #include "../inc/Pattern.hpp"
 
-DiagBoard::DiagBoard():
-    IBoard()
+DiagBoard::DiagBoard()
+    : IBoard()
 {
     resetBoard();
 }
 
-DiagBoard::~DiagBoard(){
+DiagBoard::~DiagBoard() {
 
 };
 
-DiagBoard::DiagBoard(const DiagBoard &cpy):
-    IBoard::IBoard(cpy)
+DiagBoard::DiagBoard(const DiagBoard& cpy)
+    : IBoard::IBoard(cpy)
 {
 }
 
-DiagBoard &DiagBoard::operator=(const DiagBoard &rhs)
+DiagBoard& DiagBoard::operator=(const DiagBoard& rhs)
 {
-    if (this != &rhs)
-    {
-	    IBoard::operator=(rhs);
+    if (this != &rhs) {
+        IBoard::operator=(rhs);
     }
     return (*this);
 }
 
-uint16_t  DiagBoard::convertCoordinate(uint16_t x, uint16_t y) const noexcept
+uint16_t DiagBoard::convertCoordinate(uint16_t x, uint16_t y) const noexcept
 {
     int newY = (x + y) % IBoard::getWidth();
     return (x + newY * IBoard::getWidth());
 };
 
-patternBitset DiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const {
+patternBitset DiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const
+{
     int convertedCoordinate = this->convertCoordinate(xPos, yPos);
     xPos = convertedCoordinate % IBoard::getWidth();
     yPos = convertedCoordinate / IBoard::getWidth();
@@ -53,7 +53,8 @@ patternBitset DiagBoard::extractPattern(uint16_t xPos, uint16_t yPos, uint16_t l
     return patternBitset(extractedPattern.to_ulong());
 }
 
-patternBitset DiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const {
+patternBitset DiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const
+{
     int convertedCoordinate = this->convertCoordinate(xPos, yPos);
     xPos = convertedCoordinate % IBoard::getWidth();
     yPos = convertedCoordinate / IBoard::getWidth();
@@ -76,16 +77,17 @@ patternBitset DiagBoard::extractPatternReversed(uint16_t xPos, uint16_t yPos, ui
     return patternBitset(extractedPattern.to_ulong());
 }
 
-bool DiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length) {
+bool DiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length)
+{
     const int xEnd = x + length - 1;
     if (!IBoard::isValidPos(xEnd, y) || (x < y + 1 && xEnd > y + 1))
         return false;
 
     const int index = this->convertCoordinate(x, y);
-    if (player == getIdPlayer1() 
+    if (player == getIdPlayer1()
         && (getPlayer1() & (mask << index)) == (mask << index))
         return true;
-    else if (player == getIdPlayer2() 
+    else if (player == getIdPlayer2()
         && (getPlayer2() & (mask << index)) == (mask << index))
         return true;
     return false;

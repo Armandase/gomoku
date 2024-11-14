@@ -2,16 +2,18 @@
 #include "../inc/utils.hpp"
 // #include "../inc/Pattern.hpp"
 
-Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax){
+Heuristic finCorrectValue(const heuristicSet& recursiveResult, int minOrMax)
+{
     if (recursiveResult.empty())
         throw std::runtime_error("Empty vector of recursive\n");
-    if (minOrMax == MAX){
+    if (minOrMax == MAX) {
         return *recursiveResult.rbegin();
     }
     return *recursiveResult.begin();
 }
 
-Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int alpha, int beta) {
+Heuristic minMaxRecursive(Heuristic& heuristic, int initPlayer, int depth, int alpha, int beta)
+{
     if (depth == 0 || checkWin(heuristic) == true) {
         heuristic.setHeuristic(heuristic.globalHeuristic());
         return (heuristic);
@@ -35,7 +37,7 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
                 copy.setPos(x, y, getCurrentPlayer(depth, initPlayer));
                 if (validGame(copy, y, x, heuristic.getPlayer()) == false)
                     continue;
-                if (checkWin(heuristic) == true){
+                if (checkWin(heuristic) == true) {
                     Heuristic h(copy, x, y, heuristic.getBeginX(), heuristic.getBeginY());
                     h.setHeuristic(INT_MAX);
                     return h;
@@ -71,55 +73,54 @@ Heuristic minMaxRecursive(Heuristic &heuristic, int initPlayer, int depth, int a
 
     heuristicSet recursiveResult;
     int limit = (PRUNING < result.size()) ? PRUNING : result.size();
-    for (int i = 0; i < limit; i ++){
-        //takes the max values
-        if (getCurrentPlayer(depth, initPlayer) == initPlayer){
+    for (int i = 0; i < limit; i++) {
+        // takes the max values
+        if (getCurrentPlayer(depth, initPlayer) == initPlayer) {
             auto it = result.begin();
-            std::advance(it, i);    
+            std::advance(it, i);
             Heuristic tmp = *it;
             recursiveResult.insert(minMaxRecursive(tmp, initPlayer, depth - 1, alpha, beta));
-        }
-        else{
+        } else {
             auto it = result.rbegin();
             std::advance(it, i);
             Heuristic tmp = *it;
             recursiveResult.insert(minMaxRecursive(tmp, initPlayer, depth - 1, alpha, beta));
-        } 
+        }
     }
-    
+
     if (initPlayer == getCurrentPlayer(depth, initPlayer))
         return finCorrectValue(recursiveResult, MAX);
 
     return finCorrectValue(recursiveResult, MIN);
 }
 
+Heuristic minMaxFirstStep(Board& game, int player)
+{
+    std::vector<std::future<Heuristic>> threadResult;
 
-Heuristic    minMaxFirstStep(Board& game, int player){
-    std::vector<std::future<Heuristic> > threadResult;
-    
     {
         heuristicSet possibleMoves = generatePossibleMoves(game, player);
 
         int alpha = -2147483648, beta = 2147483647;
 
         int limit = (PRUNING < possibleMoves.size()) ? PRUNING : possibleMoves.size();
-        for (int i = 0; i < limit; i ++){
+        for (int i = 0; i < limit; i++) {
             auto it = possibleMoves.begin();
             std::advance(it, i);
             Heuristic tmp = *it;
-            threadResult.push_back(std::async(std::launch::async, minMaxRecursive, std::ref(tmp), player, DEPTH , alpha, beta));
+            threadResult.push_back(std::async(std::launch::async, minMaxRecursive, std::ref(tmp), player, DEPTH, alpha, beta));
         }
     }
 
     heuristicSet recursiveResult;
     int size = threadResult.size();
-    for (int i = 0; i < size; i ++){
+    for (int i = 0; i < size; i++) {
         threadResult[i].wait();
-        if (threadResult[i].valid() == true){
+        if (threadResult[i].valid() == true) {
             Heuristic threadReturn = threadResult[i].get();
             recursiveResult.insert(threadReturn);
         } else {
-            std::cerr << "Fail to join a future" << std::endl; 
+            std::cerr << "Fail to join a future" << std::endl;
         }
     }
     Heuristic result = *recursiveResult.begin();
