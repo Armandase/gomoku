@@ -347,13 +347,14 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
 
 int Game::heuristicTest(int x, int y, int player)
 {
-    bool exit = false;
+    bool exit;
     int counter = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
     patternMap extractPlayer = extractPatterns(x, y, PATTERN_SIZE, player);
     patternMap extractOpponent = extractPatterns(x, y, PATTERN_SIZE, opponent);
 
     for (int i = 0; i < 4; i++) {
+        exit = false;
         for (const t_pattern& pattern : patternsArray) {
             patternBitset boardPlayerPattern = extractPlayer[static_cast<Game::PatternType>(i)];
             patternBitset revBoardPlayerPattern = extractPlayer[static_cast<Game::PatternType>(i + 4)];

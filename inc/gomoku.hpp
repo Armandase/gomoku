@@ -67,7 +67,8 @@ const std::array<const t_pattern, 19> patternsArray { {
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
     { patternMerge("000000110"), patternMerge("000001001"), 4, 0 },
-    // PATTERN SORT BY VALUE
+    // PATTERN SORT BY VALUE                                   2147483647
+    { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE FREE WIN GG EZ WP EN BASKET
     { patternMerge("000001111"), patternMerge("000000000"), 5, 10000000 }, // ONE SIDE OPEN FOUR
     { patternMerge("000011110"), patternMerge("000000000"), 5, 10000000 }, // ONE SIDE OPEN FOUR
     { patternMerge("000001101"), patternMerge("000000000"), 4, 100000 },
