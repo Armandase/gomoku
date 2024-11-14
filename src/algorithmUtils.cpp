@@ -98,3 +98,8 @@ gameSet generatePossibleMoves(Game& game, int player)
     }
     return possibleMoves;
 }
+
+bool isTerminal(Game& node, int player)
+{
+    return node.playerWin(player) || node.isFull();
+}

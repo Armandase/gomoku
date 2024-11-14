@@ -1,11 +1,6 @@
 #include "../inc/TranspositionTable.hpp"
 #include "../inc/algorithm.hpp"
 
-bool isTerminal(Game& node, int player)
-{
-    return node.playerWin(player) || node.isFull();
-}
-
 int miniMax(Game& node, int depth, bool maximizingPlayer, int player)
 {
     if (depth == 0 || isTerminal(node, player))
@@ -43,5 +38,6 @@ t_playerGame findBestMove(Game& root, int depth, int player)
             bestMove = move;
         }
     }
+    std::cout << "Best value: " << bestValue << std::endl;
     return bestMove;
 }
