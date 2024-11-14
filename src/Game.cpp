@@ -381,7 +381,7 @@ int Game::heuristicTest(int x, int y, int player)
                 break ;
         }
     }
-    return 0;
+    return counter;
 }
 
 int Game::globalHeurisitic(int player)
