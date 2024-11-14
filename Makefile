@@ -13,6 +13,7 @@ SRC 	=	utils.cpp \
 			TransposedBoard.cpp \
 			ClassicBoard.cpp \
 			Game.cpp \
+			miniMax.cpp \
 			TranspositionTable.cpp
 
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \

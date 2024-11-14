@@ -112,6 +112,12 @@ int64_t Game::getHeuristic() const{
     return this->_heuristic;
 }
 
+bool    Game::isFull() const{
+    IBoard::bitboard fullBoard = this->_classicBoard.getPlayer1() | this->_classicBoard.getPlayer2();
+    return (fullBoard.count() == this->_classicBoard.getWidth() * this->_classicBoard.getWidth());
+}
+
+
 bool Game::canBeCaptured(uint16_t x, uint16_t y, Game::PatternType boardType, uint16_t player) {
     const int   opponent = (player == WHITE) ? BLACK : WHITE;
     const int   dirX[8] = {1, 0, 1, 1, -1, 0, -1, -1};
@@ -318,3 +324,22 @@ int Game::heuristicTest(int x, int y, int player) {
     }
     return 0;
 }
+
+int  Game::globalHeurisitic(int player){
+    int result = 0;
+    const int opponent = (player == WHITE) ? BLACK : WHITE;
+    const int width = getClassicBoard().getWidth();
+ 
+    for (int x = 0; x < width; x++){
+        for (int y = 0; y < width; y++){
+            if (getClassicBoard().getPos(x, y) == player){
+                result += heuristicTest(x, y, player);
+            }
+            else if (getClassicBoard().getPos(x, y) == opponent){
+                result -= heuristicTest(x, y, opponent);
+            }
+        }
+    }
+    return result;
+}
+

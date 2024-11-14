@@ -36,6 +36,7 @@ class Game{
         void    setPosToBoards(uint16_t x, uint16_t y, int player);
         void    removePosToBoards(uint16_t x, uint16_t y);
         void    resetBoards();
+        bool    isFull() const;
 
         ClassicBoard& getClassicBoard() noexcept;
         TransposedBoard& getTransposedBoard() noexcept;
@@ -55,6 +56,7 @@ class Game{
         void handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t>& capturesBoard, uint16_t player, Render& render);
         bool playerWin(uint16_t player);
         int  heuristicTest(int x, int y, int player);
+        int  globalHeurisitic(int player);
     private:
         ClassicBoard    _classicBoard;
         TransposedBoard _transposedBoard;
