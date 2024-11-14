@@ -50,6 +50,7 @@ int main()
                     place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
                         player);
                     game = gameIA.game;
+                    std::cout << "IA player: " << player << std::endl;
                 }
                 SDL_RenderPresent(render.getRenderer());
             }

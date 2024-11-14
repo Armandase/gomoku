@@ -38,7 +38,7 @@ enum side {
 };
 
 enum player {
-    EMPTY,
+    EMPTY = 0,
     WHITE,
     BLACK,
 };
