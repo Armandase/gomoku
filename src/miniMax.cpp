@@ -48,9 +48,11 @@ t_playerGame findBestMove(Game& root, int depth, int player)
     gameSet possibleMoves = generatePossibleMoves(root, player);
     t_playerGame bestMove = possibleMoves.front();
     std::cout << "Possibles moves" << possibleMoves.size() << std::endl;
+
+    int nextPlayer = player == WHITE ? BLACK : WHITE;
     for (auto& move : possibleMoves) {
-        std::cout << "First step player: " << player << std::endl;
-        int value = miniMax(move.game, depth, false, player);
+        std::cout << "First step player: " << nextPlayer << std::endl;
+        int value = miniMax(move.game, depth, false, nextPlayer);
         // std::cout << "Value: " << value << std::endl;
         if (value > bestValue) {
             bestValue = value;
