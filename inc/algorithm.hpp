@@ -28,7 +28,7 @@ IBoard::bitboard getSurroundingBits(Game& game);
 
 gameSet generatePossibleMoves(Game& game, int player);
 
-t_playerGame findBestMove(Game& root, int depth);
+t_playerGame findBestMove(Game& root, int depth, int player);
 
 // struct CompareHeuristic {
 //     bool operator()(const Heuristic& a, const Heuristic& b) const {

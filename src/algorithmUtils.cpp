@@ -54,8 +54,7 @@ IBoard::bitboard getSurroundingBits(Game& game)
 
     for (int y = 0; y < board_size; y++) {
         for (int x = 0; x < board_size; x++) {
-            //   if (game.getClassicBoard().isPosEmpty(x, y) == true) continue;
-            if (allPieces.test(x + y * board_size) == true)
+            if (game.getClassicBoard().isPosEmpty(x, y) == true)
                 continue;
 
             for (int i = 0; i < 8; i++) {
