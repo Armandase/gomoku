@@ -1,4 +1,5 @@
 #include "../inc/algorithm.hpp"
+#include "../inc/gomoku.hpp"
 
 // IBoard::bitboard getSurroundingBits(Game& game) {
 //     IBoard::bitboard surroundingBits = 0;
@@ -74,19 +75,11 @@ gameSet generatePossibleMoves(Game& game, int player)
     for (int y = 0; y < BOARD_SIZE; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
             if (game.getClassicBoard().isPosEmpty(x, y) == true && neighbour.test(x + y * width)) {
+                if (posValid(game, x, y, player) == false)
+                    continue;
                 Game copy = game;
                 copy.setPosToBoards(x, y, player);
-                // if (validGame(copy, y, x, player) == false)
-                // continue;
 
-                // Heuristic h(copy, x, y, x, y);
-                // if (checkWin(h) == true){
-                // h.setHeuristic(INT_MAX);
-                // possibleMoves.insert(h);
-                // return possibleMoves;
-                // }
-                // h.setHeuristic(h.localHeuristic(x, y));
-                // possibleMoves.insert(h);
                 t_playerGame playerGame;
                 playerGame.stone.x = x;
                 playerGame.stone.y = y;

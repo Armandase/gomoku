@@ -379,7 +379,7 @@ int Game::heuristicTest(int x, int y, int player)
                 }
             }
             if (exit)
-                break ;
+                break;
         }
     }
     return counter;

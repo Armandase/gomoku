@@ -24,19 +24,10 @@ t_playerGame iterativeDeepening(Game& root, int player);
 bool times_up(const timePoint& start);
 bool isTerminal(Game& node, int player);
 
-int getCurrentPlayer(int depth, int initPlayer);
 IBoard::bitboard getSurroundingBits(Game& game);
 
 gameSet generatePossibleMoves(Game& game, int player);
 
 t_playerGame findBestMove(Game& root, int depth, int player);
-
-// struct CompareHeuristic {
-//     bool operator()(const Heuristic& a, const Heuristic& b) const {
-//         return a.getHeuristic() > b.getHeuristic();
-//     }
-// };
-
-// typedef std::set<Heuristic, CompareHeuristic> heuristicSet;
 
 #endif
