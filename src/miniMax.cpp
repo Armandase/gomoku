@@ -5,18 +5,25 @@
 t_playerGame miniMax(t_playerGame& node, int depth, bool maximizingPlayer, int player)
 {
     if (depth == 0 || isTerminal(node.game, player)) {
-        node.game.setHeuristic(node.game.globalHeuristic(player));
+        if (DEPTH % 2 == 0) {
+            node.game.setHeuristic(node.game.globalHeuristic(player == WHITE ? BLACK : WHITE));
+        } else {
+            node.game.setHeuristic(node.game.globalHeuristic(player));
+        }
         return node;
     }
-
-    int nextPlayer = player == WHITE ? BLACK : WHITE;
     gameSet possibleMoves = generatePossibleMoves(node.game, player);
     if (possibleMoves.empty()) {
-        node.game.setHeuristic(node.game.globalHeuristic(player));
+        if (DEPTH % 2 == 0) {
+            node.game.setHeuristic(node.game.globalHeuristic(player == WHITE ? BLACK : WHITE));
+        } else {
+            node.game.setHeuristic(node.game.globalHeuristic(player));
+        }
         return node;
     }
 
     t_playerGame bestMove;
+    int nextPlayer = player == WHITE ? BLACK : WHITE;
     if (maximizingPlayer) {
         bestMove.game.setHeuristic(std::numeric_limits<int>::min());
         for (auto& move : possibleMoves) {
@@ -54,6 +61,7 @@ t_playerGame findBestMove(Game& root, int depth, int player)
     }
 
     std::cout << "Best value: " << bestValue << std::endl;
+    bestMove.game.getClassicBoard().printBoard();
     return bestMove;
 }
 
