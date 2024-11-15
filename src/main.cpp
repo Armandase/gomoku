@@ -49,9 +49,9 @@ int main()
                     }
                 }
                 if (start == IA_MODE && player == BLACK) {
-                    t_playerGame gameIA = findBestMove(game, DEPTH, player);
+                    // t_playerGame gameIA = findBestMove(game, DEPTH, player);
 
-                    // t_playerGame gameIA = iterativeDeepening(game, player);
+                    t_playerGame gameIA = iterativeDeepening(game, player);
 
                     place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
                         player);
