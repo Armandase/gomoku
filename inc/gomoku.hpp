@@ -83,7 +83,7 @@ const std::array<const t_pattern, 19> patternsArray { {
     { patternMerge("000000101"), patternMerge("000000000"), 3, 10 },
     { patternMerge("000001010"), patternMerge("000000000"), 4, 10 },
     { patternMerge("000001001"), patternMerge("000000000"), 4, 10 },
-} };
+}};
 
 // const std::array<const t_pattern, 11> patternsArray { {
 //     // SIZE 4
@@ -100,7 +100,8 @@ const std::array<const t_pattern, 19> patternsArray { {
 //     { patternMerge("000000101"), patternMerge("000000000"), 3, 10 },
 //     // SIZE 2
 //     { patternMerge("000000011"), patternMerge("000000000"), 2, 100 },
-// } };
+// }};
+
 bool handleMouse(int mouseX, int mouseY);
 int modeSelection(Game& game, Render& render, Button& player, Button& IA);
 void place_stone(Game& board, Render& render, int x, int y, int& player);

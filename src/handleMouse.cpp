@@ -8,7 +8,7 @@ bool posValid(Game& game, int x, int y, int player)
         return false;
     }
     if (!game.canCapture(x, y, player) && game.isDoubleThree(x, y, player)) {
-        std::cout << "Double Three" << std::endl;
+        // std::cout << "Double Three" << std::endl;
         return false;
     }
     return true;

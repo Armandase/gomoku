@@ -86,7 +86,7 @@ ${NAME} : lib ${OBJS} ${HEADER}
 		${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
 
 test: ${TEST_NAME}
-	 ./${TEST_NAME} # --gtest_filter=
+	 ./${TEST_NAME} #--gtest_filter=BoardRules.EndCapture
 
 ${TEST_NAME}: lib ${TEST_OBJS}
 		${CXX} -o ${TEST_NAME} ${TEST_OBJS} ${LDFLAGS} -pthread
