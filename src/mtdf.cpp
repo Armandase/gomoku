@@ -13,7 +13,6 @@ bool times_up(const timePoint& start)
 t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int depth,
     TranspositionTable& memory)
 {
-    // int heuristic = 0;
     t_playerGame result = node;
     const dataTranspositionTable_t* founded = memory.retrieve(node.game);
     if (founded != nullptr) {
@@ -46,7 +45,6 @@ t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int de
         result.game.setHeuristic(std::numeric_limits<int>::max());
         int64_t b = beta;
         gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player);
-
         for (auto it = possibleMoves.begin(); it != possibleMoves.end() && result.game.getHeuristic() > alpha; ++it) {
             it->stone.player = node.stone.player == BLACK ? WHITE : BLACK;
             t_playerGame ret = alphaBetaWithMemory(*it, alpha, b, depth - 1, memory);
@@ -68,7 +66,7 @@ t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int de
     return result;
 }
 
-t_playerGame& mtdf(t_playerGame& root, uint16_t depth, TranspositionTable& memory, const timePoint& start, int player)
+t_playerGame mtdf(t_playerGame& root, uint16_t depth, TranspositionTable& memory, const timePoint& start, int player)
 {
     int upperbound = std::numeric_limits<int>::max();
     int lowerbound = std::numeric_limits<int>::min();
@@ -77,7 +75,7 @@ t_playerGame& mtdf(t_playerGame& root, uint16_t depth, TranspositionTable& memor
 
     while (lowerbound < upperbound) {
         beta = node.game.getHeuristic() + (node.game.getHeuristic() == lowerbound);
-        // node.stone.player = player;
+        node.stone.player = player;
         node = alphaBetaWithMemory(node, beta - 1, beta, depth, memory);
         if (node.game.getHeuristic() < beta)
             upperbound = node.game.getHeuristic();
@@ -87,7 +85,6 @@ t_playerGame& mtdf(t_playerGame& root, uint16_t depth, TranspositionTable& memor
         if (times_up(start) == true)
             break;
     }
-    std::cout << "Lowerbound: " << lowerbound << " Upperbound: " << upperbound << std::endl;
     return node;
 }
 
@@ -104,7 +101,8 @@ t_playerGame iterativeDeepening(Game& root, int player)
 
     for (int i = DEPTH; i >= 0; i--) {
         if ((i + 2) % 2 == (DEPTH + 2) % 2)
-            node = mtdf(node, i, memory, start, player);
+            node
+                = mtdf(node, i, memory, start, player);
         else
             node = mtdf(node, i, memory, start, player == BLACK ? WHITE : BLACK);
         if (times_up(start) == true)
@@ -112,7 +110,5 @@ t_playerGame iterativeDeepening(Game& root, int player)
     }
 
     node.game.getClassicBoard().printBoard();
-    std::cout << "Nb of capture black: " << node.game.getCapture(BLACK) << std::endl;
-    std::cout << "Nb of capture white: " << node.game.getCapture(WHITE) << std::endl;
     return node;
 }
