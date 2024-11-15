@@ -385,7 +385,7 @@ int Game::heuristicTest(int x, int y, int player)
     return counter;
 }
 
-int Game::globalHeurisitic(int player)
+int Game::globalHeuristic(int player)
 {
     int result = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
