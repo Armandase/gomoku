@@ -61,7 +61,7 @@ t_playerGame findBestMove(Game& root, int depth, int player)
     }
 
     std::cout << "Best value: " << bestValue << std::endl;
-    bestMove.game.getClassicBoard().printBoard();
+    // bestMove.game.getClassicBoard().printBoard();
     return bestMove;
 }
 

@@ -69,14 +69,17 @@ IBoard::bitboard getSurroundingBits(Game& game)
 gameSet generatePossibleMoves(Game& game, int player)
 {
     gameSet possibleMoves;
-    IBoard::bitboard neighbour = getSurroundingBits(game);
+    IBoard::bitboard neighbourBits = getSurroundingBits(game);
     int width = game.getClassicBoard().getWidth();
 
     for (int y = 0; y < BOARD_SIZE; y++) {
         for (int x = 0; x < BOARD_SIZE; x++) {
-            if (game.getClassicBoard().isPosEmpty(x, y) == true && neighbour.test(x + y * width)) {
-                if (posValid(game, x, y, player) == false)
-                    continue;
+            int bitIndex = x + y * width;
+
+            if (game.getClassicBoard().isPosEmpty(x, y) == false || !neighbourBits.test(bitIndex))
+                continue;
+
+            if (posValid(game, x, y, player)) {
                 Game copy = game;
                 copy.setPosToBoards(x, y, player);
 
@@ -84,8 +87,8 @@ gameSet generatePossibleMoves(Game& game, int player)
                 playerGame.stone.x = x;
                 playerGame.stone.y = y;
                 playerGame.stone.player = player;
-                playerGame.game = copy;
-                possibleMoves.push_back(playerGame);
+                playerGame.game = std::move(copy);
+                possibleMoves.push_back(std::move(playerGame));
             }
         }
     }

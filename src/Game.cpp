@@ -86,7 +86,7 @@ Game::getAntiDiagBoard() noexcept
 DiagBoard&
 Game::getDiagBoard() noexcept
 {
-    return ((this->_diagBoard));
+    return (this->_diagBoard);
 }
 
 void Game::setPosToBoards(uint16_t x, uint16_t y, int player)
@@ -111,6 +111,8 @@ void Game::resetBoards()
     _transposedBoard.resetBoard();
     _antiDiagBoard.resetBoard();
     _diagBoard.resetBoard();
+    _player1Capture = 0;
+    _player2Capture = 0;
 }
 
 size_t
@@ -192,6 +194,9 @@ bool Game::playerWin(uint16_t player)
     IBoard::bitboard mask("11111");
     for (int i = 0; i < size; ++i) {
         int x = i % (width - len_mask - 1), y = i / width;
+        if (getClassicBoard().isPosEmpty(x, y))
+            continue;
+
         if (getClassicBoard().findMatch(x, y, player, mask, len_mask))
             return !canBeCaptured(x, y, PatternType::CLASSIC, player);
 
