@@ -29,7 +29,7 @@ t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int de
     }
     if (depth == 0 || isTerminal(node.game, node.stone.player)) {
         result = node;
-        result.game.setHeuristic(node.game.globalHeurisitic(node.stone.player));
+        result.game.setHeuristic(node.game.globalHeuristic(node.stone.player));
     } else if (node.stone.player == BLACK) { // maximization node
         result.game.setHeuristic(std::numeric_limits<int>::min());
         int64_t a = alpha;
@@ -82,8 +82,8 @@ t_playerGame& mtdf(t_playerGame& root, uint16_t depth, TranspositionTable& memor
         // beta = node.game.getHeuristic() + (node.game.getHeuristic() == lowerbound);
         beta = (heuristic == upperbound) ? heuristic + 1 : heuristic;
 
-        node = alphaBetaWithMemory(node, beta - 1, beta,
-            depth, memory);
+        // node = alphaBetaWithMemory(node, beta - 1, beta, depth, memory);
+        node ;
         if (node.game.getHeuristic() < beta)
             upperbound = node.game.getHeuristic();
         else

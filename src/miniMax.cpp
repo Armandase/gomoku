@@ -4,27 +4,31 @@
 
 t_playerGame miniMax(t_playerGame& node, int depth, bool maximizingPlayer, int player)
 {
-    // std::cout << "Depth: " << depth << " maixmizing " << maximizingPlayer << std::endl;
     if (depth == 0 || isTerminal(node.game, player)) {
-        node.game.setHeuristic(node.game.globalHeurisitic(player));
+        node.game.setHeuristic(node.game.globalHeuristic(player));
         return node;
     }
+
     int nextPlayer = player == WHITE ? BLACK : WHITE;
+    gameSet possibleMoves = generatePossibleMoves(node.game, player);
+    if (possibleMoves.empty()) {
+        node.game.setHeuristic(node.game.globalHeuristic(player));
+        return node;
+    }
+
     t_playerGame bestMove;
     if (maximizingPlayer) {
         bestMove.game.setHeuristic(std::numeric_limits<int>::min());
-        gameSet possibleMoves = generatePossibleMoves(node.game, player);
         for (auto& move : possibleMoves) {
-            t_playerGame value = miniMax(move, depth - 1, false, nextPlayer);
+            t_playerGame value = miniMax(move, depth - 1, !maximizingPlayer, nextPlayer);
             if (value.game.getHeuristic() > bestMove.game.getHeuristic())
                 bestMove = value;
         }
         return bestMove;
     } else {
         bestMove.game.setHeuristic(std::numeric_limits<int>::max());
-        gameSet possibleMoves = generatePossibleMoves(node.game, player);
         for (auto& move : possibleMoves) {
-            t_playerGame res = miniMax(move, depth - 1, true, nextPlayer);
+            t_playerGame res = miniMax(move, depth - 1, !maximizingPlayer, nextPlayer);
             if (res.game.getHeuristic() < bestMove.game.getHeuristic())
                 bestMove = res;
         }
@@ -41,7 +45,6 @@ t_playerGame findBestMove(Game& root, int depth, int player)
     t_playerGame bestMove = possibleMoves.front();
 
     int nextPlayer = player == WHITE ? BLACK : WHITE;
-    // std::cout << "Depth: " << depth << " maixmizing " << true << std::endl;
     for (auto& move : possibleMoves) {
         t_playerGame value = miniMax(move, depth, false, nextPlayer);
         if (value.game.getHeuristic() > bestValue) {
