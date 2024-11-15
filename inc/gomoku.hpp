@@ -83,7 +83,7 @@ const std::array<const t_pattern, 19> patternsArray { {
     { patternMerge("000000101"), patternMerge("000000000"), 3, 10 },
     { patternMerge("000001010"), patternMerge("000000000"), 4, 10 },
     { patternMerge("000001001"), patternMerge("000000000"), 4, 10 },
-} };
+}};
 
 // const std::array<const t_pattern, 11> patternsArray { {
 //     // SIZE 4
