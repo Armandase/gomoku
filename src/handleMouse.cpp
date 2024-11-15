@@ -31,8 +31,7 @@ void place_stone(Game& game, Render& render, int x, int y, int& player)
     render.drawCircle(boardToRender(x), boardToRender(y));
 
     if (game.playerWin(player)) {
-        // render.renderWin(player);
-        game.getClassicBoard().printBoard();
+        render.renderWin(player);
         sleep(1);
         game.resetBoards();
         render.renderBoard(game);
