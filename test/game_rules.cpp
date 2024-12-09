@@ -431,4 +431,37 @@ TEST(BoardRules, EndCapture)
         EXPECT_EQ(gameTest.playerWin(WHITE), true);
         EXPECT_EQ(gameTest.playerWin(BLACK), true);
     }
+    {
+        std::string str_test(
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000200000"
+            "0000000000000012000"
+            "0000000000000010000"
+            "0000000000000010000"
+            "0000000000000210000"
+            "0000000000000012000"
+            "0000000000000200000"
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000000000"
+            "0000000000000000000");
+
+        Game gameTest;
+        int size = str_test.size();
+        int width = gameTest.getClassicBoard().getWidth();
+        for (int i = 0; i < size; i++) {
+            if (str_test[i] == '0')
+                continue;
+            gameTest.setPosToBoards(i % width, i / width, str_test[i] - 48);
+        }
+
+        EXPECT_EQ(gameTest.playerWin(WHITE), true);
+    }
 }

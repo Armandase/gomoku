@@ -164,6 +164,7 @@ bool Game::canBeCaptured(uint16_t x,
 
             if (getClassicBoard().isValidPos(xOpp1, yOpp1) && getClassicBoard().isValidPos(xFwd2, yFwd2)) {
                 if ((getClassicBoard().getPos(xOpp1, yOpp1) == opponent && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == EMPTY) || (getClassicBoard().getPos(xOpp1, yOpp1) == EMPTY && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == opponent)) {
+                    // std::cout << "FOR1: " << xFwd1 << " " << yFwd1 << " FOR2: " << xFwd2 << " " << yFwd2 << " Opp: " << xOpp1 << " " << yOpp1 << "\n";
                     return true;
                 }
             }
@@ -175,6 +176,7 @@ bool Game::canBeCaptured(uint16_t x,
 
             if (getClassicBoard().isValidPos(xOpp2, yOpp2) && getClassicBoard().isValidPos(xRev2, yRev2)) {
                 if ((getClassicBoard().getPos(xOpp2, yOpp2) == opponent && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == EMPTY) || (getClassicBoard().getPos(xOpp2, yOpp2) == EMPTY && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == opponent)) {
+                    // std::cout << "Rev1:" << xRev1 << " " << yRev1 << " Rev2: " << xRev2 << " " << yRev2 << " Opp: " << xOpp2 << " " << yOpp2 << "\n";
                     return true;
                 }
             }
@@ -190,10 +192,10 @@ bool Game::playerWin(uint16_t player)
 
     const uint16_t len_mask = 5;
     const int width = getClassicBoard().getWidth();
-    const int size = width * width - width * (len_mask - 1);
+    const int size = width * width;
     IBoard::bitboard mask("11111");
     for (int i = 0; i < size; ++i) {
-        int x = i % (width - len_mask - 1), y = i / width;
+        int x = i % width, y = i / width;
         if (getClassicBoard().isPosEmpty(x, y))
             continue;
 
