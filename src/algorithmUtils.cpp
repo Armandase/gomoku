@@ -1,5 +1,6 @@
 #include "../inc/algorithm.hpp"
 #include "../inc/gomoku.hpp"
+#include <algorithm>
 
 // IBoard::bitboard getSurroundingBits(Game& game) {
 //     IBoard::bitboard surroundingBits = 0;
@@ -66,6 +67,16 @@ IBoard::bitboard getSurroundingBits(Game& game)
     return surroundingBits;
 }
 
+void sortBoards(gameSet& possibleMoves, int player)
+{
+    for (auto& move : possibleMoves) {
+        move.game.setHeuristic(move.game.heuristicTest(move.stone.x, move.stone.y, player));
+    }
+    std::sort(possibleMoves.begin(), possibleMoves.end(), [](const t_playerGame& a, const t_playerGame& b) {
+        return a.game.getHeuristic() > b.game.getHeuristic();
+    });
+}
+
 gameSet generatePossibleMoves(Game& game, int player)
 {
     gameSet possibleMoves;
@@ -92,6 +103,9 @@ gameSet generatePossibleMoves(Game& game, int player)
             }
         }
     }
+    sortBoards(possibleMoves, player);
+    if (possibleMoves.size() > PRUNING)
+        possibleMoves.resize(PRUNING);
     return possibleMoves;
 }
 
