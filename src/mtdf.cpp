@@ -81,9 +81,9 @@ t_playerGame mtdf(t_playerGame& root, uint16_t depth, TranspositionTable& memory
             upperbound = node.game.getHeuristic();
         else
             lowerbound = node.game.getHeuristic();
-        std::cout << "Lowerbound: " << lowerbound << " Upperbound: " << upperbound << std::endl;
-        // if (times_up(start) == true)
-        // break;
+
+        if (times_up(start) == true)
+            break;
     }
     return node;
 }
@@ -99,15 +99,12 @@ t_playerGame iterativeDeepening(Game& root, int player)
     node.game.setHeuristic(0);
     node.stone.player = player;
 
-    for (int i = DEPTH; i > 0; --i) {
-        std::cout << "Depth" << i << std::endl;
-        if ((i + 2) % 2 == (DEPTH + 2) % 2) {
-            node = mtdf(node, i, memory, start, player);
-            std::cout << "Node max" << std::endl;
-        } else {
+    for (int i = DEPTH; i >= 0; i--) {
+        if ((i + 2) % 2 == (DEPTH + 2) % 2)
+            node
+                = mtdf(node, i, memory, start, player);
+        else
             node = mtdf(node, i, memory, start, player == BLACK ? WHITE : BLACK);
-            std::cout << "Node min" << std::endl;
-        }
         if (times_up(start) == true)
             break;
     }
