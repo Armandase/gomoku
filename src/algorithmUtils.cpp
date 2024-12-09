@@ -70,7 +70,7 @@ IBoard::bitboard getSurroundingBits(Game& game)
 void sortBoards(gameSet& possibleMoves, int player)
 {
     for (auto& move : possibleMoves) {
-        move.game.setHeuristic(move.game.heuristicTest(move.stone.x, move.stone.y, player));
+        move.game.setHeuristic(move.game.globalHeuristic(player));
     }
     std::sort(possibleMoves.begin(), possibleMoves.end(), [](const t_playerGame& a, const t_playerGame& b) {
         return a.game.getHeuristic() > b.game.getHeuristic();
@@ -104,8 +104,13 @@ gameSet generatePossibleMoves(Game& game, int player)
         }
     }
     sortBoards(possibleMoves, player);
-    if (possibleMoves.size() > PRUNING)
+    if (possibleMoves.size() > PRUNING && player == BLACK)
         possibleMoves.resize(PRUNING);
+    else if (possibleMoves.size() > PRUNING)
+        possibleMoves.erase(possibleMoves.begin(), possibleMoves.end() - PRUNING);
+    else
+        std::cerr << "No pruning" << std::endl;
+
     return possibleMoves;
 }
 
