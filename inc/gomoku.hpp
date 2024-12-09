@@ -22,7 +22,7 @@
 #define SCREEN_WIDTH (BOARD_DIMENSIONS + MARGIN + OFFSET)
 #define RADIUS (GRID_SIZE / 3)
 #define DIAMETER (RADIUS * 2)
-#define DEPTH 2
+#define DEPTH 1
 #define PRUNING 10
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
@@ -83,7 +83,7 @@ const std::array<const t_pattern, 19> patternsArray { {
     { patternMerge("000000101"), patternMerge("000000000"), 3, 10 },
     { patternMerge("000001010"), patternMerge("000000000"), 4, 10 },
     { patternMerge("000001001"), patternMerge("000000000"), 4, 10 },
-}};
+} };
 
 // const std::array<const t_pattern, 11> patternsArray { {
 //     // SIZE 4
