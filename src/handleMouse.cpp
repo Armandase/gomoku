@@ -8,7 +8,7 @@ bool posValid(Game& game, int x, int y, int player)
         return false;
     }
     if (!game.canCapture(x, y, player) && game.isDoubleThree(x, y, player)) {
-        // std::cout << "Double Three" << std::endl;
+        std::cout << "Double Three" << std::endl;
         return false;
     }
     return true;
@@ -16,8 +16,10 @@ bool posValid(Game& game, int x, int y, int player)
 
 void place_stone(Game& game, Render& render, int x, int y, int& player)
 {
-    game.setPosToBoards(x, y, player);
-    game.heuristicTest(x, y, player);
+    // if (!posValid(game, x, y, player))
+    // return;
+    // game.setPosToBoards(x, y, player);
+    // game.heuristicTest(x, y, player);
     std::vector<uint16_t> capturesBoard = game.isCapture(x, y, player);
     if (capturesBoard.size() > 0)
         game.handleCapture(x, y, capturesBoard, player, render);
