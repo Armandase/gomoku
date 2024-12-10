@@ -70,6 +70,7 @@ int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode)
 
 //     return bestMove;
 // }
+#include <future>
 
 t_playerGame findBestMovePVS(Game& root, int depth, int player)
 {
@@ -81,6 +82,7 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
         return playerGame;
     }
 
+    std::vector<std::future<int>> threadResult;
     int nextPlayer = player == WHITE ? BLACK : WHITE;
     int bestValue = std::numeric_limits<int>::min();
     t_playerGame bestMove = possibleMoves.front();
@@ -88,11 +90,15 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
     --depth;
     int result = std::numeric_limits<int>::min();
     for (auto& move : possibleMoves) {
-        result = pvs(move,
-            std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true);
+        threadResult.push_back(std::async(std::launch::async, pvs, std::ref(move),
+            std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true));
+    }
+    // for (auto& thread : threadResult) {
+    for (size_t i = 0; i < threadResult.size(); ++i) {
+        result = threadResult[i].get();
         if (result > bestValue) {
             bestValue = result;
-            bestMove = move;
+            bestMove = possibleMoves[i];
         }
     }
 

@@ -390,20 +390,8 @@ int Game::heuristicTest(int x, int y, int player)
                     // std::endl;
                     counter += pattern.value;
                     exit = true;
-                }
-                if (checkPatternAtPosition(
-                        mergedOpponentPattern, mergedPlayerPattern, pattern, 5 - i, opponent)
-                    || checkPatternAtPosition(
-                        mergedOpponentPattern, mergedPlayerPattern, pattern, 5 + i, opponent)) {
-                    // std::cout << "PLAYER: " << ((player == WHITE) ? "WHITE" : "BLACK")
-                    // << " | FIND: " << pattern.value << " | PLAYER PATTERN: " <<
-                    // pattern.player << " | OPP PATTERN: " << pattern.opponent <<
-                    // std::endl;
-                    counter += pattern.value * 2;
-                    exit = true;
-                }
-                if (exit)
                     break;
+                }
             }
             if (exit)
                 break;
