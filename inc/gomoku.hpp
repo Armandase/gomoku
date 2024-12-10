@@ -62,7 +62,7 @@ typedef struct s_pattern {
     const int value;
 } t_pattern;
 
-const std::array<const t_pattern, 19> patternsArray { {
+const std::array<const t_pattern, 23> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
@@ -76,6 +76,8 @@ const std::array<const t_pattern, 19> patternsArray { {
 
     // MODERATE THREATS - One-Sided Open Four
     { patternMerge("000001111"), patternMerge("000000000"), 4, 1000000 }, // FOUR
+    { patternMerge("000010000"), patternMerge("000001111"), 5, 5000000 }, // FOUR
+    { patternMerge("000000001"), patternMerge("000011110"), 5, 5000000 }, // FOUR
     { patternMerge("000011011"), patternMerge("000000000"), 5, 1000000 }, // FOUR
     { patternMerge("000010111"), patternMerge("000000000"), 5, 1000000 }, // FOUR
     { patternMerge("000011101"), patternMerge("000000000"), 5, 1000000 }, // FOUR
@@ -83,6 +85,8 @@ const std::array<const t_pattern, 19> patternsArray { {
     // POTENTIAL BUILD-UP - Open Three
     { patternMerge("000001110"), patternMerge("000000000"), 5, 100000 }, // THREE (open on both ends)
     { patternMerge("000000111"), patternMerge("000000000"), 3, 100000 }, // THREE
+    { patternMerge("000001000"), patternMerge("000000111"), 4, 500000 }, // THREE
+    { patternMerge("000000001"), patternMerge("000001110"), 4, 500000 }, // THREE
 
     // MODERATE THREATS
     { patternMerge("000001101"), patternMerge("000000000"), 4, 10000 },
