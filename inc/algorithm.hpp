@@ -30,5 +30,6 @@ gameSet generatePossibleMoves(Game& game, int player, bool max);
 
 t_playerGame findBestMove(Game& root, int depth, int player);
 t_playerGame findBestMovePVS(Game& root, int depth, int player);
+t_playerGame findBestMovePVSmultithread(Game& root, int depth, int player);
 
 #endif
