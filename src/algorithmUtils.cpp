@@ -77,7 +77,7 @@ void sortBoards(gameSet& possibleMoves, int player)
     });
 }
 
-gameSet generatePossibleMoves(Game& game, int player)
+gameSet generatePossibleMoves(Game& game, int player, bool max)
 {
     gameSet possibleMoves;
     IBoard::bitboard neighbourBits = getSurroundingBits(game);
@@ -104,7 +104,10 @@ gameSet generatePossibleMoves(Game& game, int player)
         }
     }
     sortBoards(possibleMoves, player);
-    if (possibleMoves.size() > PRUNING && player == BLACK)
+    // for (auto& move : possibleMoves) {
+    // std::cout << "Heuristic: " << move.game.getHeuristic() << std::endl;
+    // }
+    if (possibleMoves.size() > PRUNING && max)
         possibleMoves.resize(PRUNING);
     else if (possibleMoves.size() > PRUNING)
         possibleMoves.erase(possibleMoves.begin(), possibleMoves.end() - PRUNING);
