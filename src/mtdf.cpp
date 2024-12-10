@@ -84,6 +84,8 @@ t_playerGame mtdf(t_playerGame& root, int firstGuess, uint16_t depth, Transposit
             upperbound = g;
         else
             lowerbound = g;
+        // if (times_up(start) == true)
+        // break;
     }
 
     return root;
@@ -102,8 +104,17 @@ t_playerGame iterativeDeepening(Game& root, int player)
         firstGuess = node.game.getHeuristic();
 
         // if (times_up(start))
-        // break;
+        // break;   
     }
+    // for (int i = DEPTH; i >= 0; i--) {
+    //     if ((i + 2) % 2 == (DEPTH + 2) % 2)
+    //         node
+    //             = mtdf(node, i, memory, start, player);
+    //     else
+    //         node = mtdf(node, i, memory, start, player == BLACK ? WHITE : BLACK);
+    //     if (times_up(start) == true)
+    //         break;
+    // }
 
     return node;
 }
