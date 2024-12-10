@@ -338,7 +338,7 @@ void Game::handleCapture(uint16_t x,
 bool checkPatternAtPosition(const patternMerge& playerLine,
     const patternMerge& opponentLine,
     t_pattern pattern,
-    int startPos)
+    int startPos, int player)
 {
     if (startPos < 0 || startPos > MERGE_SIZE)
         return false;
@@ -346,6 +346,13 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
 
     patternMerge playerShiftedPattern(playerLine.to_ulong() >> (9 - startPos));
     patternMerge opponentShiftedPattern(opponentLine.to_ulong() >> (9 - startPos));
+    if (player == WHITE) {
+        playerShiftedPattern[4] = 1;
+        opponentShiftedPattern[4] = 0;
+    } else {
+        playerShiftedPattern[4] = 0;
+        opponentShiftedPattern[4] = 1; 
+    }
     playerShiftedPattern &= mask;
     opponentShiftedPattern &= mask;
 
@@ -357,7 +364,6 @@ int Game::heuristicTest(int x, int y, int player)
     bool exit;
     int counter = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
-    const int playerTmp = getClassicBoard().getPos(x, y);
 
     patternMap extractPlayer = extractPatterns(x, y, PATTERN_SIZE, player);
     patternMap extractOpponent = extractPatterns(x, y, PATTERN_SIZE, opponent);
@@ -375,17 +381,29 @@ int Game::heuristicTest(int x, int y, int player)
 
             for (int i = 0; i < pattern.length; i++) {
                 if (checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - i)
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - i, player)
                     || checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + i)) {
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + i, player)) {
                     // std::cout << "PLAYER: " << ((player == WHITE) ? "WHITE" : "BLACK")
                     // << " | FIND: " << pattern.value << " | PLAYER PATTERN: " <<
                     // pattern.player << " | OPP PATTERN: " << pattern.opponent <<
                     // std::endl;
                     counter += pattern.value;
                     exit = true;
-                    break;
                 }
+                if (checkPatternAtPosition(
+                        mergedOpponentPattern, mergedPlayerPattern, pattern, 5 - i, opponent)
+                    || checkPatternAtPosition(
+                        mergedOpponentPattern, mergedPlayerPattern, pattern, 5 + i, opponent)) {
+                    // std::cout << "PLAYER: " << ((player == WHITE) ? "WHITE" : "BLACK")
+                    // << " | FIND: " << pattern.value << " | PLAYER PATTERN: " <<
+                    // pattern.player << " | OPP PATTERN: " << pattern.opponent <<
+                    // std::endl;
+                    counter += pattern.value * 2;
+                    exit = true;
+                }
+                if (exit)
+                    break;
             }
             if (exit)
                 break;

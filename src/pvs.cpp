@@ -43,6 +43,34 @@ int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode)
     return alpha;
 }
 
+// t_playerGame findBestMovePVS(Game& root, int depth, int player)
+// {
+//     gameSet possibleMoves = generatePossibleMoves(root, player, true);
+//     if (possibleMoves.empty()) {
+//         t_playerGame playerGame;
+//         playerGame.game = root;
+//         playerGame.stone.player = player;
+//         return playerGame;
+//     }
+
+//     int nextPlayer = player == WHITE ? BLACK : WHITE;
+//     int bestValue = std::numeric_limits<int>::min();
+//     t_playerGame bestMove = possibleMoves.front();
+
+//     --depth;
+//     int result = std::numeric_limits<int>::min();
+//     for (auto& move : possibleMoves) {
+//         result = pvs(move,
+//             std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true);
+//         if (result > bestValue) {
+//             bestValue = result;
+//             bestMove = move;
+//         }
+//     }
+
+//     return bestMove;
+// }
+
 t_playerGame findBestMovePVS(Game& root, int depth, int player)
 {
     gameSet possibleMoves = generatePossibleMoves(root, player, true);
@@ -68,7 +96,5 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
         }
     }
 
-    // std::cout << "Best value: " << bestValue << std::endl;
-    // bestMove.game.getClassicBoard().printBoard();
     return bestMove;
 }

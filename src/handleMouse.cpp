@@ -1,14 +1,16 @@
 #include "../inc/Game.hpp"
 #include "../inc/utils.hpp"
 
-bool posValid(Game& game, int x, int y, int player)
+bool posValid(Game& game, int x, int y, int player, bool verbose)
 {
     if (game.getClassicBoard().isPosEmpty(x, y) == false) {
-        std::cout << "Position already used" << std::endl;
+        if (verbose)
+            std::cout << "Position already used" << std::endl;
         return false;
     }
     if (!game.canCapture(x, y, player) && game.isDoubleThree(x, y, player)) {
-        std::cout << "Double Three" << std::endl;
+        if (verbose)
+            std::cout << "Double Three" << std::endl;
         return false;
     }
     return true;

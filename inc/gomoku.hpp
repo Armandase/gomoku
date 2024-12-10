@@ -74,7 +74,6 @@ const std::array<const t_pattern, 19> patternsArray { {
     // STRONG THREATS - Open Four (either side open)
     { patternMerge("000011110"), patternMerge("000000000"), 5, 10000000 }, // FOUR (open on both ends)
 
-
     // MODERATE THREATS - One-Sided Open Four
     { patternMerge("000001111"), patternMerge("000000000"), 4, 1000000 }, // FOUR
     { patternMerge("000011011"), patternMerge("000000000"), 5, 1000000 }, // FOUR
@@ -122,6 +121,6 @@ const std::array<const t_pattern, 19> patternsArray { {
 bool handleMouse(int mouseX, int mouseY);
 int modeSelection(Game& game, Render& render, Button& player, Button& IA);
 void place_stone(Game& board, Render& render, int x, int y, int& player);
-bool posValid(Game& game, int x, int y, int player);
+bool posValid(Game& game, int x, int y, int player, bool verbose = false);
 
 #endif
