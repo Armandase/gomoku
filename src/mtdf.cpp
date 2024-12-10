@@ -32,7 +32,7 @@ t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int de
     } else if (node.stone.player == BLACK) { // maximization node
         result.game.setHeuristic(std::numeric_limits<int>::min());
         int64_t a = alpha;
-        gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player);
+        gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player, true);
 
         for (auto it = possibleMoves.begin(); it != possibleMoves.end() && result.game.getHeuristic() < beta; ++it) {
             it->stone.player = node.stone.player == BLACK ? WHITE : BLACK;
@@ -44,7 +44,7 @@ t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int de
     } else { // minimization node
         result.game.setHeuristic(std::numeric_limits<int>::max());
         int64_t b = beta;
-        gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player);
+        gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player, false);
         for (auto it = possibleMoves.begin(); it != possibleMoves.end() && result.game.getHeuristic() > alpha; ++it) {
             it->stone.player = node.stone.player == BLACK ? WHITE : BLACK;
             t_playerGame ret = alphaBetaWithMemory(*it, alpha, b, depth - 1, memory);
@@ -66,49 +66,55 @@ t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int de
     return result;
 }
 
-t_playerGame mtdf(t_playerGame& root, uint16_t depth, TranspositionTable& memory, const timePoint& start, int player)
+t_playerGame mtdf(t_playerGame& root, int firstGuess, uint16_t depth, TranspositionTable& memory, int player)
 {
+    int g = firstGuess;
     int upperbound = std::numeric_limits<int>::max();
     int lowerbound = std::numeric_limits<int>::min();
-    int beta = 0;
-    t_playerGame node = root;
 
     while (lowerbound < upperbound) {
-        beta = node.game.getHeuristic() + (node.game.getHeuristic() == lowerbound);
-        node.stone.player = player;
-        node = alphaBetaWithMemory(node, beta - 1, beta, depth, memory);
-        if (node.game.getHeuristic() < beta)
-            upperbound = node.game.getHeuristic();
-        else
-            lowerbound = node.game.getHeuristic();
+        int beta = (g == lowerbound) ? g + 1 : g;
 
-        if (times_up(start) == true)
-            break;
+        root.stone.player = player;
+        root = alphaBetaWithMemory(root, beta - 1, beta, depth, memory);
+
+        g = root.game.getHeuristic();
+
+        if (g < beta)
+            upperbound = g;
+        else
+            lowerbound = g;
+        // if (times_up(start) == true)
+        // break;
     }
-    return node;
+
+    return root;
 }
 
 t_playerGame iterativeDeepening(Game& root, int player)
 {
     TranspositionTable memory;
-    const timePoint start = std::chrono::high_resolution_clock::now();
     int firstGuess = 0;
-
     t_playerGame node;
     node.game = root;
-    node.game.setHeuristic(0);
     node.stone.player = player;
 
-    for (int i = DEPTH; i >= 0; i--) {
-        if ((i + 2) % 2 == (DEPTH + 2) % 2)
-            node
-                = mtdf(node, i, memory, start, player);
-        else
-            node = mtdf(node, i, memory, start, player == BLACK ? WHITE : BLACK);
-        if (times_up(start) == true)
-            break;
-    }
+    for (int depth = 1; depth <= DEPTH; ++depth) {
+        node = mtdf(node, firstGuess, depth, memory, player);
+        firstGuess = node.game.getHeuristic();
 
-    node.game.getClassicBoard().printBoard();
+        // if (times_up(start))
+        // break;   
+    }
+    // for (int i = DEPTH; i >= 0; i--) {
+    //     if ((i + 2) % 2 == (DEPTH + 2) % 2)
+    //         node
+    //             = mtdf(node, i, memory, start, player);
+    //     else
+    //         node = mtdf(node, i, memory, start, player == BLACK ? WHITE : BLACK);
+    //     if (times_up(start) == true)
+    //         break;
+    // }
+
     return node;
 }

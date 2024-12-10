@@ -13,7 +13,7 @@ t_playerGame miniMax(t_playerGame& node, int depth, bool maximizingPlayer, int p
         }
         return node;
     }
-    gameSet possibleMoves = generatePossibleMoves(node.game, player);
+    gameSet possibleMoves = generatePossibleMoves(node.game, player, maximizingPlayer);
     if (possibleMoves.empty()) {
         if ((DEPTH + 2) % 2 == WHITE) {
             node.game.setHeuristic(node.game.globalHeuristic(player == WHITE ? BLACK : WHITE));
@@ -49,7 +49,7 @@ t_playerGame findBestMove(Game& root, int depth, int player)
 {
     int bestValue = std::numeric_limits<int>::min();
 
-    gameSet possibleMoves = generatePossibleMoves(root, player);
+    gameSet possibleMoves = generatePossibleMoves(root, player, true);
     t_playerGame bestMove = possibleMoves.front();
 
     std::cout << "Possible moves: " << possibleMoves.size() << std::endl;

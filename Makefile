@@ -14,7 +14,8 @@ SRC 	=	utils.cpp \
 			ClassicBoard.cpp \
 			Game.cpp \
 			miniMax.cpp \
-			TranspositionTable.cpp
+			TranspositionTable.cpp \
+			pvs.cpp
 
 HEADER	=	inc/gomoku.hpp inc/utils.hpp \
 			inc/algorithm.hpp \

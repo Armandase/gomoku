@@ -26,8 +26,9 @@ bool isTerminal(Game& node, int player);
 
 IBoard::bitboard getSurroundingBits(Game& game);
 
-gameSet generatePossibleMoves(Game& game, int player);
+gameSet generatePossibleMoves(Game& game, int player, bool max);
 
 t_playerGame findBestMove(Game& root, int depth, int player);
+t_playerGame findBestMovePVS(Game& root, int depth, int player);
 
 #endif
