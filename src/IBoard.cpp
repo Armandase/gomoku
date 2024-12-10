@@ -82,16 +82,14 @@ bool IBoard::isPosEmpty(uint16_t x, uint16_t y) const
 
 void IBoard::setPos(uint16_t x, uint16_t y, int player)
 {
-
     if (this->isValidPos(x, y) == false)
         return;
 
     const int convertedCoordinate = this->convertCoordinate(x, y);
     x = convertedCoordinate % this->_width;
     y = convertedCoordinate / this->_width;
-
     if (this->isPosEmpty(x, y) == false) {
-        std::cerr << "Error: Invalid move to place stone in (" << x << ";" << y << ")" << std::endl;
+        std::cerr << "Error: Position already use in (" << x << ";" << y << ")" << std::endl;
         return;
     }
 

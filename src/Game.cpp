@@ -296,7 +296,6 @@ bool Game::canCapture(uint16_t x, uint16_t y, uint16_t player)
 {
     if (!getClassicBoard().isPosEmpty(x, y))
         return false;
-
     setPosToBoards(x, y, player);
     const int opponent = (player == WHITE) ? BLACK : WHITE;
 

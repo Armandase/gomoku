@@ -47,6 +47,7 @@ int main()
                     int x = coordToBoard(mouseX);
                     int y = coordToBoard(mouseY);
                     if (posValid(game, x, y, player)) {
+                        game.setPosToBoards(x, y, player);
                         place_stone(game, render, x, y, player);
                     }
                 }
