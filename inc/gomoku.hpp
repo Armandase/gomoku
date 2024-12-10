@@ -22,8 +22,8 @@
 #define SCREEN_WIDTH (BOARD_DIMENSIONS + MARGIN + OFFSET)
 #define RADIUS (GRID_SIZE / 3)
 #define DIAMETER (RADIUS * 2)
-#define DEPTH 1
-#define PRUNING 5
+#define DEPTH 10
+#define PRUNING 4
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
 #define TIME_UP 500
@@ -69,28 +69,28 @@ const std::array<const t_pattern, 19> patternsArray { {
     { patternMerge("000000110"), patternMerge("000001001"), 4, 0 },
 
     // WINNING CONDITION - Five in a row
-    { patternMerge("000011111"), patternMerge("000000000"), 5, 500000000 }, // FIVE (unblockable win)
+    { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE (unblockable win)
 
     // STRONG THREATS - Open Four (either side open)
     { patternMerge("000011110"), patternMerge("000000000"), 5, 10000000 }, // FOUR (open on both ends)
 
 
     // MODERATE THREATS - One-Sided Open Four
-    { patternMerge("000001111"), patternMerge("000000000"), 4, 5000000 }, // FOUR
-    { patternMerge("000011011"), patternMerge("000000000"), 5, 5000000 }, // FOUR
-    { patternMerge("000010111"), patternMerge("000000000"), 5, 5000000 }, // FOUR
-    { patternMerge("000011101"), patternMerge("000000000"), 5, 5000000 }, // FOUR
+    { patternMerge("000001111"), patternMerge("000000000"), 4, 1000000 }, // FOUR
+    { patternMerge("000011011"), patternMerge("000000000"), 5, 1000000 }, // FOUR
+    { patternMerge("000010111"), patternMerge("000000000"), 5, 1000000 }, // FOUR
+    { patternMerge("000011101"), patternMerge("000000000"), 5, 1000000 }, // FOUR
 
     // POTENTIAL BUILD-UP - Open Three
-    { patternMerge("000001110"), patternMerge("000000000"), 5, 500000 }, // THREE (open on both ends)
+    { patternMerge("000001110"), patternMerge("000000000"), 5, 100000 }, // THREE (open on both ends)
+    { patternMerge("000000111"), patternMerge("000000000"), 3, 100000 }, // THREE
 
     // MODERATE THREATS
-    { patternMerge("000001101"), patternMerge("000000000"), 4, 100000 },
-    { patternMerge("000001011"), patternMerge("000000000"), 4, 100000 },
+    { patternMerge("000001101"), patternMerge("000000000"), 4, 10000 },
+    { patternMerge("000001011"), patternMerge("000000000"), 4, 10000 },
 
     // MODERATE OPPORTUNITIES - Defensive or transitional patterns
-    { patternMerge("000000111"), patternMerge("000000000"), 3, 50000 }, // THREE
-    { patternMerge("000001001"), patternMerge("000000110"), 4, 50000 }, // Capture opportunity
+    { patternMerge("000001001"), patternMerge("000000110"), 4, 1000 }, // Capture opportunity
 
     // LOW-PRIORITY OPPORTUNITIES - Transitional steps
     { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO

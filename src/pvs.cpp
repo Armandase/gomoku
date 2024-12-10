@@ -18,11 +18,12 @@ function pvs(node, depth, α, β, color) is
 
 int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode)
 {
+    const int opponent = (node.stone.player == WHITE) ? BLACK : WHITE;
     if (depth <= 0 || isTerminal(node.game, node.stone.player)) {
         if (maxNode)
-            return node.game.globalHeuristic(node.stone.player);
+            return node.game.heuristicTest(node.stone.x, node.stone.y, node.stone.player);
         else
-            return -node.game.globalHeuristic(node.stone.player);
+            return -node.game.heuristicTest(node.stone.x, node.stone.y, node.stone.player);
     }
     int nextPlayer = node.stone.player == WHITE ? BLACK : WHITE;
     gameSet possibleMoves = generatePossibleMoves(node.game, nextPlayer, !maxNode);

@@ -70,7 +70,7 @@ IBoard::bitboard getSurroundingBits(Game& game)
 void sortBoards(gameSet& possibleMoves, int player)
 {
     for (auto& move : possibleMoves) {
-        move.game.setHeuristic(move.game.globalHeuristic(player));
+        move.game.setHeuristic(move.game.heuristicTest(move.stone.x, move.stone.y, player));
     }
     std::sort(possibleMoves.begin(), possibleMoves.end(), [](const t_playerGame& a, const t_playerGame& b) {
         return a.game.getHeuristic() > b.game.getHeuristic();

@@ -358,6 +358,8 @@ int Game::heuristicTest(int x, int y, int player)
     bool exit;
     int counter = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
+    const int playerTmp = getClassicBoard().getPos(x, y);
+
     patternMap extractPlayer = extractPatterns(x, y, PATTERN_SIZE, player);
     patternMap extractOpponent = extractPatterns(x, y, PATTERN_SIZE, opponent);
 
@@ -390,6 +392,7 @@ int Game::heuristicTest(int x, int y, int player)
                 break;
         }
     }
+
     return counter;
 }
 
