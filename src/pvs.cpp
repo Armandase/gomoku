@@ -1,4 +1,6 @@
 #include "../inc/algorithm.hpp"
+#include <future>
+
 /*
 function pvs(node, depth, α, β, color) is
     if depth = 0 or node is a terminal node then
@@ -43,35 +45,6 @@ int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode)
     return alpha;
 }
 
-// t_playerGame findBestMovePVS(Game& root, int depth, int player)
-// {
-//     gameSet possibleMoves = generatePossibleMoves(root, player, true);
-//     if (possibleMoves.empty()) {
-//         t_playerGame playerGame;
-//         playerGame.game = root;
-//         playerGame.stone.player = player;
-//         return playerGame;
-//     }
-
-//     int nextPlayer = player == WHITE ? BLACK : WHITE;
-//     int bestValue = std::numeric_limits<int>::min();
-//     t_playerGame bestMove = possibleMoves.front();
-
-//     --depth;
-//     int result = std::numeric_limits<int>::min();
-//     for (auto& move : possibleMoves) {
-//         result = pvs(move,
-//             std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true);
-//         if (result > bestValue) {
-//             bestValue = result;
-//             bestMove = move;
-//         }
-//     }
-
-//     return bestMove;
-// }
-#include <future>
-
 t_playerGame findBestMovePVS(Game& root, int depth, int player)
 {
     gameSet possibleMoves = generatePossibleMoves(root, player, true);
@@ -82,8 +55,34 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
         return playerGame;
     }
 
+    int bestValue = std::numeric_limits<int>::min();
+    t_playerGame bestMove = possibleMoves.front();
+
+    --depth;
+    int result = std::numeric_limits<int>::min();
+    for (auto& move : possibleMoves) {
+        result = pvs(move,
+            std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true);
+        if (result > bestValue) {
+            bestValue = result;
+            bestMove = move;
+        }
+    }
+
+    return bestMove;
+}
+
+t_playerGame findBestMovePVSmultithread(Game& root, int depth, int player)
+{
+    gameSet possibleMoves = generatePossibleMoves(root, player, true);
+    if (possibleMoves.empty()) {
+        t_playerGame playerGame;
+        playerGame.game = root;
+        playerGame.stone.player = player;
+        return playerGame;
+    }
+
     std::vector<std::future<int>> threadResult;
-    int nextPlayer = player == WHITE ? BLACK : WHITE;
     int bestValue = std::numeric_limits<int>::min();
     t_playerGame bestMove = possibleMoves.front();
 
@@ -93,7 +92,6 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
         threadResult.push_back(std::async(std::launch::async, pvs, std::ref(move),
             std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true));
     }
-    // for (auto& thread : threadResult) {
     for (size_t i = 0; i < threadResult.size(); ++i) {
         result = threadResult[i].get();
         if (result > bestValue) {
