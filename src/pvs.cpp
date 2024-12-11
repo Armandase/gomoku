@@ -18,10 +18,9 @@ function pvs(node, depth, α, β, color) is
     return α
 */
 
-int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode)
+int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode, const timePoint& start)
 {
-    const int opponent = (node.stone.player == WHITE) ? BLACK : WHITE;
-    if (depth <= 0 || isTerminal(node.game, node.stone.player)) {
+    if (depth <= 0 || isTerminal(node.game, node.stone.player) || times_up(start)) {
         if (maxNode)
             return node.game.heuristicTest(node.stone.x, node.stone.y, node.stone.player);
         else
@@ -32,11 +31,11 @@ int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode)
     int score = 0;
     for (auto it = possibleMoves.begin(); it != possibleMoves.end(); ++it) {
         if (it == possibleMoves.begin())
-            score = -pvs(*it, -beta, -alpha, depth - 1, !maxNode);
+            score = -pvs(*it, -beta, -alpha, depth - 1, !maxNode, start);
         else {
-            score = -pvs(*it, -alpha - 1, -alpha, depth - 1, !maxNode);
+            score = -pvs(*it, -alpha - 1, -alpha, depth - 1, !maxNode, start);
             if (alpha < score && score < beta)
-                score = -pvs(*it, -beta, -alpha, depth - 1, !maxNode);
+                score = -pvs(*it, -beta, -alpha, depth - 1, !maxNode, start);
         }
         alpha = std::max(alpha, score);
         if (alpha >= beta)
@@ -61,10 +60,10 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
     int bestValue = std::numeric_limits<int>::min();
     int result = std::numeric_limits<int>::min();
     int highestDepth = -1;
+    timePoint start = std::chrono::high_resolution_clock::now();
     for (auto& move : possibleMoves) {
         result = pvs(move,
-            std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true);
-        std::cout << "Result comes from PVS: " << move.depth << std::endl;
+            std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true, start);
         if (result > bestValue) {
             bestValue = result;
             bestMove = move;
@@ -75,6 +74,8 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
             bestValue = result;
             highestDepth = move.depth;
         }
+        if (times_up(start))
+            break;
     }
     // std::cout << bestValue << std::endl;
     // bestMove.game.getClassicBoard().printBoard();
@@ -95,11 +96,12 @@ t_playerGame findBestMovePVSmultithread(Game& root, int depth, int player)
     std::vector<std::future<int>> threadResult;
     int bestValue = std::numeric_limits<int>::min();
     t_playerGame bestMove = possibleMoves.front();
+    timePoint start = std::chrono::high_resolution_clock::now();
 
     --depth;
     for (auto& move : possibleMoves) {
         threadResult.push_back(std::async(std::launch::async, pvs, std::ref(move),
-            std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true));
+            std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true, start));
     }
     int result = std::numeric_limits<int>::min();
     int highestDepth = -1;

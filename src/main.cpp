@@ -52,12 +52,20 @@ int main()
                     }
                 }
                 if (start == IA_MODE && player == BLACK) {
+                    timePoint start = std::chrono::high_resolution_clock::now();
                     t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+                    timePoint end = std::chrono::high_resolution_clock::now();
+                    std::cout << "Time taken: "
+                              << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+                              << " milliseconds" << std::endl;
+                    std::string timeTaken = "Time taken: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count())
+                        + " ms";
+                    render.writeText(timeTaken, "fonts/OpenSans-Bold.ttf",
+                        { SCREEN_WIDTH - OFFSET, SCREEN_HEIGHT - MARGIN, 200, 50 }, BLACK_COLOR, 50);
                     // t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
                     // t_playerGame gameIA = findBestMove(game, DEPTH, player);
 
                     // t_playerGame gameIA = iterativeDeepening(game, player);
-
                     place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
                         player);
                     game = gameIA.game;

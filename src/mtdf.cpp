@@ -1,15 +1,6 @@
 #include "../inc/TranspositionTable.hpp"
 #include "../inc/algorithm.hpp"
 
-bool times_up(const timePoint& start)
-{
-    const timePoint now = std::chrono::high_resolution_clock::now();
-
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() >= TIME_UP)
-        return true;
-    return false;
-}
-
 t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int depth,
     TranspositionTable& memory)
 {
@@ -104,7 +95,7 @@ t_playerGame iterativeDeepening(Game& root, int player)
         firstGuess = node.game.getHeuristic();
 
         // if (times_up(start))
-        // break;   
+        // break;
     }
     // for (int i = DEPTH; i >= 0; i--) {
     //     if ((i + 2) % 2 == (DEPTH + 2) % 2)
