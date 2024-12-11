@@ -68,7 +68,9 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
             bestMove = move;
         }
     }
-
+    // std::cout << bestValue << std::endl;
+    // bestMove.game.getClassicBoard().printBoard();
+    // std::cout << "\n";
     return bestMove;
 }
 

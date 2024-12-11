@@ -52,8 +52,8 @@ int main()
                     }
                 }
                 if (start == IA_MODE && player == BLACK) {
-                    // t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
-                    t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
+                    t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+                    // t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
                     // t_playerGame gameIA = findBestMove(game, DEPTH, player);
 
                     // t_playerGame gameIA = iterativeDeepening(game, player);
