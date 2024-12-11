@@ -38,8 +38,9 @@ int main()
                 if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q)
                     quit = true;
                 if (endgame) {
-                    endgame = false;
                     resetGame(game, render, player);
+                    endgame = false;
+                    player = WHITE;
                     continue;
                 }
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
@@ -47,8 +48,9 @@ int main()
                     start = modeSelection(game, render, playerButton, IAButton);
                     continue;
                 } else if (endgame) {
-                    endgame = false;
                     resetGame(game, render, player);
+                    endgame = false;
+                    player = WHITE;
                     continue;
                 }
                 SDL_GetMouseState(&mouseX, &mouseY);
