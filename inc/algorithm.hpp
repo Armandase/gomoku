@@ -16,6 +16,7 @@ typedef struct s_stone {
 typedef struct s_playerGame {
     t_stone stone;
     Game game;
+    int depth = 0;
 } t_playerGame;
 
 typedef std::vector<t_playerGame> gameSet;
@@ -26,7 +27,7 @@ bool isTerminal(Game& node, int player);
 
 IBoard::bitboard getSurroundingBits(Game& game);
 
-gameSet generatePossibleMoves(Game& game, int player, bool max);
+gameSet generatePossibleMoves(Game& game, int player, bool max, int depth);
 
 t_playerGame findBestMove(Game& root, int depth, int player);
 t_playerGame findBestMovePVS(Game& root, int depth, int player);

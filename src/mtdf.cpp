@@ -32,7 +32,7 @@ t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int de
     } else if (node.stone.player == BLACK) { // maximization node
         result.game.setHeuristic(std::numeric_limits<int>::min());
         int64_t a = alpha;
-        gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player, true);
+        gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player, true, depth);
 
         for (auto it = possibleMoves.begin(); it != possibleMoves.end() && result.game.getHeuristic() < beta; ++it) {
             it->stone.player = node.stone.player == BLACK ? WHITE : BLACK;
@@ -44,7 +44,7 @@ t_playerGame alphaBetaWithMemory(t_playerGame& node, int alpha, int beta, int de
     } else { // minimization node
         result.game.setHeuristic(std::numeric_limits<int>::max());
         int64_t b = beta;
-        gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player, false);
+        gameSet possibleMoves = generatePossibleMoves(node.game, node.stone.player, false, depth);
         for (auto it = possibleMoves.begin(); it != possibleMoves.end() && result.game.getHeuristic() > alpha; ++it) {
             it->stone.player = node.stone.player == BLACK ? WHITE : BLACK;
             t_playerGame ret = alphaBetaWithMemory(*it, alpha, b, depth - 1, memory);

@@ -28,7 +28,7 @@ int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode)
             return -node.game.heuristicTest(node.stone.x, node.stone.y, node.stone.player);
     }
     int nextPlayer = node.stone.player == WHITE ? BLACK : WHITE;
-    gameSet possibleMoves = generatePossibleMoves(node.game, nextPlayer, !maxNode);
+    gameSet possibleMoves = generatePossibleMoves(node.game, nextPlayer, !maxNode, depth);
     int score = 0;
     for (auto it = possibleMoves.begin(); it != possibleMoves.end(); ++it) {
         if (it == possibleMoves.begin())
@@ -47,7 +47,7 @@ int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode)
 
 t_playerGame findBestMovePVS(Game& root, int depth, int player)
 {
-    gameSet possibleMoves = generatePossibleMoves(root, player, true);
+    gameSet possibleMoves = generatePossibleMoves(root, player, true, depth);
     if (possibleMoves.empty()) {
         t_playerGame playerGame;
         playerGame.game = root;
@@ -55,17 +55,25 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
         return playerGame;
     }
 
-    int bestValue = std::numeric_limits<int>::min();
     t_playerGame bestMove = possibleMoves.front();
 
     --depth;
+    int bestValue = std::numeric_limits<int>::min();
     int result = std::numeric_limits<int>::min();
+    int highestDepth = -1;
     for (auto& move : possibleMoves) {
         result = pvs(move,
             std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true);
+        std::cout << "Result comes from PVS: " << move.depth << std::endl;
         if (result > bestValue) {
             bestValue = result;
             bestMove = move;
+            highestDepth = move.depth;
+        } else if (result == bestValue && move.depth > highestDepth) {
+            std::cout << "MATCHING VALUE FOUND PVS NORMAL" << std::endl;
+            bestMove = move;
+            bestValue = result;
+            highestDepth = move.depth;
         }
     }
     // std::cout << bestValue << std::endl;
@@ -76,7 +84,7 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
 
 t_playerGame findBestMovePVSmultithread(Game& root, int depth, int player)
 {
-    gameSet possibleMoves = generatePossibleMoves(root, player, true);
+    gameSet possibleMoves = generatePossibleMoves(root, player, true, depth);
     if (possibleMoves.empty()) {
         t_playerGame playerGame;
         playerGame.game = root;
@@ -89,16 +97,23 @@ t_playerGame findBestMovePVSmultithread(Game& root, int depth, int player)
     t_playerGame bestMove = possibleMoves.front();
 
     --depth;
-    int result = std::numeric_limits<int>::min();
     for (auto& move : possibleMoves) {
         threadResult.push_back(std::async(std::launch::async, pvs, std::ref(move),
             std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), depth, true));
     }
+    int result = std::numeric_limits<int>::min();
+    int highestDepth = -1;
     for (size_t i = 0; i < threadResult.size(); ++i) {
         result = threadResult[i].get();
         if (result > bestValue) {
             bestValue = result;
             bestMove = possibleMoves[i];
+            highestDepth = possibleMoves[i].depth;
+        } else if (result && result == bestValue && possibleMoves[i].depth > highestDepth) {
+            std::cout << "MATCHING VALUE FOUND" << result << std::endl;
+            highestDepth = possibleMoves[i].depth;
+            bestMove = possibleMoves[i];
+            bestValue = result;
         }
     }
 
