@@ -77,7 +77,7 @@ void sortBoards(gameSet& possibleMoves, int player)
     });
 }
 
-gameSet generatePossibleMoves(Game& game, int player, bool max)
+gameSet generatePossibleMoves(Game& game, int player, bool max, int depth)
 {
     gameSet possibleMoves;
     IBoard::bitboard neighbourBits = getSurroundingBits(game);
@@ -98,6 +98,7 @@ gameSet generatePossibleMoves(Game& game, int player, bool max)
                 playerGame.stone.x = x;
                 playerGame.stone.y = y;
                 playerGame.stone.player = player;
+                playerGame.depth = depth;
                 playerGame.game = std::move(copy);
                 possibleMoves.push_back(std::move(playerGame));
             }
