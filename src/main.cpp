@@ -4,6 +4,19 @@
 #include "../inc/algorithm.hpp"
 #include "../inc/gomoku.hpp"
 
+void predictPos(Game& game, Render& render, int player, int& lastPosX, int& lastPosY, int x, int y)
+{
+    t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+    if (lastPosX != -1 && lastPosY != -1 && !(x == lastPosX && y == lastPosY))
+        render.erasePlayer(lastPosX, lastPosY);
+    else if (lastPosX == gameIA.stone.x && lastPosY == gameIA.stone.y)
+        return;
+
+    lastPosY = gameIA.stone.y;
+    lastPosX = gameIA.stone.x;
+    placeAdvisorStone(gameIA.stone.x, gameIA.stone.y, render);
+}
+
 // Function to initialize the SDL window and run the game loop
 int main()
 {
@@ -20,7 +33,7 @@ int main()
     // Create buttons for choosing human vs AI or human vs human
     Button playerButton(SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
     Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
-
+    int lastPosX = -1, lastPosY = -1;
     // Render Start Menu
     // const SDL_Rect PvP = {SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100};
     // const SDL_Rect PvIA = {SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100};
@@ -61,6 +74,8 @@ int main()
                         game.setPosToBoards(x, y, player);
                         place_stone(game, render, x, y, player, endgame);
                     }
+                    if (start == PLAYER_MODE)
+                        predictPos(game, render, player, lastPosX, lastPosY, x, y);
                 }
                 if (start == IA_MODE && player == BLACK) {
                     timePoint start = std::chrono::high_resolution_clock::now();

@@ -140,6 +140,12 @@ bool Game::isFull() const
     return (fullBoard.count() == this->_classicBoard.getWidth() * this->_classicBoard.getWidth());
 }
 
+bool Game::isEmpty() const
+{
+    IBoard::bitboard emptyBoard = this->_classicBoard.getPlayer1() | this->_classicBoard.getPlayer2();
+    return (emptyBoard.count() == 0);
+}
+
 bool Game::canBeCaptured(uint16_t x,
     uint16_t y,
     Game::PatternType boardType,
