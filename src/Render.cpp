@@ -83,7 +83,8 @@ void Render::writeText(const std::string& msg, const std::string& font, const SD
     TTF_CloseFont(Font);
 }
 
-void Render::renderImage(const std::string& path, const SDL_Rect* rect) {
+void Render::renderImage(const std::string& path, const SDL_Rect* rect)
+{
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
     if (!loadedSurface)
         throw std::runtime_error(std::string("Failed to load Image: ") + std::string(SDL_GetError()));
@@ -274,6 +275,20 @@ void Render::renderCapture(uint16_t p1Capture, uint16_t p2Capture) const
         else
             drawCircle((MARGIN + BOARD_DIMENSIONS) + ((i - 5) * RADIUS * 2) + (i - 5) * 10, SCREEN_HEIGHT / 5 * 3 + GRID_SIZE + RADIUS * 3);
     }
+
+    SDL_RenderPresent(this->_renderer);
+}
+
+void Render::renderTime(const std::string& timeTaken) const
+{
+    const SDL_Rect timeTakenRect = { MARGIN + BOARD_DIMENSIONS + 1, SCREEN_HEIGHT / 10 * 9, OFFSET, GRID_SIZE };
+    SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
+    SDL_RenderFillRect(this->_renderer, &timeTakenRect);
+
+    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+    std::string timeTakenStr = " Time: " + timeTaken + "ms ";
+    writeText(timeTakenStr, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        timeTakenRect, BLACK_COLOR, FONT_SIZE);
 
     SDL_RenderPresent(this->_renderer);
 }

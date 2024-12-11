@@ -17,7 +17,7 @@ SRC 	=	utils.cpp \
 			TranspositionTable.cpp \
 			pvs.cpp
 
-HEADER	=	inc/gomoku.hpp inc/utils.hpp \
+HEADER	=	inc/gomoku.hpp \
 			inc/algorithm.hpp \
 			inc/Pattern.hpp \
 			inc/Render.hpp \

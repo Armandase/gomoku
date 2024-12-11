@@ -26,7 +26,7 @@
 #define PRUNING 3
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
-#define TIME_UP 500
+#define TIME_UP 450
 #define FONT_SIZE 24
 
 enum side {
@@ -73,9 +73,9 @@ typedef struct s_pattern {
 //     // STRONG THREATS - Open Four (either side open)
 //     { patternMerge("000011110"), patternMerge("000000000"), 6, 10000000 }, // FOUR (open on both ends)
 
-//     // MODERATE THREATS - One-Sided Open Four 
-//     { patternMerge("000000001"), patternMerge("000001110"), 4, 1000000 }, 
-//     { patternMerge("000001000"), patternMerge("000000111"), 4, 1000000 }, 
+//     // MODERATE THREATS - One-Sided Open Four
+//     { patternMerge("000000001"), patternMerge("000001110"), 4, 1000000 },
+//     { patternMerge("000001000"), patternMerge("000000111"), 4, 1000000 },
 
 //     { patternMerge("000001111"), patternMerge("000000000"), 4, 1000000 }, // FOUR
 //     { patternMerge("000011011"), patternMerge("000000000"), 5, 1000000 }, // FOUR
@@ -103,24 +103,24 @@ typedef struct s_pattern {
 //     { patternMerge("000001001"), patternMerge("000000000"), 4, 5 },
 // }};
 
-const std::array<const t_pattern, 35> patternsArray { {
+const std::array<const t_pattern, 37> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
     { patternMerge("000000110"), patternMerge("000001001"), 4, 0 },
 
-    // WINNING CONDITION - Five in a row
+    // WINNING CONDITION - Five in a row                       2147483647
     { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE (unblockable win)
-    
+
     // DEFENSE FOUR
-    { patternMerge("000010000"), patternMerge("000001111"), 5, 100000000 }, // FOUR
-    { patternMerge("000000001"), patternMerge("000011110"), 5, 100000000 }, // FOUR
-    { patternMerge("000000100"), patternMerge("000011011"), 5, 100000000 }, // FOUR
-    { patternMerge("000001000"), patternMerge("000010111"), 5, 100000000 }, // FOUR
-    { patternMerge("000000010"), patternMerge("000011101"), 5, 100000000 },
+    { patternMerge("000010000"), patternMerge("000001111"), 5, 10000000 }, // FOUR
+    { patternMerge("000000001"), patternMerge("000011110"), 5, 10000000 }, // FOUR
+    { patternMerge("000000100"), patternMerge("000011011"), 5, 10000000 }, // FOUR
+    { patternMerge("000001000"), patternMerge("000010111"), 5, 10000000 }, // FOUR
+    { patternMerge("000000010"), patternMerge("000011101"), 5, 10000000 },
 
     // STRONG THREATS - Open Four (either side open)
-    { patternMerge("000011110"), patternMerge("000000000"), 6, 10000000 }, // FOUR (open on both ends)
+    { patternMerge("000011110"), patternMerge("000000000"), 6, 1000000 }, // FOUR (open on both ends)
 
     // MODERATE THREATS - One-Sided Open Four
     { patternMerge("000001111"), patternMerge("000000000"), 4, 1000000 }, // FOUR
@@ -131,7 +131,7 @@ const std::array<const t_pattern, 35> patternsArray { {
     // DENFENSE THREE
     { patternMerge("000001000"), patternMerge("000000111"), 4, 100000 }, // THREE
     { patternMerge("000000001"), patternMerge("000001110"), 4, 100000 }, // THREE
-        // POTENTIAL BUILD-UP - Open Three
+    // POTENTIAL BUILD-UP - Open Three
     { patternMerge("000001110"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
     { patternMerge("000001110"), patternMerge("000000000"), 4, 10000 }, // THREE
     { patternMerge("000000111"), patternMerge("000000000"), 3, 10000 }, // THREE
@@ -141,6 +141,8 @@ const std::array<const t_pattern, 35> patternsArray { {
     { patternMerge("000000010"), patternMerge("000001101"), 4, 5000 },
     { patternMerge("000001011"), patternMerge("000000000"), 4, 5000 },
     { patternMerge("000000100"), patternMerge("000001011"), 4, 5000 },
+    { patternMerge("000001110"), patternMerge("000000001"), 4, 5000 },
+    { patternMerge("000000111"), patternMerge("000001000"), 4, 5000 },
 
     // MODERATE OPPORTUNITIES - Defensive or transitional patterns
     { patternMerge("000001001"), patternMerge("000000110"), 4, 1000 }, // Capture opportunity
@@ -159,9 +161,13 @@ const std::array<const t_pattern, 35> patternsArray { {
     { patternMerge("000001001"), patternMerge("000000000"), 4, 50 },
 } };
 
+int intlen(int number);
+int coordToBoard(int coor);
+int boardToRender(int value);
 bool handleMouse(int mouseX, int mouseY);
 int modeSelection(Game& game, Render& render, Button& player, Button& IA);
-void place_stone(Game& board, Render& render, int x, int y, int& player);
+void place_stone(Game& board, Render& render, int x, int y, int& player, bool& endgame);
 bool posValid(Game& game, int x, int y, int player, bool verbose = false);
+void resetGame(Game& game, Render& render, int player);
 
 #endif

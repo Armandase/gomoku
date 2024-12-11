@@ -3,10 +3,9 @@
 
 #include "Button.hpp"
 #include "gomoku.hpp"
-#include "utils.hpp"
 #include <SDL.h>
-#include <SDL_ttf.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 
 const SDL_Color BLACK_COLOR = { 0, 0, 0, 255 };
@@ -37,6 +36,7 @@ public:
     void renderCapture(uint16_t p1Capture, uint16_t p2Capture) const;
     void eraseCapture();
     void renderImage(const std::string& path, const SDL_Rect* rect);
+    void renderTime(const std::string& timeTaken) const;
 
 private:
     SDL_Renderer* _renderer;
