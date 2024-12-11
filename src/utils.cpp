@@ -1,4 +1,6 @@
 #include "../inc/gomoku.hpp"
+#include "../inc/Game.hpp"
+#include <unistd.h>
 
 int modeSelection(Game& game, Render& render, Button& player, Button& IA)
 {
@@ -27,6 +29,13 @@ int intlen(int number)
         length++;
     }
     return length;
+}
+
+void resetGame(Game& game, Render& render, int player)
+{
+    game.resetBoards();
+    render.renderBoard(game);
+    render.eraseCapture();
 }
 
 int coordToBoard(int coor)

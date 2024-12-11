@@ -3,7 +3,6 @@
 
 #include "Button.hpp"
 #include "gomoku.hpp"
-#include "utils.hpp"
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>

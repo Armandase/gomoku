@@ -6,7 +6,6 @@
 #include "DiagBoard.hpp"
 #include "Pattern.hpp"
 #include "TransposedBoard.hpp"
-
 // bitboard representation of the board
 
 class Game {

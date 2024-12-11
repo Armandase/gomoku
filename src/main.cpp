@@ -3,7 +3,6 @@
 #include "../inc/Render.hpp"
 #include "../inc/algorithm.hpp"
 #include "../inc/gomoku.hpp"
-#include "../inc/utils.hpp"
 
 // Function to initialize the SDL window and run the game loop
 int main()
@@ -13,6 +12,7 @@ int main()
 
     int start = 0;
     bool quit = false;
+    bool endgame = false;
     SDL_Event e;
     int player = WHITE;
     int mouseX, mouseY;
@@ -37,9 +37,18 @@ int main()
             else if (e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q)
                     quit = true;
+                if (endgame) {
+                    endgame = false;
+                    resetGame(game, render, player);
+                    continue;
+                }
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
                 if (!start) {
                     start = modeSelection(game, render, playerButton, IAButton);
+                    continue;
+                } else if (endgame) {
+                    endgame = false;
+                    resetGame(game, render, player);
                     continue;
                 }
                 SDL_GetMouseState(&mouseX, &mouseY);
@@ -48,18 +57,18 @@ int main()
                     int y = coordToBoard(mouseY);
                     if (posValid(game, x, y, player, true)) {
                         game.setPosToBoards(x, y, player);
-                        place_stone(game, render, x, y, player);
+                        place_stone(game, render, x, y, player, endgame);
                     }
                 }
                 if (start == IA_MODE && player == BLACK) {
-                    t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
-                    // t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
+                    // t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+                    t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
                     // t_playerGame gameIA = findBestMove(game, DEPTH, player);
 
                     // t_playerGame gameIA = iterativeDeepening(game, player);
 
                     place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
-                        player);
+                        player, endgame);
                     game = gameIA.game;
                 }
                 SDL_RenderPresent(render.getRenderer());

@@ -338,7 +338,7 @@ void Game::handleCapture(uint16_t x,
 bool checkPatternAtPosition(const patternMerge& playerLine,
     const patternMerge& opponentLine,
     t_pattern pattern,
-    int startPos, int player)
+    int startPos)
 {
     if (startPos < 0 || startPos > MERGE_SIZE)
         return false;
@@ -375,9 +375,9 @@ int Game::heuristicTest(int x, int y, int player)
 
             for (int i = 0; i < pattern.length; i++) {
                 if (checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - i, player)
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - i)
                     || checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + i, player)) {
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + i)) {
                     // std::cout << "X: " << x << " Y: " << y << " PLAYER: " << ((player == WHITE) ? "WHITE" : "BLACK")
                     // << " | FIND: " << pattern.value << " | PLAYER PATTERN: " <<
                     // pattern.player << " | OPP PATTERN: " << pattern.opponent <<

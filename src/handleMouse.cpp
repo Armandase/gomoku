@@ -1,5 +1,4 @@
 #include "../inc/Game.hpp"
-#include "../inc/utils.hpp"
 
 bool posValid(Game& game, int x, int y, int player, bool verbose)
 {
@@ -16,7 +15,7 @@ bool posValid(Game& game, int x, int y, int player, bool verbose)
     return true;
 }
 
-void place_stone(Game& game, Render& render, int x, int y, int& player)
+void place_stone(Game& game, Render& render, int x, int y, int& player, bool& endgame)
 {
     // if (!posValid(game, x, y, player))
     // return;
@@ -36,10 +35,8 @@ void place_stone(Game& game, Render& render, int x, int y, int& player)
 
     if (game.playerWin(player)) {
         render.renderWin(player);
-        sleep(1);
-        game.resetBoards();
-        render.renderBoard(game);
-        render.eraseCapture();
+        endgame = true;
+        return ; 
     }
     player = (player == WHITE) ? BLACK : WHITE;
 }

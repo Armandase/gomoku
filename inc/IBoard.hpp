@@ -7,7 +7,6 @@
 #include <map>
 
 #include "gomoku.hpp"
-#include "utils.hpp"
 
 // bitboard representation of the board
 
