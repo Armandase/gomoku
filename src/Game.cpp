@@ -355,6 +355,8 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
 
 int Game::heuristicTest(int x, int y, int player)
 {
+    if (playerWin(player))
+        return INT_MAX;
     bool exit;
     int counter = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;

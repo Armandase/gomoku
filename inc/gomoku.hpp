@@ -103,7 +103,7 @@ typedef struct s_pattern {
 //     { patternMerge("000001001"), patternMerge("000000000"), 4, 5 },
 // }};
 
-const std::array<const t_pattern, 37> patternsArray { {
+const std::array<const t_pattern, 33> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
@@ -131,29 +131,26 @@ const std::array<const t_pattern, 37> patternsArray { {
     // DENFENSE THREE
     { patternMerge("000001000"), patternMerge("000000111"), 4, 100000 }, // THREE
     { patternMerge("000000001"), patternMerge("000001110"), 4, 100000 }, // THREE
+    { patternMerge("000000010"), patternMerge("000001101"), 4, 100000 },
+    { patternMerge("000000100"), patternMerge("000001011"), 4, 100000 },
     // POTENTIAL BUILD-UP - Open Three
+    { patternMerge("000001001"), patternMerge("000000110"), 4, 10000 }, // Capture opportunity
     { patternMerge("000001110"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
     { patternMerge("000001110"), patternMerge("000000000"), 4, 10000 }, // THREE
     { patternMerge("000000111"), patternMerge("000000000"), 3, 10000 }, // THREE
 
     // MODERATE THREATS
     { patternMerge("000001101"), patternMerge("000000000"), 4, 5000 },
-    { patternMerge("000000010"), patternMerge("000001101"), 4, 5000 },
     { patternMerge("000001011"), patternMerge("000000000"), 4, 5000 },
-    { patternMerge("000000100"), patternMerge("000001011"), 4, 5000 },
     { patternMerge("000001110"), patternMerge("000000001"), 4, 5000 },
     { patternMerge("000000111"), patternMerge("000001000"), 4, 5000 },
 
-    // MODERATE OPPORTUNITIES - Defensive or transitional patterns
-    { patternMerge("000001001"), patternMerge("000000110"), 4, 1000 }, // Capture opportunity
 
     // LOW-PRIORITY OPPORTUNITIES - Transitional steps
     { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
-    { patternMerge("000000001"), patternMerge("000000110"), 3, 500 }, // OPEN TWO
-    { patternMerge("000000011"), patternMerge("000000000"), 3, 100 }, // TWO
-    { patternMerge("000000110"), patternMerge("000000000"), 3, 100 }, // TWO
-    { patternMerge("000000011"), patternMerge("000000000"), 2, 100 }, // TWO
+    { patternMerge("000000001"), patternMerge("000000110"), 3, 100 }, // OPEN TWO
     { patternMerge("000000100"), patternMerge("000000011"), 3, 100 }, // TWO
+    { patternMerge("000000011"), patternMerge("000000000"), 2, 100 }, // TWO
 
     // FILLERS - Low-value potential plays
     { patternMerge("000000101"), patternMerge("000000000"), 3, 50 },
