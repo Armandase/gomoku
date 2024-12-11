@@ -53,11 +53,24 @@ int main()
                 }
                 SDL_GetMouseState(&mouseX, &mouseY);
                 if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) {
+                    std::cout << "Empty: " << game.isEmpty() << std::endl;
+                    if (start == PLAYER_MODE && game.isEmpty() == false) {
+                        t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+                        // t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
+                        // t_playerGame gameIA = findBestMove(game, DEPTH, player);
+                        placeAdvisorStone(gameIA.stone.x, gameIA.stone.y, render);
+                    }
                     int x = coordToBoard(mouseX);
                     int y = coordToBoard(mouseY);
                     if (posValid(game, x, y, player, true)) {
                         game.setPosToBoards(x, y, player);
                         place_stone(game, render, x, y, player, endgame);
+                    }
+                    if (start == PLAYER_MODE) {
+                        t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+                        // t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
+                        // t_playerGame gameIA = findBestMove(game, DEPTH, player);
+                        placeAdvisorStone(gameIA.stone.x, gameIA.stone.y, render);
                     }
                 }
                 if (start == IA_MODE && player == BLACK) {
@@ -67,10 +80,6 @@ int main()
                     std::cout << "Time taken: "
                               << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
                               << " milliseconds" << std::endl;
-                    // std::string timeTaken = "Time taken: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count())
-                    //     + " ms";
-                    // render.writeText(timeTaken, "fonts/OpenSans-Bold.ttf",
-                    //     { SCREEN_WIDTH - OFFSET, SCREEN_HEIGHT - MARGIN, 200, 50 }, BLACK_COLOR, 50);
                     // t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
                     // t_playerGame gameIA = findBestMove(game, DEPTH, player);
 

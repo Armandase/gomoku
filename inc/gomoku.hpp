@@ -38,6 +38,7 @@ enum player {
     EMPTY = 0,
     WHITE,
     BLACK,
+    ADVISOR,
 };
 
 enum mode {
@@ -167,6 +168,7 @@ int boardToRender(int value);
 bool handleMouse(int mouseX, int mouseY);
 int modeSelection(Game& game, Render& render, Button& player, Button& IA);
 void place_stone(Game& board, Render& render, int x, int y, int& player, bool& endgame);
+void placeAdvisorStone(int x, int y, Render& render);
 bool posValid(Game& game, int x, int y, int player, bool verbose = false);
 void resetGame(Game& game, Render& render, int player);
 

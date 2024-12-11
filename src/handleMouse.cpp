@@ -36,9 +36,16 @@ void place_stone(Game& game, Render& render, int x, int y, int& player, bool& en
     if (game.playerWin(player)) {
         render.renderWin(player);
         endgame = true;
-        return ; 
+        return;
     }
     player = (player == WHITE) ? BLACK : WHITE;
+}
+
+void placeAdvisorStone(int x, int y, Render& render)
+{
+    // SDL_SetRenderDrawColor(render.getRenderer(), LIGHT_GREY_COLOR, LIGHT_GREY_COLOR[1], LIGHT_GREY_COLOR[2], LIGHT_GREY_COLOR[3]);
+    SDL_SetRenderDrawColor(render.getRenderer(), LIGHT_GREY_COLOR.r, LIGHT_GREY_COLOR.g, LIGHT_GREY_COLOR.b, LIGHT_GREY_COLOR.a);
+    render.drawCircle(boardToRender(x), boardToRender(y));
 }
 
 bool handleMouse(int mouseX, int mouseY)

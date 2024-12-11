@@ -9,6 +9,8 @@
 #include <iostream>
 
 const SDL_Color BLACK_COLOR = { 0, 0, 0, 255 };
+// const SDL_Color LIGHT_GREY_COLOR = { 211, 211, 211, 100 };
+const SDL_Color LIGHT_GREY_COLOR = { 100, 100, 100, 255 };
 const SDL_Color WHITE_COLOR = { 255, 255, 255, 255 };
 
 class Game;

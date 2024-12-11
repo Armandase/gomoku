@@ -37,6 +37,7 @@ public:
     void removePosToBoards(uint16_t x, uint16_t y);
     void resetBoards();
     bool isFull() const;
+    bool isEmpty() const;
 
     ClassicBoard& getClassicBoard() noexcept;
     TransposedBoard& getTransposedBoard() noexcept;
