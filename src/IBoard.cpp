@@ -74,6 +74,8 @@ uint16_t IBoard::getIdPlayer2() const noexcept
 
 bool IBoard::isPosEmpty(uint16_t x, uint16_t y) const
 {
+    if (this->isValidPos(x, y) == false)
+        return false;
     const int coor = x + y * this->_width;
     if (this->_player1.test(coor) || this->_player2.test(coor))
         return false;

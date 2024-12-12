@@ -192,14 +192,37 @@ bool Game::canBeCaptured(uint16_t x,
     return false;
 }
 
+bool Game::playerWinAtPos(uint16_t x, uint16_t y, uint16_t player)
+{
+    if (getClassicBoard().isPosEmpty(x, y))
+        return false;
+        
+    const uint16_t len_mask = 5;
+    IBoard::bitboard mask("11111");
+
+    if (getClassicBoard().findMatch(x, y, player, mask, len_mask))
+        return !canBeCaptured(x, y, PatternType::CLASSIC, player);
+
+    if (getTransposedBoard().findMatch(x, y, player, mask, len_mask))
+        return !canBeCaptured(x, y, PatternType::TRANSPOS, player);
+
+    if (getDiagBoard().findMatch(x, y, player, mask, len_mask))
+        return !canBeCaptured(x, y, PatternType::DIAG, player);
+
+    if (getAntiDiagBoard().findMatch(x, y, player, mask, len_mask))
+        return !canBeCaptured(x, y, PatternType::ANTIDIAG, player);
+
+    return false;
+}
+
 bool Game::playerWin(uint16_t player)
 {
     if (getCapture(player) >= 5)
         return true;
 
-    const uint16_t len_mask = 5;
     const int width = getClassicBoard().getWidth();
     const int size = width * width;
+    const uint16_t len_mask = 5;
     IBoard::bitboard mask("11111");
     for (int i = 0; i < size; ++i) {
         int x = i % width, y = i / width;
@@ -363,9 +386,19 @@ int Game::heuristicTest(int x, int y, int player)
 {
     if (playerWin(player))
         return INT_MAX;
+
     bool exit;
     int counter = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
+
+    const patternMerge playerCapture("000001001");
+    const patternMerge opponentCapture("000000110");
+
+    const patternMerge playerCaptureDefense("000001110");
+    const patternMerge opponentCaptureDefense("000000001");
+
+    const int dirX[8] = { 1, 0, 1, 1, -1, 0, -1, -1 };
+    const int dirY[8] = { 0, 1, -1, 1, 0, -1, 1, -1 };
 
     patternMap extractPlayer = extractPatterns(x, y, PATTERN_SIZE, player);
     patternMap extractOpponent = extractPatterns(x, y, PATTERN_SIZE, opponent);
@@ -381,16 +414,22 @@ int Game::heuristicTest(int x, int y, int player)
             patternBitset revBoardOpponentPattern = extractOpponent[static_cast<Game::PatternType>(i + 4)];
             patternMerge mergedOpponentPattern = (boardOpponentPattern.to_ulong() << 4 | revBoardOpponentPattern.to_ulong());
 
-            for (int i = 0; i < pattern.length; i++) {
+            for (int pos = 0; pos < pattern.length; pos++) {
                 if (checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - i)
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - pos)
                     || checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + i)) {
-                    // std::cout << "X: " << x << " Y: " << y << " PLAYER: " << ((player == WHITE) ? "WHITE" : "BLACK")
-                    // << " | FIND: " << pattern.value << " | PLAYER PATTERN: " <<
-                    // pattern.player << " | OPP PATTERN: " << pattern.opponent <<
-                    // std::endl;
-                    counter += pattern.value;
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos)) {
+
+                    if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
+                        counter += pattern.value * (getCapture(player) + 1);
+                    else if (pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001"
+                    && (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player) 
+                    || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))) {
+                        std::cout << "BLOCKED END CAPTURE\n";
+                        counter += 50000000;
+                    }
+                    else
+                        counter += pattern.value;
                     exit = true;
                     break;
                 }

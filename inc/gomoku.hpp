@@ -22,7 +22,7 @@
 #define SCREEN_WIDTH (BOARD_DIMENSIONS + MARGIN + OFFSET)
 #define RADIUS (GRID_SIZE / 3)
 #define DIAMETER (RADIUS * 2)
-#define DEPTH 10
+#define DEPTH 1
 #define PRUNING 3
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
@@ -60,50 +60,6 @@ typedef struct s_pattern {
     const int value;
 } t_pattern;
 
-// const std::array<const t_pattern, 23> patternsArray { {
-//     // USELESS PATTERNS - Minimal value as they don't directly influence the game
-//     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
-//     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
-//     { patternMerge("000000110"), patternMerge("000001001"), 4, 0 },
-
-//     // WINNING CONDITION - Five in a row
-//     { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE (unblockable win)
-//     { patternMerge("000010000"), patternMerge("000001111"), 5, 100000000 },
-//     { patternMerge("000000001"), patternMerge("000011110"), 5, 100000000 },
-
-//     // STRONG THREATS - Open Four (either side open)
-//     { patternMerge("000011110"), patternMerge("000000000"), 6, 10000000 }, // FOUR (open on both ends)
-
-//     // MODERATE THREATS - One-Sided Open Four
-//     { patternMerge("000000001"), patternMerge("000001110"), 4, 1000000 },
-//     { patternMerge("000001000"), patternMerge("000000111"), 4, 1000000 },
-
-//     { patternMerge("000001111"), patternMerge("000000000"), 4, 1000000 }, // FOUR
-//     { patternMerge("000011011"), patternMerge("000000000"), 5, 1000000 }, // FOUR
-//     { patternMerge("000010111"), patternMerge("000000000"), 5, 1000000 }, // FOUR
-//     { patternMerge("000011101"), patternMerge("000000000"), 5, 1000000 }, // FOUR
-
-//     // POTENTIAL BUILD-UP - Open Three
-//     { patternMerge("000001110"), patternMerge("000000000"), 5, 100000 }, // THREE (open on both ends)
-//     { patternMerge("000000111"), patternMerge("000000000"), 3, 10000 }, // THREE
-
-//     // MODERATE THREATS
-//     { patternMerge("000001101"), patternMerge("000000000"), 4, 1000 },
-//     { patternMerge("000001011"), patternMerge("000000000"), 4, 1000 },
-
-//     // MODERATE OPPORTUNITIES - Defensive or transitional patterns
-//     { patternMerge("000001001"), patternMerge("000000110"), 4, 100 }, // Capture opportunity
-
-//     // LOW-PRIORITY OPPORTUNITIES - Transitional steps
-//     { patternMerge("000000110"), patternMerge("000000000"), 4, 50 }, // OPEN TWO
-//     { patternMerge("000000011"), patternMerge("000000000"), 2, 10 }, // TWO
-
-//     // FILLERS - Low-value potential plays
-//     { patternMerge("000000101"), patternMerge("000000000"), 3, 5 },
-//     { patternMerge("000001010"), patternMerge("000000000"), 4, 5 },
-//     { patternMerge("000001001"), patternMerge("000000000"), 4, 5 },
-// }};
-
 const std::array<const t_pattern, 33> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
@@ -137,6 +93,7 @@ const std::array<const t_pattern, 33> patternsArray { {
     // POTENTIAL BUILD-UP - Open Three
     { patternMerge("000001110"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
     { patternMerge("000001001"), patternMerge("000000110"), 4, 10000 }, // Capture opportunity
+    { patternMerge("000001110"), patternMerge("000000001"), 4, 10000 }, // Cancel Capture
 
     // MODERATE THREATS
     { patternMerge("000000111"), patternMerge("000000000"), 3, 5000 }, // THREE
