@@ -146,7 +146,6 @@ const std::array<const t_pattern, 33> patternsArray { {
     { patternMerge("000001110"), patternMerge("000000001"), 4, 5000 },
     { patternMerge("000000111"), patternMerge("000001000"), 4, 5000 },
 
-
     // LOW-PRIORITY OPPORTUNITIES - Transitional steps
     { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
     { patternMerge("000000001"), patternMerge("000000110"), 3, 100 }, // OPEN TWO

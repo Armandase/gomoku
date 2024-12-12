@@ -1,4 +1,5 @@
 #include "../inc/Game.hpp"
+#include "../inc/gomoku.hpp"
 
 bool posValid(Game& game, int x, int y, int player, bool verbose)
 {
@@ -31,8 +32,13 @@ void place_stone(Game& game, Render& render, int x, int y, int& player, bool& en
     else
         SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);
 
+// render.drawCircle(boardToRender(x), boardToRender(y));
+// #ifdef WHITE_STONE_PATH&& BLACK_STONE_PATH
+#if defined(WHITE_STONE_PATH) && defined(BLACK_STONE_PATH)
+    render.drawStoneAssets(boardToRender(x), boardToRender(y), player);
+#else
     render.drawCircle(boardToRender(x), boardToRender(y));
-
+#endif
     if (game.playerWin(player)) {
         render.renderWin(player);
         endgame = true;

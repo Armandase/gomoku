@@ -8,6 +8,9 @@
 #include <SDL_ttf.h>
 #include <iostream>
 
+// #define WHITE_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/frog.png"
+#define BLACK_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/rat.png"
+
 const SDL_Color BLACK_COLOR = { 0, 0, 0, 255 };
 // const SDL_Color LIGHT_GREY_COLOR = { 211, 211, 211, 100 };
 const SDL_Color LIGHT_GREY_COLOR = { 100, 100, 100, 255 };
@@ -33,6 +36,7 @@ public:
     void renderMenu(Button& player, Button& IA) const;
     void erasePlayer(int x, int y) const;
     void drawCircle(int centreX, int centreY) const;
+    void drawStoneAssets(int centreX, int centreY, int player);
     void writeText(const std::string& msg, const std::string& font,
         const SDL_Rect& rect, const SDL_Color& color, int size) const;
     void renderCapture(uint16_t p1Capture, uint16_t p2Capture) const;
