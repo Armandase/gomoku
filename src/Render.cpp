@@ -202,6 +202,18 @@ void Render::drawCircle(int centreX, int centreY) const
     SDL_RenderPresent(this->_renderer);
 }
 
+void Render::drawStoneAssets(int centreX, int centreY, int player)
+{
+#if defined(WHITE_STONE_PATH) && defined(BLACK_STONE_PATH)
+
+    const SDL_Rect rect = { int(centreX - RADIUS * 1.5), int(centreY - RADIUS * 1.5), int(RADIUS * 2.5), int(RADIUS * 2.5) };
+    if (player == WHITE)
+        renderImage(WHITE_STONE_PATH, &rect);
+    else
+        renderImage(BLACK_STONE_PATH, &rect);
+#endif
+}
+
 void Render::renderWin(uint16_t player) const
 {
     std::string message;
