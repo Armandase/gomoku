@@ -373,8 +373,8 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
         return false;
     patternMerge mask((1 << pattern.length) - 1);
 
-    patternMerge playerShiftedPattern(playerLine.to_ulong() >> (9 - startPos));
-    patternMerge opponentShiftedPattern(opponentLine.to_ulong() >> (9 - startPos));
+    patternMerge playerShiftedPattern(playerLine.to_ulong() >> (MERGE_SIZE - startPos));
+    patternMerge opponentShiftedPattern(opponentLine.to_ulong() >> (MERGE_SIZE - startPos));
 
     playerShiftedPattern &= mask;
     opponentShiftedPattern &= mask;
@@ -410,21 +410,20 @@ int Game::heuristicTest(int x, int y, int player)
 
             for (int pos = 0; pos < pattern.length; pos++) {
                 if ((checkPatternAtPosition(
-                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - pos)
-                        && !mergedOpponentPattern[4 - pos])
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - pos))
                     || (checkPatternAtPosition(
-                            mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos)
-                        && !mergedOpponentPattern[4 + pos])) {
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
                         counter += pattern.value * (getCapture(player) + 1);
                     else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
                         || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
+                        // Cancel End Capture
                         if (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
                             || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))
-                            counter += 100000000;
+                            counter += 1000000;
                         else
-                            counter += pattern.value * (getCapture(player) + 1) * 5;
+                            counter += pattern.value * (getCapture(opponent) + 1);
                     } else
                         counter += pattern.value;
                     exit = true;
