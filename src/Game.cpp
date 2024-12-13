@@ -387,9 +387,12 @@ int Game::heuristicTest(int x, int y, int player)
     if (playerWin(player))
         return INT_MAX;
 
+    const int opponent = (player == WHITE) ? BLACK : WHITE;
+    if (playerWin(opponent))
+        return INT_MIN;
+
     bool exit;
     int counter = 0;
-    const int opponent = (player == WHITE) ? BLACK : WHITE;
 
     const int dirX[8] = { 1, 0, 1, 1, -1, 0, -1, -1 };
     const int dirY[8] = { 0, 1, -1, 1, 0, -1, 1, -1 };
