@@ -377,8 +377,8 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
         return false;
     patternMerge mask((1 << pattern.length) - 1);
 
-    patternMerge playerShiftedPattern(playerLine.to_ulong() >> (9 - startPos));
-    patternMerge opponentShiftedPattern(opponentLine.to_ulong() >> (9 - startPos));
+    patternMerge playerShiftedPattern(playerLine.to_ulong() >> (MERGE_SIZE - startPos));
+    patternMerge opponentShiftedPattern(opponentLine.to_ulong() >> (MERGE_SIZE - startPos));
 
     playerShiftedPattern &= mask;
     opponentShiftedPattern &= mask;
@@ -394,12 +394,6 @@ int Game::heuristicTest(int x, int y, int player)
     bool exit;
     int counter = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
-
-    const patternMerge playerCapture("000001001");
-    const patternMerge opponentCapture("000000110");
-
-    const patternMerge playerCaptureDefense("000001110");
-    const patternMerge opponentCaptureDefense("000000001");
 
     const int dirX[8] = { 1, 0, 1, 1, -1, 0, -1, -1 };
     const int dirY[8] = { 0, 1, -1, 1, 0, -1, 1, -1 };
@@ -419,18 +413,21 @@ int Game::heuristicTest(int x, int y, int player)
             patternMerge mergedOpponentPattern = (boardOpponentPattern.to_ulong() << 4 | revBoardOpponentPattern.to_ulong());
 
             for (int pos = 0; pos < pattern.length; pos++) {
-                if (checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - pos)
-                    || checkPatternAtPosition(
-                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos)) {
+                if ((checkPatternAtPosition(
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 - pos))
+                    || (checkPatternAtPosition(
+                        mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
                         counter += pattern.value * (getCapture(player) + 1);
-                    else if (pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001"
-                        && (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
-                            || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))) {
-                        std::cout << "BLOCKED END CAPTURE\n";
-                        counter += 50000000;
+                    else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
+                        || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
+                        // Cancel End Capture
+                        if (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
+                            || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))
+                            counter += 1000000;
+                        else
+                            counter += pattern.value * (getCapture(opponent) + 1);
                     } else
                         counter += pattern.value;
                     exit = true;

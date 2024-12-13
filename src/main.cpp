@@ -46,7 +46,7 @@ int main()
     // render.renderImage("img/PvP_Button.png", &PvP);
     // render.renderImage("img/PvP_Button.png", &PvIA);
     render.renderMenu(playerButton, IAButton, IAvsIA);
-
+    timePoint lastPlay = std::chrono::high_resolution_clock::now();
     Game game;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -62,6 +62,7 @@ int main()
                     continue;
                 }
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+
                 if (!start) {
                     start = modeSelection(game, render, playerButton, IAButton, IAvsIA);
                     continue;
@@ -69,6 +70,8 @@ int main()
                     resetGame(game, render, player);
                     endgame = false;
                     player = WHITE;
+                    continue;
+                } else if (start == IA_VS_IA) {
                     continue;
                 }
                 SDL_GetMouseState(&mouseX, &mouseY);
@@ -84,8 +87,8 @@ int main()
                 }
                 if (start == IA_MODE && player == BLACK) {
                     timePoint start = std::chrono::high_resolution_clock::now();
-                    t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
-                    // t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
+                    // t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+                    t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
                     // t_playerGame gameIA = findBestMove(game, DEPTH, player);
                     // t_playerGame gameIA = iterativeDeepening(game, player);
                     timePoint end = std::chrono::high_resolution_clock::now();
@@ -102,6 +105,8 @@ int main()
                     player = WHITE;
                     continue;
                 }
+                if (std::chrono::high_resolution_clock::now() - lastPlay < std::chrono::milliseconds(TIME_UP))
+                    continue;
                 timePoint start = std::chrono::high_resolution_clock::now();
                 t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
                 timePoint end = std::chrono::high_resolution_clock::now();
@@ -113,7 +118,7 @@ int main()
                 // gameIA.game.setPosToBoards(gameIA.stone.x, gameIA.stone.y, player);
 
                 SDL_RenderPresent(render.getRenderer());
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                lastPlay = std::chrono::high_resolution_clock::now();
             }
         }
     }

@@ -69,7 +69,6 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
             bestMove = move;
             highestDepth = move.depth;
         } else if (result == bestValue && move.depth > highestDepth) {
-            std::cout << "MATCHING VALUE FOUND PVS NORMAL" << std::endl;
             bestMove = move;
             bestValue = result;
             highestDepth = move.depth;
