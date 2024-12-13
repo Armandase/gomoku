@@ -62,7 +62,7 @@ typedef struct s_pattern {
 
 } t_pattern;
 
-const std::array<const t_pattern, 33> patternsArray { {
+const std::array<const t_pattern, 37> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
@@ -94,6 +94,7 @@ const std::array<const t_pattern, 33> patternsArray { {
     { patternMerge("000000010"), patternMerge("000001101"), 4, 100000 },
     { patternMerge("000000100"), patternMerge("000001011"), 4, 100000 },
 
+
     // POTENTIAL BUILD-UP - Open Three
     { patternMerge("000001110"), patternMerge("000000000"), 5, 13000 }, // THREE (open on both ends)
     { patternMerge("000000111"), patternMerge("000000000"), 5, 13000 }, // THREE (open on both ends)
@@ -102,9 +103,14 @@ const std::array<const t_pattern, 33> patternsArray { {
     { patternMerge("000001110"), patternMerge("000000001"), 4, 10000 }, // Cancel Capture
     { patternMerge("000000111"), patternMerge("000001000"), 4, 10000 }, // Cancel Capture
 
+
     // MODERATE THREATS
     { patternMerge("000001101"), patternMerge("000000000"), 4, 1000 },
     { patternMerge("000001011"), patternMerge("000000000"), 4, 1000 },
+
+    // DEFENSE TWO
+    { patternMerge("000000001"), patternMerge("000001010"), 4, 5000 },
+    { patternMerge("000001000"), patternMerge("000000101"), 4, 5000 },
 
     // LOW-PRIORITY OPPORTUNITIES - Transitional steps
     { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
