@@ -196,7 +196,7 @@ bool Game::playerWinAtPos(uint16_t x, uint16_t y, uint16_t player)
 {
     if (getClassicBoard().isPosEmpty(x, y))
         return false;
-        
+
     const uint16_t len_mask = 5;
     IBoard::bitboard mask("11111");
 
@@ -359,6 +359,10 @@ void Game::handleCapture(uint16_t x,
         render.erasePlayer(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
         removePosToBoards(x + dirX[boardType], y + dirY[boardType]);
         removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
+#ifdef CAPTURE_SOUND_PATH
+        std::string command("paplay " + std::string(CAPTURE_SOUND_PATH) + " &");
+        system(command.c_str());
+#endif
         addCapture(player);
         render.renderCapture(getCapture(WHITE), getCapture(BLACK));
     }
@@ -423,12 +427,11 @@ int Game::heuristicTest(int x, int y, int player)
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
                         counter += pattern.value * (getCapture(player) + 1);
                     else if (pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001"
-                    && (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player) 
-                    || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))) {
+                        && (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
+                            || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))) {
                         std::cout << "BLOCKED END CAPTURE\n";
                         counter += 50000000;
-                    }
-                    else
+                    } else
                         counter += pattern.value;
                     exit = true;
                     break;

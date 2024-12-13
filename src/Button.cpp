@@ -21,3 +21,23 @@ void Button::renderButton(SDL_Renderer* renderer, int R, int G, int B)
     SDL_SetRenderDrawColor(renderer, R, G, B, 255);
     SDL_RenderFillRect(renderer, &buttonRect);
 }
+
+int Button::getButtonX() const
+{
+    return _buttonX;
+}
+
+int Button::getButtonY() const
+{
+    return _buttonY;
+}
+
+int Button::getWidth() const
+{
+    return _width;
+}
+
+int Button::getHeight() const
+{
+    return _height;
+}

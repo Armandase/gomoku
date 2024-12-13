@@ -8,8 +8,18 @@
 #include <SDL_ttf.h>
 #include <iostream>
 
-// #define WHITE_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/frog.png"
+#define WHITE_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/frog.png"
 #define BLACK_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/rat.png"
+
+// #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone.ogg"
+// #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone1.ogg"
+#define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone_wood.ogg"
+
+#define CAPTURE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/capture_axe.ogg"
+// #define CAPTURE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/capture_animal.ogg"
+// #define CAPTURE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/capture_blood.ogg"
+
+#define BACKGROUND_AMBIANCE_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/ambiance.ogg"
 
 const SDL_Color BLACK_COLOR = { 0, 0, 0, 255 };
 // const SDL_Color LIGHT_GREY_COLOR = { 211, 211, 211, 100 };
@@ -33,7 +43,7 @@ public:
     void renderWin(uint16_t player) const;
 
     void renderBoard(Game& game) const;
-    void renderMenu(Button& player, Button& IA) const;
+    void renderMenu(Button& player, Button& IA, Button& IAvsIA) const;
     void erasePlayer(int x, int y) const;
     void drawCircle(int centreX, int centreY) const;
     void drawStoneAssets(int centreX, int centreY, int player);

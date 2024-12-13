@@ -41,10 +41,17 @@ void place_stone(Game& game, Render& render, int x, int y, int& player, bool& en
 #endif
     if (game.playerWin(player)) {
         render.renderWin(player);
+        std::cout << "Player " << player << " wins" << std::endl;
         endgame = true;
         return;
     }
     player = (player == WHITE) ? BLACK : WHITE;
+
+// #if defined(PLACING_STONE_SOUND_PATH)
+#ifdef PLACING_STONE_SOUND_PATH
+    std::string command("paplay " + std::string(PLACING_STONE_SOUND_PATH) + " &");
+    system(command.c_str());
+#endif
 }
 
 void placeAdvisorStone(int x, int y, Render& render)
