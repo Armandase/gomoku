@@ -4,6 +4,7 @@
 #include "../inc/algorithm.hpp"
 #include "../inc/gomoku.hpp"
 #include <chrono>
+#include <cstdlib>
 #include <thread>
 void predictPos(Game& game, Render& render, int player, int& lastPosX, int& lastPosY, int x, int y)
 {
@@ -34,10 +35,28 @@ int main()
     // Create buttons for choosing human vs AI or human vs human
     int button_width = 300;
     int button_height = 100;
-    Button playerButton(SCREEN_WIDTH / 2 - (button_width / 2), SCREEN_HEIGHT / 2 - button_height, button_width, button_height);
-    Button IAButton(SCREEN_WIDTH / 2 - (button_width / 2), SCREEN_HEIGHT / 2 + button_height, button_width, button_height);
-    // Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
-    Button IAvsIA(SCREEN_WIDTH / 2 - (button_width / 2), SCREEN_HEIGHT / 2 + (button_height * 3), button_width, button_height);
+    int posX = SCREEN_WIDTH / 2 - (button_width / 2);
+    int nbWidgets = 6;
+    int heightPerWidget = (SCREEN_HEIGHT / nbWidgets + 1);
+    // lambda function to compute the position in y
+    auto computeY = [&](int i) {
+        return i * heightPerWidget;
+    };
+
+    Button playerButton(posX, computeY(1), button_width, button_height);
+    Button IAButton(posX, computeY(2), button_width, button_height);
+    Button IAvsIA(posX, computeY(3), button_width, button_height);
+    Button PvPPro(posX, computeY(4), button_width, button_height);
+    Button PvPLongPro(posX, computeY(5), button_width, button_height);
+    std::cout << "Pos pvpSwap: (" << PvPPro.getButtonX() << "," << PvPPro.getButtonY() << ";" << PvPPro.getWidth() << "," << PvPPro.getHeight() << ")" << std::endl;
+    std::vector<std::tuple<Button, std::string>> buttons = {
+        { playerButton, "Player VS Player" },
+        { IAButton, "Player VS IA" },
+        { IAvsIA, "IA VS IA" },
+        { PvPPro, "PvP Pro Mode" },
+        { PvPLongPro, "PvP Long Pro Mode" }
+    };
+    render.renderMenu(buttons);
     int lastPosX = -1, lastPosY = -1;
     // Render Start Menu
     // const SDL_Rect PvP = {SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100};
@@ -45,9 +64,11 @@ int main()
     // render.renderImage("img/wlp_go.png", NULL);
     // render.renderImage("img/PvP_Button.png", &PvP);
     // render.renderImage("img/PvP_Button.png", &PvIA);
-    render.renderMenu(playerButton, IAButton, IAvsIA);
+    // init random
+    std::srand((unsigned)time(NULL));
     timePoint lastPlay = std::chrono::high_resolution_clock::now();
     Game game;
+    int nbTurn = 0;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT)
@@ -60,35 +81,73 @@ int main()
                     endgame = false;
                     player = WHITE;
                     start = 0;
-                    render.renderMenu(playerButton, IAButton, IAvsIA);
+                    // render.renderMenu(playerButton, IAButton, IAvsIA);
+                    render.renderMenu(buttons);
                     continue;
                 }
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
 
                 if (!start) {
-                    start = modeSelection(game, render, playerButton, IAButton, IAvsIA);
+                    start = modeSelection(game, render, playerButton, IAButton, IAvsIA, PvPPro, PvPLongPro);
                     continue;
                 } else if (endgame) {
                     resetGame(game, render, player);
                     endgame = false;
                     player = WHITE;
                     start = 0;
-                    render.renderMenu(playerButton, IAButton, IAvsIA);
+                    render.renderMenu(buttons);
                     continue;
                 } else if (start == IA_VS_IA) {
                     continue;
                 }
                 SDL_GetMouseState(&mouseX, &mouseY);
-                if ((player == WHITE || start == PLAYER_MODE) && handleMouse(mouseX, mouseY)) {
+                if (((player == WHITE && start == IA_MODE) || start == PLAYER_MODE || start == PVP_PRO || start == PVP_LONGPRO) && handleMouse(mouseX, mouseY)) {
                     int x = coordToBoard(mouseX);
                     int y = coordToBoard(mouseY);
+                    if (nbTurn == 0 && (start == PVP_PRO || start == PVP_LONGPRO)) {
+                        x = (BOARD_SIZE - 1) / 2;
+                        y = (BOARD_SIZE - 1) / 2;
+                    } else if (nbTurn == 2 && start == PVP_PRO) {
+                        int centerX = (BOARD_SIZE - 1) / 2;
+                        int centerY = (BOARD_SIZE - 1) / 2;
+                        if (x > centerX - 3 && x < centerX + 3 && y > centerY - 3 && y < centerY + 3) {
+
+                            continue;
+                        }
+                    } else if (nbTurn == 2 && start == PVP_LONGPRO) {
+                        int centerX = (BOARD_SIZE - 1) / 2;
+                        int centerY = (BOARD_SIZE - 1) / 2;
+                        if (x > centerX - 4 && x < centerX + 4 && y > centerY - 4 && y < centerY + 4) {
+                            continue;
+                        }
+                    }
                     if (posValid(game, x, y, player, true)) {
                         game.setPosToBoards(x, y, player);
                         place_stone(game, render, x, y, player, endgame);
                     }
                     if (start == PLAYER_MODE)
                         predictPos(game, render, player, lastPosX, lastPosY, x, y);
+                    nbTurn++;
                 }
+                // else if (start == PVP_PRO && handleMouse(mouseX, mouseY)) {
+                //     int x = coordToBoard(mouseX);
+                //     int y = coordToBoard(mouseY);
+                //     if (nbTurn == 0) {
+                //         x = (BOARD_SIZE - 1) / 2;
+                //         y = (BOARD_SIZE - 1) / 2;
+                //     } else if (nbTurn == 2) {
+                //         int centerX = (BOARD_SIZE - 1) / 2;
+                //         int centerY = (BOARD_SIZE - 1) / 2;
+                //         if (x > centerX - 3 && x < centerX + 3 && y > centerY - 3 && y < centerY + 3) {
+                //             continue;
+                //         }
+                //     }
+                //     if (posValid(game, x, y, player, true)) {
+                //         game.setPosToBoards(x, y, player);
+                //         place_stone(game, render, x, y, player, endgame);
+                //     }
+                //     nbTurn++;
+                // }
                 if (start == IA_MODE && player == BLACK) {
                     timePoint start = std::chrono::high_resolution_clock::now();
                     t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
@@ -100,6 +159,7 @@ int main()
                     place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
                         player, endgame);
                     game = gameIA.game;
+                    nbTurn++;
                 }
                 SDL_RenderPresent(render.getRenderer());
             } else if (start == IA_VS_IA) {
@@ -124,6 +184,7 @@ int main()
                 // gameIA.game.setPosToBoards(gameIA.stone.x, gameIA.stone.y, player);
                 lastPlay = std::chrono::high_resolution_clock::now();
                 SDL_RenderPresent(render.getRenderer());
+                nbTurn++;
             }
         }
     }

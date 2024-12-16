@@ -45,6 +45,8 @@ enum mode {
     PLAYER_MODE = 1,
     IA_MODE,
     IA_VS_IA,
+    PVP_PRO,
+    PVP_LONGPRO,
 };
 
 class Game;
@@ -62,7 +64,7 @@ typedef struct s_pattern {
 
 } t_pattern;
 
-const std::array<const t_pattern, 37> patternsArray { {
+const std::array<const t_pattern, 39> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
@@ -116,16 +118,19 @@ const std::array<const t_pattern, 37> patternsArray { {
     { patternMerge("000000100"), patternMerge("000000011"), 3, 500 }, // DEFEND TWO
 
     // FILLERS - Low-value potential plays
+    { patternMerge("000000011"), patternMerge("000000000"), 2, 200 },
     { patternMerge("000000101"), patternMerge("000000000"), 3, 50 },
     { patternMerge("000001010"), patternMerge("000000000"), 4, 50 },
     { patternMerge("000001001"), patternMerge("000000000"), 4, 50 },
+
+    // { patternMerge("000000001"), patternMerge("000000000"), 1, 5 },
 } };
 
 int intlen(int number);
 int coordToBoard(int coor);
 int boardToRender(int value);
 bool handleMouse(int mouseX, int mouseY);
-int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button& IAvsIA);
+int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button& IAvsIA, Button& PvPPro, Button& PvPSwap);
 void place_stone(Game& board, Render& render, int x, int y, int& player, bool& endgame);
 void placeAdvisorStone(int x, int y, Render& render);
 bool posValid(Game& game, int x, int y, int player, bool verbose = false);

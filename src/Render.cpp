@@ -229,38 +229,32 @@ void Render::renderWin(uint16_t player) const
     writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, FONT_SIZE);
 }
 
-void Render::renderMenu(Button& player, Button& IA, Button& IAvsIA) const
+void Render::renderMenu(std::vector<std::tuple<Button, std::string>>& buttons) const
 {
-    int buttonWidth = player.getWidth();
-    int buttonHeight = player.getHeight();
+    if (buttons.empty())
+        return;
+    Button IA = std::get<0>(buttons[0]);
+    int buttonWidth = IA.getWidth();
+    int buttonHeight = IA.getHeight();
     int textMargin = 10;
     SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
     SDL_RenderClear(this->_renderer);
-    IA.renderButton(this->_renderer, 205, 127, 50);
-    player.renderButton(this->_renderer, 205, 127, 50);
-    const SDL_Rect playerText = { player.getButtonX(), player.getButtonY(), buttonWidth - textMargin, buttonHeight };
+    for (auto& button : buttons) {
+        Button& btn = std::get<0>(button);
+        std::string& text = std::get<1>(button);
 
-    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
-    SDL_RenderDrawRect(this->_renderer, &playerText);
+        SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
+        btn.renderButton(this->_renderer, 205, 127, 50);
+        const SDL_Rect playerText = { btn.getButtonX(), btn.getButtonY(), buttonWidth - textMargin, buttonHeight };
 
-    writeText("Player VS Player", "fonts/OpenSans-Bold.ttf",
-        playerText, BLACK_COLOR, 50);
+        SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+        SDL_RenderDrawRect(this->_renderer, &playerText);
 
-    // const SDL_Rect IAText = { SCREEN_WIDTH / 3 * 2 - 140, SCREEN_HEIGHT / 2 - 50, 280, 100 };
-    // const SDL_Rect IAText = { SCREEN_WIDTH / 2 - (buttonWidth / 2) + textMargin, SCREEN_HEIGHT / 2 + (buttonHeight), buttonWidth - textMargin, 100 };
-    const SDL_Rect IAText = { IA.getButtonX(), IA.getButtonY(), buttonWidth - textMargin, 100 };
-    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
-    SDL_RenderDrawRect(this->_renderer, &IAText);
-    writeText("Player VS IA", "fonts/OpenSans-Bold.ttf",
-        IAText, BLACK_COLOR, 50);
+        writeText(std::get<1>(button), "fonts/OpenSans-Bold.ttf",
+            playerText, BLACK_COLOR, 50);
+    }
 
-    const SDL_Rect IAvsIAText = { IAvsIA.getButtonX(), IAvsIA.getButtonY(), buttonWidth - textMargin, 100 };
-    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
-    SDL_RenderDrawRect(this->_renderer, &IAvsIAText);
-    writeText("IA VS IA", "fonts/OpenSans-Bold.ttf",
-        IAvsIAText, BLACK_COLOR, 50);
-
-    const SDL_Rect titleText = { SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 4 - 50, 200, 100 };
+    const SDL_Rect titleText = { SCREEN_WIDTH / 2 - (buttonWidth / 2), MARGIN, buttonWidth, buttonHeight };
     writeText("GOMOKU", "fonts/OpenSans-Bold.ttf",
         titleText, BLACK_COLOR, FONT_SIZE);
 

@@ -41,6 +41,10 @@ int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode, const t
             if (alpha < score && score < beta)
                 score = -pvs(*it, -beta, -alpha, depth - 1, !maxNode, start);
         }
+        if (score == INT_MAX || score == INT_MIN) {
+            // std::cout << "FOUND WINNING MOVE: " << score << std::endl;
+            return score;
+        }
         alpha = std::max(alpha, score);
         if (alpha >= beta)
             break;

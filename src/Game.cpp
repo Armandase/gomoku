@@ -392,6 +392,9 @@ int Game::heuristicTest(int x, int y, int player)
         return INT_MAX;
 
     const int opponent = (player == WHITE) ? BLACK : WHITE;
+    if (playerWin(opponent))
+        return INT_MIN;
+
     bool exit;
     int counter = 0;
 
@@ -419,7 +422,9 @@ int Game::heuristicTest(int x, int y, int player)
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
-                        counter += pattern.value * (getCapture(player) + 1);
+                        // counter += pattern.value * ((getCapture(player) + 1) * 5);
+                        counter += pattern.value;
+                    // counter += pattern.value * (getCapture(player) + 1);
                     else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
                         || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
                         // Cancel End Capture
@@ -427,7 +432,8 @@ int Game::heuristicTest(int x, int y, int player)
                             || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))
                             counter += 1000000;
                         else
-                            counter += pattern.value * (getCapture(opponent) + 1);
+                            counter += pattern.value;
+                        // counter += pattern.value * ((getCapture(opponent) + 1) * 5);
                     } else
                         counter += pattern.value;
                     exit = true;
