@@ -83,13 +83,15 @@ lib_clean :
 		rm -rf ${SDL2_IMAGE}/build
 		rm -rf ${GTEST}/googletest/build
 
-${NAME} : lib ${OBJS} ${HEADER}
+${NAME} : ${OBJS} ${HEADER}
+		make lib
 		${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
 
 test: ${TEST_NAME}
 	 ./${TEST_NAME} #--gtest_filter=BoardRules.EndCapture
 
-${TEST_NAME}: lib ${TEST_OBJS}
+${TEST_NAME}: ${TEST_OBJS}
+		make lib
 		${CXX} -o ${TEST_NAME} ${TEST_OBJS} ${LDFLAGS} -pthread
 
 obj/%.o: src/%.cpp $(HEADER)

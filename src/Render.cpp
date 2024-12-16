@@ -325,3 +325,17 @@ void Render::eraseCapture()
     }
     SDL_RenderPresent(_renderer);
 }
+
+void Render::drawRedCross(int x, int y) {
+    SDL_SetRenderDrawColor(this->_renderer, 255, 0, 0, 255);
+    SDL_RenderDrawLine(this->_renderer, x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
+    SDL_RenderDrawLine(this->_renderer, x - RADIUS, y + RADIUS, x + RADIUS, y - RADIUS);
+    SDL_RenderPresent(this->_renderer);
+}
+
+void Render::drawEmptyCase(int x, int y) {
+    SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
+    SDL_RenderDrawLine(this->_renderer, x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
+    SDL_RenderDrawLine(this->_renderer, x - RADIUS, y + RADIUS, x + RADIUS, y - RADIUS);
+    SDL_RenderPresent(this->_renderer);
+}

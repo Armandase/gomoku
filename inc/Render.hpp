@@ -10,12 +10,12 @@
 #include <tuple>
 #include <vector>
 
-#define WHITE_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/frog.png"
-#define BLACK_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/rat.png"
+// #define WHITE_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/frog.png"
+// #define BLACK_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/rat.png"
 
 // #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone.ogg"
 // #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone1.ogg"
-#define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone_wood.ogg"
+// #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone_wood.ogg"
 
 #define CAPTURE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/capture_axe.ogg"
 // #define CAPTURE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/capture_animal.ogg"
@@ -54,6 +54,8 @@ public:
     void eraseCapture();
     void renderImage(const std::string& path, const SDL_Rect* rect);
     void renderTime(const std::string& timeTaken) const;
+    void drawRedCross(int x, int y);
+    void drawEmptyCase(int x, int y);
 
 private:
     SDL_Renderer* _renderer;

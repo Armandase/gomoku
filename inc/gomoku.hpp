@@ -26,7 +26,7 @@
 #define PRUNING 3
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
-#define TIME_UP 450
+#define TIME_UP 470
 #define FONT_SIZE 24
 
 enum side {
@@ -71,7 +71,7 @@ const std::array<const t_pattern, 46> patternsArray { {
     { patternMerge("000000110"), patternMerge("000001001"), 4, 0 },
 
     // WINNING CONDITION - Five in a row                       2147483647
-    { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE (unblockable win)
+    { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE
 
     // DEFENSE FOUR
     { patternMerge("000010000"), patternMerge("000001111"), 5, 1000000 }, // FOUR
@@ -116,9 +116,13 @@ const std::array<const t_pattern, 46> patternsArray { {
     { patternMerge("000000010"), patternMerge("000000101"), 4, 1000 },
     { patternMerge("000000100"), patternMerge("000001010"), 4, 1000 },
 
+    // MODERATE THREATS
+    { patternMerge("000001101"), patternMerge("000000000"), 4, 1000 },
+    { patternMerge("000001011"), patternMerge("000000000"), 4, 1000 },
+
     // LOW-PRIORITY OPPORTUNITIES - Transitional steps
     { patternMerge("000001010"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
-    { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
+    { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO   
     { patternMerge("000000011"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
     { patternMerge("000000101"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
 
@@ -146,5 +150,6 @@ void place_stone(Game& board, Render& render, int x, int y, int& player, bool& e
 void placeAdvisorStone(int x, int y, Render& render);
 bool posValid(Game& game, int x, int y, int player, bool verbose = false);
 void resetGame(Game& game, Render& render, int player);
+void placeForbiddenMove(Game& game, Render& render, int player);
 
 #endif
