@@ -206,7 +206,8 @@ void Render::drawStoneAssets(int centreX, int centreY, int player)
 {
 #if defined(WHITE_STONE_PATH) && defined(BLACK_STONE_PATH)
 
-    const SDL_Rect rect = { int(centreX - RADIUS * 1.5), int(centreY - RADIUS * 1.5), int(RADIUS * 2.5), int(RADIUS * 2.5) };
+    // const SDL_Rect rect = { int(centreX - RADIUS * 1.5), int(centreY - RADIUS * 1.5), int(RADIUS * 3), int(RADIUS * 3) };
+    const SDL_Rect rect = { int(centreX - RADIUS), int(centreY - RADIUS), int(RADIUS * 2), int(RADIUS * 2) };
     if (player == WHITE)
         renderImage(WHITE_STONE_PATH, &rect);
     else
@@ -228,13 +229,16 @@ void Render::renderWin(uint16_t player) const
     writeText(message, "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect, textColor, FONT_SIZE);
 }
 
-void Render::renderMenu(Button& player, Button& IA) const
+void Render::renderMenu(Button& player, Button& IA, Button& IAvsIA) const
 {
+    int buttonWidth = player.getWidth();
+    int buttonHeight = player.getHeight();
+    int textMargin = 10;
     SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
     SDL_RenderClear(this->_renderer);
     IA.renderButton(this->_renderer, 205, 127, 50);
     player.renderButton(this->_renderer, 205, 127, 50);
-    const SDL_Rect playerText = { SCREEN_WIDTH / 3 - 140, SCREEN_HEIGHT / 2 - 50, 280, 100 };
+    const SDL_Rect playerText = { player.getButtonX(), player.getButtonY(), buttonWidth - textMargin, buttonHeight };
 
     SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
     SDL_RenderDrawRect(this->_renderer, &playerText);
@@ -242,11 +246,19 @@ void Render::renderMenu(Button& player, Button& IA) const
     writeText("Player VS Player", "fonts/OpenSans-Bold.ttf",
         playerText, BLACK_COLOR, 50);
 
-    const SDL_Rect IAText = { SCREEN_WIDTH / 3 * 2 - 140, SCREEN_HEIGHT / 2 - 50, 280, 100 };
+    // const SDL_Rect IAText = { SCREEN_WIDTH / 3 * 2 - 140, SCREEN_HEIGHT / 2 - 50, 280, 100 };
+    // const SDL_Rect IAText = { SCREEN_WIDTH / 2 - (buttonWidth / 2) + textMargin, SCREEN_HEIGHT / 2 + (buttonHeight), buttonWidth - textMargin, 100 };
+    const SDL_Rect IAText = { IA.getButtonX(), IA.getButtonY(), buttonWidth - textMargin, 100 };
     SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
     SDL_RenderDrawRect(this->_renderer, &IAText);
     writeText("Player VS IA", "fonts/OpenSans-Bold.ttf",
         IAText, BLACK_COLOR, 50);
+
+    const SDL_Rect IAvsIAText = { IAvsIA.getButtonX(), IAvsIA.getButtonY(), buttonWidth - textMargin, 100 };
+    SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(this->_renderer, &IAvsIAText);
+    writeText("IA VS IA", "fonts/OpenSans-Bold.ttf",
+        IAvsIAText, BLACK_COLOR, 50);
 
     const SDL_Rect titleText = { SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 4 - 50, 200, 100 };
     writeText("GOMOKU", "fonts/OpenSans-Bold.ttf",

@@ -16,6 +16,10 @@ public:
     ~Button();
     bool inButton(int mouseX, int mouseY);
     void renderButton(SDL_Renderer* renderer, int R, int G, int B);
+    int getButtonX() const;
+    int getButtonY() const;
+    int getWidth() const;
+    int getHeight() const;
 };
 
 #endif

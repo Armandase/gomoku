@@ -26,7 +26,7 @@
 #define PRUNING 3
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
-#define TIME_UP 450
+#define TIME_UP 470
 #define FONT_SIZE 24
 
 enum side {
@@ -44,6 +44,7 @@ enum player {
 enum mode {
     PLAYER_MODE = 1,
     IA_MODE,
+    IA_VS_IA,
 };
 
 class Game;
@@ -61,14 +62,14 @@ typedef struct s_pattern {
 
 } t_pattern;
 
-const std::array<const t_pattern, 33> patternsArray { {
+const std::array<const t_pattern, 37> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
     { patternMerge("000000110"), patternMerge("000001001"), 4, 0 },
 
     // WINNING CONDITION - Five in a row                       2147483647
-    { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE (unblockable win)
+    { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE
 
     // DEFENSE FOUR
     { patternMerge("000010000"), patternMerge("000001111"), 5, 10000000 }, // FOUR
@@ -93,6 +94,7 @@ const std::array<const t_pattern, 33> patternsArray { {
     { patternMerge("000000010"), patternMerge("000001101"), 4, 100000 },
     { patternMerge("000000100"), patternMerge("000001011"), 4, 100000 },
 
+
     // POTENTIAL BUILD-UP - Open Three
     { patternMerge("000001110"), patternMerge("000000000"), 5, 13000 }, // THREE (open on both ends)
     { patternMerge("000000111"), patternMerge("000000000"), 5, 13000 }, // THREE (open on both ends)
@@ -100,6 +102,10 @@ const std::array<const t_pattern, 33> patternsArray { {
     { patternMerge("000001001"), patternMerge("000000110"), 4, 12000 }, // Capture opportunity
     { patternMerge("000001110"), patternMerge("000000001"), 4, 10000 }, // Cancel Capture
     { patternMerge("000000111"), patternMerge("000001000"), 4, 10000 }, // Cancel Capture
+
+    // DEFENSE TWO
+    { patternMerge("000000001"), patternMerge("000001010"), 4, 5000 },
+    { patternMerge("000001000"), patternMerge("000000101"), 4, 5000 },
 
     // MODERATE THREATS
     { patternMerge("000001101"), patternMerge("000000000"), 4, 1000 },
@@ -120,7 +126,7 @@ int intlen(int number);
 int coordToBoard(int coor);
 int boardToRender(int value);
 bool handleMouse(int mouseX, int mouseY);
-int modeSelection(Game& game, Render& render, Button& player, Button& IA);
+int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button& IAvsIA);
 void place_stone(Game& board, Render& render, int x, int y, int& player, bool& endgame);
 void placeAdvisorStone(int x, int y, Render& render);
 bool posValid(Game& game, int x, int y, int player, bool verbose = false);

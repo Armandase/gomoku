@@ -359,6 +359,10 @@ void Game::handleCapture(uint16_t x,
         render.erasePlayer(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
         removePosToBoards(x + dirX[boardType], y + dirY[boardType]);
         removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
+#ifdef CAPTURE_SOUND_PATH
+        std::string command("paplay " + std::string(CAPTURE_SOUND_PATH) + " &");
+        system(command.c_str());
+#endif
         addCapture(player);
         render.renderCapture(getCapture(WHITE), getCapture(BLACK));
     }
@@ -388,9 +392,6 @@ int Game::heuristicTest(int x, int y, int player)
         return INT_MAX;
 
     const int opponent = (player == WHITE) ? BLACK : WHITE;
-    if (playerWin(opponent))
-        return INT_MIN;
-
     bool exit;
     int counter = 0;
 

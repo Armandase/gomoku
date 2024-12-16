@@ -28,6 +28,10 @@ int pvs(t_playerGame& node, int alpha, int beta, int depth, int maxNode, const t
     }
     int nextPlayer = node.stone.player == WHITE ? BLACK : WHITE;
     gameSet possibleMoves = generatePossibleMoves(node.game, nextPlayer, !maxNode, depth);
+    
+    // std::cout << "\nDEPTH: " << depth << (maxNode == true ? " WHITE": " BLACK") << "\n";
+    // possibleMoves[0].game.getClassicBoard().printBoard();
+
     int score = 0;
     for (auto it = possibleMoves.begin(); it != possibleMoves.end(); ++it) {
         if (it == possibleMoves.begin())
@@ -55,7 +59,6 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
     }
 
     t_playerGame bestMove = possibleMoves.front();
-
     --depth;
     int bestValue = std::numeric_limits<int>::min();
     int result = std::numeric_limits<int>::min();
@@ -69,11 +72,14 @@ t_playerGame findBestMovePVS(Game& root, int depth, int player)
             bestMove = move;
             highestDepth = move.depth;
         } else if (result == bestValue && move.depth > highestDepth) {
-            std::cout << "MATCHING VALUE FOUND PVS NORMAL" << std::endl;
             bestMove = move;
             bestValue = result;
             highestDepth = move.depth;
         }
+        // if (result >= 200000000) {
+        //     std::cout << "FOUND WINNING MOVE: " << result << std::endl;
+        //     break;
+        // }
         if (times_up(start))
             break;
     }
