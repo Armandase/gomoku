@@ -2,7 +2,7 @@
 #include "../inc/gomoku.hpp"
 #include <unistd.h>
 
-int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button& IAvsIA)
+int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button& IAvsIA, Button& PvPPro, Button& PvPLongPro)
 {
     int mouseX, mouseY;
 
@@ -19,6 +19,14 @@ int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button
     if (IAvsIA.inButton(mouseX, mouseY)) {
         render.renderBoard(game);
         return IA_VS_IA;
+    }
+    if (PvPPro.inButton(mouseX, mouseY)) {
+        render.renderBoard(game);
+        return PVP_PRO;
+    }
+    if (PvPLongPro.inButton(mouseX, mouseY)) {
+        render.renderBoard(game);
+        return PVP_LONGPRO;
     }
     return 0;
 }

@@ -45,6 +45,8 @@ enum mode {
     PLAYER_MODE = 1,
     IA_MODE,
     IA_VS_IA,
+    PVP_PRO,
+    PVP_LONGPRO,
 };
 
 class Game;
@@ -128,7 +130,7 @@ int intlen(int number);
 int coordToBoard(int coor);
 int boardToRender(int value);
 bool handleMouse(int mouseX, int mouseY);
-int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button& IAvsIA);
+int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button& IAvsIA, Button& PvPPro, Button& PvPSwap);
 void place_stone(Game& board, Render& render, int x, int y, int& player, bool& endgame);
 void placeAdvisorStone(int x, int y, Render& render);
 bool posValid(Game& game, int x, int y, int player, bool verbose = false);
