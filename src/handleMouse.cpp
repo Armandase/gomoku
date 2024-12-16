@@ -22,7 +22,7 @@ void placeForbiddenMove(Game& game, Render& render, int player)
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < width; y++) {
             if (game.getClassicBoard().isPosEmpty(x, y)) {
-                render.drawEmptyCase(boardToRender(x), boardToRender(y));
+                render.drawEmptyCross(boardToRender(x), boardToRender(y));
                 if (game.isDoubleThree(x, y, player))
                     render.drawRedCross(boardToRender(x), boardToRender(y));
             } 

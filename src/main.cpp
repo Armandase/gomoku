@@ -129,25 +129,6 @@ int main()
                         predictPos(game, render, player, lastPosX, lastPosY, x, y);
                     nbTurn++;
                 }
-                // else if (start == PVP_PRO && handleMouse(mouseX, mouseY)) {
-                //     int x = coordToBoard(mouseX);
-                //     int y = coordToBoard(mouseY);
-                //     if (nbTurn == 0) {
-                //         x = (BOARD_SIZE - 1) / 2;
-                //         y = (BOARD_SIZE - 1) / 2;
-                //     } else if (nbTurn == 2) {
-                //         int centerX = (BOARD_SIZE - 1) / 2;
-                //         int centerY = (BOARD_SIZE - 1) / 2;
-                //         if (x > centerX - 3 && x < centerX + 3 && y > centerY - 3 && y < centerY + 3) {
-                //             continue;
-                //         }
-                //     }
-                //     if (posValid(game, x, y, player, true)) {
-                //         game.setPosToBoards(x, y, player);
-                //         place_stone(game, render, x, y, player, endgame);
-                //     }
-                //     nbTurn++;
-                // }
                 if (start == IA_MODE && player == BLACK) {
                     timePoint start = std::chrono::high_resolution_clock::now();
                     t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);

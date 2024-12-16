@@ -55,7 +55,7 @@ public:
     void renderImage(const std::string& path, const SDL_Rect* rect);
     void renderTime(const std::string& timeTaken) const;
     void drawRedCross(int x, int y);
-    void drawEmptyCase(int x, int y);
+    void drawEmptyCross(int x, int y);
 
 private:
     SDL_Renderer* _renderer;

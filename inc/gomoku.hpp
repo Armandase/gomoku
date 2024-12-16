@@ -104,10 +104,6 @@ const std::array<const t_pattern, 46> patternsArray { {
     { patternMerge("000001110"), patternMerge("000000001"), 4, 7000 }, // Cancel Capture
     { patternMerge("000000111"), patternMerge("000001000"), 4, 7000 }, // Cancel Capture
 
-    // MODERATE THREATS
-    { patternMerge("000001101"), patternMerge("000000000"), 4, 5000 },
-    { patternMerge("000001011"), patternMerge("000000000"), 4, 5000 },
-
     // DEFENSE TWO
     { patternMerge("000000001"), patternMerge("000001010"), 4, 1000 },
     { patternMerge("000000001"), patternMerge("000000110"), 4, 1000 },

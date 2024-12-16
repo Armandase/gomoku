@@ -333,7 +333,7 @@ void Render::drawRedCross(int x, int y) {
     SDL_RenderPresent(this->_renderer);
 }
 
-void Render::drawEmptyCase(int x, int y) {
+void Render::drawEmptyCross(int x, int y) {
     SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
     SDL_RenderDrawLine(this->_renderer, x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
     SDL_RenderDrawLine(this->_renderer, x - RADIUS, y + RADIUS, x + RADIUS, y - RADIUS);
