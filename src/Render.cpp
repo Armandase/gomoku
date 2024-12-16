@@ -115,11 +115,11 @@ void Render::renderBoard(Game& game) const
         SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
         SDL_Color textColor = BLACK_COLOR;
 
-        SDL_Rect msg_rect_x = { x - (intlen(cnt) * (MARGIN / 3) / 2), 0 + MARGIN / 10, intlen(cnt) * (MARGIN / 3), MARGIN / 2 };
+        SDL_Rect msg_rect_x = { x - (intlen(cnt) * (MARGIN / 3) / 2), 0 + MARGIN / 10, intlen(cnt) * (MARGIN / 4), MARGIN / 2 };
         SDL_RenderFillRect(this->_renderer, &msg_rect_x);
         writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_x, textColor, FONT_SIZE);
 
-        SDL_Rect msg_rect_y = { 0 + MARGIN / 10, x - (intlen(cnt) * (MARGIN / 3) / 2), intlen(cnt) * (MARGIN / 3), MARGIN / 2 };
+        SDL_Rect msg_rect_y = { 0 + MARGIN / 10, x - (intlen(cnt) * (MARGIN / 3) / 2), intlen(cnt) * (MARGIN / 4), MARGIN / 2 };
         SDL_RenderFillRect(this->_renderer, &msg_rect_y);
         writeText(std::to_string(cnt), "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", msg_rect_y, textColor, FONT_SIZE);
 
@@ -330,4 +330,18 @@ void Render::eraseCapture()
         }
     }
     SDL_RenderPresent(_renderer);
+}
+
+void Render::drawRedCross(int x, int y) {
+    SDL_SetRenderDrawColor(this->_renderer, 255, 0, 0, 255);
+    SDL_RenderDrawLine(this->_renderer, x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
+    SDL_RenderDrawLine(this->_renderer, x - RADIUS, y + RADIUS, x + RADIUS, y - RADIUS);
+    SDL_RenderPresent(this->_renderer);
+}
+
+void Render::drawEmptyCase(int x, int y) {
+    SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
+    SDL_RenderDrawLine(this->_renderer, x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
+    SDL_RenderDrawLine(this->_renderer, x - RADIUS, y + RADIUS, x + RADIUS, y - RADIUS);
+    SDL_RenderPresent(this->_renderer);
 }

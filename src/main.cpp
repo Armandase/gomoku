@@ -17,7 +17,7 @@ void predictPos(Game& game, Render& render, int player, int& lastPosX, int& last
     lastPosX = gameIA.stone.x;
     placeAdvisorStone(gameIA.stone.x, gameIA.stone.y, render);
 }
-
+#include <unistd.h>
 // Function to initialize the SDL window and run the game loop
 int main()
 {
@@ -59,6 +59,8 @@ int main()
                     resetGame(game, render, player);
                     endgame = false;
                     player = WHITE;
+                    start = 0;
+                    render.renderMenu(playerButton, IAButton, IAvsIA);
                     continue;
                 }
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
@@ -70,6 +72,8 @@ int main()
                     resetGame(game, render, player);
                     endgame = false;
                     player = WHITE;
+                    start = 0;
+                    render.renderMenu(playerButton, IAButton, IAvsIA);
                     continue;
                 } else if (start == IA_VS_IA) {
                     continue;
@@ -99,26 +103,27 @@ int main()
                 }
                 SDL_RenderPresent(render.getRenderer());
             } else if (start == IA_VS_IA) {
-                if (endgame) {
-                    resetGame(game, render, player);
-                    endgame = false;
-                    player = WHITE;
+                if (game.isEmpty()) {
+                    int x = (std::rand() % BOARD_SIZE) - 1;
+                    int y = (std::rand() % BOARD_SIZE) - 1;
+                    game.setPosToBoards(x, y, player);
+                    place_stone(game, render, x, y, player, endgame);
+                    lastPlay = std::chrono::high_resolution_clock::now();
                     continue;
                 }
-                if (std::chrono::high_resolution_clock::now() - lastPlay < std::chrono::milliseconds(TIME_UP))
+                if (times_up(lastPlay) == false || endgame)
                     continue;
                 timePoint start = std::chrono::high_resolution_clock::now();
                 t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
                 timePoint end = std::chrono::high_resolution_clock::now();
                 render.renderTime(std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()));
-                gameIA.game.setPosToBoards(gameIA.stone.x, gameIA.stone.y, player);
+                // gameIA.game.setPosToBoards(gameIA.stone.x, gameIA.stone.y, player);
                 place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
                     player, endgame);
                 game = gameIA.game;
                 // gameIA.game.setPosToBoards(gameIA.stone.x, gameIA.stone.y, player);
-
-                SDL_RenderPresent(render.getRenderer());
                 lastPlay = std::chrono::high_resolution_clock::now();
+                SDL_RenderPresent(render.getRenderer());
             }
         }
     }

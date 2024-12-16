@@ -94,7 +94,6 @@ const std::array<const t_pattern, 37> patternsArray { {
     { patternMerge("000000010"), patternMerge("000001101"), 4, 100000 },
     { patternMerge("000000100"), patternMerge("000001011"), 4, 100000 },
 
-
     // POTENTIAL BUILD-UP - Open Three
     { patternMerge("000001110"), patternMerge("000000000"), 5, 13000 }, // THREE (open on both ends)
     { patternMerge("000000111"), patternMerge("000000000"), 5, 13000 }, // THREE (open on both ends)
@@ -131,5 +130,6 @@ void place_stone(Game& board, Render& render, int x, int y, int& player, bool& e
 void placeAdvisorStone(int x, int y, Render& render);
 bool posValid(Game& game, int x, int y, int player, bool verbose = false);
 void resetGame(Game& game, Render& render, int player);
+void placeForbiddenMove(Game& game, Render& render, int player);
 
 #endif

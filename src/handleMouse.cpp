@@ -16,12 +16,22 @@ bool posValid(Game& game, int x, int y, int player, bool verbose)
     return true;
 }
 
+void placeForbiddenMove(Game& game, Render& render, int player)
+{
+    const int width = game.getClassicBoard().getWidth();
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < width; y++) {
+            if (game.getClassicBoard().isPosEmpty(x, y)) {
+                render.drawEmptyCase(boardToRender(x), boardToRender(y));
+                if (game.isDoubleThree(x, y, player))
+                    render.drawRedCross(boardToRender(x), boardToRender(y));
+            } 
+        }
+    }
+}
+
 void place_stone(Game& game, Render& render, int x, int y, int& player, bool& endgame)
 {
-    // if (!posValid(game, x, y, player))
-    // return;
-    // game.setPosToBoards(x, y, player);
-    // game.heuristicTest(x, y, player);
     std::vector<uint16_t> capturesBoard = game.isCapture(x, y, player);
     if (capturesBoard.size() > 0)
         game.handleCapture(x, y, capturesBoard, player, render);
@@ -32,13 +42,12 @@ void place_stone(Game& game, Render& render, int x, int y, int& player, bool& en
     else
         SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);
 
-// render.drawCircle(boardToRender(x), boardToRender(y));
-// #ifdef WHITE_STONE_PATH&& BLACK_STONE_PATH
 #if defined(WHITE_STONE_PATH) && defined(BLACK_STONE_PATH)
     render.drawStoneAssets(boardToRender(x), boardToRender(y), player);
 #else
     render.drawCircle(boardToRender(x), boardToRender(y));
 #endif
+
     if (game.playerWin(player)) {
         render.renderWin(player);
         std::cout << "Player " << player << " wins" << std::endl;
@@ -46,6 +55,7 @@ void place_stone(Game& game, Render& render, int x, int y, int& player, bool& en
         return;
     }
     player = (player == WHITE) ? BLACK : WHITE;
+    placeForbiddenMove(game, render, player);
 
 // #if defined(PLACING_STONE_SOUND_PATH)
 #ifdef PLACING_STONE_SOUND_PATH
