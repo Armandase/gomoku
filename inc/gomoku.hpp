@@ -62,7 +62,7 @@ typedef struct s_pattern {
 
 } t_pattern;
 
-const std::array<const t_pattern, 37> patternsArray { {
+const std::array<const t_pattern, 39> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, 0 },
     { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
@@ -116,9 +116,12 @@ const std::array<const t_pattern, 37> patternsArray { {
     { patternMerge("000000100"), patternMerge("000000011"), 3, 500 }, // DEFEND TWO
 
     // FILLERS - Low-value potential plays
+    { patternMerge("000000011"), patternMerge("000000000"), 2, 200 },
     { patternMerge("000000101"), patternMerge("000000000"), 3, 50 },
     { patternMerge("000001010"), patternMerge("000000000"), 4, 50 },
     { patternMerge("000001001"), patternMerge("000000000"), 4, 50 },
+
+    // { patternMerge("000000001"), patternMerge("000000000"), 1, 5 },
 } };
 
 int intlen(int number);

@@ -4,6 +4,7 @@
 #include "../inc/algorithm.hpp"
 #include "../inc/gomoku.hpp"
 #include <chrono>
+#include <cstdlib>
 #include <thread>
 void predictPos(Game& game, Render& render, int player, int& lastPosX, int& lastPosY, int x, int y)
 {
@@ -45,6 +46,8 @@ int main()
     // render.renderImage("img/wlp_go.png", NULL);
     // render.renderImage("img/PvP_Button.png", &PvP);
     // render.renderImage("img/PvP_Button.png", &PvIA);
+    // init random
+    std::srand((unsigned)time(NULL));
     render.renderMenu(playerButton, IAButton, IAvsIA);
     timePoint lastPlay = std::chrono::high_resolution_clock::now();
     Game game;
