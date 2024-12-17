@@ -124,7 +124,6 @@ bool times_up(const timePoint& start)
     const timePoint now = std::chrono::high_resolution_clock::now();
 
     if (std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() >= TIME_UP) {
-        // std::cout << "TIMES UP!!\n";
         return true;
     }
     return false;
