@@ -96,3 +96,28 @@ bool AntiDiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard&
         return true;
     return false;
 }
+
+bool AntiDiagBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
+    const int width = getWidth();
+    int index = this->convertCoordinate(x, y);
+    x = index % width;
+    y = index / width;
+
+    for (int startX = std::max(0, x - 4); startX <= x; ++startX) {
+        if (startX + 4 < width) {
+            bool isFive = true;
+            for (int i = 0; i < 5; ++i) {
+                if (!IBoard::isValidPos(startX + i, y) || (width - x < y + 1 && width - startX + i > y + 1))
+                    return false;
+                int currentPos = y * width + (startX + i);
+                if ((player == getIdPlayer1() && (!getPlayer1()[currentPos]))
+                    || (player == getIdPlayer2() && (!getPlayer2()[currentPos]))) {
+                    isFive = false;
+                    break;
+                }
+            }
+            if (isFive) return true;
+        }
+    }
+    return false;
+}

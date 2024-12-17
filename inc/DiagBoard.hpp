@@ -17,6 +17,7 @@ public:
     patternBitset extractPatternReversed(uint16_t xPos, uint16_t yPos, uint16_t length, int player) const;
 
     bool findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length);
+    bool isInFive(uint16_t x, uint16_t y, uint16_t player);
 };
 
 #endif

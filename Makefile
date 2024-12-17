@@ -85,7 +85,7 @@ ${NAME} : ${OBJS} ${HEADER}
 		${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
 
 test: ${TEST_NAME}
-	 ./${TEST_NAME} #--gtest_filter=BoardRules.EndCapture
+	 ./${TEST_NAME} --gtest_filter=BoardRules.EndCapture
 
 ${TEST_NAME}: ${TEST_OBJS}
 		make lib

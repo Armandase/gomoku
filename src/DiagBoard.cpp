@@ -94,3 +94,29 @@ bool DiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mas
         return true;
     return false;
 }
+
+bool DiagBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
+    int index = this->convertCoordinate(x, y);
+    x = index % IBoard::getWidth();
+    y = index / IBoard::getWidth();
+
+
+    int width = getWidth();
+    for (int startX = std::max(0, x - 4); startX <= x; ++startX) {
+        if (startX + 4 < width) {
+            bool isFive = true;
+            for (int i = 0; i < 5; ++i) {
+                if (!IBoard::isValidPos(startX + i, y) || (x < y + 1 && startX + i > y + 1))
+                    return false;
+                int currentPos = y * width + (startX + i);
+                if ((player == getIdPlayer1() && (!getPlayer1()[currentPos]))
+                    || (player == getIdPlayer2() && (!getPlayer2()[currentPos]))) {
+                    isFive = false;
+                    break;
+                }
+            }
+            if (isFive) return true;
+        }
+    }
+    return false;
+}

@@ -198,3 +198,25 @@ void IBoard::printBoard() const
     }
     std::cout << std::endl;
 }
+
+bool IBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
+    const int width = getWidth();
+    int index = this->convertCoordinate(x, y);
+    x = index % width;
+    y = index / width;
+    for (int startX = std::max(0, x - 4); startX <= x; ++startX) {
+        if (startX + 4 < width) {
+            bool isFive = true;
+            for (int i = 0; i < 5; ++i) {
+                int currentPos = y * width + (startX + i);
+                if ((player == getIdPlayer1() && (!_player1[currentPos]))
+                    || (player == getIdPlayer2() && (!_player2[currentPos]))) {
+                    isFive = false;
+                    break;
+                }
+            }
+            if (isFive) return true;
+        }
+    }
+    return false;
+}

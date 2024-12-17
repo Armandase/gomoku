@@ -182,29 +182,6 @@ bool Game::canBeCaptured(uint16_t x,
     return false;
 }
 
-bool Game::playerWinAtPos(uint16_t x, uint16_t y, uint16_t player)
-{
-    if (getClassicBoard().isPosEmpty(x, y))
-        return false;
-
-    const uint16_t len_mask = 5;
-    IBoard::bitboard mask("11111");
-
-    if (getClassicBoard().findMatch(x, y, player, mask, len_mask))
-        return !canBeCaptured(x, y, PatternType::CLASSIC, player);
-
-    if (getTransposedBoard().findMatch(x, y, player, mask, len_mask))
-        return !canBeCaptured(x, y, PatternType::TRANSPOS, player);
-
-    if (getDiagBoard().findMatch(x, y, player, mask, len_mask))
-        return !canBeCaptured(x, y, PatternType::DIAG, player);
-
-    if (getAntiDiagBoard().findMatch(x, y, player, mask, len_mask))
-        return !canBeCaptured(x, y, PatternType::ANTIDIAG, player);
-
-    return false;
-}
-
 bool Game::playerWin(uint16_t player)
 {
     if (getCapture(player) >= 5)
@@ -382,6 +359,24 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
     return playerShiftedPattern == pattern.player && opponentShiftedPattern == pattern.opponent;
 }
 
+bool Game::inFiveAtPos(uint16_t x, uint16_t y, uint16_t player)
+{
+    if (getClassicBoard().isPosEmpty(x, y))
+        return false;
+    // std::cout << "X check: " << x << " Y check: " << y << std::endl;
+    // std::cout << getClassicBoard().isInFive(x, y, player) << std::endl;
+    // std::cout << getTransposedBoard().isInFive(x, y, player) << std::endl;
+    // std::cout << getDiagBoard().isInFive(x, y, player) << std::endl;
+    // std::cout << getAntiDiagBoard().isInFive(x, y, player) << std::endl
+    //           << std::endl;
+    if (getClassicBoard().isInFive(x, y, player)
+        || getTransposedBoard().isInFive(x, y, player)
+        || getDiagBoard().isInFive(x, y, player)
+        || getAntiDiagBoard().isInFive(x, y, player))
+        return true;
+    return false;
+}
+
 int Game::heuristicLocal(int x, int y, int player)
 {
     if (playerWin(player))
@@ -418,21 +413,23 @@ int Game::heuristicLocal(int x, int y, int player)
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
-                        // if (pattern.player.to_ulong() == 9 && pattern.opponent.to_ulong() == 6)
-                        // same but with an int comparison
                         counter += pattern.value * getCapture(player);
                     else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
                         || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
-                        // else if ((pattern.player.to_ulong() == 14 && pattern.opponent.to_ulong() == 1)
-                        // || (pattern.player.to_ulong() == 7 && pattern.opponent.to_ulong() == 8)) {
-                        // Cancel End Capture
-                        if (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
-                            || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))
+                        if (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
+                            || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || inFiveAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player)) {
                             counter += 1000000;
-                        else
+                        } else
                             counter += pattern.value * getCapture(opponent);
                     } else
                         counter += pattern.value;
+                    
+                    removePosToBoards(x, y);
+                    if (pattern.player.to_string() == "000011111" && pattern.opponent.to_string() == "000000000"
+                        && (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player)))
+                        counter -= pattern.value;
+                    setPosToBoards(x, y, player);
+
                     exit = true;
                     break;
                 }
