@@ -24,6 +24,7 @@
 #define DIAMETER (RADIUS * 2)
 #define DEPTH 1
 #define PRUNING 3
+#define FIRST_PRUNING 5
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
 #define TIME_UP 470
@@ -195,15 +196,13 @@ const std::array<const t_pattern, 61> patternsArray { {
 
     // DENFENSE THREE
     // PRIORISER +++++++++++++++++++++++++++++++ CA
-    { patternMerge("000001000"), patternMerge("000000111"), 4, 10000 }, // THREE
-    { patternMerge("000000001"), patternMerge("000001110"), 4, 10000 }, // THREE
+    { patternMerge("000001110"), patternMerge("000000001"), 4, 50000 }, // Cancel Capture
+    { patternMerge("000000111"), patternMerge("000001000"), 4, 50000 }, // Cancel Capture
     { patternMerge("000000010"), patternMerge("000001101"), 4, 10000 },
     { patternMerge("000000100"), patternMerge("000001011"), 4, 10000 },
 
     // POTENTIAL BUILD-UP - Open Three
     { patternMerge("000001001"), patternMerge("000000110"), 4, 90000 }, // Capture opportunity
-    { patternMerge("000001110"), patternMerge("000000001"), 4, 5000 }, // Cancel Capture
-    { patternMerge("000000111"), patternMerge("000001000"), 4, 5000 }, // Cancel Capture
     { patternMerge("000001110"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
     { patternMerge("000000111"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
     { patternMerge("000011100"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)

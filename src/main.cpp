@@ -131,8 +131,8 @@ int main()
                 }
                 if (start == IA_MODE && player == BLACK) {
                     timePoint start = std::chrono::high_resolution_clock::now();
-                    t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
-                    // t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
+                    // t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+                    t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
                     //  t_playerGame gameIA = findBestMove(game, DEPTH, player);
                     timePoint end = std::chrono::high_resolution_clock::now();
                     render.renderTime(std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()));

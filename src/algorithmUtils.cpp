@@ -104,7 +104,11 @@ gameSet generatePossibleMoves(Game& game, int player, bool max, int depth)
         }
     }
     sortBoards(possibleMoves, player);
-    if (possibleMoves.size() > PRUNING && max)
+    if (depth == DEPTH && possibleMoves.size() > FIRST_PRUNING && max)
+        possibleMoves.resize(FIRST_PRUNING);
+    else if (depth == DEPTH && possibleMoves.size() > FIRST_PRUNING)
+        possibleMoves.erase(possibleMoves.begin(), possibleMoves.end() - FIRST_PRUNING);
+    else if (possibleMoves.size() > PRUNING && max)
         possibleMoves.resize(PRUNING);
     else if (possibleMoves.size() > PRUNING)
         possibleMoves.erase(possibleMoves.begin(), possibleMoves.end() - PRUNING);

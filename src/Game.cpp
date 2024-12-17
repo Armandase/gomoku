@@ -363,12 +363,7 @@ bool Game::inFiveAtPos(uint16_t x, uint16_t y, uint16_t player)
 {
     if (getClassicBoard().isPosEmpty(x, y))
         return false;
-    // std::cout << "X check: " << x << " Y check: " << y << std::endl;
-    // std::cout << getClassicBoard().isInFive(x, y, player) << std::endl;
-    // std::cout << getTransposedBoard().isInFive(x, y, player) << std::endl;
-    // std::cout << getDiagBoard().isInFive(x, y, player) << std::endl;
-    // std::cout << getAntiDiagBoard().isInFive(x, y, player) << std::endl
-    //           << std::endl;
+
     if (getClassicBoard().isInFive(x, y, player)
         || getTransposedBoard().isInFive(x, y, player)
         || getDiagBoard().isInFive(x, y, player)
@@ -413,17 +408,17 @@ int Game::heuristicLocal(int x, int y, int player)
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
-                        counter += pattern.value * getCapture(player);
+                        counter += pattern.value * (getCapture(player) + 1);
                     else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
                         || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
                         if (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
                             || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || inFiveAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player)) {
                             counter += 1000000;
                         } else
-                            counter += pattern.value * getCapture(opponent);
+                            counter += pattern.value * (getCapture(opponent) + 1);
                     } else
                         counter += pattern.value;
-                    
+
                     removePosToBoards(x, y);
                     if (pattern.player.to_string() == "000011111" && pattern.opponent.to_string() == "000000000"
                         && (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player)))
