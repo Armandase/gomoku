@@ -41,10 +41,6 @@ IBoard::bitboard getSurroundingBits(Game& game) {
 IBoard::bitboard getSurroundingBits(Game& game)
 {
     IBoard::bitboard surroundingBits = 0;
-    auto firstPlayer = game.getClassicBoard().getPlayer1();
-    auto secondPlayer = game.getClassicBoard().getPlayer2();
-
-    IBoard::bitboard allPieces = firstPlayer | secondPlayer;
     int board_size = BOARD_SIZE;
 
     const int dir[8][2] = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 },

@@ -78,7 +78,7 @@ int main()
                 if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q)
                     quit = true;
                 if (endgame) {
-                    resetGame(game, render, player);
+                    resetGame(game, render);
                     endgame = false;
                     player = WHITE;
                     start = 0;
@@ -91,7 +91,7 @@ int main()
                     start = modeSelection(game, render, playerButton, IAButton, IAvsIA, PvPPro, PvPLongPro);
                     continue;
                 } else if (endgame) {
-                    resetGame(game, render, player);
+                    resetGame(game, render);
                     endgame = false;
                     player = WHITE;
                     start = 0;

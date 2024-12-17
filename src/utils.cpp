@@ -43,7 +43,7 @@ int intlen(int number)
     return length;
 }
 
-void resetGame(Game& game, Render& render, int player)
+void resetGame(Game& game, Render& render)
 {
     game.resetBoards();
     render.renderBoard(game);

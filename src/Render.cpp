@@ -212,6 +212,10 @@ void Render::drawStoneAssets(int centreX, int centreY, int player)
         renderImage(WHITE_STONE_PATH, &rect);
     else
         renderImage(BLACK_STONE_PATH, &rect);
+#else
+    (void)centreX;
+    (void)centreY;
+    (void)player;
 #endif
 }
 
@@ -250,7 +254,7 @@ void Render::renderMenu(std::vector<std::tuple<Button, std::string>>& buttons) c
         SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
         SDL_RenderDrawRect(this->_renderer, &playerText);
 
-        writeText(std::get<1>(button), "fonts/OpenSans-Bold.ttf",
+        writeText(text, "fonts/OpenSans-Bold.ttf",
             playerText, BLACK_COLOR, 50);
     }
 
@@ -326,14 +330,16 @@ void Render::eraseCapture()
     SDL_RenderPresent(_renderer);
 }
 
-void Render::drawRedCross(int x, int y) {
+void Render::drawRedCross(int x, int y)
+{
     SDL_SetRenderDrawColor(this->_renderer, 255, 0, 0, 255);
     SDL_RenderDrawLine(this->_renderer, x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
     SDL_RenderDrawLine(this->_renderer, x - RADIUS, y + RADIUS, x + RADIUS, y - RADIUS);
     SDL_RenderPresent(this->_renderer);
 }
 
-void Render::drawEmptyCross(int x, int y) {
+void Render::drawEmptyCross(int x, int y)
+{
     SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
     SDL_RenderDrawLine(this->_renderer, x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
     SDL_RenderDrawLine(this->_renderer, x - RADIUS, y + RADIUS, x + RADIUS, y - RADIUS);

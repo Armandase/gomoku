@@ -145,7 +145,7 @@ int modeSelection(Game& game, Render& render, Button& player, Button& IA, Button
 void place_stone(Game& board, Render& render, int x, int y, int& player, bool& endgame);
 void placeAdvisorStone(int x, int y, Render& render);
 bool posValid(Game& game, int x, int y, int player, bool verbose = false);
-void resetGame(Game& game, Render& render, int player);
+void resetGame(Game& game, Render& render);
 void placeForbiddenMove(Game& game, Render& render, int player);
 
 #endif

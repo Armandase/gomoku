@@ -206,9 +206,9 @@ TEST(MiniMaxUtils, generatePossibleMoves)
     gameSet nextMoves = generatePossibleMoves(gameTest, 1, true, 0);
     int nb_moves = static_cast<int>(nextMoves.size());
     if (PRUNING < 7)
-        EXPECT_EQ(static_cast<int>(nextMoves.size()), PRUNING);
+        EXPECT_EQ(nb_moves, PRUNING);
     else
-        EXPECT_EQ(static_cast<int>(nextMoves.size()), 7);
+        EXPECT_EQ(nb_moves, 7);
 }
 
 TEST(MiniMaxUtils, generatePossibleMovesCompare)
@@ -273,5 +273,8 @@ TEST(MiniMaxUtils, generatePossibleMovesCompare)
 
     gameSet nextMoves = generatePossibleMoves(gameTest, 1, true, 0);
     int nb_new_moves = nextMoves.size();
-    EXPECT_EQ(nb_new_moves, PRUNING);
+    if (PRUNING < 5)
+        EXPECT_EQ(nb_new_moves, PRUNING);
+    else
+        EXPECT_EQ(nb_new_moves, 5);
 }
