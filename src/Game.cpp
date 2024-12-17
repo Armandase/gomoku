@@ -418,15 +418,19 @@ int Game::heuristicLocal(int x, int y, int player)
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
-                        counter += pattern.value;
+                        // if (pattern.player.to_ulong() == 9 && pattern.opponent.to_ulong() == 6)
+                        // same but with an int comparison
+                        counter += pattern.value * getCapture(player);
                     else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
                         || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
+                        // else if ((pattern.player.to_ulong() == 14 && pattern.opponent.to_ulong() == 1)
+                        // || (pattern.player.to_ulong() == 7 && pattern.opponent.to_ulong() == 8)) {
                         // Cancel End Capture
                         if (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
                             || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))
                             counter += 1000000;
                         else
-                            counter += pattern.value;
+                            counter += pattern.value * getCapture(opponent);
                     } else
                         counter += pattern.value;
                     exit = true;
