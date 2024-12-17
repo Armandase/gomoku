@@ -200,18 +200,11 @@ bool Game::playerWinAtPos(uint16_t x, uint16_t y, uint16_t player)
     const uint16_t len_mask = 5;
     IBoard::bitboard mask("11111");
 
-    if (getClassicBoard().findMatch(x, y, player, mask, len_mask))
-        return !canBeCaptured(x, y, PatternType::CLASSIC, player);
-
-    if (getTransposedBoard().findMatch(x, y, player, mask, len_mask))
-        return !canBeCaptured(x, y, PatternType::TRANSPOS, player);
-
-    if (getDiagBoard().findMatch(x, y, player, mask, len_mask))
-        return !canBeCaptured(x, y, PatternType::DIAG, player);
-
-    if (getAntiDiagBoard().findMatch(x, y, player, mask, len_mask))
-        return !canBeCaptured(x, y, PatternType::ANTIDIAG, player);
-
+    if (getClassicBoard().findMatch(x, y, player, mask, len_mask)
+        || getTransposedBoard().findMatch(x, y, player, mask, len_mask)
+        || getDiagBoard().findMatch(x, y, player, mask, len_mask)
+        || getAntiDiagBoard().findMatch(x, y, player, mask, len_mask))
+        return true;
     return false;
 }
 
@@ -422,18 +415,22 @@ int Game::heuristicTest(int x, int y, int player)
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
-                        // counter += pattern.value * ((getCapture(player) + 1) * 5);
                         counter += pattern.value;
-                    // counter += pattern.value * (getCapture(player) + 1);
                     else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
                         || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
                         // Cancel End Capture
+                        std::cout << "CAPTURE"  << std::endl;
+                        std::cout << "X CHECK: " << x << " Y CHECK: " << y << std::endl;
+                        // std::cout << "1: " << x + dirX[i] << " " << y + dirY[i] << " " << playerWinAtPos(x + dirX[i], y + dirY[i], player) << std::endl;
+                        // std: :cout << "2: " << x + dirX[i] * 2 << " " << y + dirY[i] * 2 << " " << playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player) << std::endl;
+                        // std::cout << "3: " << x + dirX[i + 4] << " " << y + dirY[i + 4] << " " << playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) << std::endl;
+                        // std::cout << "4: " << x + dirX[i + 4] * 2 << " " << y + dirY[i + 4] * 2 << " " << playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player) << std::endl;
                         if (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
-                            || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player))
+                            || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player)) {
+                            std::cout << "CANCEL CAPTURE" << std::endl;
                             counter += 1000000;
-                        else
+                        } else
                             counter += pattern.value;
-                        // counter += pattern.value * ((getCapture(opponent) + 1) * 5);
                     } else
                         counter += pattern.value;
                     exit = true;

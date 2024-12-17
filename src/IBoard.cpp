@@ -173,6 +173,7 @@ void IBoard::swapBits(bitboard& board, int pos1, int pos2)
 bool IBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length)
 {
     const int index = this->convertCoordinate(x, y);
+    std::cout << index << std::endl;
     if (player == getIdPlayer1() && (_player1 & (mask << index)) == (mask << index))
         return true;
     if (player == getIdPlayer2() && (_player2 & (mask << index)) == (mask << index))

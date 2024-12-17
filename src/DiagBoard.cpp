@@ -84,9 +84,11 @@ bool DiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mas
     y = index / IBoard::getWidth();
     int xEnd = x + length;
 
+    std::cout << "Ok" << std::endl;
     if (!IBoard::isValidPos(xEnd, y) || (x < y + 1 && xEnd > y + 1))
         return false;
-        
+    
+    printBoard();
     if (player == getIdPlayer1()
         && (getPlayer1() & (mask << index)) == (mask << index))
         return true;

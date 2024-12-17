@@ -22,7 +22,7 @@
 #define SCREEN_WIDTH (BOARD_DIMENSIONS + MARGIN + OFFSET)
 #define RADIUS (GRID_SIZE / 3)
 #define DIAMETER (RADIUS * 2)
-#define DEPTH 10
+#define DEPTH 1
 #define PRUNING 3
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
@@ -97,12 +97,12 @@ const std::array<const t_pattern, 46> patternsArray { {
     { patternMerge("000000100"), patternMerge("000001011"), 4, 10000 },
 
     // POTENTIAL BUILD-UP - Open Three
-    { patternMerge("000001110"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
-    { patternMerge("000000111"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
-    { patternMerge("000011100"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
     { patternMerge("000001001"), patternMerge("000000110"), 4, 50000 }, // Capture opportunity
     { patternMerge("000001110"), patternMerge("000000001"), 4, 7000 }, // Cancel Capture
     { patternMerge("000000111"), patternMerge("000001000"), 4, 7000 }, // Cancel Capture
+    { patternMerge("000001110"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
+    { patternMerge("000000111"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
+    { patternMerge("000011100"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
 
     // DEFENSE TWO
     { patternMerge("000000001"), patternMerge("000001010"), 4, 1000 },
