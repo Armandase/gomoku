@@ -1,4 +1,3 @@
-#include "../inc/TranspositionTable.hpp"
 #include "../inc/algorithm.hpp"
 #include "../inc/gomoku.hpp"
 
@@ -38,46 +37,6 @@ TEST(Algorithm, timesUp)
         }
     }
     EXPECT_EQ(times_up(start), true);
-}
-
-TEST(TranspositionTable, store)
-{
-
-    std::string str_test(
-        "1111111111111111111"
-        "0000000000000000000"
-        "0000000000000000000"
-        "1000000000000000000"
-        "0100000000000000000"
-        "0010000000000000000"
-        "0001000000000000000"
-        "0000100000000000000"
-        "0000010000000000000"
-        "0000001000000000000"
-        "0000000100000000000"
-        "0000000010000000000"
-        "0000000001000000000"
-        "0000000000100000000"
-        "0000000000010000000"
-        "0000000000001000000"
-        "0000000000000100000"
-        "0000000000000010000"
-        "0000000000000001000");
-    Game gameTest;
-    fillGame(gameTest, str_test);
-
-    TranspositionTable table;
-    size_t cmp = 1;
-    int width = gameTest.getClassicBoard().getWidth();
-    table.store(gameTest, 10, 0);
-    EXPECT_EQ(table.getTable().size(), cmp);
-    table.store(gameTest, 10, 0);
-    EXPECT_EQ(table.getTable().size(), cmp);
-
-    cmp = 2;
-    gameTest.setPosToBoards(width - 1, width - 1, cmp);
-    table.store(gameTest, 10, 0);
-    EXPECT_EQ(table.getTable().size(), cmp);
 }
 
 TEST(MiniMaxUtils, surroundingBits)
@@ -208,111 +167,111 @@ TEST(MiniMaxUtils, surroundingBitsTwoPlayers)
     EXPECT_EQ(bits, surrounded);
 }
 
-// TEST(MiniMaxUtils, generatePossibleMoves)
-// {
+TEST(MiniMaxUtils, generatePossibleMoves)
+{
 
-//     std::string str_test(
-//         "0010000000000000000"
-//         "0010000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000");
+    std::string str_test(
+        "0010000000000000000"
+        "0010000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000");
 
-//     std::reverse(str_test.begin(), str_test.end());
-//     IBoard::bitboard test(str_test);
+    std::reverse(str_test.begin(), str_test.end());
+    IBoard::bitboard test(str_test);
 
-//     Game gameTest;
-//     int width = gameTest.getClassicBoard().getWidth();
-//     int size = test.size();
-//     for (int i = 0; i < size; i++) {
-//         if (!test[i])
-//             continue;
-//         gameTest.setPosToBoards(i % width, i / width, 1);
-//     }
+    Game gameTest;
+    int width = gameTest.getClassicBoard().getWidth();
+    int size = test.size();
+    for (int i = 0; i < size; i++) {
+        if (!test[i])
+            continue;
+        gameTest.setPosToBoards(i % width, i / width, 1);
+    }
 
-//     gameSet nextMoves = generatePossibleMoves(gameTest, 1, true);
-//     int nb_moves = static_cast<int>(nextMoves.size());
-//     if (PRUNING < 7)
-//         EXPECT_EQ(static_cast<int>(nextMoves.size()), PRUNING);
-//     else
-//         EXPECT_EQ(static_cast<int>(nextMoves.size()), 7);
-// }
+    gameSet nextMoves = generatePossibleMoves(gameTest, 1, true, 0);
+    int nb_moves = static_cast<int>(nextMoves.size());
+    if (PRUNING < 7)
+        EXPECT_EQ(static_cast<int>(nextMoves.size()), PRUNING);
+    else
+        EXPECT_EQ(static_cast<int>(nextMoves.size()), 7);
+}
 
-// TEST(MiniMaxUtils, generatePossibleMovesCompare)
-// {
+TEST(MiniMaxUtils, generatePossibleMovesCompare)
+{
 
-//     std::string str_test_p1(
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "1000000000000000000");
-//     std::string str_test_p2(
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "0000000000000000000"
-//         "1000000000000000000"
-//         "0100000000000000000");
+    std::string str_test_p1(
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "1000000000000000000");
+    std::string str_test_p2(
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "0000000000000000000"
+        "1000000000000000000"
+        "0100000000000000000");
 
-//     std::reverse(str_test_p1.begin(), str_test_p1.end());
-//     IBoard::bitboard test_p1(str_test_p1);
+    std::reverse(str_test_p1.begin(), str_test_p1.end());
+    IBoard::bitboard test_p1(str_test_p1);
 
-//     std::reverse(str_test_p2.begin(), str_test_p2.end());
-//     IBoard::bitboard test_p2(str_test_p2);
+    std::reverse(str_test_p2.begin(), str_test_p2.end());
+    IBoard::bitboard test_p2(str_test_p2);
 
-//     Game gameTest;
-//     int width = gameTest.getClassicBoard().getWidth();
-//     int size = test_p1.size();
-//     for (int i = 0; i < size; i++) {
-//         if (test_p1[i])
-//             gameTest.setPosToBoards(i % width, i / width, 1);
-//         else if (test_p2[i])
-//             gameTest.setPosToBoards(i % width, i / width, 2);
-//     }
+    Game gameTest;
+    int width = gameTest.getClassicBoard().getWidth();
+    int size = test_p1.size();
+    for (int i = 0; i < size; i++) {
+        if (test_p1[i])
+            gameTest.setPosToBoards(i % width, i / width, 1);
+        else if (test_p2[i])
+            gameTest.setPosToBoards(i % width, i / width, 2);
+    }
 
-//     gameSet nextMoves = generatePossibleMoves(gameTest, 1, true);
-//     int nb_new_moves = nextMoves.size();
-//     EXPECT_EQ(nb_new_moves, 5);
-// }
+    gameSet nextMoves = generatePossibleMoves(gameTest, 1, true, 0);
+    int nb_new_moves = nextMoves.size();
+    EXPECT_EQ(nb_new_moves, PRUNING);
+}
