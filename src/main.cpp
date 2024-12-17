@@ -31,7 +31,7 @@ int main()
     bool quit = false;
     bool endgame = false;
     SDL_Event e;
-    int player = WHITE;
+    int player = BLACK;
     int mouseX, mouseY;
 
     // Create buttons for choosing human vs AI or human vs human
@@ -70,6 +70,7 @@ int main()
     timePoint lastPlay = std::chrono::high_resolution_clock::now();
     Game game;
     int nbTurn = 0;
+    int timeSum = 0;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT)
@@ -80,8 +81,13 @@ int main()
                 if (endgame) {
                     resetGame(game, render);
                     endgame = false;
-                    player = WHITE;
+                    player = BLACK;
+                    if (start == IA_MODE) {
+                        std::cout << "Average time for IA to play " << timeSum / (nbTurn / 2) << " ms" << std::endl;
+                    }
                     start = 0;
+                    nbTurn = 0;
+                    timeSum = 0;
                     render.renderMenu(buttons);
                     continue;
                 }
@@ -93,8 +99,13 @@ int main()
                 } else if (endgame) {
                     resetGame(game, render);
                     endgame = false;
-                    player = WHITE;
+                    player = BLACK;
+                    if (start == IA_MODE) {
+                        std::cout << "Average time for IA to play " << timeSum / (nbTurn / 2) << " ms" << std::endl;
+                    }
                     start = 0;
+                    nbTurn = 0;
+                    timeSum = 0;
                     render.renderMenu(buttons);
                     continue;
                 } else if (start == IA_VS_IA) {
@@ -130,16 +141,27 @@ int main()
                     nbTurn++;
                 }
                 if (start == IA_MODE && player == BLACK) {
+                    if (game.isEmpty()) {
+                        int x = BOARD_SIZE / 2;
+                        int y = BOARD_SIZE / 2;
+                        game.setPosToBoards(x, y, player);
+                        place_stone(game, render, x, y, player, endgame);
+                        player = WHITE;
+                        continue;
+                    }
                     timePoint start = std::chrono::high_resolution_clock::now();
                     // t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
                     t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
                     //  t_playerGame gameIA = findBestMove(game, DEPTH, player);
                     timePoint end = std::chrono::high_resolution_clock::now();
-                    render.renderTime(std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()));
+                    int diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+                    timeSum += diff;
+                    render.renderTime(std::to_string(diff));
                     place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
                         player, endgame);
                     game = gameIA.game;
                     nbTurn++;
+                    std::cout << "IA played " << nbTurn / 2 << " times" << std::endl;
                 }
                 SDL_RenderPresent(render.getRenderer());
             }

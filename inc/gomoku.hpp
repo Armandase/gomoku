@@ -22,7 +22,7 @@
 #define SCREEN_WIDTH (BOARD_DIMENSIONS + MARGIN + OFFSET)
 #define RADIUS (GRID_SIZE / 3)
 #define DIAMETER (RADIUS * 2)
-#define DEPTH 1
+#define DEPTH 10
 #define PRUNING 3
 #define FIRST_PRUNING 5
 #define PATTERN_SIZE 5
