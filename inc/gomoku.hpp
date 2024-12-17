@@ -100,6 +100,7 @@ const std::array<const t_pattern, 61> patternsArray { {
     { patternMerge("000011101"), patternMerge("000000000"), 5, 100000 }, // FOUR
 
     // DENFENSE THREE
+    // PRIORISER +++++++++++++++++++++++++++++++ CA
     { patternMerge("000001000"), patternMerge("000000111"), 4, 10000 }, // THREE
     { patternMerge("000000001"), patternMerge("000001110"), 4, 10000 }, // THREE
     { patternMerge("000000010"), patternMerge("000001101"), 4, 10000 },
