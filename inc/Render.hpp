@@ -10,16 +10,16 @@
 #include <tuple>
 #include <vector>
 
-// #define WHITE_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/frog.png"
-// #define BLACK_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/rat.png"
+#define WHITE_STONE_PATH "img/stones/frog.png"
+#define BLACK_STONE_PATH "img/stones/rat.png"
 
-#define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone.ogg"
-// #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone1.ogg"
-// #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone_wood.ogg"
+// #define PLACING_STONE_SOUND_PATH "sound/placing_stone.ogg"
+// #define PLACING_STONE_SOUND_PATH "sound/placing_stone1.ogg"
+#define PLACING_STONE_SOUND_PATH "sound/placing_stone_wood.ogg"
 
-#define CAPTURE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/capture_axe.ogg"
-// #define CAPTURE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/capture_animal.ogg"
-// #define CAPTURE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/capture_blood.ogg"
+#define CAPTURE_SOUND_PATH "sound/capture_axe.ogg"
+// #define CAPTURE_SOUND_PATH "sound/capture_animal.ogg"
+// #define CAPTURE_SOUND_PATH "sound/capture_blood.ogg"
 
 const SDL_Color BLACK_COLOR = { 0, 0, 0, 255 };
 // const SDL_Color LIGHT_GREY_COLOR = { 211, 211, 211, 100 };

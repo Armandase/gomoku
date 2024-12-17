@@ -64,7 +64,7 @@ typedef struct s_pattern {
 
 } t_pattern;
 
-const std::array<const t_pattern, 61> patternsArray { {
+const std::array<const t_pattern, 65> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, -200 },
     { patternMerge("000001110"), patternMerge("000100001"), 6, -200 },
@@ -83,11 +83,15 @@ const std::array<const t_pattern, 61> patternsArray { {
     { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE
 
     // DEFENSE FOUR
-    { patternMerge("000010000"), patternMerge("000001111"), 5, 5000000 }, // FOUR
+    { patternMerge("000100000"), patternMerge("000001111"), 6, 9000000 }, // FOUR
+    { patternMerge("000100000"), patternMerge("000011110"), 6, 9000000 }, // FOUR
+    { patternMerge("000000001"), patternMerge("000011110"), 6, 9000000 }, // FOUR
+    { patternMerge("000000001"), patternMerge("000111100"), 6, 9000000 }, // FOUR
     { patternMerge("000000001"), patternMerge("000011110"), 5, 5000000 }, // FOUR
-    { patternMerge("000000100"), patternMerge("000011011"), 5, 5000000 }, // FOUR
-    { patternMerge("000001000"), patternMerge("000010111"), 5, 5000000 }, // FOUR
-    { patternMerge("000000010"), patternMerge("000011101"), 5, 5000000 },
+    { patternMerge("000000010"), patternMerge("000011101"), 5, 1000000 },
+    { patternMerge("000000100"), patternMerge("000011011"), 5, 1000000 }, // FOUR
+    { patternMerge("000001000"), patternMerge("000010111"), 5, 1000000 }, // FOUR
+    { patternMerge("000010000"), patternMerge("000001111"), 5, 1000000 }, // FOUR
 
     // STRONG THREATS - Open Four (either side open)
     { patternMerge("000011110"), patternMerge("000000000"), 6, 1000000 }, // FOUR (open on both ends)
@@ -100,19 +104,18 @@ const std::array<const t_pattern, 61> patternsArray { {
     { patternMerge("000011101"), patternMerge("000000000"), 5, 100000 }, // FOUR
 
     // DENFENSE THREE
-    // PRIORISER +++++++++++++++++++++++++++++++ CA
-    { patternMerge("000001000"), patternMerge("000000111"), 4, 10000 }, // THREE
-    { patternMerge("000000001"), patternMerge("000001110"), 4, 10000 }, // THREE
-    { patternMerge("000000010"), patternMerge("000001101"), 4, 10000 },
-    { patternMerge("000000100"), patternMerge("000001011"), 4, 10000 },
+    { patternMerge("000001000"), patternMerge("000000111"), 4, 90000 }, // THREE
+    { patternMerge("000000001"), patternMerge("000001110"), 4, 90000 }, // THREE
+    { patternMerge("000000010"), patternMerge("000001101"), 4, 30000 },
+    { patternMerge("000000100"), patternMerge("000001011"), 4, 30000 },
 
     // POTENTIAL BUILD-UP - Open Three
     { patternMerge("000001001"), patternMerge("000000110"), 4, 90000 }, // Capture opportunity
     { patternMerge("000001110"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
     { patternMerge("000000111"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
     { patternMerge("000011100"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
-    { patternMerge("000011010"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
-    { patternMerge("000001011"), patternMerge("000000000"), 5, 10000 }, // THREE (open on both ends)
+    { patternMerge("000011010"), patternMerge("000000000"), 5, 7000 }, // THREE (open on both ends)
+    { patternMerge("000001011"), patternMerge("000000000"), 5, 7000 }, // THREE (open on both ends)
     { patternMerge("000010011"), patternMerge("000000000"), 5, 5000 }, // THREE (open on both ends)
     { patternMerge("000011001"), patternMerge("000000000"), 5, 5000 }, // THREE (open on both ends)
     { patternMerge("000001110"), patternMerge("000000001"), 4, 5000 }, // Cancel Capture
