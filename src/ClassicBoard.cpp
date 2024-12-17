@@ -1,5 +1,4 @@
 #include "../inc/ClassicBoard.hpp"
-#include "../inc/Pattern.hpp"
 
 ClassicBoard::ClassicBoard()
     : IBoard()

@@ -115,14 +115,6 @@ void Game::resetBoards()
     _player2Capture = 0;
 }
 
-size_t
-Game::hashGame() const
-{
-    std::size_t h1 = std::hash<IBoard::bitboard> {}(this->_classicBoard.getPlayer1());
-    std::size_t h2 = std::hash<IBoard::bitboard> {}(this->_classicBoard.getPlayer2());
-    return h1 ^ (h2 << 1);
-}
-
 void Game::setHeuristic(int64_t heuristic)
 {
     this->_heuristic = heuristic;
@@ -171,7 +163,6 @@ bool Game::canBeCaptured(uint16_t x,
 
             if (getClassicBoard().isValidPos(xOpp1, yOpp1) && getClassicBoard().isValidPos(xFwd2, yFwd2)) {
                 if ((getClassicBoard().getPos(xOpp1, yOpp1) == opponent && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == EMPTY) || (getClassicBoard().getPos(xOpp1, yOpp1) == EMPTY && getClassicBoard().getPos(xFwd1, yFwd1) == player && getClassicBoard().getPos(xFwd2, yFwd2) == opponent)) {
-                    // std::cout << "FOR1: " << xFwd1 << " " << yFwd1 << " FOR2: " << xFwd2 << " " << yFwd2 << " Opp: " << xOpp1 << " " << yOpp1 << "\n";
                     return true;
                 }
             }
@@ -183,28 +174,11 @@ bool Game::canBeCaptured(uint16_t x,
 
             if (getClassicBoard().isValidPos(xOpp2, yOpp2) && getClassicBoard().isValidPos(xRev2, yRev2)) {
                 if ((getClassicBoard().getPos(xOpp2, yOpp2) == opponent && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == EMPTY) || (getClassicBoard().getPos(xOpp2, yOpp2) == EMPTY && getClassicBoard().getPos(xRev1, yRev1) == player && getClassicBoard().getPos(xRev2, yRev2) == opponent)) {
-                    // std::cout << "Rev1:" << xRev1 << " " << yRev1 << " Rev2: " << xRev2 << " " << yRev2 << " Opp: " << xOpp2 << " " << yOpp2 << "\n";
                     return true;
                 }
             }
         }
     }
-    return false;
-}
-
-bool Game::playerWinAtPos(uint16_t x, uint16_t y, uint16_t player)
-{
-    if (getClassicBoard().isPosEmpty(x, y))
-        return false;
-
-    const uint16_t len_mask = 5;
-    IBoard::bitboard mask("11111");
-
-    if (getClassicBoard().findMatch(x, y, player, mask, len_mask)
-        || getTransposedBoard().findMatch(x, y, player, mask, len_mask)
-        || getDiagBoard().findMatch(x, y, player, mask, len_mask)
-        || getAntiDiagBoard().findMatch(x, y, player, mask, len_mask))
-        return true;
     return false;
 }
 
@@ -354,7 +328,13 @@ void Game::handleCapture(uint16_t x,
         removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
 #ifdef CAPTURE_SOUND_PATH
         std::string command("paplay " + std::string(CAPTURE_SOUND_PATH) + " &");
-        system(command.c_str());
+        int ret = system(command.c_str());
+        if (ret == -1) {
+            std::cerr << "Erreur : system() a échoué à exécuter la commande." << std::endl;
+        } else if (WEXITSTATUS(ret) != 0) {
+            std::cerr << "La commande s'est exécutée avec un code de sortie non nul : "
+                      << WEXITSTATUS(ret) << std::endl;
+        }
 #endif
         addCapture(player);
         render.renderCapture(getCapture(WHITE), getCapture(BLACK));
@@ -379,7 +359,25 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
     return playerShiftedPattern == pattern.player && opponentShiftedPattern == pattern.opponent;
 }
 
-int Game::heuristicTest(int x, int y, int player)
+bool Game::inFiveAtPos(uint16_t x, uint16_t y, uint16_t player)
+{
+    if (getClassicBoard().isPosEmpty(x, y))
+        return false;
+    // std::cout << "X check: " << x << " Y check: " << y << std::endl;
+    // std::cout << getClassicBoard().isInFive(x, y, player) << std::endl;
+    // std::cout << getTransposedBoard().isInFive(x, y, player) << std::endl;
+    // std::cout << getDiagBoard().isInFive(x, y, player) << std::endl;
+    // std::cout << getAntiDiagBoard().isInFive(x, y, player) << std::endl
+    //           << std::endl;
+    if (getClassicBoard().isInFive(x, y, player)
+        || getTransposedBoard().isInFive(x, y, player)
+        || getDiagBoard().isInFive(x, y, player)
+        || getAntiDiagBoard().isInFive(x, y, player))
+        return true;
+    return false;
+}
+
+int Game::heuristicLocal(int x, int y, int player)
 {
     if (playerWin(player))
         return INT_MAX;
@@ -415,24 +413,23 @@ int Game::heuristicTest(int x, int y, int player)
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
                     if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
-                        counter += pattern.value;
+                        counter += pattern.value * getCapture(player);
                     else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
                         || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
-                        // Cancel End Capture
-                        std::cout << "CAPTURE"  << std::endl;
-                        std::cout << "X CHECK: " << x << " Y CHECK: " << y << std::endl;
-                        // std::cout << "1: " << x + dirX[i] << " " << y + dirY[i] << " " << playerWinAtPos(x + dirX[i], y + dirY[i], player) << std::endl;
-                        // std: :cout << "2: " << x + dirX[i] * 2 << " " << y + dirY[i] * 2 << " " << playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player) << std::endl;
-                        // std::cout << "3: " << x + dirX[i + 4] << " " << y + dirY[i + 4] << " " << playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) << std::endl;
-                        // std::cout << "4: " << x + dirX[i + 4] * 2 << " " << y + dirY[i + 4] * 2 << " " << playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player) << std::endl;
-                        if (playerWinAtPos(x + dirX[i], y + dirY[i], player) || playerWinAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
-                            || playerWinAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || playerWinAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player)) {
-                            std::cout << "CANCEL CAPTURE" << std::endl;
+                        if (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
+                            || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || inFiveAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player)) {
                             counter += 1000000;
                         } else
-                            counter += pattern.value;
+                            counter += pattern.value * getCapture(opponent);
                     } else
                         counter += pattern.value;
+                    
+                    removePosToBoards(x, y);
+                    if (pattern.player.to_string() == "000011111" && pattern.opponent.to_string() == "000000000"
+                        && (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player)))
+                        counter -= pattern.value;
+                    setPosToBoards(x, y, player);
+
                     exit = true;
                     break;
                 }
@@ -453,9 +450,9 @@ int Game::globalHeuristic(int player)
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < width; y++) {
             if (getClassicBoard().getPos(x, y) == player) {
-                result += heuristicTest(x, y, player);
+                result += heuristicLocal(x, y, player);
             } else if (getClassicBoard().getPos(x, y) == opponent) {
-                result -= heuristicTest(x, y, opponent);
+                result -= heuristicLocal(x, y, opponent);
             }
         }
     }

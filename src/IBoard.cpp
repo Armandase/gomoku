@@ -1,5 +1,4 @@
 #include "../inc/IBoard.hpp"
-#include "../inc/Pattern.hpp"
 
 IBoard::IBoard()
     : _player1(0)
@@ -52,7 +51,7 @@ bool IBoard::operator==(const IBoard& rhs)
 
 bool IBoard::isValidPos(uint16_t x, uint16_t y) const
 {
-    if (x < 0 || x >= this->_width || y < 0 || y >= this->_width)
+    if (x >= this->_width || y >= this->_width)
         return false;
     return true;
 }
@@ -172,8 +171,8 @@ void IBoard::swapBits(bitboard& board, int pos1, int pos2)
 
 bool IBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mask, uint16_t length)
 {
+    (void)length;
     const int index = this->convertCoordinate(x, y);
-    std::cout << index << std::endl;
     if (player == getIdPlayer1() && (_player1 & (mask << index)) == (mask << index))
         return true;
     if (player == getIdPlayer2() && (_player2 & (mask << index)) == (mask << index))
@@ -198,4 +197,26 @@ void IBoard::printBoard() const
         std::cout << "\n";
     }
     std::cout << std::endl;
+}
+
+bool IBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
+    const int width = getWidth();
+    int index = this->convertCoordinate(x, y);
+    x = index % width;
+    y = index / width;
+    for (int startX = std::max(0, x - 4); startX <= x; ++startX) {
+        if (startX + 4 < width) {
+            bool isFive = true;
+            for (int i = 0; i < 5; ++i) {
+                int currentPos = y * width + (startX + i);
+                if ((player == getIdPlayer1() && (!_player1[currentPos]))
+                    || (player == getIdPlayer2() && (!_player2[currentPos]))) {
+                    isFive = false;
+                    break;
+                }
+            }
+            if (isFive) return true;
+        }
+    }
+    return false;
 }

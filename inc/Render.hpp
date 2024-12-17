@@ -13,7 +13,7 @@
 // #define WHITE_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/frog.png"
 // #define BLACK_STONE_PATH "/nfs/homes/adamiens/42/spe/gomoku/img/stones/rat.png"
 
-// #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone.ogg"
+#define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone.ogg"
 // #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone1.ogg"
 // #define PLACING_STONE_SOUND_PATH "/nfs/homes/adamiens/42/spe/gomoku/sound/placing_stone_wood.ogg"
 
