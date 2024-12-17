@@ -118,6 +118,5 @@ t_playerGame findBestMovePVSmultithread(Game& root, int depth, int player)
         if (times_up(start))
             break;
     }
-
     return bestMove;
 }
