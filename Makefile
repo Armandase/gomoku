@@ -1,6 +1,6 @@
 MAKEFLAGS += -j
 
-CXX		=	c++
+CXX		=	g++
 NAME 	= 	Gomoku
 SRC 	=	utils.cpp \
 			handleMouse.cpp \

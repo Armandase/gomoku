@@ -51,7 +51,7 @@ bool IBoard::operator==(const IBoard& rhs)
 
 bool IBoard::isValidPos(uint16_t x, uint16_t y) const
 {
-    if (x < 0 || x >= this->_width || y < 0 || y >= this->_width)
+    if (x >= this->_width || y >= this->_width)
         return false;
     return true;
 }

@@ -25,7 +25,7 @@ void placeForbiddenMove(Game& game, Render& render, int player)
                 render.drawEmptyCross(boardToRender(x), boardToRender(y));
                 if (game.isDoubleThree(x, y, player))
                     render.drawRedCross(boardToRender(x), boardToRender(y));
-            } 
+            }
         }
     }
 }
@@ -57,16 +57,20 @@ void place_stone(Game& game, Render& render, int x, int y, int& player, bool& en
     player = (player == WHITE) ? BLACK : WHITE;
     placeForbiddenMove(game, render, player);
 
-// #if defined(PLACING_STONE_SOUND_PATH)
 #ifdef PLACING_STONE_SOUND_PATH
     std::string command("paplay " + std::string(PLACING_STONE_SOUND_PATH) + " &");
-    system(command.c_str());
+    int ret = system(command.c_str());
+    if (ret == -1) {
+        std::cerr << "Erreur : system() a échoué à exécuter la commande." << std::endl;
+    } else if (WEXITSTATUS(ret) != 0) {
+        std::cerr << "La commande s'est exécutée avec un code de sortie non nul : "
+                  << WEXITSTATUS(ret) << std::endl;
+    }
 #endif
 }
 
 void placeAdvisorStone(int x, int y, Render& render)
 {
-    // SDL_SetRenderDrawColor(render.getRenderer(), LIGHT_GREY_COLOR, LIGHT_GREY_COLOR[1], LIGHT_GREY_COLOR[2], LIGHT_GREY_COLOR[3]);
     SDL_SetRenderDrawColor(render.getRenderer(), LIGHT_GREY_COLOR.r, LIGHT_GREY_COLOR.g, LIGHT_GREY_COLOR.b, LIGHT_GREY_COLOR.a);
     render.drawCircle(boardToRender(x), boardToRender(y));
 }

@@ -115,7 +115,6 @@ void Game::resetBoards()
     _player2Capture = 0;
 }
 
-
 void Game::setHeuristic(int64_t heuristic)
 {
     this->_heuristic = heuristic;
@@ -352,7 +351,13 @@ void Game::handleCapture(uint16_t x,
         removePosToBoards(x + dirX[boardType] * 2, y + dirY[boardType] * 2);
 #ifdef CAPTURE_SOUND_PATH
         std::string command("paplay " + std::string(CAPTURE_SOUND_PATH) + " &");
-        system(command.c_str());
+        int ret = system(command.c_str());
+        if (ret == -1) {
+            std::cerr << "Erreur : system() a échoué à exécuter la commande." << std::endl;
+        } else if (WEXITSTATUS(ret) != 0) {
+            std::cerr << "La commande s'est exécutée avec un code de sortie non nul : "
+                      << WEXITSTATUS(ret) << std::endl;
+        }
 #endif
         addCapture(player);
         render.renderCapture(getCapture(WHITE), getCapture(BLACK));
