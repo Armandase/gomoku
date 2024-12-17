@@ -4,7 +4,6 @@
 #include "AntiDiagBoard.hpp"
 #include "ClassicBoard.hpp"
 #include "DiagBoard.hpp"
-#include "Pattern.hpp"
 #include "TransposedBoard.hpp"
 // bitboard representation of the board
 
@@ -45,7 +44,6 @@ public:
     DiagBoard& getDiagBoard() noexcept;
 
     patternMap extractPatterns(uint16_t x, uint16_t y, uint16_t length, uint16_t player);
-    size_t hashGame() const;
 
     void setHeuristic(int64_t heuristic);
     int64_t getHeuristic() const;
@@ -57,7 +55,7 @@ public:
     void handleCapture(uint16_t x, uint16_t y, std::vector<uint16_t>& capturesBoard, uint16_t player, Render& render);
     bool playerWinAtPos(uint16_t x, uint16_t y, uint16_t player);
     bool playerWin(uint16_t player);
-    int heuristicTest(int x, int y, int player);
+    int heuristicLocal(int x, int y, int player);
     int globalHeuristic(int player);
 
 private:

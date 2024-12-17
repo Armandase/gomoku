@@ -118,7 +118,7 @@ const std::array<const t_pattern, 46> patternsArray { {
 
     // LOW-PRIORITY OPPORTUNITIES - Transitional steps
     { patternMerge("000001010"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
-    { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO   
+    { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
     { patternMerge("000000011"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
     { patternMerge("000000101"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
 

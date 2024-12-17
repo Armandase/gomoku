@@ -1,5 +1,4 @@
 #include "../inc/DiagBoard.hpp"
-#include "../inc/Pattern.hpp"
 
 DiagBoard::DiagBoard()
     : IBoard()

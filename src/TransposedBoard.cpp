@@ -1,5 +1,4 @@
 #include "../inc/TransposedBoard.hpp"
-#include "../inc/Pattern.hpp"
 
 TransposedBoard::TransposedBoard()
     : IBoard()

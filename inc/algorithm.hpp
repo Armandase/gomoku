@@ -21,7 +21,6 @@ typedef struct s_playerGame {
 
 typedef std::vector<t_playerGame> gameSet;
 
-t_playerGame iterativeDeepening(Game& root, int player);
 bool times_up(const timePoint& start);
 bool isTerminal(Game& node, int player);
 

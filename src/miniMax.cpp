@@ -1,4 +1,3 @@
-#include "../inc/TranspositionTable.hpp"
 #include "../inc/algorithm.hpp"
 #include <future>
 
@@ -52,8 +51,6 @@ t_playerGame findBestMove(Game& root, int depth, int player)
     gameSet possibleMoves = generatePossibleMoves(root, player, true, depth);
     t_playerGame bestMove = possibleMoves.front();
 
-    std::cout << "Possible moves: " << possibleMoves.size() << std::endl;
-
     int nextPlayer = player == WHITE ? BLACK : WHITE;
     --depth;
     for (auto& move : possibleMoves) {
@@ -63,43 +60,5 @@ t_playerGame findBestMove(Game& root, int depth, int player)
             bestMove = move;
         }
     }
-
-    std::cout << "Best value: " << bestValue << std::endl;
-    // bestMove.game.getClassicBoard().printBoard();
     return bestMove;
 }
-
-// t_playerGame findBestMove(Game& root, int depth, int player)
-// {
-//     std::vector<std::future<t_playerGame>> threadResult;
-//     int bestValue = std::numeric_limits<int>::min();
-
-//     gameSet possibleMoves = generatePossibleMoves(root, player);
-//     t_playerGame bestMove = possibleMoves.front();
-
-//     int nextPlayer = player == WHITE ? BLACK : WHITE;
-//     --depth;
-//     for (auto& move : possibleMoves) {
-//         threadResult.push_back(std::async(std::launch::async, miniMax, std::ref(move), depth, false, nextPlayer));
-//     }
-
-//     int idx = 0;
-//     for (auto& thread : threadResult) {
-//         thread.wait();
-//         if (thread.valid() == true) {
-//             t_playerGame threadReturn = thread.get();
-//             if (threadReturn.game.getHeuristic() > bestValue) {
-//                 bestValue = threadReturn.game.getHeuristic();
-//                 // bestMove = threadReturn;
-//                 bestMove = possibleMoves[idx];
-//             }
-//         } else {
-//             std::cerr << "Fail to join a future" << std::endl;
-//         }
-//         ++idx;
-//     }
-
-//     std::cout << "Best value: " << bestValue << std::endl;
-//     bestMove.game.getClassicBoard().printBoard();
-//     return bestMove;
-// }

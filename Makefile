@@ -4,7 +4,7 @@ CXX		=	c++
 NAME 	= 	Gomoku
 SRC 	=	utils.cpp \
 			handleMouse.cpp \
-			mtdf.cpp algorithmUtils.cpp \
+			algorithmUtils.cpp \
 			Button.cpp \
 			Render.cpp \
 			IBoard.cpp \
@@ -14,12 +14,10 @@ SRC 	=	utils.cpp \
 			ClassicBoard.cpp \
 			Game.cpp \
 			miniMax.cpp \
-			TranspositionTable.cpp \
 			pvs.cpp
 
 HEADER	=	inc/gomoku.hpp \
 			inc/algorithm.hpp \
-			inc/Pattern.hpp \
 			inc/Render.hpp \
 			inc/IBoard.hpp \
 			inc/Button.hpp \
@@ -27,8 +25,7 @@ HEADER	=	inc/gomoku.hpp \
 			inc/AntiDiagBoard.hpp \
 			inc/TransposedBoard.hpp \
 			inc/ClassicBoard.hpp \
-			inc/Game.hpp \
-			inc/TranspositionTable.hpp
+			inc/Game.hpp
 			
 TEST_NAME = run_test
 SRC_MAIN  = main.cpp

@@ -1,5 +1,4 @@
 #include "../inc/AntiDiagBoard.hpp"
-#include "../inc/Pattern.hpp"
 
 AntiDiagBoard::AntiDiagBoard()
     : IBoard()

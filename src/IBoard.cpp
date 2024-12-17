@@ -1,5 +1,4 @@
 #include "../inc/IBoard.hpp"
-#include "../inc/Pattern.hpp"
 
 IBoard::IBoard()
     : _player1(0)
