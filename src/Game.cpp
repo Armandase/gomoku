@@ -190,7 +190,7 @@ bool Game::playerWin(uint16_t player)
     const int width = getClassicBoard().getWidth();
     const int size = width * width;
     const uint16_t len_mask = 5;
-    IBoard::bitboard mask("11111");
+    IBoard::bitboard mask(0b11111);
     for (int i = 0; i < size; ++i) {
         int x = i % width, y = i / width;
         if (getClassicBoard().isPosEmpty(x, y))
@@ -246,9 +246,9 @@ bool Game::isDoubleThree(uint16_t x, uint16_t y, uint16_t player)
     int doubleThreeCnt = 0;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
 
-    const patternBitset playerPattern1("0110");
-    const patternBitset playerPattern2("1100");
-    const patternBitset playerPattern3("0011");
+    const patternBitset playerPattern1(0b0110);
+    const patternBitset playerPattern2(0b1100);
+    const patternBitset playerPattern3(0b0011);
 
     patternMap playerPatternMap = extractPatterns(x, y, 4, player);
     patternMap opponentPatternMap = extractPatterns(x, y, 5, opponent);
@@ -274,8 +274,8 @@ Game::isCapture(uint16_t x, uint16_t y, uint16_t player)
     std::vector<uint16_t> capturesBoard;
     const int opponent = (player == WHITE) ? BLACK : WHITE;
 
-    const patternBitset playerPattern("1001");
-    const patternBitset opponentPattern("0110");
+    const patternBitset playerPattern(0b1001);
+    const patternBitset opponentPattern(0b110);
 
     patternMap playerPatternMap = extractPatterns(x, y, 4, player);
     patternMap opponentPatternMap = extractPatterns(x, y, 4, opponent);
@@ -295,8 +295,8 @@ bool Game::canCapture(uint16_t x, uint16_t y, uint16_t player)
     setPosToBoards(x, y, player);
     const int opponent = (player == WHITE) ? BLACK : WHITE;
 
-    const patternBitset playerPattern("1001");
-    const patternBitset opponentPattern("0110");
+    const patternBitset playerPattern(0b1001);
+    const patternBitset opponentPattern(0b0110);
 
     patternMap playerPatternMap = extractPatterns(x, y, 4, player);
     patternMap opponentPatternMap = extractPatterns(x, y, 4, opponent);
@@ -407,10 +407,13 @@ int Game::heuristicLocal(int x, int y, int player)
                     || (checkPatternAtPosition(
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
-                    if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
+                    // if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
+                    if (pattern.player.to_ulong() == 0b1001 && pattern.opponent.to_ulong() == 0b110)
                         counter += pattern.value * (getCapture(player) + 1);
-                    else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
-                        || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
+                    // else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
+                    // || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
+                    else if ((pattern.player.to_ulong() == 0b1110 && pattern.opponent.to_ulong() == 1)
+                        || (pattern.player.to_ulong() == 0b111 && pattern.opponent.to_ulong() == 0b1000)) {
                         if (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
                             || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || inFiveAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player)) {
                             counter += 1000000;
@@ -419,9 +422,9 @@ int Game::heuristicLocal(int x, int y, int player)
                     } else
                         counter += pattern.value;
 
-                    // std::cout << "POS: " << pos << " X: " << x << " Y: " << y << " MERGE_PLAYER: " << mergedPlayerPattern << " MERGE_OPP: " << mergedOpponentPattern << " value: " << pattern.value << "     " << pattern.player << "    " << pattern.opponent << std::endl;
                     removePosToBoards(x, y);
-                    if (pattern.player.to_string() == "000011111" && pattern.opponent.to_string() == "000000000"
+                    // if (pattern.player.to_string() == "000011111" && pattern.opponent.to_string() == "000000000"
+                    if (pattern.player.to_ulong() == 0b11111 && pattern.opponent.none()
                         && (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player)))
                         counter -= pattern.value;
                     setPosToBoards(x, y, player);
