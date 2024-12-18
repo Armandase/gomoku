@@ -85,7 +85,7 @@ bool DiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mas
 
     if (!IBoard::isValidPos(xEnd, y) || (x < y + 1 && xEnd > y + 1))
         return false;
-        
+
     if (player == getIdPlayer1()
         && (getPlayer1() & (mask << index)) == (mask << index))
         return true;
@@ -95,11 +95,11 @@ bool DiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard& mas
     return false;
 }
 
-bool DiagBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
+bool DiagBoard::isInFive(uint16_t x, uint16_t y, uint16_t player)
+{
     int index = this->convertCoordinate(x, y);
     x = index % IBoard::getWidth();
     y = index / IBoard::getWidth();
-
 
     int width = getWidth();
     for (int startX = std::max(0, x - 4); startX <= x; ++startX) {
@@ -115,7 +115,8 @@ bool DiagBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
                     break;
                 }
             }
-            if (isFive) return true;
+            if (isFive)
+                return true;
         }
     }
     return false;

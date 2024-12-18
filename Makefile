@@ -1,4 +1,4 @@
-MAKEFLAGS += -j
+# MAKEFLAGS += -j
 
 CXX		=	g++
 NAME 	= 	Gomoku
@@ -41,7 +41,7 @@ SDL2_IMAGE = libs/SDL2_image
 GTEST     = libs/gtest
 LDFLAGS   = -lSDL2 -L$(SDL2_TTF)/build -lSDL2_ttf -L$(SDL2_IMAGE)/build -lSDL2_image \
             -Wl,-rpath,$(SDL2_TTF)/build -Wl,-rpath,$(SDL2_IMAGE)/build \
-            -Ofast #-g -pg
+            -Ofast -g -pg
 
 
 all:  ${NAME}

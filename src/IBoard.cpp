@@ -199,7 +199,8 @@ void IBoard::printBoard() const
     std::cout << std::endl;
 }
 
-bool IBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
+bool IBoard::isInFive(uint16_t x, uint16_t y, uint16_t player)
+{
     const int width = getWidth();
     int index = this->convertCoordinate(x, y);
     x = index % width;
@@ -215,7 +216,8 @@ bool IBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
                     break;
                 }
             }
-            if (isFive) return true;
+            if (isFive)
+                return true;
         }
     }
     return false;

@@ -1,5 +1,4 @@
 #include "../inc/Game.hpp"
-
 #include "../inc/IBoard.hpp"
 
 Game::Game()
@@ -407,11 +406,8 @@ int Game::heuristicLocal(int x, int y, int player)
                     || (checkPatternAtPosition(
                         mergedPlayerPattern, mergedOpponentPattern, pattern, 5 + pos))) {
 
-                    // if (pattern.player.to_string() == "000001001" && pattern.opponent.to_string() == "000000110")
                     if (pattern.player.to_ulong() == 0b1001 && pattern.opponent.to_ulong() == 0b110)
                         counter += pattern.value * (getCapture(player) + 1);
-                    // else if ((pattern.player.to_string() == "000001110" && pattern.opponent.to_string() == "000000001")
-                    // || (pattern.player.to_string() == "000000111" && pattern.opponent.to_string() == "000001000")) {
                     else if ((pattern.player.to_ulong() == 0b1110 && pattern.opponent.to_ulong() == 1)
                         || (pattern.player.to_ulong() == 0b111 && pattern.opponent.to_ulong() == 0b1000)) {
                         if (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
@@ -423,7 +419,6 @@ int Game::heuristicLocal(int x, int y, int player)
                         counter += pattern.value;
 
                     removePosToBoards(x, y);
-                    // if (pattern.player.to_string() == "000011111" && pattern.opponent.to_string() == "000000000"
                     if (pattern.player.to_ulong() == 0b11111 && pattern.opponent.none()
                         && (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player)))
                         counter -= pattern.value;

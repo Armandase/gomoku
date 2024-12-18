@@ -43,7 +43,6 @@ public:
     void renderWin(uint16_t player) const;
 
     void renderBoard(Game& game) const;
-    // void renderMenu(Button& player, Button& IA, Button& IAvsIA) const;
     void renderMenu(std::vector<std::tuple<Button, std::string>>& buttons) const;
     void erasePlayer(int x, int y) const;
     void drawCircle(int centreX, int centreY) const;

@@ -59,12 +59,6 @@ int main()
     };
     render.renderMenu(buttons);
     int lastPosX = -1, lastPosY = -1;
-    // Render Start Menu
-    // const SDL_Rect PvP = {SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100};
-    // const SDL_Rect PvIA = {SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100};
-    // render.renderImage("img/wlp_go.png", NULL);
-    // render.renderImage("img/PvP_Button.png", &PvP);
-    // render.renderImage("img/PvP_Button.png", &PvIA);
     // init random
     std::srand((unsigned)time(NULL));
     timePoint lastPlay = std::chrono::high_resolution_clock::now();
@@ -152,7 +146,6 @@ int main()
                     timePoint start = std::chrono::high_resolution_clock::now();
                     // t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
                     t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
-                    //  t_playerGame gameIA = findBestMove(game, DEPTH, player);
                     timePoint end = std::chrono::high_resolution_clock::now();
                     int diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
                     timeSum += diff;

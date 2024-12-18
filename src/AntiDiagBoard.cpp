@@ -97,7 +97,8 @@ bool AntiDiagBoard::findMatch(uint16_t x, uint16_t y, uint16_t player, bitboard&
     return false;
 }
 
-bool AntiDiagBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
+bool AntiDiagBoard::isInFive(uint16_t x, uint16_t y, uint16_t player)
+{
     const int width = getWidth();
     int index = this->convertCoordinate(x, y);
     x = index % width;
@@ -116,7 +117,8 @@ bool AntiDiagBoard::isInFive(uint16_t x, uint16_t y, uint16_t player) {
                     break;
                 }
             }
-            if (isFive) return true;
+            if (isFive)
+                return true;
         }
     }
     return false;

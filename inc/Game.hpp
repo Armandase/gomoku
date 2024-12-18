@@ -5,7 +5,6 @@
 #include "ClassicBoard.hpp"
 #include "DiagBoard.hpp"
 #include "TransposedBoard.hpp"
-// bitboard representation of the board
 
 class Game {
 public:

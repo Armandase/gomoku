@@ -6,7 +6,7 @@
 #include "../inc/Game.hpp"
 
 typedef std::chrono::time_point<std::chrono::high_resolution_clock> timePoint;
-// typedef std::vector<Game> gameSet;
+
 typedef struct s_stone {
     int x = 0;
     int y = 0;

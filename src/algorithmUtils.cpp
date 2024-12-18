@@ -1,42 +1,6 @@
 #include "../inc/algorithm.hpp"
 #include "../inc/gomoku.hpp"
 #include <algorithm>
-/*
-Generate all surrounding bits of the board with bitshifts
-
-IBoard::bitboard getSurroundingBits(Game& game) {
-    IBoard::bitboard surroundingBits = 0;
-    auto firstPlayer = game.getClassicBoard().getPlayer1();
-    auto secondPlayer = game.getClassicBoard().getPlayer2();
-
-    IBoard::bitboard allPieces = firstPlayer | secondPlayer;
-    int board_size = BOARD_SIZE + 1;
-
-    IBoard::bitboard leftBoundary = 0;
-    IBoard::bitboard rightBoundary = 0;
-
-    for (int i = 0; i < board_size; i++) {
-        leftBoundary |= (IBoard::bitboard(1) << (i * board_size));
-        rightBoundary |= (IBoard::bitboard(1) << (i * board_size + board_size
-        - 1));
-    }
-
-    leftBoundary = ~leftBoundary;
-    rightBoundary = ~rightBoundary;
-
-    surroundingBits = (allPieces >> board_size) // top
-        | (allPieces << board_size) // bottom
-        | ((allPieces >> 1) & leftBoundary) // left
-        | ((allPieces << 1) & rightBoundary) // right
-        | ((allPieces >> (board_size + 1)) & leftBoundary) // top left
-        | ((allPieces >> (board_size - 1)) & rightBoundary) // top right
-        | ((allPieces << (board_size + 1)) & rightBoundary) // bottom right
-        | ((allPieces << (board_size - 1)) & leftBoundary) // bottom left
-        | allPieces; // center
-
-    return surroundingBits;
-}
-*/
 
 IBoard::bitboard getSurroundingBits(Game& game)
 {
@@ -104,11 +68,7 @@ gameSet generatePossibleMoves(Game& game, int player, bool max, int depth)
         }
     }
     sortBoards(possibleMoves, player);
-    if (depth == DEPTH && possibleMoves.size() > FIRST_PRUNING && max)
-        possibleMoves.resize(FIRST_PRUNING);
-    else if (depth == DEPTH && possibleMoves.size() > FIRST_PRUNING)
-        possibleMoves.erase(possibleMoves.begin(), possibleMoves.end() - FIRST_PRUNING);
-    else if (possibleMoves.size() > PRUNING && max)
+    if (possibleMoves.size() > PRUNING && max)
         possibleMoves.resize(PRUNING);
     else if (possibleMoves.size() > PRUNING)
         possibleMoves.erase(possibleMoves.begin(), possibleMoves.end() - PRUNING);
