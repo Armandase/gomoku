@@ -35,13 +35,13 @@ OBJS      = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(SRC_MAIN:.cpp=
 TEST_OBJS = $(addprefix obj/, $(SRC:.cpp=.o)) $(addprefix obj/, $(TEST_FILES:.cpp=.o)) \
              obj/gtest-all.o
 
-CXXFLAGS  = -Wall -Wextra --std=c++17 -I${GTEST}/googletest/include -I${GTEST}/googletest -I$(SDL2_TTF) -I$(SDL2_IMAGE)/include -I/usr/include/SDL2 -Ofast #-g -pg
+CXXFLAGS  = -Wall -Wextra --std=c++17 -I${GTEST}/googletest/include -I${GTEST}/googletest -I$(SDL2_TTF) -I$(SDL2_IMAGE)/include -I/usr/include/SDL2 -Ofast
 SDL2_TTF  = libs/SDL2_ttf
 SDL2_IMAGE = libs/SDL2_image
 GTEST     = libs/gtest
 LDFLAGS   = -lSDL2 -L$(SDL2_TTF)/build -lSDL2_ttf -L$(SDL2_IMAGE)/build -lSDL2_image \
             -Wl,-rpath,$(SDL2_TTF)/build -Wl,-rpath,$(SDL2_IMAGE)/build \
-            -Ofast -g -pg
+            -Ofast
 
 
 all:  ${NAME}
