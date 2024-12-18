@@ -10,8 +10,8 @@
 #include <tuple>
 #include <vector>
 
-#define WHITE_STONE_PATH "img/stones/frog.png"
-#define BLACK_STONE_PATH "img/stones/rat.png"
+#define WHITE_STONE_PATH "img/frog.png"
+#define BLACK_STONE_PATH "img/rat.png"
 
 // #define PLACING_STONE_SOUND_PATH "sound/placing_stone.ogg"
 // #define PLACING_STONE_SOUND_PATH "sound/placing_stone1.ogg"
