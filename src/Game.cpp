@@ -346,7 +346,7 @@ bool checkPatternAtPosition(const patternMerge& playerLine,
     t_pattern pattern,
     int startPos)
 {
-    if (startPos < 0 || startPos > MERGE_SIZE)
+    if (startPos < 0 || startPos > MERGE_SIZE || MERGE_SIZE - startPos >= PATTERN_SIZE)
         return false;
     patternMerge mask((1 << pattern.length) - 1);
 
@@ -419,6 +419,7 @@ int Game::heuristicLocal(int x, int y, int player)
                     } else
                         counter += pattern.value;
 
+                    // std::cout << "POS: " << pos << " X: " << x << " Y: " << y << " MERGE_PLAYER: " << mergedPlayerPattern << " MERGE_OPP: " << mergedOpponentPattern << " value: " << pattern.value << "     " << pattern.player << "    " << pattern.opponent << std::endl;
                     removePosToBoards(x, y);
                     if (pattern.player.to_string() == "000011111" && pattern.opponent.to_string() == "000000000"
                         && (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player)))
