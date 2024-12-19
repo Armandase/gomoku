@@ -7,10 +7,10 @@ TEST(BoardRules, doubleThree)
 {
     std::string str_test(
         "0000000000000000000"
+        "0010000000000000000"
+        "0001000000000000000"
         "0000000000000000000"
-        "0000100000000000000"
-        "0000100000000000000"
-        "0000001100000000000"
+        "0000000110000000000"
         "0000000000000000000"
         "0000000000000000000"
         "0000000000000000000"
@@ -37,9 +37,9 @@ TEST(BoardRules, doubleThree)
         gameTest.setPosToBoards(i % width, i / width, test[i]);
     }
 
-    EXPECT_EQ(gameTest.isDoubleThree(4, 4, WHITE), true);
-    gameTest.setPosToBoards(8, 4, BLACK);
-    EXPECT_EQ(gameTest.isDoubleThree(4, 4, WHITE), false);
+    EXPECT_EQ(gameTest.isDoubleThree(5, 4, WHITE), true);
+    gameTest.setPosToBoards(4, 4, BLACK);
+    EXPECT_EQ(gameTest.isDoubleThree(5, 4, WHITE), false);
 
     EXPECT_EQ(gameTest.isDoubleThree(1, 14, WHITE), true);
     gameTest.setPosToBoards(4, 14, BLACK);

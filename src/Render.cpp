@@ -297,7 +297,6 @@ void Render::renderCapture(uint16_t p1Capture, uint16_t p2Capture)
     }
 
 #else
-    (void)player;
     // RENDER P1 CAPTURES
     writeText(" WHITE CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p1rect, BLACK_COLOR, FONT_SIZE);
 

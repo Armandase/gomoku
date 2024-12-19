@@ -255,6 +255,10 @@ bool Game::isDoubleThree(uint16_t x, uint16_t y, uint16_t player)
     for (int i = 0; i < 4; i++) {
         Game::PatternType boardType = static_cast<Game::PatternType>(i);
         Game::PatternType boardTypeRev = static_cast<Game::PatternType>(i + 4);
+
+        if (opponentPatternMap[boardType][1] || opponentPatternMap[boardTypeRev][3])
+            continue;
+            
         if (opponentPatternMap[boardType] == 0 && (playerPatternMap[boardType] == playerPattern1 || playerPatternMap[boardType] == playerPattern2 || playerPatternMap[boardType] == playerPattern3))
             doubleThreeCnt++;
         else if ((opponentPatternMap[boardType] == 1 || opponentPatternMap[boardType] == 16) && playerPatternMap[boardType] == playerPattern1)
