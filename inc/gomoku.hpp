@@ -26,7 +26,7 @@
 #define PRUNING 3
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
-#define TIME_UP 470
+#define TIME_UP 490
 #define FONT_SIZE 24
 
 enum side {

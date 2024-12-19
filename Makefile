@@ -43,7 +43,7 @@ LDFLAGS   = -lSDL2 -L$(SDL2_TTF)/build -lSDL2_ttf -L$(SDL2_IMAGE)/build -lSDL2_i
             -Ofast
 
 
-all:  ${NAME}
+all: lib ${NAME}
 
 lib:
 	@if [ ! -d "$(SDL2_TTF)/build" ]; then \
@@ -74,17 +74,18 @@ lib:
 		cmake .. && make; \
 	fi
 
+	@cd ${SDL2_TTF} && git checkout release-2.20.2 > /dev/null 2>&1
+	@cd ${SDL2_IMAGE} && git checkout release-2.8.0 > /dev/null 2>&1
+
 lib_clean :
 		rm -rf ${SDL2_TTF}/build
 		rm -rf ${SDL2_IMAGE}/build
 		rm -rf ${GTEST}/googletest/build
 
 ${NAME} : ${OBJS} ${HEADER}
-		make lib
 		${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
 
 test: ${TEST_NAME}
-	#  ./${TEST_NAME} --gtest_filter=BoardRules.EndCapture
 	 ./${TEST_NAME}
 
 ${TEST_NAME}: ${TEST_OBJS}

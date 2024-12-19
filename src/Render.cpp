@@ -97,7 +97,7 @@ void Render::renderImage(const std::string& path, const SDL_Rect* rect)
     SDL_DestroyTexture(texture);
 }
 
-void Render::renderBoard(Game& game) const
+void Render::renderBoard(Game& game)
 {
     int cnt = 0;
     SDL_SetRenderDrawColor(this->_renderer, 205, 127, 50, 255);
@@ -206,7 +206,6 @@ void Render::drawStoneAssets(int centreX, int centreY, int player)
 {
 #if defined(WHITE_STONE_PATH) && defined(BLACK_STONE_PATH)
 
-    // const SDL_Rect rect = { int(centreX - RADIUS * 1.5), int(centreY - RADIUS * 1.5), int(RADIUS * 3), int(RADIUS * 3) };
     const SDL_Rect rect = { int(centreX - RADIUS), int(centreY - RADIUS), int(RADIUS * 2), int(RADIUS * 2) };
     if (player == WHITE)
         renderImage(WHITE_STONE_PATH, &rect);
@@ -222,7 +221,11 @@ void Render::drawStoneAssets(int centreX, int centreY, int player)
 void Render::renderWin(uint16_t player) const
 {
     std::string message;
-    player == BLACK ? message = "black wins" : message = "white wins";
+#if defined(WHITE_STONE_PATH) && defined(BLACK_STONE_PATH)
+    player == BLACK ? message = "Rat wins" : message = "Frog wins";
+#else
+    player == BLACK ? message = "Black wins" : message = "White wins";
+#endif
     // reset game's Game with game's color
     SDL_SetRenderDrawColor(_renderer, 205, 127, 50, 255);
     // SDL_RenderClear(_renderer);
@@ -269,11 +272,33 @@ void Render::renderMenu(std::vector<std::tuple<Button, std::string>>& buttons) c
     SDL_RenderPresent(this->_renderer);
 }
 
-void Render::renderCapture(uint16_t p1Capture, uint16_t p2Capture) const
+void Render::renderCapture(uint16_t p1Capture, uint16_t p2Capture)
 {
-
-    // RENDER P1 CAPTURES
     const SDL_Rect p1rect = { MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5, OFFSET, GRID_SIZE };
+    const SDL_Rect p2rect = { MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5 * 3, OFFSET, GRID_SIZE };
+    
+#if defined(WHITE_STONE_PATH) && defined(BLACK_STONE_PATH)
+    // RENDER P1 CAPTURES
+    writeText(" FROG CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p1rect, BLACK_COLOR, FONT_SIZE);
+    for (int i = 1; i < p1Capture * 2 + 1; i++) {
+        if (i <= 5)
+            drawStoneAssets((MARGIN + BOARD_DIMENSIONS) + (i * RADIUS * 2) + i * 10, SCREEN_HEIGHT / 5 + GRID_SIZE + RADIUS, BLACK);
+        else
+            drawStoneAssets((MARGIN + BOARD_DIMENSIONS) + ((i - 5) * RADIUS * 2) + (i - 5) * 10, SCREEN_HEIGHT / 5 + GRID_SIZE + RADIUS * 3, BLACK);
+    }
+
+    // RENDER P2 CAPTURES
+    writeText(" RAT CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p2rect, BLACK_COLOR, FONT_SIZE);
+    for (int i = 1; i < p2Capture * 2 + 1; i++) {
+        if (i <= 5)
+            drawStoneAssets((MARGIN + BOARD_DIMENSIONS) + (i * RADIUS * 2) + i * 10, SCREEN_HEIGHT / 5 * 3 + GRID_SIZE + RADIUS, WHITE);
+        else
+            drawStoneAssets((MARGIN + BOARD_DIMENSIONS) + ((i - 5) * RADIUS * 2) + (i - 5) * 10, SCREEN_HEIGHT / 5 * 3 + GRID_SIZE + RADIUS * 3, WHITE);
+    }
+
+#else
+    (void)player;
+    // RENDER P1 CAPTURES
     writeText(" WHITE CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p1rect, BLACK_COLOR, FONT_SIZE);
 
     SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
@@ -286,7 +311,6 @@ void Render::renderCapture(uint16_t p1Capture, uint16_t p2Capture) const
     }
 
     // RENDER P2 CAPTURES
-    const SDL_Rect p2rect = { MARGIN + BOARD_DIMENSIONS, SCREEN_HEIGHT / 5 * 3, OFFSET, GRID_SIZE };
     writeText(" BLACK CAPTURES ", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", p2rect, BLACK_COLOR, FONT_SIZE);
 
     SDL_SetRenderDrawColor(this->_renderer, 255, 255, 255, 255);
@@ -297,7 +321,7 @@ void Render::renderCapture(uint16_t p1Capture, uint16_t p2Capture) const
         else
             drawCircle((MARGIN + BOARD_DIMENSIONS) + ((i - 5) * RADIUS * 2) + (i - 5) * 10, SCREEN_HEIGHT / 5 * 3 + GRID_SIZE + RADIUS * 3);
     }
-
+#endif
     SDL_RenderPresent(this->_renderer);
 }
 
