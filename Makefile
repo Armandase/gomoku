@@ -86,7 +86,7 @@ ${NAME} : ${OBJS} ${HEADER}
 		${CXX} -o ${NAME} ${OBJS} ${LDFLAGS}
 
 test: ${TEST_NAME}
-	 ./${TEST_NAME} --gtest_filter=BoardRules.doubleThree
+	 ./${TEST_NAME} #--gtest_filter=BoardRules.doubleThree
 
 ${TEST_NAME}: ${TEST_OBJS}
 		make lib
