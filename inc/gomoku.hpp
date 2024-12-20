@@ -64,22 +64,22 @@ typedef struct s_pattern {
 
 } t_pattern;
 
-const std::array<const t_pattern, 67> patternsArray { {
+const std::array<const t_pattern, 66> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
-    { patternMerge("000011110"), patternMerge("000100001"), 6, -200 },
-    { patternMerge("000001110"), patternMerge("000100001"), 6, -200 },
-    { patternMerge("000011100"), patternMerge("000100001"), 6, -200 },
-    { patternMerge("000000110"), patternMerge("000100001"), 6, -200 },
-    { patternMerge("000011000"), patternMerge("000100001"), 6, -200 },
-    { patternMerge("000001100"), patternMerge("000100001"), 6, -200 },
-    { patternMerge("000001110"), patternMerge("000010001"), 5, -200 },
-    { patternMerge("000000110"), patternMerge("000010001"), 5, -200 },
-    { patternMerge("000001100"), patternMerge("000010001"), 5, -200 },
-    { patternMerge("000000110"), patternMerge("000001001"), 4, -200 },
-    { patternMerge("000000010"), patternMerge("000001001"), 4, -200 },
-    { patternMerge("000000100"), patternMerge("000001001"), 4, -200 },
-    { patternMerge("000000110"), patternMerge("000001000"), 4, -200 },
-    { patternMerge("000000110"), patternMerge("000000001"), 4, -200 },
+    // { patternMerge("000011110"), patternMerge("000100001"), 6, -200 },
+    { patternMerge("000001110"), patternMerge("000100001"), 6, 0 },
+    { patternMerge("000011100"), patternMerge("000100001"), 6, 0 },
+    { patternMerge("000000110"), patternMerge("000100001"), 6, 0 },
+    { patternMerge("000011000"), patternMerge("000100001"), 6, 0 },
+    { patternMerge("000001100"), patternMerge("000100001"), 6, 0 },
+    { patternMerge("000001110"), patternMerge("000010001"), 5, 0 },
+    { patternMerge("000000110"), patternMerge("000010001"), 5, 0 },
+    { patternMerge("000001100"), patternMerge("000010001"), 5, 0 },
+    { patternMerge("000000110"), patternMerge("000001001"), 4, 0 },
+    { patternMerge("000000010"), patternMerge("000001001"), 4, 0 },
+    { patternMerge("000000100"), patternMerge("000001001"), 4, 0 },
+    { patternMerge("000000110"), patternMerge("000001000"), 4, 0 },
+    { patternMerge("000000110"), patternMerge("000000001"), 4, 0 },
 
     // WINNING CONDITION - Five in a row                       2147483647
     { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE

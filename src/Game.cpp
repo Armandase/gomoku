@@ -258,7 +258,7 @@ bool Game::isDoubleThree(uint16_t x, uint16_t y, uint16_t player)
 
         if (opponentPatternMap[boardType][1] || opponentPatternMap[boardTypeRev][3])
             continue;
-            
+
         if (opponentPatternMap[boardType] == 0 && (playerPatternMap[boardType] == playerPattern1 || playerPatternMap[boardType] == playerPattern2 || playerPatternMap[boardType] == playerPattern3))
             doubleThreeCnt++;
         else if ((opponentPatternMap[boardType] == 1 || opponentPatternMap[boardType] == 16) && playerPatternMap[boardType] == playerPattern1)
@@ -416,7 +416,7 @@ int Game::heuristicLocal(int x, int y, int player)
                         || (pattern.player.to_ulong() == 0b111 && pattern.opponent.to_ulong() == 0b1000)) {
                         if (inFiveAtPos(x + dirX[i], y + dirY[i], player) || inFiveAtPos(x + dirX[i] * 2, y + dirY[i] * 2, player)
                             || inFiveAtPos(x + dirX[i + 4], y + dirY[i + 4], player) || inFiveAtPos(x + dirX[i + 4] * 2, y + dirY[i + 4] * 2, player)) {
-                            counter += 1000000;
+                            counter += 7000;
                         } else
                             counter += pattern.value * (getCapture(opponent) + 1);
                     } else
