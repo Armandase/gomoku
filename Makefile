@@ -1,4 +1,4 @@
-# MAKEFLAGS += -j
+MAKEFLAGS += -j
 
 CXX		=	g++
 NAME 	= 	Gomoku

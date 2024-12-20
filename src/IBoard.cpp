@@ -201,6 +201,8 @@ void IBoard::printBoard() const
 
 bool IBoard::isInFive(uint16_t x, uint16_t y, uint16_t player)
 {
+    if (!isValidPos(x, y))
+        return false;
     const int width = getWidth();
     int index = this->convertCoordinate(x, y);
     x = index % width;

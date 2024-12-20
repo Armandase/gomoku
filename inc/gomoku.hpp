@@ -64,7 +64,7 @@ typedef struct s_pattern {
 
 } t_pattern;
 
-const std::array<const t_pattern, 65> patternsArray { {
+const std::array<const t_pattern, 67> patternsArray { {
     // USELESS PATTERNS - Minimal value as they don't directly influence the game
     { patternMerge("000011110"), patternMerge("000100001"), 6, -200 },
     { patternMerge("000001110"), patternMerge("000100001"), 6, -200 },
@@ -78,6 +78,8 @@ const std::array<const t_pattern, 65> patternsArray { {
     { patternMerge("000000110"), patternMerge("000001001"), 4, -200 },
     { patternMerge("000000010"), patternMerge("000001001"), 4, -200 },
     { patternMerge("000000100"), patternMerge("000001001"), 4, -200 },
+    { patternMerge("000000110"), patternMerge("000001000"), 4, -200 },
+    { patternMerge("000000110"), patternMerge("000000001"), 4, -200 },
 
     // WINNING CONDITION - Five in a row                       2147483647
     { patternMerge("000011111"), patternMerge("000000000"), 5, 100000000 }, // FIVE
@@ -98,6 +100,7 @@ const std::array<const t_pattern, 65> patternsArray { {
     { patternMerge("000011011"), patternMerge("000000000"), 5, 100000 }, // FOUR
     { patternMerge("000010111"), patternMerge("000000000"), 5, 100000 }, // FOUR
     { patternMerge("000011101"), patternMerge("000000000"), 5, 100000 }, // FOUR
+    { patternMerge("000001001"), patternMerge("000000110"), 4, 100000 }, // Capture opportunity
 
     // DENFENSE THREE
     { patternMerge("000001000"), patternMerge("000000111"), 4, 100000 }, // THREE
@@ -106,9 +109,8 @@ const std::array<const t_pattern, 65> patternsArray { {
     { patternMerge("000000100"), patternMerge("000001011"), 4, 30000 },
 
     // PRIORISER +++++++++++++++++++++++++++++++ CA
-    { patternMerge("000001001"), patternMerge("000000110"), 4, 90000 }, // Capture opportunity
-    { patternMerge("000001110"), patternMerge("000000001"), 4, 50000 }, // Cancel Capture
-    { patternMerge("000000111"), patternMerge("000001000"), 4, 50000 }, // Cancel Capture
+    { patternMerge("000001110"), patternMerge("000000001"), 4, 100000 }, // Cancel Capture
+    { patternMerge("000000111"), patternMerge("000001000"), 4, 100000 }, // Cancel Capture
     { patternMerge("000000010"), patternMerge("000001101"), 4, 10000 },
     { patternMerge("000000100"), patternMerge("000001011"), 4, 10000 },
 
