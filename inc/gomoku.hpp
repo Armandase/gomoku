@@ -22,8 +22,8 @@
 #define SCREEN_WIDTH (BOARD_DIMENSIONS + MARGIN + OFFSET)
 #define RADIUS (GRID_SIZE / 3)
 #define DIAMETER (RADIUS * 2)
-#define DEPTH 10
-#define PRUNING 3
+#define DEPTH 6
+#define PRUNING 10
 #define PATTERN_SIZE 5
 #define MERGE_SIZE (PATTERN_SIZE * 2 - 1)
 #define TIME_UP 490
@@ -100,7 +100,7 @@ const std::array<const t_pattern, 66> patternsArray { {
     { patternMerge("000011011"), patternMerge("000000000"), 5, 100000 }, // FOUR
     { patternMerge("000010111"), patternMerge("000000000"), 5, 100000 }, // FOUR
     { patternMerge("000011101"), patternMerge("000000000"), 5, 100000 }, // FOUR
-    { patternMerge("000001001"), patternMerge("000000110"), 4, 100000 }, // Capture opportunity
+    { patternMerge("000001001"), patternMerge("000000110"), 4, 1000000 }, // Capture opportunity
 
     // DENFENSE THREE
     { patternMerge("000001000"), patternMerge("000000111"), 4, 100000 }, // THREE
@@ -132,14 +132,16 @@ const std::array<const t_pattern, 66> patternsArray { {
     { patternMerge("000000010"), patternMerge("000000101"), 4, 5000 },
 
     // MODERATE THREATS
+    { patternMerge("000000111"), patternMerge("000000000"), 4, 1000 }, // THREE (open on both ends)
+    { patternMerge("000001110"), patternMerge("000000000"), 4, 1000 }, // THREE (open on both ends)
     { patternMerge("000001101"), patternMerge("000000000"), 4, 1000 },
     { patternMerge("000001011"), patternMerge("000000000"), 4, 1000 },
 
     // LOW-PRIORITY OPPORTUNITIES - Transitional steps
-    { patternMerge("000001010"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
+    // { patternMerge("000001010"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
     { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
     { patternMerge("000000011"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
-    { patternMerge("000000101"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
+    // { patternMerge("000000101"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
 
     { patternMerge("000000110"), patternMerge("000000000"), 4, 500 }, // OPEN TWO
     { patternMerge("000001000"), patternMerge("000000011"), 4, 500 }, // DEFEND EXTENDED TWO
@@ -150,10 +152,14 @@ const std::array<const t_pattern, 66> patternsArray { {
     { patternMerge("000000011"), patternMerge("000000000"), 3, 250 }, // ONE SIDE TWO
 
     // FILLERS - Low-value potential plays
-    { patternMerge("000000011"), patternMerge("000000000"), 2, 200 },
-    { patternMerge("000000101"), patternMerge("000000000"), 3, 50 },
+    { patternMerge("000000101"), patternMerge("000000000"), 4, 50 },
     { patternMerge("000001010"), patternMerge("000000000"), 4, 50 },
+
     { patternMerge("000001001"), patternMerge("000000000"), 4, 50 },
+
+    { patternMerge("000000101"), patternMerge("000000000"), 3, 50 },
+
+    { patternMerge("000000011"), patternMerge("000000000"), 2, 50 },
 } };
 
 int intlen(int number);
