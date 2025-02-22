@@ -1,81 +1,184 @@
-#include "../inc/gomoku.hpp"
-#include "../inc/utils.hpp"
-#include "../inc/minMaxAlgorithm.hpp"
 #include "../inc/Button.hpp"
+#include "../inc/Game.hpp"
+#include "../inc/Render.hpp"
+#include "../inc/algorithm.hpp"
+#include "../inc/gomoku.hpp"
+#include <chrono>
+#include <cstdlib>
+#include <thread>
+#include <unistd.h>
 
-void render_board(SDL_Renderer *renderer)
+// Function used in PvP mode to advise the player where to play
+void predictPos(Game& game, Render& render, int player, int& lastPosX, int& lastPosY, int x, int y)
 {
-    SDL_SetRenderDrawColor(renderer, 205, 127, 50, 255);
-    SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+    if (lastPosX != -1 && lastPosY != -1 && !(x == lastPosX && y == lastPosY))
+        render.erasePlayer(lastPosX, lastPosY);
+    else if (lastPosX == gameIA.stone.x && lastPosY == gameIA.stone.y)
+        return;
 
-    // Draw grid of 19 * 19
-    for (int x = MARGIN; x < SCREEN_WIDTH; x += GRID_SIZE)
-    {
-        SDL_RenderDrawLine(renderer, x, MARGIN, x, SCREEN_HEIGHT - MARGIN);
-        SDL_RenderDrawLine(renderer, MARGIN, x, SCREEN_WIDTH - MARGIN, x);
-    }
-    SDL_RenderPresent(renderer);
+    lastPosY = gameIA.stone.y;
+    lastPosX = gameIA.stone.x;
+    placeAdvisorStone(gameIA.stone.x, gameIA.stone.y, render);
 }
-
+// Function to initialize the SDL window and run the game loop
 int main()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-        SDL_Error("Failed to init SDL:", NULL, NULL);
-    if (TTF_Init() == -1)
-        SDL_Error("Failed to init TTF:", NULL, NULL);
-    SDL_Window *window = SDL_CreateWindow("Gomoku", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (!window)
-        SDL_Error("Failed to create SDL window:", window, NULL);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer)
-        SDL_Error("Failed to create SDL renderer:", window, renderer);
+    Render render;
+    render.initSDL("Gomoku", SCREEN_WIDTH, SCREEN_HEIGHT);
 
     int start = 0;
     bool quit = false;
+    bool endgame = false;
     SDL_Event e;
-    int player = WHITE;
+    int player = BLACK;
+    int mouseX, mouseY;
 
-    // create 2 button
-    Button playerButton(SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
-    Button IAButton(SCREEN_WIDTH / 3 * 2 - 150, SCREEN_HEIGHT / 2 - 50, 300, 100);
+    // Create buttons for choosing human vs AI or human vs human
+    int button_width = 300;
+    int button_height = 100;
+    int posX = SCREEN_WIDTH / 2 - (button_width / 2);
+    int nbWidgets = 6;
+    int heightPerWidget = (SCREEN_HEIGHT / nbWidgets + 1);
+    // lambda function to compute the position in y
+    auto computeY = [&](int i) {
+        return i * heightPerWidget;
+    };
 
-    // Render Start Menu
-    start_menu(renderer, playerButton, IAButton);
-
-    vector2d game(BOARD_SIZE + 1, std::vector<int>(BOARD_SIZE + 1, 0));
-    while (!quit)
-    {
-        // Handle q and echap for quit the programm
-        // If SDL receive an event SDL_PollEvent return 1
-        while (SDL_PollEvent(&e) != 0)
-        {
+    Button playerButton(posX, computeY(1), button_width, button_height);
+    Button IAButton(posX, computeY(2), button_width, button_height);
+    Button IAvsIA(posX, computeY(3), button_width, button_height);
+    Button PvPPro(posX, computeY(4), button_width, button_height);
+    Button PvPLongPro(posX, computeY(5), button_width, button_height);
+    std::vector<std::tuple<Button, std::string>> buttons = {
+        { playerButton, "Player VS Player" },
+        { IAButton, "Player VS IA" },
+        { IAvsIA, "IA VS IA" },
+        { PvPPro, "PvP Pro Mode" },
+        { PvPLongPro, "PvP Long Pro Mode" }
+    };
+    render.renderMenu(buttons);
+    int lastPosX = -1, lastPosY = -1;
+    // init random
+    std::srand((unsigned)time(NULL));
+    timePoint lastPlay = std::chrono::high_resolution_clock::now();
+    Game game;
+    int nbTurn = 0;
+    int timeSum = 0;
+    while (!quit) {
+        while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT)
                 quit = true;
-            else if (e.type == SDL_KEYDOWN)
-            {
+            else if (e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_q)
                     quit = true;
-            }
-            else if (e.type == SDL_MOUSEBUTTONDOWN)
-            {
-                if (!start)
-                {
-                    start = handleStart(renderer, playerButton, IAButton);
+                if (endgame) {
+                    resetGame(game, render);
+                    endgame = false;
+                    player = BLACK;
+                    if (start == IA_MODE) {
+                        std::cout << "Average time for IA to play " << timeSum / (nbTurn / 2) << " ms" << std::endl;
+                    }
+                    start = 0;
+                    nbTurn = 0;
+                    timeSum = 0;
+                    render.renderMenu(buttons);
                     continue;
                 }
-                if (player == WHITE && handleMouse(game, player, renderer))
+            } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+
+                if (!start) {
+                    start = modeSelection(game, render, playerButton, IAButton, IAvsIA, PvPPro, PvPLongPro);
                     continue;
-                if (player == BLACK) {
-                    minMaxAlgorithm(game, player, renderer);
-                    player = WHITE;
+                } else if (endgame) {
+                    resetGame(game, render);
+                    endgame = false;
+                    player = BLACK;
+                    if (start == IA_MODE) {
+                        std::cout << "Average time for IA to play " << timeSum / (nbTurn / 2) << " ms" << std::endl;
+                    }
+                    start = 0;
+                    nbTurn = 0;
+                    timeSum = 0;
+                    render.renderMenu(buttons);
+                    continue;
+                } else if (start == IA_VS_IA) {
+                    continue;
                 }
-                SDL_RenderPresent(renderer);
+                SDL_GetMouseState(&mouseX, &mouseY);
+                if (((player == WHITE && start == IA_MODE) || start == PLAYER_MODE || start == PVP_PRO || start == PVP_LONGPRO) && handleMouse(mouseX, mouseY)) {
+                    int x = coordToBoard(mouseX);
+                    int y = coordToBoard(mouseY);
+                    if (nbTurn == 0 && (start == PVP_PRO || start == PVP_LONGPRO)) {
+                        x = (BOARD_SIZE - 1) / 2;
+                        y = (BOARD_SIZE - 1) / 2;
+                    } else if (nbTurn == 2 && start == PVP_PRO) {
+                        int centerX = (BOARD_SIZE - 1) / 2;
+                        int centerY = (BOARD_SIZE - 1) / 2;
+                        if (x > centerX - 3 && x < centerX + 3 && y > centerY - 3 && y < centerY + 3) {
+
+                            continue;
+                        }
+                    } else if (nbTurn == 2 && start == PVP_LONGPRO) {
+                        int centerX = (BOARD_SIZE - 1) / 2;
+                        int centerY = (BOARD_SIZE - 1) / 2;
+                        if (x > centerX - 4 && x < centerX + 4 && y > centerY - 4 && y < centerY + 4) {
+                            continue;
+                        }
+                    }
+                    if (posValid(game, x, y, player, true)) {
+                        game.setPosToBoards(x, y, player);
+                        place_stone(game, render, x, y, player, endgame);
+                    }
+                    if (start == PLAYER_MODE)
+                        predictPos(game, render, player, lastPosX, lastPosY, x, y);
+                    nbTurn++;
+                }
+                if (start == IA_MODE && player == BLACK) {
+                    if (game.isEmpty()) {
+                        int x = BOARD_SIZE / 2;
+                        int y = BOARD_SIZE / 2;
+                        game.setPosToBoards(x, y, player);
+                        place_stone(game, render, x, y, player, endgame);
+                        player = WHITE;
+                        continue;
+                    }
+                    timePoint start = std::chrono::high_resolution_clock::now();
+                    // t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+                    t_playerGame gameIA = findBestMovePVSmultithread(game, DEPTH, player);
+                    timePoint end = std::chrono::high_resolution_clock::now();
+                    int diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+                    timeSum += diff;
+                    render.renderTime(std::to_string(diff));
+                    place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
+                        player, endgame);
+                    game = gameIA.game;
+                    nbTurn++;
+                    std::cout << "IA played " << nbTurn / 2 << " times" << std::endl;
+                }
+                SDL_RenderPresent(render.getRenderer());
             }
         }
+        if (start == IA_VS_IA) {
+            if (game.isEmpty()) {
+                int x = (std::rand() % BOARD_SIZE) - 1;
+                int y = (std::rand() % BOARD_SIZE) - 1;
+                game.setPosToBoards(x, y, player);
+                place_stone(game, render, x, y, player, endgame);
+                lastPlay = std::chrono::high_resolution_clock::now();
+                continue;
+            }
+            if (times_up(lastPlay) == false || endgame)
+                continue;
+            timePoint start = std::chrono::high_resolution_clock::now();
+            t_playerGame gameIA = findBestMovePVS(game, DEPTH, player);
+            timePoint end = std::chrono::high_resolution_clock::now();
+            render.renderTime(std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()));
+            place_stone(gameIA.game, render, gameIA.stone.x, gameIA.stone.y,
+                player, endgame);
+            game = gameIA.game;
+            lastPlay = std::chrono::high_resolution_clock::now();
+            nbTurn++;
+        }
     }
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    return 0;
 }

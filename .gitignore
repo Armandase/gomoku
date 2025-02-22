@@ -1,3 +1,6 @@
 obj/
 *.vscode
-gomoku
+Gomoku
+gmon.out
+run_test
+libs/
